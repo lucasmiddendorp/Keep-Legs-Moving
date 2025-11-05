@@ -26,6 +26,7 @@ It combines basic training load modeling, adaptive workout planning, and perform
 ### 📊 Data
 - **activity_loader** — Loads past ride data (e.g., from Strava, FIT/TCX/GPX files) and converts it into metrics.  
 - **power_metrics** — Calculates key cycling metrics like NP, IF, TSS, average power, and energy expenditure.
+- **user_data** — Defines user profiles, training preferences, and goals (e.g., FTP, weight, training days, target event).  
 
 ### 💾 Storage
 - **database** — Handles saving and loading of user data, workouts, and performance history (SQLite or JSON).
