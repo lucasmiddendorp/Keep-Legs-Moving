@@ -15,23 +15,23 @@ It combines basic training load modeling, adaptive workout planning, and perform
 - 🧩 **Modular Design** — easily extendable to integrate with Strava or export `.zwo` files.
 
 ---
-
 ## 🏗️ Project Structure
 
-Core/
--- adaptation_engine: Dynamically adapts upcoming workouts based on fatigue, missed sessions, or readiness score.
--- performance_model: Predicts changes in FTP or performance over time using fitness and fatigue trends.
--- training_load_model: Implements fitness-fatigue (CTL–ATL) model to estimate training readiness.
--- workout_planner: Builds personalized weekly workout plans based on user profile and availability.
+### 🧠 Core
+- **adaptation_engine** — Dynamically adapts upcoming workouts based on fatigue, missed sessions, or readiness score.  
+- **performance_model** — Predicts changes in FTP or performance over time using fitness and fatigue trends.  
+- **training_load_model** — Implements the fitness–fatigue (CTL–ATL) model to estimate training readiness.  
+- **workout_planner** — Builds personalized weekly workout plans based on the user profile and availability.
 
-Data/
--- activity_loader: Loads past ride data (e.g., from Strava, FIT/TCX/GPX files) and converts it into metrics.
--- power_metrics: Calculates key cycling metrics like NP, IF, TSS, average power, and energy expenditure.
+### 📊 Data
+- **activity_loader** — Loads past ride data (e.g., from Strava, FIT/TCX/GPX files) and converts it into metrics.  
+- **power_metrics** — Calculates key cycling metrics like NP, IF, TSS, average power, and energy expenditure.
 
-storage/
--- database: Handles saving and loading of user data, workouts, and performance history (SQLite or JSON).
+### 💾 Storage
+- **database** — Handles saving and loading of user data, workouts, and performance history (SQLite or JSON).
 
-ui/
--- dashboard: Simple Streamlit, CTI or PowerBI dashboard to visualize training progress and upcoming sessions.
+### 🖥️ UI
+- **dashboard** — Simple Streamlit, CLI, or Power BI dashboard to visualize training progress and upcoming sessions.
 
-main.py: Entry point to run KLM: initializes models, loads user data, generates plan, and displays results.
+### 🚀 Main
+- **main.py** — Entry point to run *Keep Legs Moving (KLM)*: initializes models, loads user data, generates plans, and displays results.
