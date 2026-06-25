@@ -19,11 +19,11 @@ def activity_to_dict(a):
         "total_elevation_gain": float(a.total_elevation_gain) if a.total_elevation_gain else None,
         "average_speed": float(a.average_speed) if a.average_speed else None,
 
-        "average_heartrate": a.average_heartrate,
-        "max_heartrate": a.max_heartrate,
+        "average_heartrate": float(a.average_heartrate) if getattr(a, "average_heartrate", None) else None,
+        "max_heartrate": float(a.max_heartrate) if getattr(a, "max_heartrate", None) else None,
 
-        "average_watts": a.average_watts,
-        "weighted_average_watts": a.weighted_average_watts,
+        "average_watts": float(a.average_watts) if getattr(a, "average_watts", None) else None,
+        "weighted_average_watts": float(a.weighted_average_watts) if getattr(a, "weighted_average_watts", None) else None,
 
         "trainer": a.trainer,
         "gear_id": a.gear_id
@@ -141,7 +141,8 @@ def update_power_stream_cache(df):
             continue
 
         print(f"Downloading power stream for activity {activity_id}")
-        df_stream = fetch_power_stream(activity_id)
+        # df_stream = fetch_power_stream(activity_id)
+        df_stream = None  # Placeholder for actual stream fetching logic
         if df_stream is not None and not df_stream.empty:
             new_dfs.append(df_stream)
 

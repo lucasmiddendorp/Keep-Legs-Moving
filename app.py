@@ -10,313 +10,11 @@ import xml.etree.ElementTree as ET
 import plotly.graph_objects as go
 from datetime import date
 
+from pacing import Pacing
+
 st.set_page_config(layout="wide")
 
 G = 9.80665
-
-
-def haversine_m(lat1, lon1, lat2, lon2):
-    radius = 6371000
-    lat1, lon1, lat2, lon2 = map(np.radians, [lat1, lon1, lat2, lon2])
-    dlat = lat2 - lat1
-    dlon = lon2 - lon1
-    a = np.sin(dlat / 2) ** 2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2) ** 2
-    return radius * 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
-
-
-def bearing_deg(lat1, lon1, lat2, lon2):
-    lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
-    dlon = lon2 - lon1
-    x = math.sin(dlon) * math.cos(lat2)
-    y = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * math.cos(lat2) * math.cos(dlon)
-    return (math.degrees(math.atan2(x, y)) + 360) % 360
-
-
-def parse_gpx(uploaded_file):
-    root = ET.fromstring(uploaded_file.getvalue())
-    points = []
-
-    for point in root.iter():
-        tag = point.tag.split("}")[-1]
-        if tag not in {"trkpt", "rtept"}:
-            continue
-
-        lat = float(point.attrib["lat"])
-        lon = float(point.attrib["lon"])
-        ele = np.nan
-        for child in point:
-            if child.tag.split("}")[-1] == "ele" and child.text:
-                ele = float(child.text)
-                break
-        points.append({"lat": lat, "lon": lon, "ele": ele})
-
-    return pd.DataFrame(points)
-
-
-def build_route_segments(points):
-    rows = []
-    for idx in range(len(points) - 1):
-        start = points.iloc[idx]
-        end = points.iloc[idx + 1]
-        distance = haversine_m(start["lat"], start["lon"], end["lat"], end["lon"])
-        if distance < 1:
-            continue
-
-        elevation_gain = end["ele"] - start["ele"]
-        rows.append(
-            {
-                "distance_m": distance,
-                "start_elevation_m": start["ele"],
-                "end_elevation_m": end["ele"],
-                "elevation_change_m": elevation_gain,
-                "grade": np.clip(elevation_gain / distance, -0.25, 0.25),
-                "bearing": bearing_deg(start["lat"], start["lon"], end["lat"], end["lon"]),
-            }
-        )
-
-    segments = pd.DataFrame(rows)
-    if segments.empty:
-        return segments
-
-    segments["distance_km"] = segments["distance_m"].cumsum() / 1000
-    return segments
-
-
-def wheel_power_required(speed, grade, mass, cda, crr, rho, drivetrain_efficiency, wind_speed, wind_from_deg, bearing):
-    slope_angle = math.atan(grade)
-    headwind = wind_speed * math.cos(math.radians(wind_from_deg - bearing))
-    apparent_air_speed = max(0.0, speed + headwind)
-    gravity_power = mass * G * math.sin(slope_angle) * speed
-    rolling_power = mass * G * math.cos(slope_angle) * crr * speed
-    aero_power = 0.5 * rho * cda * apparent_air_speed**2 * speed
-    wheel_power = gravity_power + rolling_power + aero_power
-    return wheel_power / drivetrain_efficiency
-
-
-def solve_speed_for_power(target_power, grade, mass, cda, crr, rho, drivetrain_efficiency, wind_speed, wind_from_deg, bearing, max_speed):
-    low = 0.1
-    high = max_speed
-    if wheel_power_required(high, grade, mass, cda, crr, rho, drivetrain_efficiency, wind_speed, wind_from_deg, bearing) <= target_power:
-        return high
-
-    for _ in range(45):
-        mid = (low + high) / 2
-        required = wheel_power_required(
-            mid, grade, mass, cda, crr, rho, drivetrain_efficiency, wind_speed, wind_from_deg, bearing
-        )
-        if required > target_power:
-            high = mid
-        else:
-            low = mid
-
-    return low
-
-
-def normalized_power(power, duration_s):
-    if len(power) == 0:
-        return np.nan
-
-    samples = []
-    for watts, seconds in zip(power, duration_s):
-        repeat = max(1, int(round(seconds / 5)))
-        samples.extend([watts] * repeat)
-
-    power_series = pd.Series(samples)
-    rolling_30s = power_series.rolling(6, min_periods=1).mean()
-    return (rolling_30s.pow(4).mean()) ** 0.25
-
-
-def estimate_course_pacing(segments, settings):
-    modeled = segments.copy()
-    total_mass = settings["rider_weight"] + settings["bike_weight"] + settings["gear_weight"]
-    ftp = settings["ftp"]
-    target_np = ftp * settings["target_if"]
-    max_power = ftp * settings["max_ftp_fraction"]
-    min_power = ftp * settings["min_ftp_fraction"]
-
-    load_scores = []
-    for _, segment in modeled.iterrows():
-        reference_power = wheel_power_required(
-            settings["reference_speed_kmh"] / 3.6,
-            segment["grade"],
-            total_mass,
-            settings["cda"],
-            settings["crr"],
-            settings["air_density"],
-            settings["drivetrain_efficiency"],
-            settings["wind_speed"],
-            settings["wind_from_deg"],
-            segment["bearing"],
-        )
-        load_scores.append(max(0.0, reference_power))
-
-    load_scores = np.asarray(load_scores)
-    if np.nanmax(load_scores) > 0:
-        load_scores = (load_scores - np.nanmedian(load_scores)) / (np.nanpercentile(load_scores, 90) - np.nanmedian(load_scores) + 1e-9)
-    else:
-        load_scores = np.zeros(len(modeled))
-
-    # Allocate more power where extra watts buy more time: climbs, rough/high-resistance sections, and headwinds.
-    power_shape = 1 + settings["pacing_aggression"] * np.clip(load_scores, -0.6, 1.2)
-    power_shape = np.clip(power_shape, settings["min_ftp_fraction"] / settings["target_if"], settings["max_ftp_fraction"] / settings["target_if"])
-
-    best_powers = np.full(len(modeled), target_np)
-    best_speeds = np.zeros(len(modeled))
-    best_np = target_np
-
-    low_scale = 0.5
-    high_scale = 1.5
-    for _ in range(35):
-        scale = (low_scale + high_scale) / 2
-        powers = np.clip(target_np * power_shape * scale, min_power, max_power)
-
-        speeds = []
-        for power, (_, segment) in zip(powers, modeled.iterrows()):
-            speeds.append(
-                solve_speed_for_power(
-                    power,
-                    segment["grade"],
-                    total_mass,
-                    settings["cda"],
-                    settings["crr"],
-                    settings["air_density"],
-                    settings["drivetrain_efficiency"],
-                    settings["wind_speed"],
-                    settings["wind_from_deg"],
-                    segment["bearing"],
-                    settings["max_speed_kmh"] / 3.6,
-                )
-            )
-
-        duration_s = modeled["distance_m"].to_numpy() / np.asarray(speeds)
-        current_np = normalized_power(powers, duration_s)
-        best_powers = powers
-        best_speeds = np.asarray(speeds)
-        best_np = current_np
-
-        if current_np > target_np:
-            high_scale = scale
-        else:
-            low_scale = scale
-
-    modeled["target_power_w"] = best_powers
-    modeled["speed_kmh"] = best_speeds * 3.6
-    modeled["segment_time_s"] = modeled["distance_m"] / best_speeds
-    modeled["elapsed_time_s"] = modeled["segment_time_s"].cumsum()
-    modeled.attrs["target_np"] = target_np
-    modeled.attrs["modeled_np"] = best_np
-    return modeled
-
-
-def time_weighted_average(values, weights):
-    values = np.asarray(values, dtype=float)
-    weights = np.asarray(weights, dtype=float)
-    valid = ~np.isnan(values) & ~np.isnan(weights) & (weights > 0)
-    if not valid.any():
-        return np.nan
-    return np.average(values[valid], weights=weights[valid])
-
-
-def wind_component_kmh(row, settings):
-    headwind_ms = settings["wind_speed"] * math.cos(math.radians(settings["wind_from_deg"] - row["bearing"]))
-    return headwind_ms * 3.6
-
-
-def pacing_cheat_sheet(modeled, settings):
-    category_order = [
-        "Flat/Roll\nHeadwind",
-        "Flat/Roll\nTailwind",
-        "Flat/Roll\nCrosswind",
-        "Minor Hill\n(1-2%)",
-        "Medium Hill\n(2-4%)",
-        "Major Hill\n(4-6%)",
-        "Extreme Hill\n(>6%)",
-        "Minor\nDescent",
-    ]
-
-    cheat = modeled.copy()
-    cheat["grade_percent"] = cheat["grade"] * 100
-    cheat["headwind_kmh"] = cheat.apply(lambda row: wind_component_kmh(row, settings), axis=1)
-
-    def category(row):
-        grade = row["grade_percent"]
-        if grade <= -1:
-            return "Minor\nDescent"
-        if grade >= 6:
-            return "Extreme Hill\n(>6%)"
-        if grade >= 4:
-            return "Major Hill\n(4-6%)"
-        if grade >= 2:
-            return "Medium Hill\n(2-4%)"
-        if grade >= 1:
-            return "Minor Hill\n(1-2%)"
-        if row["headwind_kmh"] >= 2:
-            return "Flat/Roll\nHeadwind"
-        if row["headwind_kmh"] <= -2:
-            return "Flat/Roll\nTailwind"
-        return "Flat/Roll\nCrosswind"
-
-    cheat["category"] = cheat.apply(category, axis=1)
-    rows = []
-    for category_name in category_order:
-        category_rows = cheat[cheat["category"] == category_name]
-        watts = time_weighted_average(category_rows["target_power_w"], category_rows["segment_time_s"])
-        rows.append(
-            {
-                "CATEGORY": category_name,
-                "WATTS": "" if np.isnan(watts) else int(round(watts)),
-            }
-        )
-
-    return pd.DataFrame(rows)
-
-
-def course_section_summary(modeled, min_distance_km=1.0):
-    sections = modeled.copy()
-    smoothing_window = max(3, min(21, len(sections) // 60))
-    if smoothing_window % 2 == 0:
-        smoothing_window += 1
-    sections["smoothed_grade"] = sections["grade"].rolling(smoothing_window, min_periods=1, center=True).mean()
-
-    def terrain_type(grade):
-        if grade >= 0.015:
-            return "Climb"
-        if grade <= -0.015:
-            return "Descent"
-        return "Flat/Roll"
-
-    sections["terrain"] = sections["smoothed_grade"].apply(terrain_type)
-    sections["section_id"] = (sections["terrain"] != sections["terrain"].shift()).cumsum()
-
-    rows = []
-    for _, section in sections.groupby("section_id", sort=False):
-        distance_km = section["distance_m"].sum() / 1000
-        if distance_km < min_distance_km:
-            continue
-
-        start_km = section["distance_km"].iloc[0] - section["distance_m"].iloc[0] / 1000
-        end_km = section["distance_km"].iloc[-1]
-        time_s = section["segment_time_s"].sum()
-        elevation_change_m = section["elevation_change_m"].sum()
-        avg_grade = elevation_change_m / section["distance_m"].sum() * 100
-        avg_watts = time_weighted_average(section["target_power_w"], section["segment_time_s"])
-        avg_speed = distance_km / (time_s / 3600)
-
-        rows.append(
-            {
-                "Type": section["terrain"].iloc[0],
-                "Start km": round(start_km, 2),
-                "End km": round(end_km, 2),
-                "Distance km": round(distance_km, 2),
-                "Avg grade %": round(avg_grade, 1),
-                "Elevation change m": round(elevation_change_m, 0),
-                "Avg watts": int(round(avg_watts)),
-                "Avg speed km/h": round(avg_speed, 1),
-                "Time min": round(time_s / 60, 1),
-            }
-        )
-
-    return pd.DataFrame(rows)
 
 
 def run_strava_update():
@@ -340,11 +38,37 @@ def format_duration(seconds):
         return f"{hours}h {minutes:02d}m"
     return f"{minutes}m"
 
+def rolling_km(series_df, value_col, km_window):
+    df = series_df.copy()
+
+    x = df["distance_km"].to_numpy()
+    y = df[value_col].to_numpy()
+
+    out = np.empty(len(df))
+
+    for i in range(len(df)):
+        start = x[i] - km_window
+        mask = (x >= start) & (x <= x[i])
+
+        out[i] = np.mean(y[mask]) if mask.any() else np.nan
+
+    return out
 
 def render_course_pacing_page():
+    progress = st.progress(0)
+    status = st.empty()
     st.title("Course Pacing Model")
 
     uploaded_file = st.file_uploader("Import GPX file", type=["gpx"])
+
+    st.sidebar.header("Smoothing")
+    smooth_km = st.sidebar.slider(
+        "Rolling average window (km)",
+        min_value=0.5,
+        max_value=10.0,
+        value=2.0,
+        step=0.5,
+    )
 
     st.sidebar.header("Rider And Bike")
     rider_weight = st.sidebar.number_input("Rider weight (kg)", min_value=30.0, max_value=130.0, value=75.0, step=0.5)
@@ -355,7 +79,7 @@ def render_course_pacing_page():
     pacing_ftp = st.sidebar.number_input("FTP (W)", min_value=100, max_value=600, value=int(config.FTP), step=5)
     target_if_percent = st.sidebar.number_input("Target IF (% FTP)", min_value=40, max_value=120, value=82, step=1)
     max_ftp_percent = st.sidebar.number_input("Max short effort (% FTP)", min_value=target_if_percent, max_value=180, value=115, step=1)
-    min_ftp_percent = st.sidebar.number_input("Minimum pedaling (% FTP)", min_value=0, max_value=target_if_percent, value=25, step=1)
+    min_ftp_percent = st.sidebar.number_input("Minimum pedaling (% FTP)", min_value=0, max_value=target_if_percent, value=0, step=1)
     pacing_aggression = st.sidebar.slider("Pacing variability", min_value=0.0, max_value=1.0, value=0.45, step=0.05)
     min_section_km = st.sidebar.number_input("Minimum section length (km)", min_value=0.2, max_value=10.0, value=1.0, step=0.1)
     max_speed_kmh = st.sidebar.number_input("Max descending speed (km/h)", min_value=20.0, max_value=120.0, value=75.0, step=1.0)
@@ -387,12 +111,15 @@ def render_course_pacing_page():
         "wind_from_deg": wind_from_deg,
     }
 
+    pacing = Pacing(settings)
     if uploaded_file is None:
         st.info("Upload a GPX route with elevation data to estimate pacing and course time.")
         return
 
-    try:
-        points = parse_gpx(uploaded_file)
+    try:    
+        status.text("Parsing GPX...")
+        points = pacing.parse_gpx(uploaded_file)
+        progress.progress(0.10)
     except ET.ParseError:
         st.error("This GPX file could not be parsed.")
         return
@@ -405,12 +132,16 @@ def render_course_pacing_page():
         st.warning("Some GPX points are missing elevation. The model needs elevation for reliable climbing and descending estimates.")
         points["ele"] = points["ele"].interpolate().bfill().ffill()
 
-    segments = build_route_segments(points)
+    status.text("Modeling course pacing...")
+    segments = pacing.build_route_segments(points)
+    progress.progress(0.30)
     if segments.empty:
         st.warning("The GPX route does not contain enough distance between points to model.")
         return
-
-    modeled = estimate_course_pacing(segments, settings)
+    
+    status.text("Estimating pacing...")
+    modeled = pacing.estimate_course_pacing(segments, settings)
+    progress.progress(0.80)
 
     total_distance_km = modeled["distance_m"].sum() / 1000
     total_time_s = modeled["segment_time_s"].sum()
@@ -427,20 +158,16 @@ def render_course_pacing_page():
     col5.metric("Elevation Gain", f"{elevation_gain_m:.0f} m")
 
     st.subheader("Route Profile And Pacing")
-    smoothing_window = max(3, min(31, len(modeled) // 40))
-    if smoothing_window % 2 == 0:
-        smoothing_window += 1
-    modeled["smoothed_speed_kmh"] = (
-        modeled["speed_kmh"]
-        .rolling(window=smoothing_window, min_periods=1, center=True)
-        .mean()
-    )
 
+    modeled["power_smooth"] = rolling_km(modeled, "target_power_w", smooth_km)
+    modeled["speed_smooth"] = rolling_km(modeled, "speed_kmh", smooth_km)
+    modeled["elev_smooth"] = rolling_km(modeled, "end_elevation_m", smooth_km)
+        
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
             x=modeled["distance_km"],
-            y=modeled["target_power_w"],
+            y=modeled["power_smooth"],
             name="Power",
             mode="lines",
             line=dict(color="rgba(134, 188, 203, 0.75)", width=1, shape="hv"),
@@ -452,7 +179,7 @@ def render_course_pacing_page():
     fig.add_trace(
         go.Scatter(
             x=modeled["distance_km"],
-            y=modeled["smoothed_speed_kmh"],
+            y=modeled["speed_smooth"],
             name="Speed",
             yaxis="y2",
             mode="lines",
@@ -463,7 +190,7 @@ def render_course_pacing_page():
     fig.add_trace(
         go.Scatter(
             x=modeled["distance_km"],
-            y=modeled["end_elevation_m"],
+            y=modeled["elev_smooth"],
             name="Elevation",
             yaxis="y3",
             mode="lines",
@@ -482,13 +209,14 @@ def render_course_pacing_page():
             zeroline=False,
             rangeslider=dict(visible=True, thickness=0.06),
         ),
+
         yaxis=dict(
             title=dict(text="Power (watts)", font=dict(color="#2459a6")),
             tickfont=dict(color="#2459a6"),
             showgrid=True,
             gridcolor="rgba(0, 0, 0, 0.12)",
             zeroline=False,
-            rangemode="tozero",
+            range=[0, modeled["target_power_w"].max() * 1.1],
         ),
         yaxis2=dict(
             title=dict(text="Speed (km/h)", font=dict(color="#ff7f0e")),
@@ -540,13 +268,13 @@ def render_course_pacing_page():
 
     st.subheader("Course Power Cheat Sheet")
     st.dataframe(
-        pacing_cheat_sheet(modeled, settings),
+        pacing.pacing_cheat_sheet(modeled, settings),
         width="stretch",
         hide_index=True,
     )
 
     st.subheader("Course Sections")
-    section_summary = course_section_summary(modeled, min_distance_km=min_section_km)
+    section_summary = pacing.course_section_summary(modeled, min_distance_km=min_section_km)
     if section_summary.empty:
         st.info(f"No climb, descent, or flat/rolling sections longer than {min_section_km:.1f} km.")
     else:
