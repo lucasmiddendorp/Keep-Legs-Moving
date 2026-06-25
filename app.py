@@ -280,7 +280,10 @@ def render_course_pacing_page():
     else:
         st.dataframe(section_summary, width="stretch", hide_index=True)
 
-
+    print("Mean speed:", modeled["speed_kmh"].mean())
+    print("Time weighted speed:",
+      modeled["distance_m"].sum() /
+      modeled["segment_time_s"].sum() * 3.6)
 page = st.sidebar.radio("Page", ["Training Dashboard", "Course Pacing"])
 
 st.markdown("""
@@ -386,9 +389,9 @@ filtered = daily.loc[pd.Timestamp(start_date):pd.Timestamp(end_date)]
 
 smoothed = filtered.copy()
 if rolling_days > 1:
-    smoothed["CTL"] = filtered["CTL"].rolling(rolling_days, min_periods=1, center=True).mean()
-    smoothed["ATL"] = filtered["ATL"].rolling(rolling_days, min_periods=1, center=True).mean()
-    smoothed["TSB"] = filtered["TSB"].rolling(rolling_days, min_periods=1, center=True).mean()
+    smoothed["CTL"] = filtered["CTL"].rolling(rolling_days, min_periods=1, center=False).mean()
+    smoothed["ATL"] = filtered["ATL"].rolling(rolling_days, min_periods=1, center=False).mean()
+    smoothed["TSB"] = filtered["TSB"].rolling(rolling_days, min_periods=1, center=False).mean()
     
 # DASHBOARD
 

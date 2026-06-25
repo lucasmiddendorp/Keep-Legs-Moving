@@ -62,9 +62,15 @@ class Pacing:
                 (p["lat"] - lat0)
                 * 111320
             )
+        df = pd.DataFrame(points)
 
-        return pd.DataFrame(points)
+        df["ele"] = (
+            df["ele"]
+            .rolling(21, center=True, min_periods=1)
+            .mean()
+        )
 
+        return df
 
     def build_route_segments(self, points):
         rows = []
@@ -285,7 +291,7 @@ class Pacing:
         return modeled
 
 
-    def time_weighted_average(values, weights):
+    def time_weighted_average(self, values, weights):
         values = np.asarray(values, dtype=float)
         weights = np.asarray(weights, dtype=float)
         valid = ~np.isnan(values) & ~np.isnan(weights) & (weights > 0)
