@@ -8,6 +8,7 @@ import subprocess
 import sys
 import xml.etree.ElementTree as ET
 import plotly.graph_objects as go
+from datetime import date
 
 st.set_page_config(layout="wide")
 
@@ -625,12 +626,18 @@ daily = (
     .asfreq("D", fill_value=0)
 )
 
+# Extend to today so CTL/ATL/TSB decay forward from last training day
+today = pd.Timestamp(date.today())
+if daily.index[-1] < today:
+    daily = daily.reindex(
+        pd.date_range(daily.index[0], today, freq="D"),
+        fill_value=0
+    )
 
 # CTL ATL TSB
 daily["CTL"] = daily["TSS"].ewm(span=CTL_TC).mean()
 daily["ATL"] = daily["TSS"].ewm(span=ATL_TC).mean()
 daily["TSB"] = daily["CTL"].shift(1) - daily["ATL"].shift(1)
-
 
 # DATE RANGE SELECTOR
 st.sidebar.header("Date Range")
@@ -642,11 +649,19 @@ start_date = st.sidebar.date_input(
 
 end_date = st.sidebar.date_input(
     "End date",
-    daily.index.max()
+    value=date.today(),
 )
+
+rolling_days = st.sidebar.slider("Rolling Average", min_value=1, max_value=28, value=1, step=1, format="%d days")
 
 filtered = daily.loc[pd.Timestamp(start_date):pd.Timestamp(end_date)]
 
+smoothed = filtered.copy()
+if rolling_days > 1:
+    smoothed["CTL"] = filtered["CTL"].rolling(rolling_days, min_periods=1, center=True).mean()
+    smoothed["ATL"] = filtered["ATL"].rolling(rolling_days, min_periods=1, center=True).mean()
+    smoothed["TSB"] = filtered["TSB"].rolling(rolling_days, min_periods=1, center=True).mean()
+    
 # DASHBOARD
 
 # --- CSS for vertical alignment ---
@@ -870,8 +885,8 @@ fig.add_trace(
 
 fig.add_trace(
     go.Scatter(
-        x=filtered.index,
-        y=filtered["CTL"],
+        x=smoothed.index,
+        y=smoothed["CTL"],
         name="Fitness (CTL)",
         mode="lines",
         line=dict(color="#5f8fb3", width=2.5),
@@ -883,8 +898,8 @@ fig.add_trace(
 
 fig.add_trace(
     go.Scatter(
-        x=filtered.index,
-        y=filtered["ATL"],
+        x=smoothed.index,
+        y=smoothed["ATL"],
         name="Fatigue (ATL)",
         mode="lines",
         line=dict(color="#f0a4e8", width=1.8),
@@ -894,8 +909,8 @@ fig.add_trace(
 
 fig.add_trace(
     go.Scatter(
-        x=filtered.index,
-        y=filtered["TSB"],
+        x=smoothed.index,
+        y=smoothed["TSB"],
         name="Form (TSB)",
         mode="lines",
         line=dict(color="#f2c14e", width=1.8),
