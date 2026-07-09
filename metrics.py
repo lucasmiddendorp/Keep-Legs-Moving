@@ -11,6 +11,6 @@ df["TSS"] = (df["moving_time"] * df["weighted_average_watts"] * df["IF"]) / (con
 df_daily = df.groupby("date")["TSS"].sum().reset_index()
 df_daily = df_daily.set_index("date").asfreq("D", fill_value=0)
 
-df_daily["CTL"] = df_daily["TSS"].ewm(span=config.CTL_TIME_CONSTANT, adjust=False).mean()
+df_daily["CTL"] = df_daily["TSS"].ewm(span=config.CTL_TIME_CONSTANT, adjust=False).mean()  + config.CTL_BASELINE
 df_daily["ATL"] = df_daily["TSS"].ewm(span=config.ATL_TIME_CONSTANT, adjust=False).mean()
 df_daily["TSB"] = df_daily["CTL"] - df_daily["ATL"]

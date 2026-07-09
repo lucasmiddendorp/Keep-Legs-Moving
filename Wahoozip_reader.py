@@ -111,6 +111,8 @@ def parse_fit_file(fit_path: str) -> tuple[dict, pd.DataFrame | None]:
             "watts":       df_rec.get("power"),
         })
 
+        # --- Tracking ----
+        
     return activity, power_df
 
 

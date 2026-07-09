@@ -120,7 +120,9 @@ class Pacing:
         return wheel_power / drivetrain_efficiency
 
 
+
     def solve_speed_for_power(self, target_power, grade, mass, cda, crr, rho, drivetrain_efficiency, wind_speed, wind_from_deg, bearing, max_speed):
+        
         low = 0.1
         high = max_speed
         if self.wheel_power_required(high, grade, mass, cda, crr, rho, drivetrain_efficiency, wind_speed, wind_from_deg, bearing) <= target_power:
@@ -157,32 +159,32 @@ class Pacing:
         modeled = segments.copy()
 
         total_mass = (
-            settings["rider_weight"]
-            + settings["bike_weight"]
-            + settings["gear_weight"]
+            settings.rider_weight
+            + settings.bike_weight
+            + settings.gear_weight
         )
 
-        ftp = settings["ftp"]
-        target_np = ftp * settings["target_if"]
-        max_power = ftp * settings["max_ftp_fraction"]
-        min_power = ftp * settings["min_ftp_fraction"]
+        ftp = settings.ftp
+        target_np = ftp * settings.target_if
+        max_power = ftp * settings.max_ftp_fraction
+        min_power = ftp * settings.min_ftp_fraction
 
         # ---------- LOAD SCORE (vectorized prep, minimal change) ----------
         load_scores = []
 
-        ref_speed = settings["reference_speed_kmh"] / 3.6
+        ref_speed = settings.reference_speed_kmh / 3.6
 
         for _, segment in modeled.iterrows():
             reference_power = self.wheel_power_required(
                 ref_speed,
                 segment["grade"],
                 total_mass,
-                settings["cda"],
-                settings["crr"],
-                settings["air_density"],
-                settings["drivetrain_efficiency"],
-                settings["wind_speed"],
-                settings["wind_from_deg"],
+                settings.cda_normal,
+                settings.crr,
+                settings.air_density,
+                settings.drivetrain_efficiency,
+                settings.wind_speed,
+                settings.wind_from_deg,
                 segment["bearing"],
             )
             load_scores.append(max(0.0, reference_power))
@@ -200,12 +202,12 @@ class Pacing:
         else:
             load_scores = np.zeros(len(modeled))
 
-        power_shape = 1 + settings["pacing_aggression"] * np.clip(load_scores, -0.6, 1.2)
+        power_shape = 1 + settings.pacing_aggression * np.clip(load_scores, -0.6, 1.2)
 
         power_shape = np.clip(
             power_shape,
-            settings["min_ftp_fraction"] / settings["target_if"],
-            settings["max_ftp_fraction"] / settings["target_if"],
+            settings.min_ftp_fraction / settings.target_if,
+            settings.max_ftp_fraction / settings.target_if,
         )
 
         # ---------- PRECOMPUTE ARRAYS (DO ONCE) ----------
@@ -230,29 +232,44 @@ class Pacing:
 
             speeds = np.zeros(n)
 
-            coast_mask = grades < -settings.get("coast_grade_threshold", 0.03)
+            coast_mask = grades < -settings.coast_grade_threshold
 
             for i in range(n):
                 speed = self.solve_speed_for_power(
                     powers[i],
                     grades[i],
                     total_mass,
-                    settings["cda"],
-                    settings["crr"],
-                    settings["air_density"],
-                    settings["drivetrain_efficiency"],
-                    settings["wind_speed"],
-                    settings["wind_from_deg"],
+                    settings.cda_normal,
+                    settings.crr,
+                    settings.air_density,
+                    settings.drivetrain_efficiency,
+                    settings.wind_speed,
+                    settings.wind_from_deg,
                     bearings[i],
-                    settings["max_speed_kmh"] / 3.6,
+                    settings.max_speed_kmh / 3.6,
                 )
+
+                if speed * 3.6 > settings.aero_pos_speed:
+                    speed = self.solve_speed_for_power(
+                        powers[i],
+                        grades[i],
+                        total_mass,
+                        settings.cda_aero,
+                        settings.crr,
+                        settings.air_density,
+                        settings.drivetrain_efficiency,
+                        settings.wind_speed,
+                        settings.wind_from_deg,
+                        bearings[i],
+                        settings.max_speed_kmh / 3.6,
+                    )
 
                 if grades[i] < -0.02:
                     speed = min(speed, self.corner_speed_limit(radii[i]))
-                if grades[i] < -settings.get("coast_grade_threshold", 0.03):
+                if grades[i] < -settings.coast_grade_threshold:
                     speeds[i] = min(
                         self.corner_speed_limit(radii[i]),
-                        settings.get("coast_speed_cap", 60 / 3.6)  # optional cap
+                        settings.coast_speed_cap  # optional cap
                     )
                 powers[coast_mask] = 0.0
 
@@ -301,8 +318,8 @@ class Pacing:
 
     def wind_component_kmh(self, row, settings):
         # unchanged but this is cheap already
-        headwind_ms = settings["wind_speed"] * math.cos(
-            math.radians(settings["wind_from_deg"] - row["bearing"])
+        headwind_ms = settings.wind_speed * math.cos(
+            math.radians(settings.wind_from_deg - row.bearing)
         )
         return headwind_ms * 3.6
 

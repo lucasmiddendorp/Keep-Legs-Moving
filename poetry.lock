@@ -2,14 +2,14 @@
 
 [[package]]
 name = "altair"
-version = "6.2.1"
+version = "6.2.2"
 description = "Vega-Altair: A declarative statistical visualization library for Python."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "altair-6.2.1-py3-none-any.whl", hash = "sha256:bf2fee3733c3a31a588e45b857a2495a88d506970deb87f74e1613f0247446b1"},
-    {file = "altair-6.2.1.tar.gz", hash = "sha256:ca0298fa20b1a4fae22eff8847b95f74912bd90544013ad36af192119883ea64"},
+    {file = "altair-6.2.2-py3-none-any.whl", hash = "sha256:94014f8ad8617c3cb163d1137359cd6db5ba134b9b46d93cfd8b609fd245a583"},
+    {file = "altair-6.2.2.tar.gz", hash = "sha256:a1ff9d9cfe81c75414641826312b9471780e19d39293ba0b012933f6b6cba0fe"},
 ]
 
 [package.dependencies]
@@ -39,14 +39,14 @@ files = [
 
 [[package]]
 name = "anyio"
-version = "4.14.0"
+version = "4.14.1"
 description = "High-level concurrency and networking framework on top of asyncio or Trio"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "anyio-4.14.0-py3-none-any.whl", hash = "sha256:dd9b7a2a9799ed6552fde617b2c5df02b7fdd7d88392fc48101e51bae46164d9"},
-    {file = "anyio-4.14.0.tar.gz", hash = "sha256:b47c1f9ccf73e67021df785332508f99379c68fa7d0684e8e3492cb1d4b23f89"},
+    {file = "anyio-4.14.1-py3-none-any.whl", hash = "sha256:4e5533c5b8ff0a24f5d7a176cbe6877129cd183893f66b537f8f227d10527d72"},
+    {file = "anyio-4.14.1.tar.gz", hash = "sha256:8d648a3544c1a700e3ff78615cd679e4c5c3f149904287e73687b2596963629e"},
 ]
 
 [package.dependencies]
@@ -265,14 +265,30 @@ files = [
 
 [[package]]
 name = "click"
-version = "7.1.2"
+version = "8.4.2"
 description = "Composable command line interface toolkit"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
-    {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
+    {file = "click-8.4.2-py3-none-any.whl", hash = "sha256:e6f9f66136c816745b9d65817da91d61d957fb16e02e4dcd0552553c5a197b76"},
+    {file = "click-8.4.2.tar.gz", hash = "sha256:9a6cea6e60b17ebe0a44c5cc636d94f09bd66142c1cd7d8b4cd731c4917a15f6"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[[package]]
+name = "colorama"
+version = "0.4.6"
+description = "Cross-platform colored terminal text."
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
+groups = ["main"]
+markers = "platform_system == \"Windows\""
+files = [
+    {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
+    {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
 
 [[package]]
@@ -536,6 +552,18 @@ gitdb = ">=4.0.1,<5"
 [package.extras]
 doc = ["sphinx (>=7.4.7,<8)", "sphinx-autodoc-typehints", "sphinx_rtd_theme"]
 test = ["coverage[toml]", "ddt (>=1.1.1,!=1.4.3)", "mock ; python_version < \"3.8\"", "mypy (==1.18.2) ; python_version >= \"3.9\"", "pre-commit", "pytest (>=7.3.1)", "pytest-cov", "pytest-instafail", "pytest-mock", "pytest-sugar", "typing-extensions ; python_version < \"3.11\""]
+
+[[package]]
+name = "gpxpy"
+version = "1.6.2"
+description = "GPX file parser and GPS track manipulation library"
+optional = false
+python-versions = ">=3.6"
+groups = ["main"]
+files = [
+    {file = "gpxpy-1.6.2-py3-none-any.whl", hash = "sha256:289bc2d80f116c988d0a1e763fda22838f83005573ece2bbc6521817b26fb40a"},
+    {file = "gpxpy-1.6.2.tar.gz", hash = "sha256:a72c484b97ec42b80834353b029cc8ee1b79f0ffca1179b2210bb3baf26c01ae"},
+]
 
 [[package]]
 name = "h11"
@@ -1646,18 +1674,6 @@ files = [
 ]
 
 [[package]]
-name = "pytz"
-version = "2026.2"
-description = "World timezone definitions, modern and historical"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "pytz-2026.2-py2.py3-none-any.whl", hash = "sha256:04156e608bee23d3792fd45c94ae47fae1036688e75032eea2e3bf0323d1f126"},
-    {file = "pytz-2026.2.tar.gz", hash = "sha256:0e60b47b29f21574376f218fe21abc009894a2321ea16c6754f3cad6eb7cdd6a"},
-]
-
-[[package]]
 name = "referencing"
 version = "0.37.0"
 description = "JSON Referencing + Python"
@@ -1881,28 +1897,27 @@ full = ["httpx (>=0.27.0,<0.29.0)", "httpx2 (>=2.0.0)", "itsdangerous", "jinja2"
 
 [[package]]
 name = "stravalib"
-version = "2.0"
+version = "2.5.0"
 description = "A Python package that makes it easy to access and download data from the Strava V3 REST API."
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.11"
 groups = ["main"]
 files = [
-    {file = "stravalib-2.0-py3-none-any.whl", hash = "sha256:ef940d34a5286b6d06fad3b5af9f3d1bdb69f3557ed67bb8246e76affc4b116e"},
-    {file = "stravalib-2.0.tar.gz", hash = "sha256:74c4ca6d9f7ea469074b1c40bf7e1b487f9e4298af04c69da22142adcb1a783d"},
+    {file = "stravalib-2.5.0-py3-none-any.whl", hash = "sha256:723422a3f06fd7f213b9b4b813f730a481fd0869b5b5e6a350f4823a1063d092"},
+    {file = "stravalib-2.5.0.tar.gz", hash = "sha256:d97a845a30c861bc65a854423b201497f0ea56ba5a763294b8d886269bbe6fe3"},
 ]
 
 [package.dependencies]
 arrow = "*"
 pint = "*"
 pydantic = ">=2.0"
-pytz = "*"
 requests = "*"
 
 [package.extras]
 build = ["build"]
-docs = ["autodoc-pydantic", "matplotlib", "myst-nb", "pydata-sphinx-theme", "sphinx", "sphinx-autobuild", "sphinx-copybutton", "sphinx-design", "sphinx-inline-tabs", "sphinx-remove-toctrees", "sphinxext-opengraph"]
-lint = ["mypy", "pre-commit", "ruff", "types-Flask", "types-pytz", "types-requests"]
-tests = ["pytest", "pytest-cov", "responses"]
+docs = ["autodoc_pydantic", "matplotlib", "myst-nb", "pydata-sphinx-theme", "sphinx", "sphinx-autobuild", "sphinx-inline-tabs", "sphinx_copybutton", "sphinx_design", "sphinx_remove_toctrees", "sphinxcontrib-mermaid", "sphinxext-opengraph"]
+lint = ["mypy", "pre-commit", "ruff", "types-Flask", "types-python-dateutil", "types-requests"]
+tests = ["pytest", "pytest-cov", "pytest-mock", "pytest-xdist", "responses"]
 
 [[package]]
 name = "streamlit"
@@ -2173,4 +2188,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "d091a35d2c6a25a804758b53ca2519acb30632f0ba52a51880c82fb633b43f35"
+content-hash = "5603396822f667f2e39fb9c218194203985f313fa33d625cda0bbcf9dfd523fa"

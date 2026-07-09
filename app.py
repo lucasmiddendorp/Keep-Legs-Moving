@@ -11,6 +11,8 @@ import plotly.graph_objects as go
 from datetime import date
 
 from pacing import Pacing
+from get_pacing_settings import PacingSettings
+from compare_pacing import PacingComparison
 
 st.set_page_config(layout="wide")
 
@@ -64,53 +66,14 @@ def render_course_pacing_page():
     st.sidebar.header("Smoothing")
     smooth_km = st.sidebar.slider(
         "Rolling average window (km)",
-        min_value=0.5,
+        min_value=0.1,
         max_value=10.0,
         value=2.0,
-        step=0.5,
+        step=0.1,
     )
 
-    st.sidebar.header("Rider And Bike")
-    rider_weight = st.sidebar.number_input("Rider weight (kg)", min_value=30.0, max_value=130.0, value=75.0, step=0.5)
-    bike_weight = st.sidebar.number_input("Bike weight (kg)", min_value=4.0, max_value=25.0, value=8.0, step=0.5)
-    gear_weight = st.sidebar.number_input("Bottles and gear (kg)", min_value=0.0, max_value=20.0, value=2.0, step=0.5)
 
-    st.sidebar.header("NP Pacing Target")
-    pacing_ftp = st.sidebar.number_input("FTP (W)", min_value=100, max_value=600, value=int(config.FTP), step=5)
-    target_if_percent = st.sidebar.number_input("Target IF (% FTP)", min_value=40, max_value=120, value=82, step=1)
-    max_ftp_percent = st.sidebar.number_input("Max short effort (% FTP)", min_value=target_if_percent, max_value=180, value=115, step=1)
-    min_ftp_percent = st.sidebar.number_input("Minimum pedaling (% FTP)", min_value=0, max_value=target_if_percent, value=0, step=1)
-    pacing_aggression = st.sidebar.slider("Pacing variability", min_value=0.0, max_value=1.0, value=0.45, step=0.05)
-    min_section_km = st.sidebar.number_input("Minimum section length (km)", min_value=0.2, max_value=10.0, value=1.0, step=0.1)
-    max_speed_kmh = st.sidebar.number_input("Max descending speed (km/h)", min_value=20.0, max_value=120.0, value=75.0, step=1.0)
-
-    st.sidebar.header("Model Assumptions")
-    cda = st.sidebar.number_input("CdA (m2)", min_value=0.15, max_value=0.70, value=0.32, step=0.01)
-    crr = st.sidebar.number_input("Rolling resistance Crr", min_value=0.0010, max_value=0.0200, value=0.0045, step=0.0005, format="%.4f")
-    drivetrain_efficiency = st.sidebar.number_input("Drivetrain efficiency", min_value=0.85, max_value=1.00, value=0.975, step=0.005)
-    air_density = st.sidebar.number_input("Air density (kg/m3)", min_value=0.90, max_value=1.35, value=1.18, step=0.01)
-    wind_speed_kmh = st.sidebar.number_input("Wind speed (km/h)", min_value=0.0, max_value=80.0, value=0.0, step=1.0)
-    wind_from_deg = st.sidebar.number_input("Wind from direction (degrees)", min_value=0, max_value=359, value=0, step=5)
-
-    settings = {
-        "rider_weight": rider_weight,
-        "bike_weight": bike_weight,
-        "gear_weight": gear_weight,
-        "ftp": pacing_ftp,
-        "target_if": target_if_percent / 100,
-        "max_ftp_fraction": max_ftp_percent / 100,
-        "min_ftp_fraction": min_ftp_percent / 100,
-        "pacing_aggression": pacing_aggression,
-        "reference_speed_kmh": 35,
-        "max_speed_kmh": max_speed_kmh,
-        "cda": cda,
-        "crr": crr,
-        "drivetrain_efficiency": drivetrain_efficiency,
-        "air_density": air_density,
-        "wind_speed": wind_speed_kmh / 3.6,
-        "wind_from_deg": wind_from_deg,
-    }
-
+    settings = PacingSettings.from_sidebar()
     pacing = Pacing(settings)
     if uploaded_file is None:
         st.info("Upload a GPX route with elevation data to estimate pacing and course time.")
@@ -245,26 +208,7 @@ def render_course_pacing_page():
     st.plotly_chart(fig, width="stretch")
 
     st.subheader("Assumptions")
-    assumptions = pd.DataFrame(
-        [
-            ("Total system mass", f"{rider_weight + bike_weight + gear_weight:.1f} kg"),
-            ("Rolling resistance", f"Crr {crr:.4f}"),
-            ("Aerodynamics", f"CdA {cda:.2f} m2"),
-            ("Drivetrain efficiency", f"{drivetrain_efficiency * 100:.1f}%"),
-            ("Air density", f"{air_density:.2f} kg/m3"),
-            ("Wind vector", f"{wind_speed_kmh:.1f} km/h from {wind_from_deg} degrees"),
-            ("FTP", f"{pacing_ftp:.0f} W"),
-            ("Target Normalized Power", f"{target_np:.0f} W ({target_if_percent:.0f}% FTP)"),
-            ("Short-effort cap", f"{pacing_ftp * max_ftp_percent / 100:.0f} W ({max_ftp_percent:.0f}% FTP)"),
-            ("Minimum pedaling floor", f"{pacing_ftp * min_ftp_percent / 100:.0f} W ({min_ftp_percent:.0f}% FTP)"),
-            ("Pacing variability", f"{pacing_aggression:.2f}; higher values bias more power toward slower, higher-resistance segments"),
-            ("Speed cap", f"{max_speed_kmh:.1f} km/h"),
-            ("NP model", "Power is shaped by route resistance, capped by max FTP %, then scaled until estimated NP matches the target IF."),
-            ("Model scope", "Steady-state physics per GPX segment; no braking model, cornering limits, traffic, road surface changes, altitude-varying air density, W prime, stochastic gusts, or formal Best Bike Split optimization."),
-        ],
-        columns=["Assumption", "Value"],
-    )
-    st.dataframe(assumptions, width="stretch", hide_index=True)
+    st.dataframe(settings.assumptions_dataframe(), width="stretch", hide_index=True)
 
     st.subheader("Course Power Cheat Sheet")
     st.dataframe(
@@ -274,9 +218,9 @@ def render_course_pacing_page():
     )
 
     st.subheader("Course Sections")
-    section_summary = pacing.course_section_summary(modeled, min_distance_km=min_section_km)
+    section_summary = pacing.course_section_summary(modeled, min_distance_km=PacingSettings.MIN_SECTION_DISTANCE_KM)
     if section_summary.empty:
-        st.info(f"No climb, descent, or flat/rolling sections longer than {min_section_km:.1f} km.")
+        st.info(f"No climb, descent, or flat/rolling sections longer than {PacingSettings.MIN_SECTION_DISTANCE_KM:.1f} km.")
     else:
         st.dataframe(section_summary, width="stretch", hide_index=True)
 
@@ -284,7 +228,84 @@ def render_course_pacing_page():
     print("Time weighted speed:",
       modeled["distance_m"].sum() /
       modeled["segment_time_s"].sum() * 3.6)
-page = st.sidebar.radio("Page", ["Training Dashboard", "Course Pacing"])
+    
+
+def render_pacing_comparison_page():
+    st.title("🏁 Pacing Comparison Tool")
+
+    settings = PacingSettings.from_sidebar()
+    pc = PacingComparison(settings)
+
+    # =========================================================
+    # FILE UPLOAD
+    # =========================================================
+    uploaded_file = st.file_uploader("Upload FIT file", type=["fit"])
+
+    if uploaded_file is None:
+        st.info("Upload a FIT file to generate pacing analysis.")
+        return
+
+    # =========================================================
+    # RUN PIPELINE
+    # =========================================================
+    with st.spinner("Processing route and running pacing model..."):
+        result = pc.run_all(uploaded_file)
+
+    summary = result["summary"]
+    modeled = result["modeled"]
+
+    # =========================================================
+    # SUMMARY METRICS
+    # =========================================================
+    st.subheader("📊 Summary")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric("Distance (km)", summary["distance_km"])
+    col2.metric("Time (min)", summary["time_min"])
+    col3.metric("Avg Power (W)", summary["avg_power_w"])
+    col4.metric("NP (W)", round(summary["np_w"], 1))
+
+
+    # =========================================================
+    # PLOTS
+    # =========================================================
+    st.subheader("📈 Analysis")
+
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "Power", "Speed", "Elevation", "Route"
+    ])
+
+    with tab1:
+        pc.plot_power(modeled)
+
+    with tab2:
+        pc.plot_speed(modeled)
+
+    with tab3:
+        pc.plot_elevation(modeled)
+
+    with tab4:
+        pc.plot_route(result["points"])
+
+    # =========================================================
+    # CHEAT SHEET (optional but very useful)
+    # =========================================================
+    st.subheader("🧠 Pacing Cheat Sheet")
+
+    cheat = pc.pacing.pacing_cheat_sheet(modeled, settings)
+    st.dataframe(cheat, use_container_width=True)
+
+    # =========================================================
+    # SECTION BREAKDOWN
+    # =========================================================
+    st.subheader("🗺 Course Sections")
+
+    sections = pc.pacing.course_section_summary(modeled)
+    st.dataframe(sections, use_container_width=True)
+
+    
+page = st.sidebar.radio("Page", ["Training Dashboard", "Course Pacing", "Pacing Comparison"])
 
 st.markdown("""
 <style>
@@ -298,6 +319,10 @@ st.markdown("""
 
 if page == "Course Pacing":
     render_course_pacing_page()
+    st.stop()
+
+if page == "Pacing Comparison":
+    render_pacing_comparison_page()
     st.stop()
 
 st.title("Cycling Training Dashboard")
@@ -341,7 +366,7 @@ ATL_TC = config.ATL_TIME_CONSTANT
 
 
 # LOAD DATA
-df = pd.read_csv("activities_cache.csv")
+df = pd.read_csv("activities_cache_lucas.csv")
 df["date"] = pd.to_datetime(df["date"], format="mixed", errors="coerce")
 df = df.dropna(subset=["date"])
 
@@ -730,7 +755,7 @@ DURATIONS = [
 duration_labels = [
     "5s", "15s", "30s", "1m", "2m", "5m", "10m", "20m", "30m", "1h"
 ]
-POWER_STREAMS_PATH = "power_streams.parquet"
+POWER_STREAMS_PATH = "power_streams_lucas.parquet"
 
 def max_avg_power(watts, duration):
     window = int(duration)
@@ -880,3 +905,5 @@ if os.path.exists(POWER_STREAMS_PATH):
                     st.info("No activity found for that duration.")
 else:
     st.info("No power stream data file found.")
+
+
