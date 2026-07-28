@@ -26,17 +26,17 @@ def render():
 
     uploaded_file = st.file_uploader("Import GPX file", type=["gpx"])
 
-    st.sidebar.header("Smoothing")
-    smooth_km = st.sidebar.slider(
-        "Rolling average window (km)",
-        min_value=0.1,
-        max_value=10.0,
-        value=2.0,
-        step=0.1,
-    )
+    with st.expander("⚙️ Pacing Settings", expanded=False):
+        smooth_km = st.slider(
+            "Rolling average window (km)",
+            min_value=0.1,
+            max_value=10.0,
+            value=2.0,
+            step=0.1,
+        )
 
-
-    settings = PacingSettings.from_sidebar()
+    with st.expander("⚙️ Pacing Settings", expanded=False):
+        settings = PacingSettings.from_ui()    
     pacing = Pacing(settings)
     if uploaded_file is None:
         st.info("Upload a GPX route with elevation data to estimate pacing and course time.")

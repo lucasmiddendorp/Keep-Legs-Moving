@@ -23,17 +23,18 @@ def render():
 
     apply_global_style()
 
-    st.title("Cycling Training Dashboard")
-
+    st.header("Dashboard")
 
     # -----------------------------------------------------
     # DATA SYNC
     # -----------------------------------------------------
 
-    st.sidebar.header("Data Sync")
+    col1, col2 = st.columns([1,3])
 
-    red_button()
-    if st.sidebar.button("Update Strava Data", type="primary",):
+    with col1:
+        red_button()
+
+    if st.button("Update Strava Data",type="primary"):
         username = st.session_state["username"]
         strava = get_user_strava(username)
 
@@ -108,20 +109,18 @@ def render():
 
     df["TSS"] = (df["moving_time"]* df["weighted_average_watts"]* df["IF"]/ (ftp * 3600)* 100)
 
-    # DATE RANGE SELECTOR
-    st.sidebar.header("Date Range")
+    with st.expander("Filters"):
 
-    start_date = st.sidebar.date_input(
-        "Start date",
-        daily.index.min()
-    )
+        col1, col2, col3 = st.columns(3)
 
-    end_date = st.sidebar.date_input(
-        "End date",
-        value=date.today(),
-    )
+        with col1:
+            start_date = st.date_input("Start date",date.today() - pd.Timedelta(days=60))
 
-    rolling_days = st.sidebar.slider("Rolling Average", min_value=1, max_value=28, value=1, step=1, format="%d days")
+        with col2:
+            end_date = st.date_input("End date",date.today())
+
+        with col3:
+            rolling_days = st.slider("Rolling Average",1,28,5)
     filtered = daily.loc[pd.Timestamp(start_date):pd.Timestamp(end_date)]
 
     smoothed = filtered.copy()

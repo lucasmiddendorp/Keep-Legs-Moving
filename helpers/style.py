@@ -2,11 +2,10 @@ import streamlit as st
 
 
 def red_button():
-
     st.markdown(
         """
         <style>
-        div.stButton > button:first-child {
+        div[data-testid="stSidebar"] div.stButton > button {
             background-color: #d9534f;
             color: white;
             font-weight: bold;
@@ -15,7 +14,7 @@ def red_button():
             height: 3em;
         }
 
-        div.stButton > button:first-child:hover {
+        div[data-testid="stSidebar"] div.stButton > button:hover {
             background-color: #c9302c;
             color: white;
         }
@@ -23,7 +22,6 @@ def red_button():
         """,
         unsafe_allow_html=True
     )
-
 
 def apply_global_style():
 

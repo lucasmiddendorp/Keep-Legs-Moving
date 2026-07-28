@@ -18,7 +18,8 @@ from helpers.compare_pacing import PacingComparison
 def render():
     st.title("🏁 Pacing Comparison Tool")
 
-    settings = PacingSettings.from_sidebar()
+    with st.expander("⚙️ Pacing Settings", expanded=False):
+        settings = PacingSettings.from_ui()
     pc = PacingComparison(settings)
 
     # =========================================================
