@@ -17,6 +17,8 @@ plotly = ">=6.8.0"
 matplotlib = ">=3.10"
 fitparse = "^1.2.0"
 gpxpy = "^1.6.2"
+pyyaml = "^6.0.3"
+streamlit-authenticator = "^0.4.2"
 
 [build-system]
 requires = ["poetry-core"]

@@ -1,0 +1,13 @@
+# Secrets
+Strava/auth_config.yaml
+auth_config.yaml
+
+# Data/cache files
+data/
+*.csv
+*.parquet
+
+# Python
+__pycache__/
+*.pyc
+.venv/

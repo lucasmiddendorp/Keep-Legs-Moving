@@ -1,6 +1,6 @@
 import os
 from datetime import date
-
+from pathlib import Path
 import pandas as pd
 
 
@@ -14,9 +14,12 @@ class ActivityCache:
     power_cache_file : path to the power-stream parquet (e.g. "power_streams_lucas.parquet")
     """
 
-    def __init__(self, cache_file: str, power_cache_file: str) -> None:
-        self.cache_file = cache_file
-        self.power_cache_file = power_cache_file
+    def __init__(self, username: str) -> None:
+        folder = Path("data") / username
+        folder.mkdir(parents=True, exist_ok=True)
+
+        self.cache_file = folder / "activities_cache.csv"
+        self.power_cache_file = folder / "power_streams.parquet"
 
     # ------------------------------------------------------------------
     # Date helpers

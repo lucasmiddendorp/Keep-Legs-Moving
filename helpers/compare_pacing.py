@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-from Wahoozip_reader import parse_fit_file, wahoo_activity_id
-from pacing import Pacing
+from helpers.Wahoozip_reader import parse_fit_file, wahoo_activity_id
+from helpers.pacing import Pacing
 
 
 class PacingComparison:

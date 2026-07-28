@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import streamlit as st
-import config
+import Strava.strava_config as strava_config
 import pandas as pd
 
 
@@ -46,7 +46,7 @@ class PacingSettings:
         gear_weight = st.sidebar.number_input("Bottles and gear (kg)", min_value=0.0, max_value=20.0, value=2.0, step=0.5)
 
         st.sidebar.header("NP Pacing Target")
-        pacing_ftp = st.sidebar.number_input("FTP (W)", min_value=100, max_value=600, value=int(config.FTP), step=5)
+        pacing_ftp = st.sidebar.number_input("FTP (W)", min_value=100, max_value=600, value=int(strava_config.FTP), step=5)
         target_if_percent = st.sidebar.number_input("Target IF (% FTP)", min_value=40, max_value=120, value=82, step=1)
         max_ftp_percent = st.sidebar.number_input("Max short effort (% FTP)", min_value=target_if_percent, max_value=180, value=115, step=1)
         min_ftp_percent = st.sidebar.number_input("Minimum pedaling (% FTP)", min_value=0, max_value=target_if_percent, value=0, step=1)

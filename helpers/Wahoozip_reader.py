@@ -6,7 +6,7 @@ import zipfile
 import pandas as pd
 from fitparse import FitFile
 
-from Activities_cache import ActivityCache
+from helpers.Activities_cache import ActivityCache
 
 CACHE_FILE = "activities_cache_lucas.csv"
 POWER_CACHE_FILE = "power_streams_lucas.parquet"
