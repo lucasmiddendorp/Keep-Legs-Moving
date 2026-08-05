@@ -1,12 +1,7 @@
 import streamlit as st
 
-from pages.dashboard import render as render_dashboard
-from pages.course_pacing import render as render_course_pacing
-from pages.pacing_comparison import render as render_pacing_strategy
-from pages.training_plan import render as render_training_plan
-from pages.settings import render as render_settings
-
 from helpers.navbar import render_navbar
+from helpers.topbar import render_topbar
 
 
 st.set_page_config(
@@ -16,28 +11,82 @@ st.set_page_config(
 )
 
 
-if "username" not in st.session_state:
-    st.switch_page("pages/login.py")
-    st.stop()
+# -----------------------------
+# Define all pages
+# -----------------------------
+
+login = st.Page(
+    "pages/login.py",
+    title="Login",
+    icon="🔑"
+)
+
+dashboard = st.Page(
+    "pages/dashboard.py",
+    title="Dashboard",
+    icon="🏠"
+)
+
+course_pacing = st.Page(
+    "pages/course_pacing.py",
+    title="Course Pacing",
+    icon="📊"
+)
+
+pacing_comparison = st.Page(
+    "pages/pacing_comparison.py",
+    title="Pacing Comparison",
+    icon="🗺️"
+)
+
+training = st.Page(
+    "pages/training_plan.py",
+    title="Training Plan",
+    icon="📅"
+)
+
+settings = st.Page(
+    "pages/settings.py",
+    title="Settings",
+    icon="⚙️"
+)
+
+profile = st.Page(
+    "pages/profile.py",
+    title="Profile",
+    icon="👤"
+)
+
+settings_availability = st.Page(
+    "pages/settings_availability.py",
+    title="Weekly Availability")
 
 
-render_navbar()
+# -----------------------------
+# Authentication routing
+# -----------------------------
+
+if not st.session_state.get("authentication_status"):
+
+    pg = st.navigation(
+        [login]
+    )
+
+else:
+    render_navbar()
+    render_topbar()
+
+    pg = st.navigation(
+        [
+            dashboard,
+            course_pacing,
+            pacing_comparison,
+            training,
+            settings,
+            profile,
+            settings_availability
+        ]
+    )
 
 
-page = st.session_state.get("page", "Dashboard")
-
-
-if page == "Dashboard":
-    render_dashboard()
-
-elif page == "Course Pacing":
-    render_course_pacing()
-
-elif page == "Pacing Comparison":
-    render_pacing_strategy()
-
-elif page == "Training Plan":
-    render_training_plan()
-
-elif page == "Settings":
-    render_settings()
+pg.run()

@@ -1,33 +1,19 @@
 import streamlit as st
 
 
-import streamlit as st
-
-
 def render_logo():
 
     st.markdown(
         """
         <style>
 
-        .brand-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 12px;
+        .sidebar-logo {
+            text-align:center;
+            margin-bottom:35px;
         }
 
-        .brand-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #1f2937;
-            letter-spacing: -1px;
-        }
-
-        .brand-subtitle {
-            font-size: 14px;
-            color: #6b7280;
-            margin-top: -5px;
+        .sidebar-logo img {
+            border-radius:14px;
         }
 
         </style>
@@ -35,88 +21,168 @@ def render_logo():
         unsafe_allow_html=True
     )
 
-    col1, col2 = st.columns([0.08, 0.92])
+    st.markdown(
+        """
+        <div class="sidebar-logo">
+            <img src="data:image/png;base64,{}" width="55">
+        </div>
+        """.format(
+            get_logo_base64()
+        ),
+        unsafe_allow_html=True
+    )
 
-    with col1:
-        st.markdown("<div style='padding-top:10px'>", unsafe_allow_html=True)
-        st.image("logo.png", width=55)
-        st.markdown("</div>", unsafe_allow_html=True)
-    with col2:
-        st.markdown(
-            """
-            <div class="brand-title">
-                Keep Legs Moving
-            </div>
-            <div class="brand-subtitle">
-                Cycling Performance Analytics
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+
+def get_logo_base64():
+
+    import base64
+
+    with open("logo.png", "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+
 
 def render_navbar():
-
-    render_logo()
 
     st.markdown(
         """
         <style>
 
-        .nav-bar {
-            background-color: #e5e7eb;
-            padding: 8px 10px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+
+        /* Make sidebar narrow */
+
+        section[data-testid="stSidebar"] {
+
+            width:90px !important;
+
+            min-width:90px !important;
+
+            background:#ffffff;
+
+            border-right:1px solid #e5e7eb;
+
         }
 
-        div[data-testid="stHorizontalBlock"] {
-            gap: 0.25rem;
+
+        section[data-testid="stSidebar"] > div {
+
+            padding:20px 10px;
+
         }
 
-        div[data-testid="stHorizontalBlock"] div.stButton > button {
-            width: 100%;
-            background-color: white;
-            color: #374151;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            height: 2.8em;
+
+
+        /* Hide button text */
+
+        section[data-testid="stSidebar"] button {
+
+            height:45px;
+
+            width:55px;
+
+            border-radius:14px;
+
+            border:none;
+
+            background:white;
+
+            font-size:0;
+
+            position:relative;
+
         }
 
-        div[data-testid="stHorizontalBlock"] div.stButton > button:hover {
-            background-color: #f9fafb;
-            color: #fc4c02;
-            border-color: #fc4c02;
+
+        /* Icons */
+
+        section[data-testid="stSidebar"] button::first-letter {
+
+            font-size:22px;
+
         }
+
+
+
+        /* Hover */
+
+        section[data-testid="stSidebar"] button:hover {
+
+            background:#eff6ff;
+
+            transform:translateX(3px);
+
+        }
+
+
+
+        /* Tooltip */
+
+        section[data-testid="stSidebar"] button:hover::after {
+
+
+            content:attr(data-testid);
+
+            position:absolute;
+
+            left:65px;
+
+            top:50%;
+
+            transform:translateY(-50%);
+
+
+            background:#0f172a;
+
+            color:white;
+
+
+            padding:8px 12px;
+
+            border-radius:8px;
+
+
+            font-size:14px;
+
+            white-space:nowrap;
+
+
+            z-index:9999;
+
+        }
+
 
         </style>
+
         """,
         unsafe_allow_html=True
     )
 
-    st.markdown('<div class="nav-bar">', unsafe_allow_html=True)
 
-    col1, col2, col3, col4, col5 = st.columns([1,1,1,1,1])
+    with st.sidebar:
 
-    with col1:
-        if st.button("Dashboard"):
-            st.session_state.page = "Dashboard"
 
-    with col2:
-        if st.button("Course Pacing"):
-            st.session_state.page = "Course Pacing"
+        render_logo()
 
-    with col3:
-        if st.button("Pacing Comparison"):
-            st.session_state.page = "Pacing Comparison"
 
-    with col4:
-        if st.button("Training Plan"):
-            st.session_state.page = "Training Plan"
+        pages = [
 
-    with col5:
-        if st.button("Settings ⚙️"):
-            st.session_state.page = "Settings"
+            ("🏠", "Dashboard"),
 
-    st.markdown("</div>", unsafe_allow_html=True)
+            ("📊", "Course Pacing"),
+
+            ("🗺️", "Pacing Comparison"),
+
+            ("📅", "Training Plan"),
+
+            # ("🎯", "Goals"),
+
+            ("⚙️", "Settings"),
+
+        ]
+
+
+        for icon, page in pages:
+            if st.button(icon, key=f"nav_{page}"):
+                st.switch_page(f"pages/{page.lower().replace(' ', '_')}.py")
+
+

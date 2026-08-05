@@ -2,6 +2,23 @@ from dataclasses import dataclass
 import streamlit as st
 import Strava.strava_config as strava_config
 import pandas as pd
+import yaml
+from yaml.loader import SafeLoader
+
+
+def get_user_settings(username):
+
+    with open("auth_config.yaml") as f:
+        config = yaml.load(f, Loader=SafeLoader)
+
+    return config["credentials"]["usernames"].get(username, {})
+
+
+def get_user_ftp(username):
+
+    settings = get_user_settings(username)
+
+    return settings.get("ftp", 0)
 
 
 @dataclass
@@ -68,13 +85,10 @@ class PacingSettings:
 
         st.subheader("NP Pacing Target")
 
-        pacing_ftp = st.number_input(
-            "FTP (W)",
-            min_value=100,
-            max_value=600,
-            value=int(strava_config.FTP),
-            step=5
-        )
+
+        username = st.session_state.username
+
+        pacing_ftp = get_user_ftp(username)
 
         target_if_percent = st.number_input(
             "Target IF (% FTP)",

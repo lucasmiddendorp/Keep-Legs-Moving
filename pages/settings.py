@@ -1,96 +1,235 @@
 import streamlit as st
+import pandas as pd
+
+import pages.settings_availability as availability_page
+import pages.settings_exceptions as exceptions_page
+from Strava.strava_user import get_user_settings, save_user_settings, load_config
+from training_planner.goals import (
+    TRAINING_GOALS,
+    get_goal_description
+)
 
 from Strava.strava_user import (
-    get_user_settings,
-    save_user_settings
+    get_training_goal,
+    save_training_goal
 )
 
 
-def render():
-
-    st.title("⚙️ Settings")
+st.title("⚙️ Settings")
 
 
-    username = st.session_state["username"]
+username = st.session_state["username"]
 
 
-    settings = get_user_settings(
+settings = get_user_settings(
+    username
+)
+
+
+if "edit_settings" not in st.session_state:
+    st.session_state.edit_settings = False
+
+
+
+
+tabs = st.tabs([
+    "Athlete Profile",
+    "Weekly Availability",
+    "Exceptions",
+    "Training Goal"
+])
+
+with tabs[0]:
+
+    st.subheader("Athlete settings")
+
+
+    athlete_levels = {
+        "Beginner": 10,
+        "Amateur": 8,
+        "Advanced": 6,
+        "Professional": 5,
+    }
+
+    current_level = settings.get("athlete_level", "Amateur")
+
+    athlete_level = st.select_slider(
+        "Athlete Level",
+        options=list(athlete_levels.keys()),
+        value=current_level,
+    )
+
+    st.caption(
+        f"Fatigue recovery time constant: {athlete_levels[athlete_level]} days"
+    )
+
+    if st.button("Save Athlete Level"):
+
+        save_user_settings(
+            username,
+            athlete_level=athlete_level,
+            atl_tc=athlete_levels[athlete_level])
+
+        st.success("Athlete level saved")
+        st.rerun()
+
+    st.divider()
+
+    st.subheader("Threshold settings")
+
+    ftp = st.number_input(
+        "Cycling FTP (W)",
+        min_value=50,
+        max_value=700,
+        value=int(settings.get("ftp", 200)),
+        step=5,
+    )
+
+    st.write("**Running Threshold Pace (min/km)**")
+
+    pace = float(settings.get("threshold_pace", 5.0))
+
+    pace_minutes = int(pace)
+    pace_seconds = int(round((pace - pace_minutes) * 60))
+
+    if pace_seconds == 60:
+        pace_minutes += 1
+        pace_seconds = 0
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        pace_min = st.number_input(
+            "Minutes",
+            min_value=2,
+            max_value=10,
+            value=pace_minutes,
+            step=1,
+        )
+
+    with col2:
+        pace_sec = st.number_input(
+            "Seconds",
+            min_value=0,
+            max_value=59,
+            value=pace_seconds,
+            step=1,
+        )
+
+    threshold_pace = pace_min + pace_sec / 60
+
+    threshold_hr = st.number_input(
+        "Threshold Heart Rate (bpm)",
+        min_value=50,
+        max_value=220,
+        value=int(settings.get("threshold_hr", 150)),
+        step=1,
+    )
+
+    if st.button("Save Threshold Settings", type="primary"):
+
+        save_user_settings(
+            username,
+            ftp=ftp,
+            threshold_hr=threshold_hr,
+            threshold_pace=threshold_pace,
+        )
+
+
+
+        st.session_state["thresholds_saved"] = True
+        st.rerun()
+
+    if st.session_state.pop("thresholds_saved", False):
+        st.success("✅ Threshold settings saved!")
+
+    st.subheader("Mass settings")
+
+
+    weight = st.number_input(
+        "Body mass (kg)",
+        min_value=30.0,
+        max_value=150.0,
+        value=float(settings.get("weight", 70)),
+        step=0.5
+    )
+
+
+    if st.button(
+        "Save mass settings",
+        type="primary"
+    ):
+
+        save_user_settings(
+            username,
+            weight=weight
+        )
+
+        st.success(
+            "Mass settings saved"
+        )
+
+        st.rerun()
+
+
+with tabs[1]:
+
+    st.subheader(
+        "Training Goal"
+    )
+
+    current_goal = get_training_goal(
         username
     )
 
 
-    if "edit_settings" not in st.session_state:
-        st.session_state.edit_settings = False
+    goal_names = list(
+        TRAINING_GOALS.keys()
+    )
 
 
+    selected_goal = st.selectbox(
 
-    # Display mode
-    if not st.session_state.edit_settings:
+        "Goal",
 
-        col1, col2 = st.columns(2)
+        goal_names,
 
-        with col1:
-            st.metric(
-                "FTP",
-                f"{settings['ftp']} W"
+        index=(
+            goal_names.index(
+                current_goal["name"]
             )
-
-        with col2:
-            st.metric(
-                "Weight",
-                f"{settings['weight']} kg"
-            )
-
-
-        if st.button("✏️ Edit settings"):
-
-            st.session_state.edit_settings = True
-
-            st.rerun()
-
-
-
-    # Edit mode
-    else:
-
-        ftp = st.number_input(
-            "FTP",
-            value=settings["ftp"]
+            if current_goal["name"] in goal_names
+            else 0
         )
 
-        weight = st.number_input(
-            "Weight (kg)",
-            value=settings["weight"]
+    )
+
+
+    st.info(
+        get_goal_description(
+            selected_goal
+        )
+    )
+
+
+    goal_date = st.date_input(
+        "Goal date"
+    )
+
+
+    if st.button(
+        "Save Training Goal"
+    ):
+
+        save_training_goal(
+            username,
+            selected_goal,
+            goal_date
         )
 
 
-        col1, col2 = st.columns(2)
+        st.success(
+            "Training goal saved"
+        )
 
-
-        with col1:
-
-            if st.button("💾 Save"):
-
-                save_user_settings(
-                    username,
-                    ftp,
-                    weight
-                )
-
-                st.session_state.edit_settings = False
-
-                st.success(
-                    "Settings saved"
-                )
-
-                st.rerun()
-
-
-
-        with col2:
-
-            if st.button("Cancel"):
-
-                st.session_state.edit_settings = False
-
-                st.rerun()
+        st.rerun()
