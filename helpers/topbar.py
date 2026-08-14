@@ -1,6 +1,7 @@
 import streamlit as st
 
 from helpers.strava_sync import update_strava
+from Strava.strava_user import get_user_strava
 
 def render_topbar():
     
@@ -75,19 +76,34 @@ def render_topbar():
     with right:
 
         col1, col2 = st.columns(
-            [1.5,1],
+            [1.5, 1],
             vertical_alignment="center"
         )
 
-
         with col1:
+
+            username = st.session_state.get("username")
+
+            strava = get_user_strava(username) if username else {}
+
+            strava_connected = (
+                isinstance(strava, dict)
+                and strava.get("connected", False)
+                and strava.get("access_token")
+            )
 
             if st.button(
                 "🔄 Sync Strava",
-                use_container_width=True
+                use_container_width=True,
+                disabled=not strava_connected,
             ):
+
                 update_strava()
 
         with col2:
-            if st.button("👤 Profile"):
+
+            if st.button(
+                "👤 Profile",
+                use_container_width=True
+            ):
                 st.switch_page("pages/profile.py")

@@ -1,9 +1,11 @@
 import os
+os.environ["SILENCE_TOKEN_WARNINGS"] = "true"
+
 import pandas as pd
+import numpy as np
 from stravalib.client import Client
 from helpers.user_cache import get_user_cache_paths
 from Strava.strava_user import get_user_settings
-import numpy as np
 
 ACTIVITY_COLUMNS = [
     "id",
@@ -19,237 +21,358 @@ ACTIVITY_COLUMNS = [
     "weighted_average_watts",
     "trainer",
     "gear_id",
-    'stress',
+    "stress",
+    "IF",
+    "average_pace",
+    "distance_km",
+    "speed_kmh",
+    "time_z1_hr",
+    "time_z2_hr",
+    "time_z3_hr",
+    "time_z4_hr",
+    "time_z5_hr",
 ]
 
 def get_user_client(access_token):
-    client = Client()
-    client.access_token = access_token
+    client=Client()
+    client.access_token=access_token
     return client
 
 def activity_to_dict(activity):
-    start_date = pd.to_datetime(activity.start_date, utc=True, errors="coerce") if activity.start_date else pd.NaT
-    activity_type = activity.type.name if hasattr(activity.type, "name") else str(activity.type)
-
+    start_date=pd.to_datetime(activity.start_date,utc=True,errors="coerce") if activity.start_date else pd.NaT
+    activity_type=activity.type.name if hasattr(activity.type,"name") else str(activity.type)
     return {
-        "id": activity.id,
-        "date": start_date.tz_localize(None) if pd.notna(start_date) else None,
-        "type": activity_type,
-        "distance": float(activity.distance) if activity.distance else None,
-        "moving_time": int(activity.moving_time) if activity.moving_time else None,
-        "total_elevation_gain": float(activity.total_elevation_gain) if activity.total_elevation_gain else None,
-        "average_speed": float(activity.average_speed) if activity.average_speed else None,
-        "average_heartrate": float(activity.average_heartrate) if getattr(activity, "average_heartrate", None) else None,
-        "max_heartrate": float(activity.max_heartrate) if getattr(activity, "max_heartrate", None) else None,
-        "average_watts": float(activity.average_watts) if getattr(activity, "average_watts", None) else None,
-        "weighted_average_watts": float(activity.weighted_average_watts) if getattr(activity, "weighted_average_watts", None) else None,
-        "trainer": activity.trainer,
-        "gear_id": activity.gear_id
+        "id":activity.id,
+        "date":start_date.tz_localize(None) if pd.notna(start_date) else None,
+        "type":activity_type,
+        "distance":float(activity.distance) if activity.distance else None,
+        "moving_time":int(activity.moving_time) if activity.moving_time else None,
+        "total_elevation_gain":float(activity.total_elevation_gain) if activity.total_elevation_gain else None,
+        "average_speed":float(activity.average_speed) if activity.average_speed else None,
+        "average_heartrate":float(activity.average_heartrate) if getattr(activity,"average_heartrate",None) else None,
+        "max_heartrate":float(activity.max_heartrate) if getattr(activity,"max_heartrate",None) else None,
+        "average_watts":float(activity.average_watts) if getattr(activity,"average_watts",None) else None,
+        "weighted_average_watts":float(activity.weighted_average_watts) if getattr(activity,"weighted_average_watts",None) else None,
+        "trainer":activity.trainer,
+        "gear_id":activity.gear_id,
     }
 
-def fetch_activities(access_token, after_date=None):
-    client = get_user_client(access_token)
-    activities = []
+def fetch_activities(access_token,after_date=None):
+    client=get_user_client(access_token)
+    activities=[]
     for activity in client.get_activities(after=after_date):
         try:
-            activity_dict = activity_to_dict(activity)
-            if activity_dict["date"] is not None:
-                activities.append(activity_dict)
-            else:
-                print("Skipping activity without date:", activity.id)
+            data=activity_to_dict(activity)
+            if data["date"] is not None:
+                activities.append(data)
         except Exception as e:
-            print("Skipping activity:", activity.id, e)
-    df = pd.DataFrame(activities, columns=ACTIVITY_COLUMNS)
-    if not df.empty:
-        df["date"] = pd.to_datetime(df["date"], errors="coerce")
-        df = df.dropna(subset=["date"])
-    else:
-        df = pd.DataFrame(columns=ACTIVITY_COLUMNS)
+            print("Skipping activity:",activity.id,e)
+    df=pd.DataFrame(activities)
+    if df.empty:
+        return pd.DataFrame(columns=ACTIVITY_COLUMNS)
+    df["date"]=pd.to_datetime(df["date"],errors="coerce")
+    df=df.dropna(subset=["date"])
     return df
 
-def update_activity_cache(username, access_token):
-    activity_file, _ = get_user_cache_paths(username)
+
+def update_activity_cache(username,access_token):
+    activity_file,_=get_user_cache_paths(username)
+
     if not os.path.exists(activity_file):
         print("Downloading all activities...")
-        df = fetch_activities(access_token)
-        new_df = df.copy()
+        df=fetch_activities(access_token)
+        new_df=df.copy()
     else:
-        print("Loading existing activity cache...")
+        print("Loading activity cache...")
+
         try:
-            df = pd.read_csv(activity_file)
-        except pd.errors.EmptyDataError:
-            df = pd.DataFrame(columns=ACTIVITY_COLUMNS)
+            df=pd.read_csv(activity_file)
+        except Exception as e:
+            print("Could not read activity cache:",e)
+            df=pd.DataFrame(columns=ACTIVITY_COLUMNS)
 
-        if "date" not in df.columns:
-            df["date"] = pd.Series(dtype="datetime64[ns]")
+        df["date"]=pd.to_datetime(df["date"],errors="coerce")
+        df=df.dropna(subset=["date"])
 
-        df["date"] = pd.to_datetime(df["date"], errors="coerce")
-        df = df[df["date"].notna()]
+        latest=df["date"].max() if not df.empty else None
 
-        if df.empty:
-            after_timestamp = None
+        print("Latest cached activity:",latest)
+
+        if latest is not None:
+            # stravalib expects a datetime object, not a Unix timestamp
+            after=latest.to_pydatetime()
+
+            # Make sure it is timezone-aware
+            if after.tzinfo is None:
+                after=after.replace(tzinfo=pd.Timestamp.utcnow().tzinfo)
+
+            print("Requesting activities after:",after)
+
         else:
-            latest_date = df["date"].max()
-            after_timestamp = int(latest_date.timestamp())
-            print("Fetching activities after:", latest_date)
+            after=None
+            print("No cached date found, downloading all activities.")
 
-        new_df = fetch_activities(access_token, after_date=after_timestamp)
-        if "date" in new_df.columns:
-            new_df["date"] = pd.to_datetime(new_df["date"], errors="coerce")
-            new_df = new_df[new_df["date"].notna()]
+        new_df=fetch_activities(
+            access_token,
+            after
+        )
+
+        print("Activities returned by Strava:",len(new_df))
+
         if not new_df.empty:
-            df = pd.concat([df, new_df], ignore_index=True)
-            df = df.drop_duplicates(subset="id")
-    df["date"] = pd.to_datetime(df["date"], errors="coerce")
-    df = df.dropna(subset=["date"])
-    df["distance_km"] = df["distance"] / 1000
-    df["speed_kmh"] = df["average_speed"] * 3.6
+            df=pd.concat(
+                [df,new_df],
+                ignore_index=True
+            )
 
-    settings = get_user_settings(username)
-    df = calculate_activity_stress(df,ftp=settings.get("ftp", 200),threshold_hr=settings.get("threshold_hr", 170),threshold_pace=settings.get("threshold_pace", 5.0))
+            df=df.drop_duplicates(
+                "id",
+                keep="last"
+            )
 
-    df.to_csv(activity_file, index=False)
+    # Derived fields
+    df["distance_km"]=df["distance"]/1000
+    df["speed_kmh"]=df["average_speed"]*3.6
 
-    return df, new_df
+    print("Final activity count:",len(df))
+    print("New activity count:",len(new_df))
 
-def fetch_power_stream(access_token, activity_id):
-    client = get_user_client(access_token)
+    return df,new_df
+
+def fetch_power_stream(access_token,activity_id):
+    client=get_user_client(access_token)
     try:
-        streams = client.get_activity_streams(activity_id, types=["time", "moving", "watts"], resolution="high", series_type="time")
-        data = {}
-        for stream_type in ["time", "moving", "watts"]:
-            stream = streams.get(stream_type)
-            data[stream_type] = stream.data if stream else []
-        df = pd.DataFrame(data)
+        streams=client.get_activity_streams(
+            activity_id,
+            types=["time","moving","watts","heartrate"],
+            resolution="high",
+            series_type="time"
+        )
+        data={}
+        for key in ["time","moving","watts","heartrate"]:
+            stream=streams.get(key)
+            data[key]=stream.data if stream else []
+        max_len=max(len(x) for x in data.values())
+        for key in data:
+            data[key]+= [np.nan]*(max_len-len(data[key]))
+        df=pd.DataFrame(data)
         if df.empty:
             return None
-        df["activity_id"] = activity_id
-        df["timepoint"] = df.index
-        return df[["activity_id", "timepoint", "time", "moving", "watts"]]
+        df["activity_id"]=activity_id
+        df["timepoint"]=df.index
+        return df[["activity_id","timepoint","time","moving","watts","heartrate"]]
     except Exception as e:
-        print(f"Power stream error {activity_id}: {e}")
+        print("Power stream error",activity_id,e)
         return None
 
-def update_power_stream_cache(username, access_token, activities):
-    _, power_file = get_user_cache_paths(username)
+
+def calculate_hr_zones(stream_df,max_hr):
+    hr=pd.to_numeric(stream_df["heartrate"],errors="coerce")
+
+    if hr.notna().sum()==0:
+        return {
+            "time_z1_hr":np.nan,
+            "time_z2_hr":np.nan,
+            "time_z3_hr":np.nan,
+            "time_z4_hr":np.nan,
+            "time_z5_hr":np.nan
+        }
+
+    z1=((hr>=0.50*max_hr)&(hr<0.65*max_hr)).sum()
+    z2=((hr>=0.65*max_hr)&(hr<0.75*max_hr)).sum()
+    z3=((hr>=0.75*max_hr)&(hr<0.85*max_hr)).sum()
+    z4=((hr>=0.85*max_hr)&(hr<0.92*max_hr)).sum()
+    z5=(hr>=0.92*max_hr).sum()
+
+    return {
+        "time_z1_hr":int(z1),
+        "time_z2_hr":int(z2),
+        "time_z3_hr":int(z3),
+        "time_z4_hr":int(z4),
+        "time_z5_hr":int(z5)
+    }
+
+def update_power_stream_cache(username,access_token,activities):
+    _,power_file=get_user_cache_paths(username)
     if os.path.exists(power_file):
-        power_df = pd.read_parquet(power_file)
-        cached_ids = set(power_df["activity_id"])
+        power_df=pd.read_parquet(power_file)
+        cached_ids=set(power_df["activity_id"])
     else:
-        power_df = pd.DataFrame()
-        cached_ids = set()
-    new_streams = []
-    for _, activity in activities.iterrows():
-        activity_id = int(activity["id"])
+        power_df=pd.DataFrame()
+        cached_ids=set()
+    streams=[]
+    for _,row in activities.iterrows():
+        activity_id=int(row["id"])
         if activity_id in cached_ids:
             continue
-        stream = fetch_power_stream(access_token, activity_id)
+        stream=fetch_power_stream(access_token,activity_id)
         if stream is not None:
-            new_streams.append(stream)
-    if new_streams:
-        power_df = pd.concat([power_df, *new_streams], ignore_index=True)
-        power_df.to_parquet(power_file, index=False)
+            streams.append(stream)
+    if streams:
+        power_df=pd.concat([power_df,*streams],ignore_index=True)
+        power_df.to_parquet(power_file,index=False)
     return power_df
 
-def update_strava_data(username, access_token):
-    print("Updating Strava data for", username)
-    activities, new_activities = update_activity_cache(username, access_token)
-    if not new_activities.empty:
-        print("Updating power streams for", len(new_activities), "new activities")
-        update_power_stream_cache(username, access_token, new_activities)
-    else:
-        print("No new activities found")
-    print("Total activities:", len(activities))
-    return activities, new_activities
+def update_hr_zones_from_streams(username,activities,max_hr):
+    _,power_file=get_user_cache_paths(username)
+    if not os.path.exists(power_file):
+        return activities
+    power_df=pd.read_parquet(power_file)
+    for activity_id in activities["id"]:
+        stream=power_df[power_df["activity_id"]==activity_id]
+        if stream.empty:
+            continue
+        zones=calculate_hr_zones(stream,max_hr)
+        for key,value in zones.items():
+            activities.loc[activities["id"]==activity_id,key]=value
+    return activities
 
+def calculate_hr_stress(row):
+    zones={
+        "time_z1_hr":0.55,
+        "time_z2_hr":0.75,
+        "time_z3_hr":0.85,
+        "time_z4_hr":1.00,
+        "time_z5_hr":1.15
+    }
+    stress=0
+    for zone,IF in zones.items():
+        value=row.get(zone,0)
+        if pd.notna(value):
+            stress+=value*(IF**2)
+    return stress/3600*100
 
-def calculate_activity_stress(df, ftp, threshold_hr, threshold_pace):
-    """
-    Calculate an estimated stress score for every activity.
+def calculate_activity_stress(df,ftp,max_hr,threshold_pace):
+    df=df.copy()
+    df["moving_time"]=pd.to_numeric(df["moving_time"],errors="coerce")
+    df["average_speed"]=pd.to_numeric(df["average_speed"],errors="coerce")
+    df["weighted_average_watts"] = pd.to_numeric(df["weighted_average_watts"],errors="coerce")
+    hours=df["moving_time"]/3600
+    df["stress"]=0.0
+    df["IF"]=0.4
 
-    Priority:
-    1. Cycling -> Power
-    2. Heart rate
-    3. Running pace
-    4. Default IF = 0.35
-    """
+    df["average_pace"]=np.where(df["average_speed"]>0,1000/(df["average_speed"]*60),np.nan)
 
-    df = df.copy()
+    activity_type=df["type"].fillna("").astype(str)
+    cycling_mask=activity_type.str.contains("Ride|VirtualRide|GravelRide|MountainBikeRide|Handcycle|Velomobile",case=False,regex=True) & ~activity_type.str.contains("EBikeRide",case=False,na=False)
+    running_mask=activity_type.str.contains("Run|TrailRun|Treadmill",case=False,regex=True)
 
-    df["moving_time"] = pd.to_numeric(df["moving_time"], errors="coerce")
-    df["average_speed"] = pd.to_numeric(df["average_speed"], errors="coerce")
-    df["average_heartrate"] = pd.to_numeric(df["average_heartrate"], errors="coerce")
-    df["weighted_average_watts"] = pd.to_numeric(df["weighted_average_watts"], errors="coerce")
-
-    hours = df["moving_time"] / 3600
-
-    df["stress"] = 0.0
-    df["IF"] = 0.35
-
-    # Pace (min/km)
-    df["average_pace"] = np.where(
-        df["average_speed"] > 0,
-        1000 / (df["average_speed"] * 60),
-        np.nan,
-    )
-
-    activity_type = df["type"].fillna("").astype(str)
-
-    cycling_mask = (activity_type.str.contains("Ride|VirtualRide|GravelRide|MountainBikeRide|Handcycle|Velomobile",
-        case=False,
-        regex=True) & ~activity_type.str.contains("EBikeRide", case=False, na=False))
-
-
-    running_mask = activity_type.str.contains(
-        "Run|TrailRun|Treadmill",
-        case=False,
-        regex=True,
-    )
-
-    # -------------------------------------------------
-    # 1. Cycling -> Power
-    # -------------------------------------------------
     power_mask = cycling_mask & df["weighted_average_watts"].notna()
+    df.loc[power_mask,"IF"] = df.loc[power_mask,"weighted_average_watts"] / ftp
 
-    df.loc[power_mask, "IF"] = (
-        df.loc[power_mask, "weighted_average_watts"] / ftp
-    )
+    hr_mask = (~power_mask) & df["time_z1_hr"].notna()
+    df.loc[hr_mask,"stress"] = df.loc[hr_mask].apply(calculate_hr_stress, axis=1)
 
-    # -------------------------------------------------
-    # 2. Heart rate (everything else)
-    # -------------------------------------------------
-    hr_mask = (~power_mask) & df["average_heartrate"].notna()
+    pace_mask = (~power_mask) & (~hr_mask) & running_mask & df["average_pace"].notna()
+    df.loc[pace_mask,"IF"] = threshold_pace / df.loc[pace_mask,"average_pace"]
 
-    df.loc[hr_mask, "IF"] = (
-        df.loc[hr_mask, "average_heartrate"] / threshold_hr
-    )
+    # Power and pace stress
+    if_mask = power_mask | pace_mask
+    df.loc[if_mask,"IF"] = df.loc[if_mask,"IF"].clip(0.2,1.5)
+    df.loc[if_mask,"stress"] = hours[if_mask] * (df.loc[if_mask,"IF"]**2) * 100
 
-    # -------------------------------------------------
-    # 3. Running pace
-    # -------------------------------------------------
-    pace_mask = (
-        (~power_mask)
-        & (~hr_mask)
-        & running_mask
-        & df["average_pace"].notna()
-    )
-
-    df.loc[pace_mask, "IF"] = (
-        threshold_pace / df.loc[pace_mask, "average_pace"]
-    )
-
-    # -------------------------------------------------
-    # Clamp IF to realistic values
-    # -------------------------------------------------
-    df["IF"] = df["IF"].clip(lower=0.20, upper=1.50)
-
-    # -------------------------------------------------
-    # Stress
-    # -------------------------------------------------
-    df["stress"] = (
-        hours
-        * (df["IF"] ** 2)
-        * 100
-    )
-
+    # No data fallback
+    fallback_mask = (~power_mask) & (~hr_mask) & (~pace_mask)
+    df.loc[fallback_mask,"IF"] = 0.4
+    df.loc[fallback_mask,"stress"] = hours[fallback_mask] * (0.4**2) * 100
     return df
+
+
+def update_strava_data(username,access_token):
+    print("="*60)
+    print("STARTING STRAVA SYNC")
+    print("Username:",username)
+    print("Access token present:",bool(access_token))
+    print("="*60)
+
+    try:
+        print("[1/6] Loading/updating activity cache...")
+
+        activities,new_activities=update_activity_cache(
+            username,
+            access_token
+        )
+
+        print(
+            "[1/6] Activity cache loaded successfully."
+            f" Total activities: {len(activities)}"
+            f" | New activities: {len(new_activities)}"
+        )
+
+        if not new_activities.empty:
+            print(
+                f"[2/6] Updating power streams for "
+                f"{len(new_activities)} new activities..."
+            )
+
+            update_power_stream_cache(
+                username,
+                access_token,
+                new_activities
+            )
+
+            print("[2/6] Power streams updated successfully.")
+
+        else:
+            print("[2/6] No new activities. Skipping power streams.")
+
+        print("[3/6] Loading user settings...")
+
+        settings=get_user_settings(username)
+
+        print("[3/6] User settings loaded.")
+        print("FTP:",settings.get("ftp",200))
+        print("Max HR:",settings.get("max_hr",190))
+        print("Threshold pace:",settings.get("threshold_pace",5))
+
+        print("[4/6] Updating HR zones...")
+
+        activities=update_hr_zones_from_streams(
+            username,
+            activities,
+            settings.get("max_hr",190)
+        )
+
+        print("[4/6] HR zones updated successfully.")
+
+        print("[5/6] Calculating activity stress...")
+
+        activities=calculate_activity_stress(
+            activities,
+            ftp=settings.get("ftp",200),
+            max_hr=settings.get("max_hr",190),
+            threshold_pace=settings.get("threshold_pace",5)
+        )
+
+        print("[5/6] Activity stress calculated successfully.")
+
+        print("[6/6] Saving activity cache...")
+
+        activity_file,_=get_user_cache_paths(username)
+
+        print("Saving to:",activity_file)
+
+        activities.to_csv(
+            activity_file,
+            index=False
+        )
+
+        print("[6/6] Activity cache saved successfully.")
+        print("Total activities:",len(activities))
+        print("="*60)
+        print("STRAVA SYNC COMPLETE")
+        print("="*60)
+
+        return activities,new_activities
+
+    except Exception as e:
+        print("="*60)
+        print("STRAVA SYNC FAILED")
+        print("Error type:",type(e).__name__)
+        print("Error:",str(e))
+        print("="*60)
+
+        import traceback
+        traceback.print_exc()
+
+        raise

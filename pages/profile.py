@@ -1,7 +1,6 @@
 import streamlit as st
-
 from helpers.style import apply_global_style
-
+from helpers.auth import get_authenticator
 
 apply_global_style()
 
@@ -52,11 +51,12 @@ confirm_password = st.text_input(
 if st.button("Update password", type="primary"):
     st.info("Password update functionality coming soon.")
 
-
 st.divider()
 
 st.subheader("Session")
 
+authenticator, config = get_authenticator()
+
 if st.button("🚪 Log out", type="secondary", use_container_width=True):
-    st.session_state.clear()
+    authenticator.logout(location="unrendered")
     st.rerun()

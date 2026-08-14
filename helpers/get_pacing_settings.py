@@ -18,8 +18,7 @@ def get_user_ftp(username):
 
     settings = get_user_settings(username)
 
-    return settings.get("ftp", 0)
-
+    return settings.get("settings", {}).get("ftp", 0)
 
 @dataclass
 class PacingSettings:
@@ -32,6 +31,8 @@ class PacingSettings:
     max_ftp_fraction: float
     min_ftp_fraction: float
     pacing_aggression: float
+
+    min_section_km: float
 
     reference_speed_kmh: float
     max_speed_kmh: float
@@ -237,6 +238,8 @@ class PacingSettings:
             pacing_aggression=pacing_aggression,
 
             reference_speed_kmh=35,
+            
+            min_section_km=min_section_km,
 
             max_speed_kmh=max_speed_kmh,
 

@@ -11,7 +11,16 @@ CONFIG_PATH = "auth_config.yaml"
 def load_config():
 
     with open(CONFIG_PATH) as f:
-        return yaml.load(f, Loader=SafeLoader)
+        config = yaml.load(f, Loader=SafeLoader)
+
+    if "strava_oauth" not in config:
+
+        config["strava_oauth"] = {
+            "pending_user": None,
+            "pending_state": None,
+        }
+
+    return config
 
 
 
@@ -72,17 +81,54 @@ def save_user_strava(
             token["expires_at"],
     }
 
+    athlete = token.get("athlete") if isinstance(token, dict) else None
+
+    if isinstance(athlete, dict) and athlete.get("id") is not None:
+        user["strava"]["athlete_id"] = athlete["id"]
+
 
     save_config(config)
 
     print("Saved successfully")
 
 
-def save_pending_user(username):
+def reset_user_strava(username):
+
+    config = load_config()
+
+    user = config["credentials"]["usernames"][username]
+
+    user.pop("strava", None)
+
+    save_config(config)
+
+
+def get_user_by_strava_athlete_id(athlete_id):
+
+    if athlete_id is None:
+        return None
+
+    config = load_config()
+
+    for username, user in config["credentials"]["usernames"].items():
+
+        strava = user.get("strava")
+
+        if not isinstance(strava, dict):
+            continue
+
+        if strava.get("athlete_id") == athlete_id:
+            return username
+
+    return None
+
+
+def save_pending_user(username, state=None):
 
     config = load_config()
 
     config["strava_oauth"]["pending_user"] = username
+    config["strava_oauth"]["pending_state"] = state
 
     save_config(config)
 
@@ -97,12 +143,22 @@ def get_pending_user():
     )
 
 
+def get_pending_state():
+
+    config = load_config()
+
+    return config["strava_oauth"].get(
+        "pending_state"
+    )
+
+
 
 def clear_pending_user():
 
     config = load_config()
 
     config["strava_oauth"]["pending_user"] = None
+    config["strava_oauth"]["pending_state"] = None
 
     save_config(config)
 
@@ -117,7 +173,7 @@ def get_user_settings(username):
         {
             "ftp": 300,
             "threshold_pace": 5.0,
-            "threshold_hr": 170,
+            "max_hr": 170,
             "weight": 70,
         }
     )
@@ -127,7 +183,7 @@ def get_user_settings(username):
 def save_user_settings(
         username,
         ftp=None,
-        threshold_hr=None,
+        max_hr=None,
         threshold_pace=None,
         weight=None,
         athlete_level=None,
@@ -142,7 +198,7 @@ def save_user_settings(
     if "settings" not in user:
         user["settings"] = {
             "ftp": 300,
-            "threshold_hr": 170,
+            "max_hr": 190,
             "threshold_pace": 5.0,
             "weight": 70,
         }
@@ -152,8 +208,8 @@ def save_user_settings(
 
     if ftp is not None:
         settings["ftp"] = ftp
-    if threshold_hr is not None:
-        settings["threshold_hr"] = threshold_hr
+    if max_hr is not None:
+        settings["max_hr"] = max_hr
     if threshold_pace is not None:
         settings["threshold_pace"] = threshold_pace
     if weight is not None:

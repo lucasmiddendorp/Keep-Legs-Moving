@@ -76,27 +76,22 @@ class PacingComparison:
     # 2. FULL PIPELINE
     # =========================================================
     def run_from_fit(self, fit_file_path):
-        """
-        Full pipeline:
-        FIT → GPX → segments → pacing → outputs
-        """
-
-        # Step 1: FIT → DataFrame (reuse parser)
         activity, power_df = parse_fit_file(fit_file_path)
 
-        if isinstance(activity, dict):
-            df = activity
+        if isinstance(power_df, pd.DataFrame):
+            df = power_df.copy()
         else:
-            df = activity.copy()
-
-        # Step 2: GPX-style processing (reuse your logic)
+            df = pd.DataFrame(power_df)
+        print(df.columns)
+        print(df.head())
         df = self._normalize_track(df)
 
-        # Step 3: segments
         segments = self.pacing.build_route_segments(df)
 
-        # Step 4: pacing simulation
-        modeled = self.pacing.estimate_course_pacing(segments, self.settings)
+        modeled = self.pacing.estimate_course_pacing(
+            segments,
+            self.settings
+        )
 
         return {
             "points": df,

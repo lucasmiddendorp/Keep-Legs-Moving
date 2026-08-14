@@ -1,82 +1,54 @@
+import secrets
 import streamlit as st
 
-st.set_page_config(
-    page_title="Connect Strava",
-    page_icon="🚴"
+from Strava.strava_auth import (
+    get_authorization_url,
+)
+from Strava.strava_user import (
+    clear_pending_user,
+    save_pending_user,
 )
 
-from Strava.strava_auth import get_authorization_url, exchange_code
-from Strava.strava_user import save_user_strava, get_user_strava, save_pending_user
 
-
+# --------------------------------------------------
+# Require logged-in user
+# --------------------------------------------------
 
 username = st.session_state.get("username")
 
-
-# Check existing Strava connection
-strava = get_user_strava(username)
-
-if strava.get("connected", False):
-
-    st.success("Strava already connected")
-
-    st.switch_page("app.py")
-
+if not username:
+    st.error("You must be logged in.")
     st.stop()
 
 
+# --------------------------------------------------
+# Connect screen
+# --------------------------------------------------
 
-st.title("🚴 Connect Strava")
+st.title("Connect Strava")
 
 st.write(
-    """
-    Connect your Strava account to import your cycling activities.
-    """
+    "Connect your Strava account to import your "
+    "activities and power data."
 )
 
 
-# OAuth button
-username = st.session_state["username"]
+# --------------------------------------------------
+# Persist the user initiating the OAuth flow
+# --------------------------------------------------
 
-save_pending_user(username)
+if "strava_oauth_state" not in st.session_state:
 
-auth_url = get_authorization_url()
+    st.session_state["strava_oauth_state"] = (secrets.token_urlsafe(32))
 
+expected_state = st.session_state["strava_oauth_state"]
+clear_pending_user()
+save_pending_user(username,state=expected_state)
+
+auth_url = get_authorization_url(state=expected_state)
 st.link_button(
     "Connect with Strava",
-    auth_url
+    auth_url,
+    type="primary",
+    use_container_width=True,
 )
-
-
-# OAuth callback
-if "code" in st.query_params:
-
-    st.write("OAuth callback received")
-
-    code = st.query_params["code"]
-
-    st.write("Code:", code)
-
-
-    with st.spinner("Connecting Strava..."):
-
-        token = exchange_code(code)
-
-        st.write("Token received:")
-        st.write(token)
-
-
-        username = st.query_params.get("pending_user")
-
-        st.write("Username:", username)
-
-        save_user_strava(
-            username,
-            token
-        )
-
-
-    st.success("Strava connected!")
-
-    st.switch_page("app.py")
-    st.stop()

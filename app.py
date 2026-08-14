@@ -2,6 +2,8 @@ import streamlit as st
 
 from helpers.navbar import render_navbar
 from helpers.topbar import render_topbar
+from Strava.strava_user import get_user_strava
+from Strava.strava_oauth import handle_strava_callback
 
 
 st.set_page_config(
@@ -11,14 +13,31 @@ st.set_page_config(
 )
 
 
-# -----------------------------
-# Define all pages
-# -----------------------------
+callback_status = handle_strava_callback()
+
+if callback_status == "success":
+
+    st.rerun()
+
+if callback_status == "error":
+
+    st.stop()
+
+
+# --------------------------------------------------
+# Pages
+# --------------------------------------------------
 
 login = st.Page(
     "pages/login.py",
     title="Login",
     icon="🔑"
+)
+
+connect_strava = st.Page(
+    "pages/connect_strava.py",
+    title="Connect Strava",
+    icon="🔗"
 )
 
 dashboard = st.Page(
@@ -59,34 +78,101 @@ profile = st.Page(
 
 settings_availability = st.Page(
     "pages/settings_availability.py",
-    title="Weekly Availability")
+    title="Weekly Availability"
+)
 
+workout_builder = st.Page(
+    "pages/workout_builder.py",
+    title="Workout Builder",
+    icon="🏋️",
+)
 
-# -----------------------------
+# --------------------------------------------------
 # Authentication routing
-# -----------------------------
+# --------------------------------------------------
 
-if not st.session_state.get("authentication_status"):
+authenticated = (
+    st.session_state.get("authentication_status") is True
+)
+
+
+# --------------------------------------------------
+# NOT LOGGED IN
+# --------------------------------------------------
+
+if not authenticated:
 
     pg = st.navigation(
         [login]
     )
 
+
+# --------------------------------------------------
+# LOGGED IN
+# --------------------------------------------------
+
 else:
-    render_navbar()
-    render_topbar()
 
-    pg = st.navigation(
-        [
-            dashboard,
-            course_pacing,
-            pacing_comparison,
-            training,
-            settings,
-            profile,
-            settings_availability
-        ]
-    )
+    username = st.session_state.get("username")
 
+    # Safety check
+    if not username:
+
+        st.session_state["authentication_status"] = None
+
+        pg = st.navigation(
+            [login]
+        )
+
+    else:
+
+        # ------------------------------------------
+        # Check Strava connection
+        # ------------------------------------------
+
+        strava = get_user_strava(username)
+
+        strava_connected = (
+            isinstance(strava, dict)
+            and bool(strava.get("connected"))
+            and bool(strava.get("access_token"))
+        )
+
+        # ------------------------------------------
+        # Strava NOT connected
+        # ------------------------------------------
+
+        if not strava_connected:
+
+            pg = st.navigation(
+                [connect_strava]
+            )
+
+        # ------------------------------------------
+        # Strava connected
+        # ------------------------------------------
+
+        else:
+
+            render_navbar()
+            render_topbar()
+
+            pg = st.navigation(
+                [
+                    dashboard,
+                    course_pacing,
+                    pacing_comparison,
+                    training,
+                    settings,
+                    profile,
+                    settings_availability,
+                    workout_builder,   
+                ]
+            )
+
+
+# --------------------------------------------------
+# Run selected page
+# --------------------------------------------------
 
 pg.run()

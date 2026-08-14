@@ -5,4 +5,4 @@ CTL_BASELINE = 40
 CLIENT_ID = "268282"
 CLIENT_SECRET = "1bc2701f22e4ee8e0b5717cf2704a0e73581fbb3"
 
-REDIRECT_URI = "http://localhost:8501/strava_callback"
+REDIRECT_URI = "http://localhost:8501"

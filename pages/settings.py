@@ -118,11 +118,11 @@ with tabs[0]:
 
     threshold_pace = pace_min + pace_sec / 60
 
-    threshold_hr = st.number_input(
-        "Threshold Heart Rate (bpm)",
-        min_value=50,
+    max_hr = st.number_input(
+        "Maximum Heart Rate (bpm)",
+        min_value=120,
         max_value=220,
-        value=int(settings.get("threshold_hr", 150)),
+        value=int(settings.get("max_hr", 180)),
         step=1,
     )
 
@@ -131,7 +131,7 @@ with tabs[0]:
         save_user_settings(
             username,
             ftp=ftp,
-            threshold_hr=threshold_hr,
+            max_hr=max_hr,
             threshold_pace=threshold_pace,
         )
 
