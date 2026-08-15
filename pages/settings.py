@@ -1,18 +1,12 @@
 import streamlit as st
 import pandas as pd
 
-import pages.settings_availability as availability_page
-import pages.settings_exceptions as exceptions_page
+# import pages.settings_availability as availability_page
+# import pages.settings_exceptions as exceptions_page
 from Strava.strava_user import get_user_settings, save_user_settings, load_config
-from training_planner.goals import (
-    TRAINING_GOALS,
-    get_goal_description
-)
+from training_planner.goals import (TRAINING_GOALS, get_goal_description)
 
-from Strava.strava_user import (
-    get_training_goal,
-    save_training_goal
-)
+from Strava.strava_user import (get_training_goal,save_training_goal)
 
 
 st.title("⚙️ Settings")

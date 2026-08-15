@@ -450,18 +450,38 @@ if os.path.exists(power_file):
                 activity_id = power_curve_acts[idx]
                 if activity_id is not None:
                     st.markdown("#### Activity with Highest Power for Selected Duration")
+
                     activity_row = df[df["id"] == activity_id]
+
                     if not activity_row.empty:
                         activity = activity_row.iloc[0]
-                        st.write({
-                            "date": activity["date"],
-                            "activity_id": activity["id"],
-                            "name": activity.get("name", ""),
-                            "moving_time (min)": round(activity["moving_time"]/60, 1),
-                            "weighted_average_watts": activity.get("weighted_average_watts", None),
-                            "IF": round(activity["IF"], 2) if "IF" in activity else None,
-                            "Stress": round(activity["stress"],1) if "stress" in activity else None,
-                        })
+
+                        activity_display = pd.DataFrame([{
+                            "Date": pd.to_datetime(activity["date"]).strftime("%d %b %Y"),
+                            "Activity": activity.get("name", ""),
+                            "Duration": f"{activity['moving_time'] / 60:.1f} min",
+                            "Avg Power": (
+                                f"{activity['weighted_average_watts']:.0f} W"
+                                if pd.notna(activity.get("weighted_average_watts"))
+                                else "—"
+                            ),
+                            "IF": (
+                                f"{activity['IF']:.2f}"
+                                if pd.notna(activity.get("IF"))
+                                else "—"
+                            ),
+                            "Stress": (
+                                f"{activity['stress']:.0f}"
+                                if pd.notna(activity.get("stress"))
+                                else "—"
+                            ),
+                        }])
+
+                        st.dataframe(
+                            activity_display,
+                            hide_index=True,
+                            use_container_width=True,
+                        )
                     else:
                         st.info("Activity not found in dataframe.")
                 else:
