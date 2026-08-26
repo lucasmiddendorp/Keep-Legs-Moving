@@ -166,8 +166,7 @@ else:
                     settings,
                     profile,
                     settings_availability,
-                    workout_builder,   
-                ]
+                    workout_builder,                 ]
             )
 
 

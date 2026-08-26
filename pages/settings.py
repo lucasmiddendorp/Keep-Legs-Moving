@@ -4,7 +4,6 @@ import pandas as pd
 # import pages.settings_availability as availability_page
 # import pages.settings_exceptions as exceptions_page
 from Strava.strava_user import get_user_settings, save_user_settings, load_config
-from training_planner.goals import (TRAINING_GOALS, get_goal_description)
 
 from Strava.strava_user import (get_training_goal,save_training_goal)
 
@@ -23,49 +22,38 @@ settings = get_user_settings(
 if "edit_settings" not in st.session_state:
     st.session_state.edit_settings = False
 
-
-
-
-tabs = st.tabs([
+sections = [
     "Athlete Profile",
     "Weekly Availability",
     "Exceptions",
-    "Training Goal"
-])
+    "Training Goal",
+]
 
-with tabs[0]:
+if "settings_section" not in st.session_state:
+    st.session_state.settings_section = "Athlete Profile"
 
-    st.subheader("Athlete settings")
+selected_section = st.segmented_control(
+    "Settings",
+    sections,
+    selection_mode="single",
+    default=st.session_state.settings_section,
+    key="settings_section_control",
+)
 
+if selected_section:
+    st.session_state.settings_section = selected_section
 
-    athlete_levels = {
-        "Beginner": 10,
-        "Amateur": 8,
-        "Advanced": 6,
-        "Professional": 5,
-    }
+if st.session_state.settings_section == "Athlete Profile":
 
-    current_level = settings.get("athlete_level", "Amateur")
-
-    athlete_level = st.select_slider(
-        "Athlete Level",
-        options=list(athlete_levels.keys()),
-        value=current_level,
+    st.subheader("Training progression")
+    progression = st.select_slider(
+        "Weekly progression",
+        options=[4, 6, 8, 10, 12],
+        value=settings.get("training_progression", 8),
+        format_func=lambda x: f"{x}%"
     )
-
-    st.caption(
-        f"Fatigue recovery time constant: {athlete_levels[athlete_level]} days"
-    )
-
-    if st.button("Save Athlete Level"):
-
-        save_user_settings(
-            username,
-            athlete_level=athlete_level,
-            atl_tc=athlete_levels[athlete_level])
-
-        st.success("Athlete level saved")
-        st.rerun()
+    st.caption("How quickly your training load increases during build weeks. 8% is recommended.")
+    settings["training_progression"] = progression
 
     st.divider()
 
@@ -75,7 +63,7 @@ with tabs[0]:
         "Cycling FTP (W)",
         min_value=50,
         max_value=700,
-        value=int(settings.get("ftp", 200)),
+        value=int(settings.get("ftp", 150)),
         step=5,
     )
 
@@ -166,64 +154,61 @@ with tabs[0]:
         st.rerun()
 
 
-with tabs[1]:
+if selected_section == "Training Goal":
+    st.subheader("Training Goal")
 
-    st.subheader(
-        "Training Goal"
+    goal_options = {
+        "general_fitness": "General Fitness",
+        "gran_fondo": "Gran Fondo",
+        "criterium": "Criterium",
+    }
+
+    current_goal = get_training_goal(username)
+
+    if not isinstance(current_goal, dict):
+        current_goal = {
+            "name": "general_fitness",
+            "goal_date": None,
+        }
+
+    current_goal_name = current_goal.get("name", "general_fitness")
+
+    if current_goal_name not in goal_options:
+        current_goal_name = "general_fitness"
+
+    current_goal_date = current_goal.get("goal_date")
+
+    if current_goal_date:
+        try:
+            current_goal_date = pd.to_datetime(current_goal_date).date()
+        except Exception:
+            current_goal_date = None
+
+    goal = st.selectbox(
+        "Training goal",
+        options=list(goal_options.keys()),
+        index=list(goal_options.keys()).index(current_goal_name),
+        format_func=lambda x: goal_options[x],
     )
-
-    current_goal = get_training_goal(
-        username
-    )
-
-
-    goal_names = list(
-        TRAINING_GOALS.keys()
-    )
-
-
-    selected_goal = st.selectbox(
-
-        "Goal",
-
-        goal_names,
-
-        index=(
-            goal_names.index(
-                current_goal["name"]
-            )
-            if current_goal["name"] in goal_names
-            else 0
-        )
-
-    )
-
-
-    st.info(
-        get_goal_description(
-            selected_goal
-        )
-    )
-
 
     goal_date = st.date_input(
-        "Goal date"
+        "Goal date",
+        value=current_goal_date,
+        min_value=pd.Timestamp.today().date(),
     )
 
+    st.caption(
+        "Your goal influences how your weekly training load is distributed. "
+        "For example, Gran Fondo prioritizes endurance, while Criterium places "
+        "more emphasis on high-intensity work."
+    )
 
-    if st.button(
-        "Save Training Goal"
-    ):
-
+    if st.button("Save Training Goal", type="primary"):
         save_training_goal(
             username,
-            selected_goal,
-            goal_date
+            goal,
+            goal_date,
         )
 
-
-        st.success(
-            "Training goal saved"
-        )
-
+        st.success("Training goal saved.")
         st.rerun()

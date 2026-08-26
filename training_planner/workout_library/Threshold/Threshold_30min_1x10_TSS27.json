@@ -1,0 +1,31 @@
+{
+  "name": "Threshold_30min_1x10_TSS27",
+  "category": "Threshold",
+  "target_tss": 27,
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Threshold",
+      "duration_type": "Time",
+      "intensity": 100,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Cool-down",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    }
+  ]
+}

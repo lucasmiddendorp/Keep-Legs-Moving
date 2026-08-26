@@ -1,0 +1,47 @@
+{
+  "name": "Tempo_45min_2x10_TSS37",
+  "category": "Tempo",
+  "target_tss": 37,
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Tempo",
+      "duration_type": "Time",
+      "intensity": 85,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Recovery",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 5,
+      "duration_seconds": 300,
+      "duration_distance": 0
+    },
+    {
+      "name": "Tempo",
+      "duration_type": "Time",
+      "intensity": 85,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Cool-down",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    }
+  ]
+}

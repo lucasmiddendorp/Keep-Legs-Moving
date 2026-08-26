@@ -172,7 +172,7 @@ def render_navbar():
 
             ("🗺️", "Pacing Comparison"),
 
-            # ("📅", "Training Plan"),
+            ("📅", "Training Plan"),
 
             ("🏋️", "Workout Builder"),
 

@@ -1,0 +1,31 @@
+{
+  "name": "Endurance_188min_TSS140",
+  "category": "Endurance",
+  "target_tss": 140,
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Endurance",
+      "duration_type": "Time",
+      "intensity": 68,
+      "duration_minutes": 168,
+      "duration_seconds": 10080,
+      "duration_distance": 0
+    },
+    {
+      "name": "Cool-down",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    }
+  ]
+}

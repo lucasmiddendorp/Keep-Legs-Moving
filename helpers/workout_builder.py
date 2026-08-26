@@ -94,19 +94,10 @@ def running_target_pace(
     90% = 10% slower
     """
 
-    threshold_speed = pace_to_speed_kmh(
-        threshold_pace_seconds
-    )
+    threshold_speed = pace_to_speed_kmh(threshold_pace_seconds)
+    target_speed = (threshold_speed * intensity/ 100)
 
-    target_speed = (
-        threshold_speed
-        * intensity
-        / 100
-    )
-
-    return speed_to_pace(
-        target_speed
-    )
+    return speed_to_pace(target_speed)
 
 
 def format_pace(seconds):
@@ -561,3 +552,30 @@ def plot_workout_summary(workout, sport="cycling"):
     )
 
     return fig
+
+
+def calculate_workout_tss(steps, ftp):
+    """Calculate planned cycling TSS from workout steps."""
+    if not ftp or ftp <= 0:
+        return 0.0
+
+    tss = 0.0
+
+    for step in steps:
+        if step.get("duration_type", "Time") != "Time":
+            continue
+
+        duration = (
+            step.get("duration_minutes", 0) * 60
+            + step.get("duration_seconds", 0)
+        )
+
+        if duration <= 0:
+            continue
+
+        intensity = float(step.get("intensity", 0))
+        intensity_factor = intensity / 100
+
+        tss += (duration / 3600) * (intensity_factor ** 2) * 100
+
+    return tss

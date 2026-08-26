@@ -1,0 +1,47 @@
+{
+  "name": "VO2max_31min_2x4min_Norwegian_TSS31",
+  "category": "VO2max",
+  "target_tss": 31,
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "VO\u2082 Max",
+      "duration_type": "Time",
+      "intensity": 120,
+      "duration_minutes": 4,
+      "duration_seconds": 240,
+      "duration_distance": 0
+    },
+    {
+      "name": "Recovery",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 3,
+      "duration_seconds": 180,
+      "duration_distance": 0
+    },
+    {
+      "name": "VO\u2082 Max",
+      "duration_type": "Time",
+      "intensity": 120,
+      "duration_minutes": 4,
+      "duration_seconds": 240,
+      "duration_distance": 0
+    },
+    {
+      "name": "Cool-down",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    }
+  ]
+}

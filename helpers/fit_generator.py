@@ -46,9 +46,10 @@ def _power_target(intensity):
 
 
 def _speed_target(threshold_pace, intensity):
+    # threshold_pace is minutes/km
     # FIT custom speed target is m/s × 1000
-    speed = (1000 / threshold_pace) * (intensity / 100)
-    return int(round(speed * 1000))
+    speed_mps = (1000 / (threshold_pace * 60)) * (intensity / 100)
+    return int(round(speed_mps * 1000))
 
 
 def _duration(step):

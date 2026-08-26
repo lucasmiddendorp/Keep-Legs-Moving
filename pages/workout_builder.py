@@ -9,6 +9,7 @@ from helpers.workout_builder import (
     running_target_pace,
     format_pace,
     plot_workout_summary,
+    calculate_workout_tss,
 )
 
 
@@ -46,7 +47,7 @@ if not username:
 
 
 try:
-    from helpers.user_settings import get_user_settings
+    from Strava.strava_user import get_user_settings
 
     settings = get_user_settings(username)
 
@@ -54,25 +55,15 @@ except Exception:
     settings = {}
 
 
-ftp = float(
-    settings.get("ftp", 290) or 290
-)
+ftp = float(settings.get("ftp", 290) or 290)
 
 
-running_threshold = settings.get(
-    "threshold_pace",
-    settings.get(
-        "running_threshold_pace",
-        270,
-    ),
-)
+running_threshold = settings.get("threshold_pace", 6.0)
 
 try:
-    running_threshold = float(
-        running_threshold
-    )
+    running_threshold = float(running_threshold)
 except Exception:
-    running_threshold = 270
+    running_threshold = 6.0
 
 
 # =========================================================
@@ -94,10 +85,11 @@ if sport == "Cycling":
 
 else:
 
-    st.info(
-        "Using running threshold pace: "
-        f"**{format_pace(running_threshold)}**"
-    )
+    running_threshold = float(settings.get("threshold_pace", 6.0) or 6.0)
+    running_threshold_seconds = running_threshold * 60
+
+    st.info("Using running threshold pace: " f"**{format_pace(running_threshold_seconds)}**"
+)
 
 
 # =========================================================
@@ -337,30 +329,15 @@ with builder_col:
 
         step["intensity"] = intensity
 
-        zone, zone_name = get_zone(
-            sport,
-            intensity,
-        )
+        zone, zone_name = get_zone(sport,intensity)
 
         if sport == "Cycling":
-
-            target = cycling_target_watts(
-                ftp,
-                intensity,
-            )
-
+            target = cycling_target_watts(ftp,intensity)
             target_text = f"{target} W"
 
         else:
-
-            target_pace = running_target_pace(
-                running_threshold,
-                intensity,
-            )
-
-            target_text = format_pace(
-                target_pace
-            )
+            target_pace = running_target_pace(running_threshold_seconds,intensity)
+            target_text = format_pace(target_pace)
 
         st.caption(
             f"**{intensity:.0f}%** · "
@@ -1078,19 +1055,8 @@ with builder_col:
 
     with summary_cols[2]:
 
-        if total_distance > 0:
-
-            st.metric(
-                "Distance",
-                f"{total_distance:.1f} km",
-            )
-
-        else:
-
-            st.metric(
-                "Distance",
-                "—",
-            )
+        workout_tss = calculate_workout_tss(steps, ftp)
+        st.metric("TSS", f"{workout_tss:.0f}")
 
 
     # =====================================================

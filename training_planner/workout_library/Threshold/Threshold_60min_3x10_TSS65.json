@@ -1,0 +1,63 @@
+{
+  "name": "Threshold_60min_3x10_TSS65",
+  "category": "Threshold",
+  "target_tss": 65,
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Threshold",
+      "duration_type": "Time",
+      "intensity": 100,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Recovery",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 5,
+      "duration_seconds": 300,
+      "duration_distance": 0
+    },
+    {
+      "name": "Threshold",
+      "duration_type": "Time",
+      "intensity": 100,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Recovery",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 5,
+      "duration_seconds": 300,
+      "duration_distance": 0
+    },
+    {
+      "name": "Threshold",
+      "duration_type": "Time",
+      "intensity": 100,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    },
+    {
+      "name": "Cool-down",
+      "duration_type": "Time",
+      "intensity": 55,
+      "duration_minutes": 10,
+      "duration_seconds": 600,
+      "duration_distance": 0
+    }
+  ]
+}

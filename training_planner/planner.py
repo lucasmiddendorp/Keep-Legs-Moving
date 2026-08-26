@@ -1,135 +1,159 @@
-from datetime import date, timedelta
-from training_planner.models import Athlete
-from training_planner.goals import get_goal
-from training_planner.phases import determine_phase
-from training_planner.workout_selector import select_category, select_workout
+from .availability import get_available_days, get_day_weights
+from .planner_rules import (
+    get_training_phase,
+    get_session_categories,
+    normalize_distribution_for_categories,
+    get_vo2max_budget,
+)
+from .workout_selection import select_workout
 
-LEVEL_SETTINGS = {
-    "Beginner": {
-        "max_hard_sessions_week": 2,
-        "max_tss_day": 100
-    },
-    "Advanced": {
-        "max_hard_sessions_week": 3,
-        "max_tss_day": 150
-    },
-    "Professional": {
-        "max_hard_sessions_week": 5,
-        "max_tss_day": 220
-    }
+def _effective_weekly_tss(weekly_tss, progression, week_number):
+    if week_number % 4 == 0:
+        return float(weekly_tss) * 0.7
+    return float(weekly_tss) * (1 + float(progression) / 100)
+
+DAY_INDEX = {
+    "Monday": 0,
+    "Tuesday": 1,
+    "Wednesday": 2,
+    "Thursday": 3,
+    "Friday": 4,
+    "Saturday": 5,
+    "Sunday": 6,
 }
 
-HARD_SESSIONS = [
-    "VO2 Max",
-    "Threshold"
-]
 
-class TrainingPlanner:
-    def __init__(self, athlete, goal):
-        self.athlete = athlete
-        if hasattr(goal, "name"):
-            self.goal_name = goal.name
-            self.race_date = goal.race_date
+def _load_for_tss(target_tss):
+    levels = {"A": 20, "B": 40, "C": 60, "D": 80, "E": 100}
+    return min(levels, key=lambda level: abs(levels[level] - float(target_tss or 0)))
+
+
+def _day_hours(availability, day):
+    day_data = availability.get(day, {}) if isinstance(availability, dict) else {}
+    if not isinstance(day_data, dict):
+        return 0.0
+    return float(day_data.get("hours", 0) or 0)
+
+
+def _workout_hours(workout):
+    steps = workout.get("steps", []) if isinstance(workout, dict) else []
+    if not steps:
+        return 0.0
+    seconds = sum(float(step.get("duration_seconds", 0) or 0) for step in steps)
+    return seconds / 3600.0
+
+def _build_workout_days_with_vo2_rest(available_days, categories):
+    """Assign categories in day order while enforcing a rest day after VO2max."""
+    planned = []
+    category_index = 0
+    blocked_next_day = None
+
+    for day in available_days:
+        day_idx = DAY_INDEX.get(day, 99)
+
+        if blocked_next_day is not None and day_idx == blocked_next_day:
+            blocked_next_day = None
+            continue
+
+        if category_index >= len(categories):
+            break
+
+        category = categories[category_index]
+        category_index += 1
+
+        planned.append((day, category))
+
+        if category == "VO2max":
+            blocked_next_day = day_idx + 1
         else:
-            self.goal_name = goal
-            self.race_date = None
-        self.goal_settings = get_goal(self.goal_name)
-        self.level_settings = LEVEL_SETTINGS.get(
-            athlete.level,
-            LEVEL_SETTINGS["Advanced"]
-        )
+            blocked_next_day = None
 
-    def get_available_hours(self, workout_date):
-        weekday = workout_date.strftime("%A")
-        availability = self.athlete.availability
-        if str(workout_date) in availability.get("exceptions", {}):
-            exception = availability["exceptions"][str(workout_date)]
-            if exception["available"]:
-                return exception["hours"]
-            return 0
-        weekly = availability.get("weekly", {})
-        if weekday in weekly and weekly[weekday]["available"]:
-            return weekly[weekday]["hours"]
-        return 0
+    return planned
 
-    def update_training_state(self, ctl, atl, tss):
-        ctl = ctl + (tss - ctl) / 42
-        atl = atl + (tss - atl) / 7
-        tsb = ctl - atl
-        return ctl, atl, tsb
 
-    def generate_plan_until_goal(self):
-        plan = []
-        current_date = date.today()
-        ctl = self.athlete.ctl
-        atl = self.athlete.atl
-        tsb = self.athlete.tsb
-        recent_categories = []
-        hard_sessions_week = 0
-        week_start = current_date
-        while current_date <= self.race_date:
-            days_to_goal = (self.race_date - current_date).days
-            phase = determine_phase(days_to_goal)
-            available_hours = self.get_available_hours(current_date)
-            if available_hours == 0:
-                workout = {
-                    "name": "Rest",
-                    "category": "Recovery",
-                    "duration": 0,
-                    "if": 0,
-                    "tss": 0
-                }
-            else:
-                simulated_athlete = Athlete(
-                    ftp=self.athlete.ftp,
-                    ctl=ctl,
-                    atl=atl,
-                    tsb=tsb,
-                    history=self.athlete.history,
-                    availability=self.athlete.availability,
-                    level=self.athlete.level
-                )
-                category = select_category(
-                    simulated_athlete,
-                    phase,
-                    self.goal_settings["distribution"]
-                )
-                if recent_categories and recent_categories[-1] in HARD_SESSIONS and category in HARD_SESSIONS:
-                    category = "Endurance"
-                if hard_sessions_week >= self.level_settings["max_hard_sessions_week"] and category in HARD_SESSIONS:
-                    category = "Endurance"
-                workout = select_workout(
-                    category,
-                    simulated_athlete,
-                    available_hours
-                )
-                if workout["tss"] > self.level_settings["max_tss_day"]:
-                    category = "Endurance"
-                    workout = select_workout(
-                        category,
-                        simulated_athlete,
-                        available_hours
-                    )
-            workout_category = workout.get("category", "Recovery")
-            plan.append({
-                "date": str(current_date),
-                "phase": phase,
-                "category": workout_category,
-                "name": workout["name"],
-                "duration": workout["duration"],
-                "if": workout["if"],
-                "tss": workout["tss"]
-            })
-            ctl, atl, tsb = self.update_training_state(
-                ctl,
-                atl,
-                workout["tss"]
+def _allocate_session_tss(total_tss, session_categories, goal, phase):
+    if not session_categories:
+        return {}
+
+    distribution = normalize_distribution_for_categories(goal, session_categories, phase=phase)
+
+    counts = {}
+    for category in session_categories:
+        counts[category] = counts.get(category, 0) + 1
+
+    budgets = {
+        category: float(total_tss) * float(distribution.get(category, 0.0))
+        for category in counts
+    }
+
+    if "VO2max" in budgets:
+        capped = min(budgets["VO2max"], float(get_vo2max_budget(total_tss, goal)))
+        overflow = budgets["VO2max"] - capped
+        budgets["VO2max"] = capped
+        budgets["Endurance"] = budgets.get("Endurance", 0.0) + max(0.0, overflow)
+
+    return {
+        category: (budgets.get(category, 0.0) / max(1, counts[category]))
+        for category in counts
+    }
+
+def create_training_plan(
+    weekly_tss,
+    progression,
+    availability,
+    goal,
+    goal_date=None,
+    workouts=None,
+    week_number=1,
+    athlete_level="Amateur",
+):
+    available_days = get_available_days(availability)
+    day_weights = get_day_weights(availability)
+    if not available_days:
+        return []
+
+    target_tss = _effective_weekly_tss(weekly_tss, progression, week_number)
+    phase = get_training_phase(goal_date)
+
+    categories = get_session_categories(len(available_days), phase=phase)
+
+    # Rule: enforce calendar rest day after every VO2max session.
+    planned_pairs = _build_workout_days_with_vo2_rest(available_days, categories)
+    session_categories = [category for _, category in planned_pairs]
+    session_tss = _allocate_session_tss(target_tss, session_categories, goal, phase)
+
+    schedule = [
+        {
+            "day": day,
+            "category": category,
+            "target_tss": round(float(session_tss.get(category, 0.0))),
+        }
+        for day, category in planned_pairs
+    ]
+
+    for day in schedule:
+        day_weight = float(day_weights.get(day["day"], 1.0))
+        if day_weight > 0:
+            day["target_tss"] = round(day["target_tss"] * max(0.9, min(1.2, day_weight / 2.0 + 0.5)))
+
+        day["load"] = _load_for_tss(day.get("target_tss", 0))
+        if workouts:
+            max_hours = _day_hours(availability, day["day"])
+            candidates = workouts
+            if max_hours > 0:
+                fitted = [
+                    workout
+                    for workout in workouts
+                    if _workout_hours(workout) <= max_hours
+                ]
+                if fitted:
+                    candidates = fitted
+
+            day["workout"] = select_workout(
+                day["category"],
+                day["load"],
+                candidates,
+                target_tss=day["target_tss"],
             )
-            recent_categories.append(workout_category)
-            if workout_category in HARD_SESSIONS:
-                hard_sessions_week += 1
-            if (current_date - week_start).days >= 7:
-                hard_sessions_week = 0
-                week_start = current_date
-            current_date += timedelta(days=1)
-        return plan
+
+    return schedule
