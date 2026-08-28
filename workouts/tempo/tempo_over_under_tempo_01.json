@@ -21,9 +21,17 @@
       "description": ""
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 420,
-      "intensity": 84,
+      "name": "Under",
+      "duration_seconds": 360,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over",
+      "duration_seconds": 360,
+      "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -31,31 +39,23 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 420,
-      "intensity": 84,
+      "name": "Under",
+      "duration_seconds": 360,
+      "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 420,
-      "intensity": 84,
+      "name": "Over",
+      "duration_seconds": 360,
+      "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,23 +63,71 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 420,
-      "intensity": 84,
+      "name": "Under",
+      "duration_seconds": 360,
+      "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 420,
-      "intensity": 84,
+      "name": "Over",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Under",
+      "duration_seconds": 360,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Under",
+      "duration_seconds": 360,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over",
+      "duration_seconds": 360,
+      "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -93,7 +141,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.75,
+  "target_if": 0.79,
   "tags": [
     "tempo",
     "over_under_tempo",
@@ -101,9 +149,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 66,
-  "estimated_tss": 59,
-  "target_tss": 59,
+  "duration_minutes": 94,
+  "estimated_tss": 92,
+  "target_tss": 92,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

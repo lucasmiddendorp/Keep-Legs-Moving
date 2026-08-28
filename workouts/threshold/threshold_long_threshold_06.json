@@ -21,7 +21,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Threshold interval 1",
       "duration_seconds": 720,
       "intensity": 95,
       "duration_type": "Time",
@@ -37,7 +37,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Threshold interval 2",
       "duration_seconds": 720,
       "intensity": 95,
       "duration_type": "Time",
@@ -48,6 +48,62 @@
       "name": "Recovery",
       "duration_seconds": 360,
       "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 3",
+      "duration_seconds": 720,
+      "intensity": 95,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 360,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 720,
+      "intensity": 95,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 360,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 2",
+      "duration_seconds": 720,
+      "intensity": 95,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 360,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 3",
+      "duration_seconds": 720,
+      "intensity": 95,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -61,7 +117,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.78,
+  "target_if": 0.84,
   "tags": [
     "threshold",
     "long_threshold",
@@ -69,11 +125,11 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 62,
-  "estimated_tss": 56,
-  "target_tss": 56,
-  "interval_count": 2,
-  "interval_duration": 720,
+  "duration_minutes": 128,
+  "estimated_tss": 136,
+  "target_tss": 136,
+  "interval_count": 6,
+  "interval_duration": 0,
   "recovery_duration": 360,
   "sets": 1,
   "fit_filename": "threshold/threshold_long_threshold_06.fit"

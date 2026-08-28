@@ -21,8 +21,168 @@
       "description": ""
     },
     {
-      "name": "Work interval",
-      "duration_seconds": 1800,
+      "name": "30 sec Work 1",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 1",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 2",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 2",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 3",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 3",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 4",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 4",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 5",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 5",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 6",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 6",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 7",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 7",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 8",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 8",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 9",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 9",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 10",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 10",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 11",
+      "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,24 +190,176 @@
     },
     {
       "name": "Recovery",
-      "duration_seconds": 900,
+      "duration_seconds": 180,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Work interval",
-      "duration_seconds": 1800,
+      "name": "30 sec Work 1",
+      "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 900,
+      "name": "15 sec Recovery 1",
+      "duration_seconds": 15,
       "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 2",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 2",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 3",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 3",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 4",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 4",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 5",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 5",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 6",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 6",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 7",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 7",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 8",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 8",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 9",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 9",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 10",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 10",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 11",
+      "duration_seconds": 30,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -61,7 +373,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.99,
+  "target_if": 0.84,
   "tags": [
     "vo2max",
     "ronnestad_30_15",
@@ -69,12 +381,12 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 116,
-  "estimated_tss": 159,
-  "target_tss": 159,
-  "interval_count": 2,
-  "interval_duration": 1800,
-  "recovery_duration": 900,
+  "duration_minutes": 44,
+  "estimated_tss": 42,
+  "target_tss": 42,
+  "interval_count": 22,
+  "interval_duration": 30,
+  "recovery_duration": 15,
   "sets": 1,
   "fit_filename": "vo2max/vo2max_ronnestad_30_15_03.fit"
 }

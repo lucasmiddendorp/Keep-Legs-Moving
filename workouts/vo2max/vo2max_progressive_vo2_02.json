@@ -21,7 +21,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Work interval 1",
       "duration_seconds": 240,
       "intensity": 109,
       "duration_type": "Time",
@@ -37,7 +37,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Work interval 2",
       "duration_seconds": 240,
       "intensity": 109,
       "duration_type": "Time",
@@ -53,7 +53,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Work interval 3",
       "duration_seconds": 240,
       "intensity": 109,
       "duration_type": "Time",
@@ -64,6 +64,142 @@
       "name": "Recovery",
       "duration_seconds": 240,
       "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 4",
+      "duration_seconds": 240,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 1",
+      "duration_seconds": 240,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 2",
+      "duration_seconds": 240,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 3",
+      "duration_seconds": 240,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 4",
+      "duration_seconds": 240,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 1",
+      "duration_seconds": 240,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 2",
+      "duration_seconds": 240,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 3",
+      "duration_seconds": 240,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 4",
+      "duration_seconds": 240,
+      "intensity": 109,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -77,7 +213,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.8,
+  "target_if": 0.89,
   "tags": [
     "vo2max",
     "progressive_vo2",
@@ -85,10 +221,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 50,
-  "estimated_tss": 44,
-  "target_tss": 44,
-  "interval_count": 3,
+  "duration_minutes": 118,
+  "estimated_tss": 128,
+  "target_tss": 128,
+  "interval_count": 12,
   "interval_duration": 240,
   "recovery_duration": 240,
   "sets": 1,

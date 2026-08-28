@@ -21,7 +21,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Threshold interval 1",
       "duration_seconds": 360,
       "intensity": 92,
       "duration_type": "Time",
@@ -37,7 +37,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Threshold interval 2",
       "duration_seconds": 360,
       "intensity": 92,
       "duration_type": "Time",
@@ -53,7 +53,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Threshold interval 3",
       "duration_seconds": 360,
       "intensity": 92,
       "duration_type": "Time",
@@ -64,6 +64,190 @@
       "name": "Recovery",
       "duration_seconds": 240,
       "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 4",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 5",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 2",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 3",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 4",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 5",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 2",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 3",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 4",
+      "duration_seconds": 360,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 5",
+      "duration_seconds": 360,
+      "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -77,7 +261,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.74,
+  "target_if": 0.8,
   "tags": [
     "threshold",
     "progressive_threshold",
@@ -85,11 +269,11 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 54,
-  "estimated_tss": 44,
-  "target_tss": 44,
-  "interval_count": 3,
-  "interval_duration": 360,
+  "duration_minutes": 170,
+  "estimated_tss": 163,
+  "target_tss": 163,
+  "interval_count": 15,
+  "interval_duration": 0,
   "recovery_duration": 240,
   "sets": 1,
   "fit_filename": "threshold/threshold_progressive_threshold_03.fit"

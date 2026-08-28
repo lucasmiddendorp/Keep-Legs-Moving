@@ -31,7 +31,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 300,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -62,8 +62,8 @@
     "aerobic"
   ],
   "duration_minutes": 56,
-  "estimated_tss": 44,
-  "target_tss": 44,
+  "estimated_tss": 43,
+  "target_tss": 43,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 300,

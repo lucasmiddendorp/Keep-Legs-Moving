@@ -85,14 +85,6 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 600,
       "intensity": 55,
@@ -101,7 +93,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.74,
+  "target_if": 0.75,
   "tags": [
     "threshold",
     "over_under",
@@ -109,9 +101,9 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 44,
-  "estimated_tss": 36,
-  "target_tss": 36,
+  "duration_minutes": 42,
+  "estimated_tss": 35,
+  "target_tss": 35,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,

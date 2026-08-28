@@ -31,7 +31,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 300,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""

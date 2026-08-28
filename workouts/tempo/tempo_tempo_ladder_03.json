@@ -29,6 +29,14 @@
       "description": ""
     },
     {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Tempo block",
       "duration_seconds": 300,
       "intensity": 81,
@@ -45,7 +53,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.67,
+  "target_if": 0.66,
   "tags": [
     "tempo",
     "tempo_ladder",
@@ -53,12 +61,12 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 34,
-  "estimated_tss": 24,
-  "target_tss": 24,
+  "duration_minutes": 36,
+  "estimated_tss": 25,
+  "target_tss": 25,
   "interval_count": 0,
   "interval_duration": 0,
-  "recovery_duration": 0,
+  "recovery_duration": 180,
   "sets": 1,
   "fit_filename": "tempo/tempo_tempo_ladder_03.fit"
 }

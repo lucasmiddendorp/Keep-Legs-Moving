@@ -21,7 +21,15 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Threshold interval 1",
+      "duration_seconds": 1860,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 2",
       "duration_seconds": 1860,
       "intensity": 92,
       "duration_type": "Time",
@@ -37,7 +45,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.82,
+  "target_if": 0.86,
   "tags": [
     "threshold",
     "sustained_threshold",
@@ -45,11 +53,11 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 54,
-  "estimated_tss": 56,
-  "target_tss": 56,
-  "interval_count": 1,
-  "interval_duration": 1860,
+  "duration_minutes": 84,
+  "estimated_tss": 100,
+  "target_tss": 100,
+  "interval_count": 2,
+  "interval_duration": 0,
   "recovery_duration": 0,
   "sets": 1,
   "fit_filename": "threshold/threshold_sustained_threshold_01.fit"

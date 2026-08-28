@@ -88,9 +88,9 @@ def get_completed_week_zones(activities, week_start, today, ftp):
         has_power = "ride" in activity_type.lower() and ftp > 0 and power is not None and not pd.isna(power)
         if has_power:
             intensity = float(power) / ftp
-            if intensity < 0.76:
+            if intensity < 0.87:
                 zone = "Zone 1+2"
-            elif intensity < 0.91:
+            elif intensity < 1.05:
                 zone = "Zone 3"
             else:
                 zone = "Zone 4+"
@@ -115,7 +115,6 @@ def render_preview(workout, key, height=115):
     )
     st.plotly_chart(fig, width="stretch", config={"displayModeBar": False}, key=key)
 
-
 @st.dialog("Workout details")
 def workout_details_dialog(workout):
     category = workout.get("_category", workout.get("category", "Workout"))
@@ -124,6 +123,28 @@ def workout_details_dialog(workout):
     target_if = float(workout.get("target_if", 0) or 0)
     st.subheader(workout.get("name", "Workout"))
     st.caption(f"{category} · {format_minutes(duration)} · IF {target_if:.2f} · {target_tss:.0f} TSS")
+    st.markdown("**Workout intervals**")
+    for step in workout.get("steps", []):
+        name = step.get("name", "Interval")
+        seconds = float(step.get("duration_seconds", 0) or 0)
+        intensity = float(step.get("intensity", 0) or 0)
+        repeat = int(step.get("repeat", 1) or 1)
+        minutes, secs = divmod(round(seconds), 60)
+        duration_text = f"{minutes}:{secs:02d}"
+        repeat_text = f" × {repeat}" if repeat > 1 else ""
+        st.markdown(
+            f"""
+            <div style="display:flex;justify-content:space-between;align-items:center;
+            padding:7px 10px;margin-bottom:3px;background:#f8fafc;
+            border:1px solid #e5e7eb;border-radius:5px;font-size:11px;color:#17212b;">
+                <span>{name}{repeat_text}</span>
+                <span style="font-weight:700;color:#17212b;">
+                    {duration_text} · IF {intensity / 100:.2f}
+                </span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
     render_preview(workout, f"details_preview_{workout.get('id', workout.get('_file', 'workout'))}", height=260)
     try:
         fit_bytes, filename = generate_workout_fit(workout)
@@ -137,7 +158,6 @@ def workout_details_dialog(workout):
         )
     except Exception:
         st.warning("FIT file unavailable for this workout.")
-
 
 @st.dialog("Choose workout")
 def edit_workout_dialog(day, plan, workouts):
@@ -636,6 +656,7 @@ if training_plan:
         }
 
         if week_budget:
+            st.write("Week budget:", week_budget)
             budget_zones = week_budget.get("zone_minutes", {})
 
             weekly_zone_targets["Zone 1+2"] = float(

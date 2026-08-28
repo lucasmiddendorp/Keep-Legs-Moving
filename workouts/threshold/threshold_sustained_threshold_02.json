@@ -21,7 +21,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Threshold interval 1",
       "duration_seconds": 1920,
       "intensity": 92,
       "duration_type": "Time",
@@ -49,7 +49,7 @@
   "estimated_tss": 59,
   "target_tss": 59,
   "interval_count": 1,
-  "interval_duration": 1920,
+  "interval_duration": 0,
   "recovery_duration": 0,
   "sets": 1,
   "fit_filename": "threshold/threshold_sustained_threshold_02.fit"

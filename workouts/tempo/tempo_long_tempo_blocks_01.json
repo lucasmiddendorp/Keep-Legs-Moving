@@ -31,7 +31,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -40,6 +40,14 @@
       "name": "Tempo block",
       "duration_seconds": 1260,
       "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -69,9 +77,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 88,
-  "estimated_tss": 81,
-  "target_tss": 81,
+  "duration_minutes": 92,
+  "estimated_tss": 82,
+  "target_tss": 82,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

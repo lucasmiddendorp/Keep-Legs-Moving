@@ -30,7 +30,7 @@
     },
     {
       "name": "Controlled surge",
-      "duration_seconds": 1800,
+      "duration_seconds": 30.0,
       "intensity": 85,
       "duration_type": "Time",
       "repeat": 1,
@@ -46,7 +46,7 @@
     },
     {
       "name": "Controlled surge",
-      "duration_seconds": 1800,
+      "duration_seconds": 30.0,
       "intensity": 85,
       "duration_type": "Time",
       "repeat": 1,
@@ -61,7 +61,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.78,
+  "target_if": 0.65,
   "tags": [
     "endurance",
     "z2_surges",
@@ -70,9 +70,9 @@
     "z2",
     "aerobic"
   ],
-  "duration_minutes": 108,
-  "estimated_tss": 106,
-  "target_tss": 106,
+  "duration_minutes": 50,
+  "estimated_tss": 35,
+  "target_tss": 35,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

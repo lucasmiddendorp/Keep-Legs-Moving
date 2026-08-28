@@ -21,7 +21,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Work interval 1",
       "duration_seconds": 240,
       "intensity": 108,
       "duration_type": "Time",
@@ -37,7 +37,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Work interval 2",
       "duration_seconds": 240,
       "intensity": 108,
       "duration_type": "Time",
@@ -53,7 +53,7 @@
       "description": ""
     },
     {
-      "name": "Work interval",
+      "name": "Work interval 3",
       "duration_seconds": 240,
       "intensity": 108,
       "duration_type": "Time",
@@ -64,6 +64,94 @@
       "name": "Recovery",
       "duration_seconds": 240,
       "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 1",
+      "duration_seconds": 240,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 2",
+      "duration_seconds": 240,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 3",
+      "duration_seconds": 240,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 1",
+      "duration_seconds": 240,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 2",
+      "duration_seconds": 240,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 3",
+      "duration_seconds": 240,
+      "intensity": 108,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -77,7 +165,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.79,
+  "target_if": 0.87,
   "tags": [
     "vo2max",
     "long_vo2",
@@ -85,10 +173,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 52,
-  "estimated_tss": 44,
-  "target_tss": 44,
-  "interval_count": 3,
+  "duration_minutes": 96,
+  "estimated_tss": 99,
+  "target_tss": 99,
+  "interval_count": 9,
   "interval_duration": 240,
   "recovery_duration": 240,
   "sets": 1,

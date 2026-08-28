@@ -1,0 +1,121 @@
+{
+  "id": "testing_ramp_test_03",
+  "name": "Ramp Test 03",
+  "category": "Testing",
+  "subtype": "ramp_test",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 780,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp Test focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Warm-up",
+      "duration_seconds": 600,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 90,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 130,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.9,
+  "tags": [
+    "testing",
+    "ramp_test",
+    "ramp_test",
+    "test",
+    "ftp",
+    "ramp"
+  ],
+  "duration_minutes": 74,
+  "estimated_tss": 81,
+  "target_tss": 81,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "testing/testing_ramp_test_03.fit"
+}

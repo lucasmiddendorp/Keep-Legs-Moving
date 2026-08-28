@@ -28,7 +28,7 @@ def validate_definition(workout: Workout) -> None:
         sum("interval" in label for label in interval_labels) > 1
         or any("under" in label or "over" in label for label in interval_labels)
     )
-    if workout.category in {"VO2max", "Threshold"} and interval_work:
+    if workout.category in {"VO2max", "Threshold"} and interval_work and workout.subtype != "sustained_threshold":
         if not any("recover" in step.name.lower() for step in workout.steps):
             raise ValueError(f"{workout.id}: hard workout needs recovery steps")
 

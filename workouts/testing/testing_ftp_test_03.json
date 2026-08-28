@@ -1,0 +1,89 @@
+{
+  "id": "testing_ftp_test_03",
+  "name": "Ftp Test 03",
+  "category": "Testing",
+  "subtype": "ftp_test",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 780,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ftp Test focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Warm-up",
+      "duration_seconds": 1200,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "FTP test",
+      "duration_seconds": 300,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 300,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "FTP test",
+      "duration_seconds": 1200,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.79,
+  "tags": [
+    "testing",
+    "ftp_test",
+    "ftp_test",
+    "test",
+    "ftp",
+    "threshold"
+  ],
+  "duration_minutes": 84,
+  "estimated_tss": 74,
+  "target_tss": 74,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 300,
+  "sets": 1,
+  "fit_filename": "testing/testing_ftp_test_03.fit"
+}

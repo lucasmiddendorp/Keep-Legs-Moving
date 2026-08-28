@@ -31,7 +31,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +47,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,7 +63,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -85,7 +85,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.74,
+  "target_if": 0.73,
   "tags": [
     "tempo",
     "tempo_intervals",
@@ -94,8 +94,8 @@
     "aerobic"
   ],
   "duration_minutes": 68,
-  "estimated_tss": 58,
-  "target_tss": 58,
+  "estimated_tss": 56,
+  "target_tss": 56,
   "interval_count": 1,
   "interval_duration": 0,
   "recovery_duration": 180,

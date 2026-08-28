@@ -85,14 +85,6 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 720,
       "intensity": 55,
@@ -101,7 +93,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.84,
+  "target_if": 0.85,
   "tags": [
     "vo2max",
     "over_under_vo2",
@@ -109,7 +101,7 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 48,
+  "duration_minutes": 46,
   "estimated_tss": 44,
   "target_tss": 44,
   "interval_count": 0,

@@ -31,7 +31,39 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 480,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,38 +79,14 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 420,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 420,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 420,
+      "duration_seconds": 480,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -93,7 +101,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.72,
+  "target_if": 0.71,
   "tags": [
     "tempo",
     "variable_tempo",
@@ -101,9 +109,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 68,
-  "estimated_tss": 56,
-  "target_tss": 56,
+  "duration_minutes": 74,
+  "estimated_tss": 60,
+  "target_tss": 60,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
