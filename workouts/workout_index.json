@@ -21047,7 +21047,7 @@
       },
       {
         "name": "Endurance ride",
-        "duration_seconds": 8100,
+        "duration_seconds": 7800,
         "intensity": 68,
         "duration_type": "Time",
         "repeat": 1,
@@ -21071,9 +21071,9 @@
       "z2",
       "aerobic"
     ],
-    "duration_minutes": 154,
-    "estimated_tss": 114,
-    "target_tss": 114,
+    "duration_minutes": 148,
+    "estimated_tss": 110,
+    "target_tss": 110,
     "interval_count": 0,
     "interval_duration": 0,
     "recovery_duration": 0,
@@ -21104,7 +21104,7 @@
       },
       {
         "name": "Endurance ride",
-        "duration_seconds": 9000,
+        "duration_seconds": 8400,
         "intensity": 68,
         "duration_type": "Time",
         "repeat": 1,
@@ -21128,9 +21128,9 @@
       "z2",
       "aerobic"
     ],
-    "duration_minutes": 170,
-    "estimated_tss": 127,
-    "target_tss": 127,
+    "duration_minutes": 160,
+    "estimated_tss": 119,
+    "target_tss": 119,
     "interval_count": 0,
     "interval_duration": 0,
     "recovery_duration": 0,
@@ -21161,7 +21161,7 @@
       },
       {
         "name": "Endurance ride",
-        "duration_seconds": 9900,
+        "duration_seconds": 9000,
         "intensity": 68,
         "duration_type": "Time",
         "repeat": 1,
@@ -21185,9 +21185,9 @@
       "z2",
       "aerobic"
     ],
-    "duration_minutes": 184,
-    "estimated_tss": 138,
-    "target_tss": 138,
+    "duration_minutes": 170,
+    "estimated_tss": 127,
+    "target_tss": 127,
     "interval_count": 0,
     "interval_duration": 0,
     "recovery_duration": 0,
@@ -21218,7 +21218,7 @@
       },
       {
         "name": "Endurance ride",
-        "duration_seconds": 10800,
+        "duration_seconds": 9600,
         "intensity": 68,
         "duration_type": "Time",
         "repeat": 1,
@@ -21242,9 +21242,9 @@
       "z2",
       "aerobic"
     ],
-    "duration_minutes": 202,
-    "estimated_tss": 151,
-    "target_tss": 151,
+    "duration_minutes": 182,
+    "estimated_tss": 135,
+    "target_tss": 135,
     "interval_count": 0,
     "interval_duration": 0,
     "recovery_duration": 0,
@@ -21275,7 +21275,7 @@
       },
       {
         "name": "Endurance ride",
-        "duration_seconds": 11700,
+        "duration_seconds": 10200,
         "intensity": 68,
         "duration_type": "Time",
         "repeat": 1,
@@ -21299,9 +21299,9 @@
       "z2",
       "aerobic"
     ],
-    "duration_minutes": 218,
-    "estimated_tss": 163,
-    "target_tss": 163,
+    "duration_minutes": 194,
+    "estimated_tss": 144,
+    "target_tss": 144,
     "interval_count": 0,
     "interval_duration": 0,
     "recovery_duration": 0,
@@ -21317,6 +21317,177 @@
       {
         "name": "Warm-up",
         "duration_seconds": 840,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Long Z2 focus",
+        "duration_seconds": 30,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Endurance ride",
+        "duration_seconds": 10800,
+        "intensity": 68,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Cool-down",
+        "duration_seconds": 480,
+        "intensity": 55,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      }
+    ],
+    "target_if": 0.67,
+    "tags": [
+      "endurance",
+      "long_z2",
+      "long_z2",
+      "easy",
+      "z2",
+      "aerobic"
+    ],
+    "duration_minutes": 202,
+    "estimated_tss": 151,
+    "target_tss": 151,
+    "interval_count": 0,
+    "interval_duration": 0,
+    "recovery_duration": 0,
+    "sets": 1,
+    "fit_filename": "endurance/endurance_long_z2_06.fit"
+  },
+  {
+    "id": "endurance_long_z2_07",
+    "name": "Long Z2 07",
+    "category": "Endurance",
+    "subtype": "long_z2",
+    "steps": [
+      {
+        "name": "Warm-up",
+        "duration_seconds": 900,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Long Z2 focus",
+        "duration_seconds": 30,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Endurance ride",
+        "duration_seconds": 11400,
+        "intensity": 68,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Cool-down",
+        "duration_seconds": 540,
+        "intensity": 55,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      }
+    ],
+    "target_if": 0.67,
+    "tags": [
+      "endurance",
+      "long_z2",
+      "long_z2",
+      "easy",
+      "z2",
+      "aerobic"
+    ],
+    "duration_minutes": 214,
+    "estimated_tss": 160,
+    "target_tss": 160,
+    "interval_count": 0,
+    "interval_duration": 0,
+    "recovery_duration": 0,
+    "sets": 1,
+    "fit_filename": "endurance/endurance_long_z2_07.fit"
+  },
+  {
+    "id": "endurance_long_z2_08",
+    "name": "Long Z2 08",
+    "category": "Endurance",
+    "subtype": "long_z2",
+    "steps": [
+      {
+        "name": "Warm-up",
+        "duration_seconds": 960,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Long Z2 focus",
+        "duration_seconds": 30,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Endurance ride",
+        "duration_seconds": 12000,
+        "intensity": 68,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Cool-down",
+        "duration_seconds": 600,
+        "intensity": 55,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      }
+    ],
+    "target_if": 0.67,
+    "tags": [
+      "endurance",
+      "long_z2",
+      "long_z2",
+      "easy",
+      "z2",
+      "aerobic"
+    ],
+    "duration_minutes": 226,
+    "estimated_tss": 169,
+    "target_tss": 169,
+    "interval_count": 0,
+    "interval_duration": 0,
+    "recovery_duration": 0,
+    "sets": 1,
+    "fit_filename": "endurance/endurance_long_z2_08.fit"
+  },
+  {
+    "id": "endurance_long_z2_09",
+    "name": "Long Z2 09",
+    "category": "Endurance",
+    "subtype": "long_z2",
+    "steps": [
+      {
+        "name": "Warm-up",
+        "duration_seconds": 1020,
         "intensity": 60,
         "duration_type": "Time",
         "repeat": 1,
@@ -21356,24 +21527,24 @@
       "z2",
       "aerobic"
     ],
-    "duration_minutes": 232,
-    "estimated_tss": 175,
-    "target_tss": 175,
+    "duration_minutes": 236,
+    "estimated_tss": 176,
+    "target_tss": 176,
     "interval_count": 0,
     "interval_duration": 0,
     "recovery_duration": 0,
     "sets": 1,
-    "fit_filename": "endurance/endurance_long_z2_06.fit"
+    "fit_filename": "endurance/endurance_long_z2_09.fit"
   },
   {
-    "id": "endurance_long_z2_07",
-    "name": "Long Z2 07",
+    "id": "endurance_long_z2_10",
+    "name": "Long Z2 10",
     "category": "Endurance",
     "subtype": "long_z2",
     "steps": [
       {
         "name": "Warm-up",
-        "duration_seconds": 900,
+        "duration_seconds": 1080,
         "intensity": 60,
         "duration_type": "Time",
         "repeat": 1,
@@ -21389,7 +21560,7 @@
       },
       {
         "name": "Endurance ride",
-        "duration_seconds": 13500,
+        "duration_seconds": 13200,
         "intensity": 68,
         "duration_type": "Time",
         "repeat": 1,
@@ -21413,24 +21584,24 @@
       "z2",
       "aerobic"
     ],
-    "duration_minutes": 250,
-    "estimated_tss": 187,
-    "target_tss": 187,
+    "duration_minutes": 248,
+    "estimated_tss": 185,
+    "target_tss": 185,
     "interval_count": 0,
     "interval_duration": 0,
     "recovery_duration": 0,
     "sets": 1,
-    "fit_filename": "endurance/endurance_long_z2_07.fit"
+    "fit_filename": "endurance/endurance_long_z2_10.fit"
   },
   {
-    "id": "endurance_long_z2_08",
-    "name": "Long Z2 08",
+    "id": "endurance_long_z2_11",
+    "name": "Long Z2 11",
     "category": "Endurance",
     "subtype": "long_z2",
     "steps": [
       {
         "name": "Warm-up",
-        "duration_seconds": 960,
+        "duration_seconds": 1140,
         "intensity": 60,
         "duration_type": "Time",
         "repeat": 1,
@@ -21446,7 +21617,7 @@
       },
       {
         "name": "Endurance ride",
-        "duration_seconds": 14400,
+        "duration_seconds": 13800,
         "intensity": 68,
         "duration_type": "Time",
         "repeat": 1,
@@ -21470,14 +21641,299 @@
       "z2",
       "aerobic"
     ],
-    "duration_minutes": 266,
-    "estimated_tss": 200,
-    "target_tss": 200,
+    "duration_minutes": 260,
+    "estimated_tss": 194,
+    "target_tss": 194,
     "interval_count": 0,
     "interval_duration": 0,
     "recovery_duration": 0,
     "sets": 1,
-    "fit_filename": "endurance/endurance_long_z2_08.fit"
+    "fit_filename": "endurance/endurance_long_z2_11.fit"
+  },
+  {
+    "id": "endurance_long_z2_12",
+    "name": "Long Z2 12",
+    "category": "Endurance",
+    "subtype": "long_z2",
+    "steps": [
+      {
+        "name": "Warm-up",
+        "duration_seconds": 1200,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Long Z2 focus",
+        "duration_seconds": 30,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Endurance ride",
+        "duration_seconds": 14400,
+        "intensity": 68,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Cool-down",
+        "duration_seconds": 480,
+        "intensity": 55,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      }
+    ],
+    "target_if": 0.67,
+    "tags": [
+      "endurance",
+      "long_z2",
+      "long_z2",
+      "easy",
+      "z2",
+      "aerobic"
+    ],
+    "duration_minutes": 268,
+    "estimated_tss": 201,
+    "target_tss": 201,
+    "interval_count": 0,
+    "interval_duration": 0,
+    "recovery_duration": 0,
+    "sets": 1,
+    "fit_filename": "endurance/endurance_long_z2_12.fit"
+  },
+  {
+    "id": "endurance_long_z2_13",
+    "name": "Long Z2 13",
+    "category": "Endurance",
+    "subtype": "long_z2",
+    "steps": [
+      {
+        "name": "Warm-up",
+        "duration_seconds": 1260,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Long Z2 focus",
+        "duration_seconds": 30,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Endurance ride",
+        "duration_seconds": 15000,
+        "intensity": 68,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Cool-down",
+        "duration_seconds": 540,
+        "intensity": 55,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      }
+    ],
+    "target_if": 0.67,
+    "tags": [
+      "endurance",
+      "long_z2",
+      "long_z2",
+      "easy",
+      "z2",
+      "aerobic"
+    ],
+    "duration_minutes": 280,
+    "estimated_tss": 210,
+    "target_tss": 210,
+    "interval_count": 0,
+    "interval_duration": 0,
+    "recovery_duration": 0,
+    "sets": 1,
+    "fit_filename": "endurance/endurance_long_z2_13.fit"
+  },
+  {
+    "id": "endurance_long_z2_14",
+    "name": "Long Z2 14",
+    "category": "Endurance",
+    "subtype": "long_z2",
+    "steps": [
+      {
+        "name": "Warm-up",
+        "duration_seconds": 1320,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Long Z2 focus",
+        "duration_seconds": 30,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Endurance ride",
+        "duration_seconds": 15600,
+        "intensity": 68,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Cool-down",
+        "duration_seconds": 600,
+        "intensity": 55,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      }
+    ],
+    "target_if": 0.67,
+    "tags": [
+      "endurance",
+      "long_z2",
+      "long_z2",
+      "easy",
+      "z2",
+      "aerobic"
+    ],
+    "duration_minutes": 292,
+    "estimated_tss": 219,
+    "target_tss": 219,
+    "interval_count": 0,
+    "interval_duration": 0,
+    "recovery_duration": 0,
+    "sets": 1,
+    "fit_filename": "endurance/endurance_long_z2_14.fit"
+  },
+  {
+    "id": "endurance_long_z2_15",
+    "name": "Long Z2 15",
+    "category": "Endurance",
+    "subtype": "long_z2",
+    "steps": [
+      {
+        "name": "Warm-up",
+        "duration_seconds": 1380,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Long Z2 focus",
+        "duration_seconds": 30,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Endurance ride",
+        "duration_seconds": 16200,
+        "intensity": 68,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Cool-down",
+        "duration_seconds": 480,
+        "intensity": 55,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      }
+    ],
+    "target_if": 0.67,
+    "tags": [
+      "endurance",
+      "long_z2",
+      "long_z2",
+      "easy",
+      "z2",
+      "aerobic"
+    ],
+    "duration_minutes": 302,
+    "estimated_tss": 226,
+    "target_tss": 226,
+    "interval_count": 0,
+    "interval_duration": 0,
+    "recovery_duration": 0,
+    "sets": 1,
+    "fit_filename": "endurance/endurance_long_z2_15.fit"
+  },
+  {
+    "id": "endurance_long_z2_16",
+    "name": "Long Z2 16",
+    "category": "Endurance",
+    "subtype": "long_z2",
+    "steps": [
+      {
+        "name": "Warm-up",
+        "duration_seconds": 1440,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Long Z2 focus",
+        "duration_seconds": 30,
+        "intensity": 60,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Endurance ride",
+        "duration_seconds": 16800,
+        "intensity": 68,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      },
+      {
+        "name": "Cool-down",
+        "duration_seconds": 540,
+        "intensity": 55,
+        "duration_type": "Time",
+        "repeat": 1,
+        "description": ""
+      }
+    ],
+    "target_if": 0.67,
+    "tags": [
+      "endurance",
+      "long_z2",
+      "long_z2",
+      "easy",
+      "z2",
+      "aerobic"
+    ],
+    "duration_minutes": 314,
+    "estimated_tss": 235,
+    "target_tss": 235,
+    "interval_count": 0,
+    "interval_duration": 0,
+    "recovery_duration": 0,
+    "sets": 1,
+    "fit_filename": "endurance/endurance_long_z2_16.fit"
   },
   {
     "id": "endurance_z2_tempo_01",

@@ -22,7 +22,7 @@
     },
     {
       "name": "Endurance ride",
-      "duration_seconds": 11700,
+      "duration_seconds": 10200,
       "intensity": 68,
       "duration_type": "Time",
       "repeat": 1,
@@ -46,9 +46,9 @@
     "z2",
     "aerobic"
   ],
-  "duration_minutes": 218,
-  "estimated_tss": 163,
-  "target_tss": 163,
+  "duration_minutes": 194,
+  "estimated_tss": 144,
+  "target_tss": 144,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

@@ -191,16 +191,63 @@ def generate_workouts():
         "aerobic_progression": (90, 65),
         "recovery_endurance": (45, 60),
     }
+
     for family, (base_min, intensity) in endurance_families.items():
-        for variant in range(1, 9):
-            duration = base_min + variant * (15 if family in {"long_z2", "steady_z2"} else 8)
-            if family == "z2_tempo":
-                steps = [work(duration - 20, intensity, "Endurance block"), work(10 + variant % 3 * 5, 80, "Tempo finish")]
-            elif family == "z2_cadence":
-                steps = [work(10, intensity + 4 if i % 2 else intensity, "Cadence block") for i in range(max(3, duration // 20))]
-            elif family == "z2_surges":
-                steps = [work(15, intensity, "Endurance block"), work(30, 85, "Controlled surge")] * max(2, duration // 45)
+
+        # More variants for long Z2 so the library can reach 5h+
+        variants = 16 if family == "long_z2" else 8
+
+        for variant in range(1, variants + 1):
+
+            if family == "long_z2":
+                # 2h15 → 5h
+                duration = 120 + variant * 10
+            elif family == "steady_z2":
+                duration = base_min + variant * 15
             else:
-                steps = [work(duration, intensity, "Endurance ride")]
-            workouts.append(build_workout(family, variant, "Endurance", family, steps, ["easy", "z2", "aerobic"], 8, 8))
+                duration = base_min + variant * (
+                    15 if family in {"long_z2", "steady_z2"} else 8
+                )
+
+            if family == "z2_tempo":
+                steps = [
+                    work(duration - 20, intensity, "Endurance block"),
+                    work(10 + variant % 3 * 5, 80, "Tempo finish"),
+                ]
+
+            elif family == "z2_cadence":
+                block_count = max(3, duration // 20)
+                steps = [
+                    work(
+                        10,
+                        intensity + 4 if i % 2 else intensity,
+                        "Cadence block",
+                    )
+                    for i in range(block_count)
+                ]
+
+            elif family == "z2_surges":
+                steps = [
+                    work(15, intensity, "Endurance block"),
+                    work(30, 85, "Controlled surge"),
+                ] * max(2, duration // 45)
+
+            else:
+                steps = [
+                    work(duration, intensity, "Endurance ride")
+                ]
+
+            workouts.append(
+                build_workout(
+                    family,
+                    variant,
+                    "Endurance",
+                    family,
+                    steps,
+                    ["easy", "z2", "aerobic"],
+                    8,
+                    8,
+                )
+            )
+
     return workouts

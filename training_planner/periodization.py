@@ -1,20 +1,30 @@
 """Independent periodized training-plan generator for Cycling Analytics."""
 
 from datetime import date, datetime, timedelta
-from itertools import permutations
+from itertools import combinations
 
 import pandas as pd
 
-from .availability import get_available_days, get_day_weights
+from .availability import get_available_days
 from .distribution import calculate_distribution
-from .workout_selection import select_workout
 from .recovery import calculate_recovery_profile
 
 DAY_ORDER = [
     "Monday", "Tuesday", "Wednesday", "Thursday",
     "Friday", "Saturday", "Sunday",
 ]
+WEEKEND_FIRST_ORDER = [
+    "Saturday", "Sunday", "Monday", "Tuesday",
+    "Wednesday", "Thursday", "Friday",
+]
 HARD_TYPES = {"Threshold", "VO2max"}
+ZONE_KEYS = ("Zone 1", "Zone 2", "Zone 3", "Zone 4+")
+CATEGORY_ZONE_FOCUS = {
+    "Endurance": ("Zone 1", "Zone 2"),
+    "Tempo": ("Zone 3",),
+    "Threshold": ("Zone 3",),
+    "VO2max": ("Zone 4+",),
+}
 
 
 def _parse_date(value):
@@ -43,6 +53,45 @@ def _workout_hours(workout):
         float(step.get("duration_seconds", 0) or 0)
         for step in (workout or {}).get("steps", [])
     ) / 3600
+
+
+def _day_priority(day, availability):
+    """Sort key that favors the most available hours, tie-broken toward the weekend."""
+    return (-_hours(availability.get(day, {})), WEEKEND_FIRST_ORDER.index(day))
+
+
+def _workout_zone_minutes(workout):
+    """Break a workout's steps down into minutes spent per training zone."""
+    zones = {zone: 0.0 for zone in ZONE_KEYS}
+    for step in (workout or {}).get("steps", []):
+        intensity = float(step.get("intensity", 0) or 0)
+        minutes = float(step.get("duration_seconds", 0) or 0) / 60
+        if intensity < 55:
+            zones["Zone 1"] += minutes
+        elif intensity < 76:
+            zones["Zone 2"] += minutes
+        elif intensity < 91:
+            zones["Zone 3"] += minutes
+        else:
+            zones["Zone 4+"] += minutes
+    return zones
+
+
+def _scale_workout(workout, target_hours):
+    """Return a copy of workout with step durations (and TSS) scaled toward target_hours."""
+    current_hours = _workout_hours(workout)
+    if not workout or target_hours <= 0 or current_hours <= 0:
+        return workout
+    factor = max(0.5, min(1.5, target_hours / current_hours))
+    if abs(factor - 1.0) < 0.05:
+        return workout
+    scaled = dict(workout)
+    scaled["steps"] = [
+        {**step, "duration_seconds": float(step.get("duration_seconds", 0) or 0) * factor}
+        for step in workout.get("steps", [])
+    ]
+    scaled["target_tss"] = float(workout.get("target_tss", 0) or 0) * factor
+    return scaled
 
 
 def classify_workout(workout):
@@ -129,28 +178,40 @@ def _intensity_budget(phase, target_tss, available_minutes):
         "taper": (0.90, 0.06, 0.04),
     }[phase]
     total_minutes = max(1.0, float(available_minutes))
-    z4 = round(total_minutes * ratios[2] * 0.7)
-    z5 = round(total_minutes * ratios[2] * 0.3)
     return {
         "easy_tss": round(target_tss * ratios[0]),
         "moderate_tss": round(target_tss * ratios[1]),
         "hard_tss": round(target_tss * ratios[2]),
         "zone_minutes": {
-            "Zone 1+2": round(total_minutes * ratios[0]),
+            "Zone 1": round(total_minutes * ratios[0] * 0.15),
+            "Zone 2": round(total_minutes * ratios[0] * 0.85),
             "Zone 3": round(total_minutes * ratios[1]),
-            "Zone 4": z4,
-            "Zone 5+": z5,
+            "Zone 4+": round(total_minutes * ratios[2]),
         },
     }
 
 
 def _remaining_zone_budget(zone_budget, completed_zone_minutes):
     remaining = {}
-    for zone in ("Zone 1+2", "Zone 3", "Zone 4", "Zone 5+"):
+    for zone in ZONE_KEYS:
         minutes = float((zone_budget or {}).get(zone, 0) or 0)
         completed = float((completed_zone_minutes or {}).get(zone, 0) or 0)
         remaining[zone] = max(0.0, minutes - completed)
     return remaining
+
+
+def _sustainable_tss_rate(recovery):
+    """Estimate a realistic TSS/hour rate from recent history (falls back to a conservative default)."""
+    historical_hours = float((recovery or {}).get("avg_hours_per_week", 0) or 0)
+    historical_tss = float((recovery or {}).get("avg_stress_per_week", 0) or 0)
+    historical_rate = historical_tss / historical_hours if historical_hours > 0 else 55.0
+    return max(35.0, min(75.0, historical_rate * 1.1))
+
+
+def _implied_minutes(target_tss, recovery):
+    """Convert a weekly TSS target into an implied total duration, so duration follows progression."""
+    rate = _sustainable_tss_rate(recovery)
+    return (float(target_tss or 0) / rate) * 60 if rate > 0 else 0.0
 
 
 def _achievable_week_tss(available_days, availability, workouts, training_hours=None, recovery=None):
@@ -163,12 +224,9 @@ def _achievable_week_tss(available_days, availability, workouts, training_hours=
     )
     if max_workout_tss <= 0:
         return 0.0
-    historical_hours = float((recovery or {}).get("avg_hours_per_week", 0) or 0)
-    historical_tss = float((recovery or {}).get("avg_stress_per_week", 0) or 0)
-    historical_rate = historical_tss / historical_hours if historical_hours > 0 else 80.0
-    sustainable_rate = max(50.0, min(90.0, historical_rate * 1.1))
+    sustainable_rate = _sustainable_tss_rate(recovery)
     by_hours = training_hours * sustainable_rate
-    by_days = len(available_days) * max_workout_tss * 1.2
+    by_days = len(available_days) * max_workout_tss
     return float(min(by_hours, by_days, 900.0))
 
 
@@ -192,371 +250,249 @@ def _supported_long_ride_hours(requested_hours, target_tss, phase, recovery):
     return round(min(float(requested_hours), supported_hours), 1)
 
 
-def _high_availability_days(days, availability):
-    if not days:
-        return []
-    highest = max(_hours(availability.get(day, {})) for day in days)
-    threshold = max(3.0, highest * 0.8)
-    return [day for day in days if _hours(availability.get(day, {})) >= threshold]
-
-
-def _workout_zone_minutes(workout):
-    zones = {"Zone 1+2": 0.0, "Zone 3": 0.0, "Zone 4": 0.0, "Zone 5+": 0.0}
-    for step in (workout or {}).get("steps", []):
-        intensity = float(step.get("intensity", 0) or 0)
-        minutes = float(step.get("duration_seconds", 0) or 0) / 60
-        if intensity < 76:
-            zones["Zone 1+2"] += minutes
-        elif intensity < 91:
-            zones["Zone 3"] += minutes
-        elif intensity <= 105:
-            zones["Zone 4"] += minutes
-        else:
-            zones["Zone 5+"] += minutes
-    return zones
-
-
-def _category_counts(
-    training_days,
+def _select_categories(
+    sessions_per_week,
     goal,
     phase,
     max_hard_sessions=2,
-    ensure_vo2=False,
-    rotation_state=None,
+    week_index=0,
 ):
+    """Build weekly structure based on available training days."""
+
+    sessions_per_week = max(2, min(6, int(sessions_per_week or 3)))
+
+    # With only 3 training days:
+    # alternate Tempo and Threshold each week, while keeping VO2max.
+    if sessions_per_week == 3:
+        second_quality = "Tempo" if week_index % 2 == 0 else "Threshold"
+        return ["Endurance", "VO2max", second_quality]
+
+    # 4+ days: keep the normal structure.
     distribution = _phase_distribution(goal, phase)
-    state = rotation_state if rotation_state is not None else {}
-    for category, weight in distribution.items():
-        state[category] = state.get(category, 0.0) + weight * training_days
-    counts = {category: 0 for category in distribution}
-    hard_count = 0
-    for _ in range(training_days):
-        eligible = [
-            category for category in state
-            if category not in HARD_TYPES or hard_count < max_hard_sessions
-        ]
-        if not eligible:
-            break
-        category = max(eligible, key=state.get)
-        counts[category] += 1
-        state[category] -= 1.0
-        if category in HARD_TYPES:
-            hard_count += 1
-    categories = [category for category, count in counts.items() for _ in range(count)]
-    if ensure_vo2 and "VO2max" not in categories and max_hard_sessions > 0:
-        replacement = next(
-            (category for category in ("Tempo", "Endurance") if category in categories),
-            None,
-        )
-        if replacement and not any(category in HARD_TYPES for category in categories):
-            categories[categories.index(replacement)] = "VO2max"
+
+    tempo_or_threshold = (
+        "Threshold"
+        if max_hard_sessions >= 2
+        and distribution["Threshold"] >= distribution["Tempo"]
+        else "Tempo"
+    )
+
+    categories = ["VO2max", tempo_or_threshold]
+    categories.extend(["Endurance"] * max(0, sessions_per_week - 2))
+
     return categories
 
 
-def _valid_sequences(
-    days,
-    categories,
-    weights,
-    rest_days=1,
-    max_hard_sessions=2,
-    max_consecutive_days=5,
-):
-    longest_day = max(days, key=lambda item: weights.get(item, 0))
-    lowest_days = sorted(days, key=lambda item: weights.get(item, 0))
-    vo2_count = categories.count("VO2max")
-    hard_count = sum(category in HARD_TYPES for category in categories)
-    if hard_count > max_hard_sessions:
-        return
-    vo2_day = next((day for day in lowest_days if day != longest_day), None)
-    if vo2_count and vo2_day is None:
-        vo2_count = 0
-
-    def build(index, remaining, previous, schedule, training_streak, rests_left):
-        if index == len(days):
-            if remaining or rests_left:
-                return
-            if vo2_count and not any(
-                day == vo2_day and category == "VO2max"
-                for day, category in schedule
-            ):
-                return
-            yield list(schedule)
-            return
-
-        day = days[index]
-        if day == longest_day and "Endurance" not in remaining:
-            return
-        if previous in HARD_TYPES:
-            yield from build(index + 1, remaining, None, schedule + [(day, None)], 0, rests_left)
-            return
-        if not remaining and rests_left:
-            yield from build(index + 1, remaining, None, schedule + [(day, None)], 0, rests_left - 1)
-            return
-        if rests_left and day != longest_day:
-            yield from build(index + 1, remaining, None, schedule + [(day, None)], 0, rests_left - 1)
-
-        choices = [
-            category for category in set(remaining)
-            if category != previous
-            and not (category in HARD_TYPES and previous in HARD_TYPES)
-        ]
-        if training_streak >= max_consecutive_days and day != longest_day:
-            yield from build(index + 1, remaining, None, schedule + [(day, None)], 0, rests_left)
-            return
-        if day == longest_day:
-            choices = [category for category in choices if category == "Endurance"]
-            if not choices and "Endurance" in remaining:
-                choices = ["Endurance"]
-        if "VO2max" in choices and index + 1 < len(days) and days[index + 1] == longest_day:
-            choices.remove("VO2max")
-        if day == vo2_day and vo2_count:
-            choices = ["VO2max"] if "VO2max" in remaining else []
-        for category in choices:
-            next_remaining = list(remaining)
-            next_remaining.remove(category)
-            yield from build(
-                index + 1,
-                next_remaining,
-                category,
-                schedule + [(day, category)],
-                training_streak + 1,
-                rests_left,
-            )
-
-    yield from build(0, list(categories), None, [], 0, rest_days)
+def _spread_indices(count, n):
+    """Return n distinct indices within range(count), spread as evenly as possible."""
+    if n <= 0 or count <= 0:
+        return []
+    if n >= count:
+        return list(range(count))
+    indices = []
+    for position in range(n):
+        index = round((position + 0.5) * count / n - 0.5)
+        index = max(0, min(count - 1, index))
+        while index in indices and index < count - 1:
+            index += 1
+        indices.append(index)
+    return sorted(set(indices))
 
 
-def _fallback_sequence(
-    days,
-    categories,
-    weights,
-    rest_days=1,
-    max_hard_sessions=2,
-    max_consecutive_days=5,
-    ensure_vo2=False,
-):
-    sequence = next(
-        _valid_sequences(
-            days,
-            categories,
-            weights,
-            rest_days=rest_days,
-            max_hard_sessions=max_hard_sessions,
-            max_consecutive_days=max_consecutive_days,
-        ),
-        None,
-    )
-    if sequence is not None:
-        return sequence
-    longest_day = max(days, key=lambda item: weights.get(item, 0))
-    longest_index = days.index(longest_day)
-    remaining = list(categories)
-    result = [(day, None) for day in days]
-    result[longest_index] = (longest_day, "Endurance")
-    if "Endurance" in remaining:
-        remaining.remove("Endurance")
-    if ensure_vo2 and "VO2max" in remaining:
-        vo2_day = min(
-            (day for day in days if day != longest_day),
-            key=lambda day: weights.get(day, 0),
-            default=None,
-        )
-        if vo2_day is not None:
-            vo2_index = days.index(vo2_day)
-            result[vo2_index] = (vo2_day, "VO2max")
-            remaining.remove("VO2max")
-            if vo2_index + 1 < len(days) and days[vo2_index + 1] != longest_day:
-                result[vo2_index + 1] = (days[vo2_index + 1], None)
-    for index, day in enumerate(days):
-        if index == longest_index or not remaining:
-            continue
-        previous = result[index - 1][1] if index else None
-        if previous is None or all(
-            category != previous and not (category in HARD_TYPES and previous in HARD_TYPES)
-            for category in remaining
-        ):
-            result[index] = (day, remaining.pop(0))
-    return result
-
-
-def _select_week(days, availability, categories, target_tss, workouts, rest_days=1, max_hard_sessions=2, max_consecutive_days=5, used_files=None, long_ride_hours=None, intensity_budget=None, ensure_vo2=False):
-    weights = get_day_weights(availability)
-    high_availability_days = _high_availability_days(days, availability)
-    candidates = list(_valid_sequences(days, categories, weights, rest_days, max_hard_sessions, max_consecutive_days))
-    if not candidates:
-        candidates = [_fallback_sequence(days, categories, weights, rest_days, max_hard_sessions, max_consecutive_days, ensure_vo2)]
-
-    best_schedule = None
-    best_score = float("inf")
-    for sequence_index, sequence in enumerate(candidates):
-        schedule = []
-        workout_options = []
-        session_count = sum(1 for _, category in sequence if category)
-        training_hours = sum(
-            _hours(availability.get(day, {}))
-            for day, category in sequence
-            if category
-        )
-        training_days = [day for day, category in sequence if category]
-        rest_days = [day for day, category in sequence if category is None]
-        long_ride_candidates = [
-            day for day, category in sequence
-            if category == "Endurance" and day in high_availability_days
-        ]
-        primary_long_day = max(
-            long_ride_candidates,
-            key=lambda day: _hours(availability.get(day, {})),
-            default=None,
-        )
-        secondary_long_days = {
-            day for day in long_ride_candidates
-            if primary_long_day is not None
-            and abs(days.index(day) - days.index(primary_long_day)) == 1
-            and day != primary_long_day
-        }
-        for day, category in sequence:
-            if category is None:
-                workout_options.append([])
-                schedule.append({
-                    "day": day,
-                    "category": None,
-                    "target_tss": 0,
-                    "workout": None,
-                    "rest": True,
-                })
-                continue
-            day_hours = _hours(availability.get(day, {}))
-            day_target = target_tss * day_hours / max(training_hours, 1.0)
-            options = [
-                workout for workout in workouts
-                if workout.get("_category") == category
-                and workout_is_safe(category, workout, day_hours)
-                and workout.get("_file") not in (used_files or set())
-            ] or [
-                workout for workout in workouts
-                if workout.get("_category") == category
-                and workout_is_safe(category, workout, day_hours)
-            ]
-            workout = select_workout(category, "C", options, target_tss=day_target) if options else None
-            requested_hours = None
-            if day == primary_long_day:
-                requested_hours = long_ride_hours
-            elif day in secondary_long_days and long_ride_hours:
-                requested_hours = round(long_ride_hours * 0.6, 1)
-            if category == "Endurance" and requested_hours:
-                long_options = [item for item in options if _workout_hours(item) <= requested_hours]
-                if long_options:
-                    workout = min(long_options, key=lambda item: abs(_workout_hours(item) - requested_hours))
-            schedule.append({
-                "day": day,
-                "category": category,
-                "target_tss": round(day_target),
-                "workout": workout,
-                "rest": False,
-            })
-            workout_options.append(options)
-
-        def workout_tss(item):
-            return float((item or {}).get("target_tss", (item or {}).get("estimated_tss", 0)) or 0)
-
-        current_total = sum(workout_tss(item.get("workout")) for item in schedule)
-        for index, options in enumerate(workout_options):
-            if not options:
-                continue
-            current_workout = schedule[index].get("workout")
-            best_workout = current_workout
-            best_error = abs(current_total - target_tss)
-            for option in options:
-                candidate_total = current_total - workout_tss(current_workout) + workout_tss(option)
-                candidate_error = abs(candidate_total - target_tss)
-                if candidate_error < best_error:
-                    best_workout = option
-                    best_error = candidate_error
-            if best_workout is not current_workout:
-                current_total = current_total - workout_tss(current_workout) + workout_tss(best_workout)
-                schedule[index]["workout"] = best_workout
-        actual = sum(float((item["workout"] or {}).get("target_tss", 0) or 0) for item in schedule)
-        duration_error = 0.0
-        if long_ride_hours:
-            for item in schedule:
-                if item["day"] == primary_long_day:
-                    duration_error = abs(_workout_hours(item.get("workout")) - long_ride_hours) * 20
-        hard_count = sum(item["category"] in HARD_TYPES for item in schedule)
-        hard_tss = sum(
-            float((item.get("workout") or {}).get("target_tss", 0) or 0)
-            for item in schedule
-            if item["category"] in HARD_TYPES
-        )
-        hard_budget = float((intensity_budget or {}).get("hard_tss", hard_tss))
-        zone_totals = {zone: 0.0 for zone in ("Zone 1+2", "Zone 3", "Zone 4", "Zone 5+")}
-        for item in schedule:
-            for zone, minutes in _workout_zone_minutes(item.get("workout")).items():
-                zone_totals[zone] += minutes
-        planned_minutes = sum(_hours(availability.get(day, {})) * 60 for day, category in sequence if category)
-        if intensity_budget and planned_minutes > 0:
-            total_minutes = float(intensity_budget.get("_planned_minutes", planned_minutes) or planned_minutes)
-            scale = planned_minutes / max(1.0, total_minutes)
-            zone_budget = {
-                zone: max(0.0, float(minutes) * scale)
-                for zone, minutes in (intensity_budget or {}).get("zone_minutes", {}).items()
-            }
+def _day_spacing_penalty(subset, ordered_days):
+    """Score a candidate day-set: penalize consecutive training-day and rest-day runs."""
+    chosen = set(subset)
+    penalty = 0
+    train_streak = 0
+    rest_streak = 0
+    for day in ordered_days:
+        if day in chosen:
+            train_streak += 1
+            rest_streak = 0
+            penalty += max(0, train_streak - 1) ** 2
         else:
-            zone_budget = (intensity_budget or {}).get("zone_minutes", {})
-        zone_error = (
-            abs(zone_totals["Zone 1+2"] - float(zone_budget.get("Zone 1+2", zone_totals["Zone 1+2"])))
-            + abs(zone_totals["Zone 3"] - float(zone_budget.get("Zone 3", zone_totals["Zone 3"])))
-            + abs(zone_totals["Zone 4"] - float(zone_budget.get("Zone 4", zone_totals["Zone 4"])))
-            + abs(zone_totals["Zone 5+"] - float(zone_budget.get("Zone 5+", zone_totals["Zone 5+"])))
-        )
-        score = (
-            abs(actual - target_tss) * 20
-            + duration_error
-            + abs(hard_tss - hard_budget) * 0.25
-            + zone_error * 0.05
-            + max(0, hard_count - max_hard_sessions) * 1000
-            + max(0, 7 - session_count) * 50
-        )
-        if score < best_score:
-            best_schedule = schedule
-            best_score = score
+            rest_streak += 1
+            train_streak = 0
+            penalty += max(0, rest_streak - 1) ** 2
+    return penalty
 
-        print(
-            "PLAN_DEBUG",
-            {
-                "sequence_index": sequence_index,
-                "phase": intensity_budget.get("phase") if intensity_budget else None,
-                "target_tss": round(target_tss, 1),
-                "max_realistic_tss": round(float((intensity_budget or {}).get("max_realistic_tss", target_tss)), 1),
-                "training_days": training_days,
-                "rest_days": rest_days,
-                "categories": [category for _, category in sequence if category],
-                "actual_tss": round(actual, 1),
-                "delta_tss": round(actual - target_tss, 1),
-                "score": round(score, 2),
-                "hard_tss": round(hard_tss, 1),
-                "hard_budget": round(hard_budget, 1),
-                "zone_totals": zone_totals,
-                "zone_budget": zone_budget,
-                "available_hours": {
-                    day: round(_hours(availability.get(day, {})), 1)
-                    for day in days
-                },
-                "planned_hours": {
-                    item["day"]: round(_workout_hours(item.get("workout")), 2)
-                    for item in schedule
-                },
-                "day_hours": {
-                    item["day"]: {
-                        "available": round(_hours(availability.get(item["day"], {})), 1),
-                        "planned": round(_workout_hours(item.get("workout")), 2),
-                        "primary_long_ride": item["day"] == primary_long_day,
-                    }
-                    for item in schedule
-                },
-                "primary_long_ride": primary_long_day,
+
+def _select_training_days(ordered_days, availability, session_count):
+    """Pick which available days train, spreading sessions across the week rather than bunching them."""
+    session_count = min(session_count, len(ordered_days))
+    if session_count >= len(ordered_days):
+        return list(ordered_days)
+
+    best_subset = None
+    best_score = None
+    for subset in combinations(ordered_days, session_count):
+        penalty = _day_spacing_penalty(subset, ordered_days)
+        hours = sum(_hours(availability.get(day, {})) for day in subset)
+        score = (penalty, -hours)
+        if best_score is None or score < best_score:
+            best_score = score
+            best_subset = subset
+    return list(best_subset)
+
+
+def _assign_categories_to_days(available_days, availability, categories, max_hard_sessions=2):
+    """Map each selected category to a specific day, spread across the week."""
+    categories = list(categories)
+    ordered_days = [day for day in DAY_ORDER if day in available_days]
+    training_days = _select_training_days(ordered_days, availability, len(categories))
+    assignment = {}
+
+    if "Endurance" in categories and training_days:
+        primary_day = min(training_days, key=lambda day: _day_priority(day, availability))
+        assignment[primary_day] = "Endurance"
+        categories.remove("Endurance")
+
+    remaining_days = [day for day in training_days if day not in assignment]
+    hard = [category for category in categories if category in HARD_TYPES]
+    soft = [category for category in categories if category not in HARD_TYPES]
+
+    hard_days = [remaining_days[index] for index in _spread_indices(len(remaining_days), len(hard))]
+    for day, category in zip(hard_days, hard):
+        assignment[day] = category
+
+    # Best-effort fix if the spread still left two hard sessions on consecutive days.
+    placed_hard = sorted(
+        (day for day, category in assignment.items() if category in HARD_TYPES),
+        key=ordered_days.index,
+    )
+    for first, second in zip(placed_hard, placed_hard[1:]):
+        if ordered_days.index(second) - ordered_days.index(first) != 1:
+            continue
+        for candidate in remaining_days:
+            if candidate in (first, second) or assignment.get(candidate) in HARD_TYPES:
+                continue
+            if abs(ordered_days.index(candidate) - ordered_days.index(first)) > 1:
+                assignment[candidate], assignment[second] = assignment.get(second), assignment.get(candidate)
+                break
+
+    leftover_days = sorted(
+        (day for day in remaining_days if day not in assignment),
+        key=lambda day: _day_priority(day, availability),
+    )
+    for day, category in zip(leftover_days, soft):
+        assignment[day] = category
+
+    return assignment
+
+
+def _select_week(
+    available_days,
+    availability,
+    categories,
+    zone_minutes_budget,
+    workouts,
+    max_hard_sessions=2,
+    used_files=None,
+    long_ride_hours=None,
+    week_target_tss=0.0,
+):
+    ordered_days = [day for day in DAY_ORDER if day in available_days]
+    assignment = _assign_categories_to_days(ordered_days, availability, categories, max_hard_sessions)
+
+    category_days = {}
+    for day, category in assignment.items():
+        category_days.setdefault(category, []).append(day)
+    endurance_days = category_days.get("Endurance", [])
+    primary_long_day = min(
+        endurance_days,
+        key=lambda day: _day_priority(day, availability),
+        default=None,
+    ) if endurance_days else None
+
+    # Each category's focus zone(s) get their weekly budget split across that category's own
+    # sessions, proportional to day hours - so zone minutes (not TSS) drive workout duration.
+    session_zone_targets = {}
+    for category, days_for_category in category_days.items():
+        focus_zones = CATEGORY_ZONE_FOCUS.get(category, ("Zone 1", "Zone 2"))
+        category_total_minutes = sum(float(zone_minutes_budget.get(zone, 0) or 0) for zone in focus_zones)
+        hours_for_category = sum(_hours(availability.get(d, {})) for d in days_for_category) or 1.0
+        for day in days_for_category:
+            day_hours = _hours(availability.get(day, {}))
+            session_zone_targets[day] = category_total_minutes * (day_hours / hours_for_category)
+
+    schedule = []
+    for day in ordered_days:
+        category = assignment.get(day)
+        if category is None:
+            schedule.append({"day": day, "category": None, "target_tss": 0, "workout": None, "rest": True})
+            continue
+
+        day_hours = _hours(availability.get(day, {}))
+        focus_zones = CATEGORY_ZONE_FOCUS.get(category, ("Zone 1", "Zone 2"))
+        target_minutes = session_zone_targets.get(day, 0.0)
+        target_hours = min(day_hours, target_minutes / 60) if target_minutes else day_hours
+
+        options = [
+            workout for workout in workouts
+            if workout.get("_category") == category
+            and workout_is_safe(category, workout, day_hours)
+            and workout.get("_file") not in (used_files or set())
+        ] or [
+            workout for workout in workouts
+            if workout.get("_category") == category
+            and workout_is_safe(category, workout, day_hours)
+        ]
+
+        workout = None
+        if options:
+            if category == "Endurance" and day == primary_long_day:
+                requested_hours = min(day_hours, long_ride_hours or day_hours)
+                long_options = [item for item in options if _workout_hours(item) <= requested_hours]
+                workout = min(long_options or options, key=lambda item: abs(_workout_hours(item) - requested_hours))
+                workout = _scale_workout(workout, requested_hours)
+            else:
+                # Pick the workout whose own focus-zone minutes are closest to this session's target.
+                workout = min(
+                    options,
+                    key=lambda item: abs(
+                        sum(_workout_zone_minutes(item).get(zone, 0.0) for zone in focus_zones) - target_minutes
+                    ),
+                )
+                workout = _scale_workout(workout, target_hours)
+
+        schedule.append({
+            "day": day,
+            "category": category,
+            "target_tss": round(float((workout or {}).get("target_tss", 0) or 0)),
+            "workout": workout,
+            "rest": False,
+        })
+
+    training_days = [item["day"] for item in schedule if item["category"]]
+    rest_days = [item["day"] for item in schedule if not item["category"]]
+    planned_tss = sum(float((item.get("workout") or {}).get("target_tss", 0) or 0) for item in schedule)
+    planned_zone_minutes = {zone: 0.0 for zone in ZONE_KEYS}
+    for item in schedule:
+        for zone, minutes in _workout_zone_minutes(item.get("workout")).items():
+            planned_zone_minutes[zone] += minutes
+
+    print(
+        "PLAN_DEBUG",
+        {
+            "sessions_per_week": len(categories),
+            "categories": categories,
+            "week_target_tss": round(float(week_target_tss), 1),
+            "zone_minute_targets": {zone: round(float(zone_minutes_budget.get(zone, 0) or 0), 1) for zone in ZONE_KEYS},
+            "planned_zone_minutes": {zone: round(value, 1) for zone, value in planned_zone_minutes.items()},
+            "planned_tss": round(planned_tss, 1),
+            "training_days": training_days,
+            "rest_days": rest_days,
+            "available_hours": {
+                day: round(_hours(availability.get(day, {})), 1)
+                for day in ordered_days
             },
-        )
-    return best_schedule or []
+            "planned_hours": {
+                item["day"]: round(_workout_hours(item.get("workout")), 2)
+                for item in schedule
+            },
+        },
+    )
+    return schedule
 
 
 def reforecast_plan(plan, completed_activities, current_date=None):
@@ -619,7 +555,7 @@ def calculate_athlete_state(activities, plan=None, current_date=None, ftp=0):
                 state["recent_volume_hours"] = float(pd.to_numeric(recent[column], errors="coerce").fillna(0).sum()) / 3600
                 break
         state["hard_sessions"] = int(recent.shape[0]) if "stress" not in recent else int((pd.to_numeric(recent["stress"], errors="coerce").fillna(0) >= 75).sum())
-        for column in ("time_z1_hr", "time_z2_hr", "time_z3_hr", "time_z4_hr", "time_z5_hr"):
+        for column in ("time_z1_hr", "time_z2_hr", "time_z3_hr", "time_z4_hr"):
             if column in recent:
                 state["zones"][column] = float(pd.to_numeric(recent[column], errors="coerce").fillna(0).sum()) / 60
         if ftp and ftp > 0 and "moving_time" in recent:
@@ -630,14 +566,14 @@ def calculate_athlete_state(activities, plan=None, current_date=None, ftp=0):
                     if pd.isna(value):
                         continue
                     intensity = float(value) / float(ftp)
-                    if intensity < 0.76:
-                        zone = "Zone 1+2"
+                    if intensity < 0.55:
+                        zone = "Zone 1"
+                    elif intensity < 0.76:
+                        zone = "Zone 2"
                     elif intensity < 0.91:
                         zone = "Zone 3"
-                    elif intensity <= 1.05:
-                        zone = "Zone 4"
                     else:
-                        zone = "Zone 5+"
+                        zone = "Zone 4+"
                     state["zones"][zone] = state["zones"].get(zone, 0.0) + float(activity.get("moving_time", 0) or 0) / 3600
     if plan:
         scheduled = {
@@ -675,8 +611,9 @@ def reoptimize_future_plan(
     completed_tss=0.0,
     current_date=None,
     horizon_days=14,
+    sessions_per_week=None,
 ):
-    """Re-optimize only the next 7-14 days and preserve completed plan rows."""
+    """Re-optimize only full upcoming weeks and preserve the current week untouched."""
     if not isinstance(plan, list):
         return generate_long_term_plan(
             goal, goal_date, availability, workouts, baseline_tss,
@@ -684,10 +621,12 @@ def reoptimize_future_plan(
             event_demand, completed_zone_minutes, completed_tss,
         )
     cutoff = _parse_date(current_date) or date.today()
-    horizon = cutoff + timedelta(days=max(7, min(14, int(horizon_days))))
+    # Always start re-planning on the next Monday so today's weekday never splits a week.
+    next_monday = cutoff + timedelta(days=(7 - cutoff.weekday()) % 7 or 7)
+    horizon = next_monday + timedelta(days=max(7, min(14, int(horizon_days))) - 1)
     future_rows = [
         item for item in plan
-        if item.get("date") and cutoff < _parse_date(item["date"]) <= horizon
+        if item.get("date") and next_monday <= _parse_date(item["date"]) <= horizon
     ]
     if not future_rows:
         return plan
@@ -702,20 +641,21 @@ def reoptimize_future_plan(
         workouts=workouts,
         baseline_tss=baseline,
         progression=progression,
-        start_date=cutoff + timedelta(days=1),
+        start_date=next_monday,
         activities=activities,
         athlete_level=athlete_level,
         event_demand=event_demand,
-        completed_zone_minutes=completed_zone_minutes,
-        completed_tss=completed_tss,
+        completed_zone_minutes=None,
+        completed_tss=0.0,
+        sessions_per_week=sessions_per_week,
     )
     replacement = {
         item["date"]: item for item in adaptive
-        if item.get("date") and cutoff < _parse_date(item["date"]) <= horizon
+        if item.get("date") and next_monday <= _parse_date(item["date"]) <= horizon
     }
     return [
         replacement.get(item.get("date"), item)
-        if item.get("date") and cutoff < _parse_date(item["date"]) <= horizon
+        if item.get("date") and next_monday <= _parse_date(item["date"]) <= horizon
         else item
         for item in plan
     ]
@@ -734,6 +674,7 @@ def _generate_plan(
     event_demand=None,
     completed_zone_minutes=None,
     completed_tss=0.0,
+    sessions_per_week=None,
 ):
     """Generate a complete dated plan through the goal date."""
     first_day = start_date or date.today()
@@ -748,8 +689,6 @@ def _generate_plan(
     previous_workouts = None
     previous_target = None
     used_files = set()
-    vo2_history = []
-    category_rotation_state = {}
     recovery = calculate_recovery_profile(activities, athlete_level=athlete_level)
     max_hard_sessions = 2
     if recovery["avg_hard_sessions"] > 2.5 or recovery["tsb"] is not None and recovery["tsb"] < -10:
@@ -762,9 +701,12 @@ def _generate_plan(
         weeks_to_goal = ((last_week - week_start).days // 7)
         phase = _phase(weeks_to_goal)
         deload = weeks_to_goal > 0 and weeks_to_goal % 4 == 0 and week_index != 2
-        target = previous_target * 0.8 if deload and previous_target else baseline_tss * ((1 + progression / 100) ** week_index)
-        if event_demand and isinstance(event_demand, dict):
-            target = max(target, float(event_demand.get("weekly_tss", target)))
+        if phase == "taper" and previous_target:
+            target = previous_target * 0.55
+        else:
+            target = previous_target * 0.8 if deload and previous_target else baseline_tss * ((1 + progression / 100) ** week_index)
+            if event_demand and isinstance(event_demand, dict):
+                target = max(target, float(event_demand.get("weekly_tss", target)))
         available_days = get_available_days(availability)
         longest_available_hours = max(
             (_hours(availability.get(day, {})) for day in available_days),
@@ -775,34 +717,26 @@ def _generate_plan(
             if isinstance(event_demand, dict) and event_demand.get("long_ride_hours")
             else longest_available_hours if longest_available_hours >= 3 else None
         )
-        training_day_limit = min(
-            len(available_days),
-            max(1, len(available_days) - int(recovery.get("rest_days", 1))),
-        )
-        rest_days = min(
-            max(1, int(recovery.get("rest_days", 1))),
-            max(0, len(available_days) - 1),
-        )
-        ensure_vo2 = week_index >= 1 and not vo2_history[-1]
+        default_sessions = max(1, len(available_days) - int(recovery.get("rest_days", 1)))
+        week_sessions = max(2, min(6, int(sessions_per_week or default_sessions)))
+        week_sessions = min(week_sessions, max(1, len(available_days)))
         week_planning_target = max(
             0.0,
             target - float(completed_tss or 0)
             if week_index == 0
             else target,
         )
-        categories = _category_counts(
-            training_day_limit,
+        categories = _select_categories(
+            week_sessions,
             goal,
             phase,
             max_hard_sessions=max_hard_sessions,
-            ensure_vo2=ensure_vo2,
-            rotation_state=category_rotation_state,
         )
         training_capacity_hours = sum(
             sorted(
                 (_hours(availability.get(day, {})) for day in available_days),
                 reverse=True,
-            )[:training_day_limit]
+            )[:len(categories)]
         )
         available_minutes = training_capacity_hours * 60
         weekly_cap = _achievable_week_tss(
@@ -820,29 +754,22 @@ def _generate_plan(
             phase,
             recovery,
         )
-        budget = _intensity_budget(phase, week_planning_target, available_minutes)
-        budget["_planned_minutes"] = available_minutes
+        # Duration follows weekly TSS progression, hard-capped by real availability.
+        implied_minutes = _implied_minutes(week_planning_target, recovery)
+        zone_minutes_pool = min(available_minutes, implied_minutes) if implied_minutes > 0 else available_minutes
+        budget = _intensity_budget(phase, week_planning_target, zone_minutes_pool)
+        budget["_planned_minutes"] = zone_minutes_pool
         budget["max_realistic_tss"] = weekly_cap
+        budget["previous_week_tss"] = previous_target
         budget["phase"] = phase
-        budget["phase"] = phase
-        if budget["hard_tss"] >= max(20.0, week_planning_target * 0.05):
-            if not any(category in HARD_TYPES for category in categories):
-                replacement = next(
-                    (category for category in ("Endurance", "Tempo") if category in categories),
-                    None,
-                )
-                if replacement:
-                    categories[categories.index(replacement)] = "Threshold"
         original_zone_budget = dict((budget.get("zone_minutes") or {}))
         if week_index == 0 and completed_zone_minutes:
             remaining_zone_budget = _remaining_zone_budget(original_zone_budget, completed_zone_minutes)
             budget["zone_minutes"] = remaining_zone_budget
             high_intensity_done = (
                 float(completed_zone_minutes.get("Zone 3", 0) or 0) >= float(original_zone_budget.get("Zone 3", 0) or 0)
-                and float(completed_zone_minutes.get("Zone 4", 0) or 0)
-                + float(completed_zone_minutes.get("Zone 5+", 0) or 0)
-                >= float(original_zone_budget.get("Zone 4", 0) or 0)
-                + float(original_zone_budget.get("Zone 5+", 0) or 0)
+                and float(completed_zone_minutes.get("Zone 4+", 0) or 0)
+                >= float(original_zone_budget.get("Zone 4+", 0) or 0)
             )
             if high_intensity_done:
                 categories = ["Endurance"]
@@ -856,15 +783,12 @@ def _generate_plan(
                 available_days,
                 availability,
                 categories,
-                week_planning_target,
+                budget["zone_minutes"],
                 workouts,
-                rest_days=rest_days,
                 max_hard_sessions=max_hard_sessions,
-                max_consecutive_days=max(1, int(recovery.get("max_consecutive_training_days", 5) or 5)),
                 used_files=used_files,
                 long_ride_hours=long_ride_hours,
-                intensity_budget=budget,
-                ensure_vo2=ensure_vo2,
+                week_target_tss=week_planning_target,
             )
             for item in weekly:
                 item["intensity_budget"] = budget
@@ -879,7 +803,6 @@ def _generate_plan(
                 if item.get("workout")
             )
         previous_target = target
-        vo2_history.append(any(item.get("category") == "VO2max" for item in weekly))
         by_day = {item["day"]: item for item in weekly}
 
         for offset in range(7):

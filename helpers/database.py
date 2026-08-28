@@ -37,6 +37,7 @@ def init_database():
                     atl_tc INTEGER DEFAULT 7
                 );
             """)
+            cur.execute("ALTER TABLE user_settings ADD COLUMN IF NOT EXISTS sessions_per_week INTEGER")
 
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS training_goals (

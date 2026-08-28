@@ -30,7 +30,6 @@ ACTIVITY_COLUMNS = [
     "time_z2_hr",
     "time_z3_hr",
     "time_z4_hr",
-    "time_z5_hr",
 ]
 
 def get_user_client(access_token):
@@ -174,22 +173,19 @@ def calculate_hr_zones(stream_df,max_hr):
             "time_z1_hr":np.nan,
             "time_z2_hr":np.nan,
             "time_z3_hr":np.nan,
-            "time_z4_hr":np.nan,
-            "time_z5_hr":np.nan
+            "time_z4_hr":np.nan
         }
 
     z1=((hr>=0.50*max_hr)&(hr<0.65*max_hr)).sum()
     z2=((hr>=0.65*max_hr)&(hr<0.75*max_hr)).sum()
     z3=((hr>=0.75*max_hr)&(hr<0.85*max_hr)).sum()
-    z4=((hr>=0.85*max_hr)&(hr<0.92*max_hr)).sum()
-    z5=(hr>=0.92*max_hr).sum()
+    z4=((hr>=0.85*max_hr)).sum()
 
     return {
         "time_z1_hr":int(z1),
         "time_z2_hr":int(z2),
         "time_z3_hr":int(z3),
-        "time_z4_hr":int(z4),
-        "time_z5_hr":int(z5)
+        "time_z4_hr":int(z4)
     }
 
 def update_power_stream_cache(username,access_token,activities):
@@ -232,8 +228,7 @@ def calculate_hr_stress(row):
         "time_z1_hr":0.55,
         "time_z2_hr":0.75,
         "time_z3_hr":0.85,
-        "time_z4_hr":1.00,
-        "time_z5_hr":1.15
+        "time_z4_hr":1.0,
     }
     stress=0
     for zone,IF in zones.items():

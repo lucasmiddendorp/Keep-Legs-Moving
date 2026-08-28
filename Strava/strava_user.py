@@ -162,6 +162,7 @@ def get_user_settings(username):
             "athlete_level": "Amateur",
             "training_progression": 8,
             "atl_tc": 7,
+            "sessions_per_week": None,
         }
 
     conn = get_connection()
@@ -177,7 +178,8 @@ def get_user_settings(username):
                     weight,
                     athlete_level,
                     training_progression,
-                    atl_tc
+                    atl_tc,
+                    sessions_per_week
                 FROM user_settings
                 WHERE user_id = %s
             """, (user_id,))
@@ -193,6 +195,7 @@ def get_user_settings(username):
                     "athlete_level": "Amateur",
                     "training_progression": 8,
                     "atl_tc": 7,
+                    "sessions_per_week": None,
                 }
 
             return {
@@ -204,6 +207,7 @@ def get_user_settings(username):
                 "athlete_level": row[5],
                 "training_progression": row[6],
                 "atl_tc": row[7],
+                "sessions_per_week": row[8],
             }
 
     finally:
@@ -220,6 +224,7 @@ def save_user_settings(
     atl_tc=None,
     threshold_hr=None,
     training_progression=None,
+    sessions_per_week=None,
 ):
     user_id = get_user_id(username)
 
@@ -240,7 +245,8 @@ def save_user_settings(
                     weight,
                     athlete_level,
                     training_progression,
-                    atl_tc
+                    atl_tc,
+                    sessions_per_week
                 )
                 VALUES (
                     %s,
@@ -251,7 +257,8 @@ def save_user_settings(
                     COALESCE(%s, 70),
                     COALESCE(%s, 'Amateur'),
                     COALESCE(%s, 8),
-                    COALESCE(%s, 7)
+                    COALESCE(%s, 7),
+                    %s
                 )
                 ON CONFLICT (user_id)
                 DO UPDATE SET
@@ -262,7 +269,8 @@ def save_user_settings(
                     weight = COALESCE(EXCLUDED.weight, user_settings.weight),
                     athlete_level = COALESCE(EXCLUDED.athlete_level, user_settings.athlete_level),
                     training_progression = COALESCE(EXCLUDED.training_progression, user_settings.training_progression),
-                    atl_tc = COALESCE(EXCLUDED.atl_tc, user_settings.atl_tc)
+                    atl_tc = COALESCE(EXCLUDED.atl_tc, user_settings.atl_tc),
+                    sessions_per_week = COALESCE(EXCLUDED.sessions_per_week, user_settings.sessions_per_week)
             """, (
                 user_id,
                 ftp,
@@ -273,6 +281,7 @@ def save_user_settings(
                 athlete_level,
                 training_progression,
                 atl_tc,
+                sessions_per_week,
             ))
 
         conn.commit()

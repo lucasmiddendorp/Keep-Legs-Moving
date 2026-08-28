@@ -40,153 +40,90 @@ def get_logo_base64():
     with open("logo.png", "rb") as f:
         return base64.b64encode(f.read()).decode()
 
-
-
 def render_navbar():
 
     st.markdown(
         """
         <style>
 
-
-        /* Make sidebar narrow */
-
+        /* Thin sidebar */
         section[data-testid="stSidebar"] {
+            width: 72px !important;
+            min-width: 72px !important;
+            max-width: 72px !important;
+            background: #202a33 !important;
+            border-right: 1px solid #34424d;
+        }
 
-            width:90px !important;
-
-            min-width:90px !important;
-
-            background:#ffffff;
-                        width:210px !important;
-                        min-width:210px !important;
-                        background:#202a33;
-                        border-right:1px solid #34424d;
-
-
+        /* Remove Streamlit's default sidebar padding */
         section[data-testid="stSidebar"] > div {
-
-            padding:20px 10px;
-
+            padding: 15px 8px !important;
         }
-                        width:180px;
 
+        /* Remove extra width from the sidebar content */
+        section[data-testid="stSidebar"] .stVerticalBlock {
+            gap: 8px !important;
+        }
 
-                        background:transparent;
-                        color:#d9e1e7;
-                        font-size:13px;
-                        text-align:left;
+        /* Navigation buttons */
         section[data-testid="stSidebar"] button {
+            width: 54px !important;
+            min-width: 54px !important;
+            max-width: 54px !important;
+            height: 50px !important;
 
-            height:45px;
+            padding: 0 !important;
+            margin: 0 auto !important;
 
-            width:55px;
+            border-radius: 12px !important;
+            border: none !important;
 
-            border-radius:14px;
+            background: transparent !important;
+            color: #d9e1e7 !important;
 
-                        background:#34424d;
-                        color:#ffffff;
-            background:white;
+            font-size: 22px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
 
-            font-size:0;
-
-            position:relative;
-
+            transition: all 0.15s ease;
         }
-
-
-        /* Icons */
-
-        section[data-testid="stSidebar"] button::first-letter {
-
-            font-size:22px;
-
-        }
-
-
 
         /* Hover */
-
         section[data-testid="stSidebar"] button:hover {
-
-            background:#eff6ff;
-
-            transform:translateX(3px);
-
+            background: #34424d !important;
+            transform: translateX(2px);
         }
 
-
-
-        /* Tooltip */
-                        if st.button(f"{icon}  {page}", key=f"nav_{page}"):
-        section[data-testid="stSidebar"] button:hover::after {
-
-
-            content:attr(data-testid);
-
-            position:absolute;
-
-            left:65px;
-
-            top:50%;
-
-            transform:translateY(-50%);
-
-
-            background:#0f172a;
-
-            color:white;
-
-
-            padding:8px 12px;
-
-            border-radius:8px;
-
-
-            font-size:14px;
-
-            white-space:nowrap;
-
-
-            z-index:9999;
-
+        /* Hide button text styling */
+        section[data-testid="stSidebar"] button p {
+            font-size: 0 !important;
+            margin: 0 !important;
         }
 
+        section[data-testid="stSidebar"] button p::first-letter {
+            font-size: 22px !important;
+        }
 
         </style>
-
         """,
         unsafe_allow_html=True
     )
 
-
     with st.sidebar:
 
-
-        # render_logo()
-
-
         pages = [
-
             ("🏠", "Dashboard"),
-
             ("📊", "Course Pacing"),
-
             ("🗺️", "Pacing Comparison"),
-
             ("📅", "Training Plan"),
-
             ("🏋️", "Workout Builder"),
-
-            # ("🎯", "Goals"),
-
+            ("📚", "Workout Library"),
             ("⚙️", "Settings"),
-
         ]
-
 
         for icon, page in pages:
             if st.button(icon, key=f"nav_{page}"):
-                st.switch_page(f"pages/{page.lower().replace(' ', '_')}.py")
-
-
+                st.switch_page(
+                    f"pages/{page.lower().replace(' ', '_')}.py"
+                )

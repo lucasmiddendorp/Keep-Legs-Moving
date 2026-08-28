@@ -1,4 +1,6 @@
 import os
+import hashlib
+import inspect
 from datetime import date, timedelta
 import pandas as pd
 from pathlib import Path
@@ -16,15 +18,15 @@ from helpers.training_plan_functions import (
 )
 
 from helpers.dashboard_css import inject_card_css
-from Strava.strava_user import get_training_goal, get_user_settings
+from Strava.strava_user import get_training_goal, get_user_settings, save_user_settings
 from helpers.availability import load_availability
 from helpers.database import load_training_plan, save_training_plan
 from helpers.user_cache import get_user_cache_paths
+from training_planner import periodization
 from training_planner.periodization import (
     calculate_athlete_state,
     calculate_event_demand,
     generate_long_term_plan,
-    reoptimize_future_plan,
 )
 
 apply_global_style()
@@ -46,7 +48,7 @@ def get_workout_duration(workout):
 
 
 def get_workout_zone_minutes(workout):
-    zones = {"Zone 1+2": 0.0, "Zone 3": 0.0, "Zone 4": 0.0, "Zone 5+": 0.0}
+    zones = {"Zone 1+2": 0.0, "Zone 3": 0.0, "Zone 4+": 0.0}
     for step in (workout or {}).get("steps", []):
         intensity = float(step.get("intensity", 0) or 0)
         minutes = float(step.get("duration_seconds", 0) or 0) / 60
@@ -55,9 +57,7 @@ def get_workout_zone_minutes(workout):
         elif 76 <= intensity < 91:
             zones["Zone 3"] += minutes
         elif intensity <= 105:
-            zones["Zone 4"] += minutes
-        else:
-            zones["Zone 5+"] += minutes
+            zones["Zone 4+"] += minutes
     return zones
 
 
@@ -74,7 +74,7 @@ def clean_activity_type(value):
 
 
 def get_completed_week_zones(activities, week_start, today, ftp):
-    zones = {"Zone 1+2": 0.0, "Zone 3": 0.0, "Zone 4": 0.0, "Zone 5+": 0.0}
+    zones = {"Zone 1+2": 0.0, "Zone 3": 0.0, "Zone 4+": 0.0}
     if activities is None or activities.empty or "date" not in activities:
         return zones
     frame = activities.copy()
@@ -93,10 +93,10 @@ def get_completed_week_zones(activities, week_start, today, ftp):
             elif intensity < 0.91:
                 zone = "Zone 3"
             else:
-                zone = "Zone 4" if intensity <= 1.05 else "Zone 5+"
+                zone = "Zone 4+"
             zones[zone] += float(activity.get("moving_time", 0) or 0) / 60
         else:
-            for zone, columns in (("Zone 1+2", ("time_z1_hr", "time_z2_hr")), ("Zone 3", ("time_z3_hr",)), ("Zone 4", ("time_z4_hr",)), ("Zone 5+", ("time_z5_hr",))):
+            for zone, columns in (("Zone 1+2", ("time_z1_hr", "time_z2_hr")), ("Zone 3", ("time_z3_hr",)), ("Zone 4+", ("time_z4_hr",))):
                 for column in columns:
                     value = activity.get(column, 0)
                     zones[zone] += 0 if pd.isna(value) else float(value) / 60
@@ -242,6 +242,23 @@ availability_summary = " · ".join(
 )
 st.caption(f"Weekly availability: {availability_summary}")
 
+planning_settings = get_user_settings(username)
+session_count_options = [2, 3, 4, 5, 6]
+stored_sessions_per_week = planning_settings.get("sessions_per_week")
+default_sessions = stored_sessions_per_week if stored_sessions_per_week in session_count_options else 4
+st.caption("Training days per week")
+sessions_per_week = st.segmented_control(
+    "Training days per week",
+    options=session_count_options,
+    selection_mode="single",
+    default=default_sessions,
+    key="sessions_per_week_select",
+    label_visibility="collapsed",
+) or default_sessions
+if sessions_per_week != stored_sessions_per_week:
+    save_user_settings(username, sessions_per_week=sessions_per_week)
+    planning_settings["sessions_per_week"] = sessions_per_week
+
 header_col, edit_col = st.columns([8, 1], vertical_alignment="center")
 
 with header_col:
@@ -259,27 +276,10 @@ with edit_col:
         st.switch_page("pages/settings.py")
 
 workouts = get_library(library_version=2)
-plan_version = 14
 goal_date = training_goal.get("goal_date")
 
 weekly_tss = calculate_target_weekly_tss(username)
 previous_week_tss = calculate_previous_week_tss(username)
-planning_settings = get_user_settings(username)
-plan_inputs_signature = repr((
-    goal,
-    goal_date,
-    training_goal.get("event_distance_km"),
-    training_goal.get("event_climb_m"),
-    training_goal.get("event_type"),
-    planning_settings.get("ftp"),
-    planning_settings.get("athlete_level"),
-    planning_settings.get("training_progression"),
-    sorted(
-        (day, data.get("hours"), data.get("available"))
-        for day, data in weekly_availability.items()
-        if isinstance(data, dict)
-    ),
-))
 
 if previous_week_tss > 0:
     change = ((weekly_tss / previous_week_tss) - 1) * 100
@@ -316,7 +316,30 @@ athlete_state = calculate_athlete_state(
     activities,
     ftp=float(planning_settings.get("ftp", 0) or 0),
 )
-activity_state_signature = repr(athlete_state)
+
+# Hash the generator's own source so any code change auto-invalidates cached plans.
+planner_source_path = inspect.getsourcefile(periodization) or inspect.getfile(periodization)
+planner_version = hashlib.sha256(Path(planner_source_path).read_bytes()).hexdigest()
+
+plan_signature = repr((
+    planner_version,
+    today.isoformat(),
+    goal,
+    goal_date,
+    training_goal.get("event_distance_km"),
+    training_goal.get("event_climb_m"),
+    training_goal.get("event_type"),
+    planning_settings.get("ftp"),
+    planning_settings.get("athlete_level"),
+    planning_settings.get("training_progression"),
+    sessions_per_week,
+    sorted(
+        (day, data.get("hours"), data.get("available"))
+        for day, data in weekly_availability.items()
+        if isinstance(data, dict)
+    ),
+    repr(athlete_state),
+))
 
 if "training_plan_horizon" not in st.session_state:
     st.session_state.training_plan_horizon = load_training_plan(username) or []
@@ -329,8 +352,7 @@ stored_end = (
 )
 plan_needs_update = (
     not stored_plan
-    or st.session_state.get("training_plan_version") != plan_version
-    or st.session_state.get("training_plan_inputs") != plan_inputs_signature
+    or st.session_state.get("training_plan_signature") != plan_signature
     or (goal_day is not None and (stored_end is None or stored_end < goal_day))
 )
 
@@ -349,6 +371,7 @@ if plan_needs_update:
         athlete_level=settings.get("athlete_level"),
         completed_zone_minutes=completed_zone_minutes,
         completed_tss=completed_week_tss,
+        sessions_per_week=sessions_per_week,
         event_demand=(
             calculate_event_demand(
                 training_goal.get("event_distance_km"),
@@ -361,37 +384,7 @@ if plan_needs_update:
         ),
     )
     save_training_plan(username, st.session_state.training_plan_horizon)
-    st.session_state.training_plan_version = plan_version
-    st.session_state.training_plan_inputs = plan_inputs_signature
-    st.session_state.training_plan_activity_state = activity_state_signature
-elif st.session_state.get("training_plan_activity_state") != activity_state_signature:
-    st.session_state.training_plan_horizon = reoptimize_future_plan(
-        plan=st.session_state.training_plan_horizon,
-        goal=goal,
-        goal_date=goal_date,
-        availability=weekly_availability,
-        workouts=workouts,
-        baseline_tss=weekly_tss,
-        progression=float(planning_settings.get("training_progression", 8) or 8),
-        activities=activities,
-        athlete_level=planning_settings.get("athlete_level"),
-        completed_zone_minutes=completed_zone_minutes,
-        completed_tss=completed_week_tss,
-        event_demand=(
-            calculate_event_demand(
-                training_goal.get("event_distance_km"),
-                training_goal.get("event_climb_m"),
-                training_goal.get("event_type"),
-                planning_settings.get("ftp"),
-            )
-            if training_goal.get("event_distance_km")
-            else None
-        ),
-        current_date=today,
-        horizon_days=14,
-    )
-    save_training_plan(username, st.session_state.training_plan_horizon)
-    st.session_state.training_plan_activity_state = activity_state_signature
+    st.session_state.training_plan_signature = plan_signature
 
 training_plan = st.session_state.training_plan_horizon
 if not training_plan:
@@ -508,7 +501,7 @@ week_plan_items = [
     plan for plan in training_plan
     if timeline_start.isoformat() <= str(plan.get("date", "")) <= (timeline_start + timedelta(days=6)).isoformat()
 ]
-zone_targets = {zone: 0.0 for zone in ("Zone 1+2", "Zone 3", "Zone 4", "Zone 5+")}
+zone_targets = {zone: 0.0 for zone in ("Zone 1+2", "Zone 3", "Zone 4+")}
 zone_forecast = {zone: 0.0 for zone in zone_targets}
 zone_completed = {zone: 0.0 for zone in zone_targets}
 week_budget = next(
@@ -520,8 +513,7 @@ if week_budget:
     budget_zones = week_budget.get("zone_minutes", {})
     zone_targets["Zone 1+2"] = float(budget_zones.get("Zone 1+2", 0) or 0)
     zone_targets["Zone 3"] = float(budget_zones.get("Zone 3", 0) or 0)
-    zone_targets["Zone 4"] = float(budget_zones.get("Zone 4", 0) or 0)
-    zone_targets["Zone 5+"] = float(budget_zones.get("Zone 5+", 0) or 0)
+    zone_targets["Zone 4+"] = float(budget_zones.get("Zone 4+", 0) or 0)
 for plan in week_plan_items:
     planned_zones = get_workout_zone_minutes(plan.get("workout"))
     for zone in zone_targets:
@@ -535,8 +527,7 @@ if not any(zone_targets.values()):
     ) or float(weekly_tss or 0)
     zone_targets["Zone 1+2"] = planner_week_tss * 0.6 * 0.6
     zone_targets["Zone 3"] = planner_week_tss * 0.1 * 0.6
-    zone_targets["Zone 4"] = planner_week_tss * 0.3 * 0.6 * 0.7
-    zone_targets["Zone 5+"] = planner_week_tss * 0.3 * 0.6 * 0.3
+    zone_targets["Zone 4+"] = planner_week_tss * 0.3 * 0.6 * 0.7
 
 if activities is not None and not activities.empty and "date" in activities:
     zone_settings = get_user_settings(username)
@@ -564,20 +555,18 @@ if activities is not None and not activities.empty and "date" in activities:
             elif intensity < 0.91:
                 zone_completed["Zone 3"] += duration_minutes
             else:
-                zone_completed["Zone 4"] += duration_minutes if intensity <= 1.05 else 0
-                zone_completed["Zone 5+"] += duration_minutes if intensity > 1.05 else 0
+                zone_completed["Zone 4+"] += duration_minutes
         else:
             for zone, columns in (
                 ("Zone 1+2", ("time_z1_hr", "time_z2_hr")),
                 ("Zone 3", ("time_z3_hr",)),
-                ("Zone 4", ("time_z4_hr",)),
-                ("Zone 5+", ("time_z5_hr",)),
+                ("Zone 4+", ("time_z4_hr",)),
             ):
                 for column in columns:
                     value = activity.get(column, 0)
                     zone_completed[zone] += 0 if pd.isna(value) else float(value) / 60
 
-zone_colors = {"Zone 1+2": "#6f9bb2", "Zone 3": "#d39a45", "Zone 4": "#b85c5c", "Zone 5+": "#8f3f56"}
+zone_colors = {"Zone 1+2": "#6f9bb2", "Zone 3": "#d39a45", "Zone 4+": "#b85c5c"}
 for zone in zone_targets:
     target = zone_targets[zone]
     current = zone_completed[zone] + zone_forecast[zone]
@@ -617,81 +606,239 @@ st.markdown(
 if training_plan:
     st.divider()
     st.subheader("Full plan until goal")
+
     weeks = {}
     for plan in display_plan:
         weeks.setdefault(plan["week_number"], []).append(plan)
 
     for week_number, week_plans in weeks.items():
-        target_week_tss = float(week_plans[0]["week_target_tss"])
-        planned_week_tss = sum(
-            float((plan.get("workout") or {}).get(
-                "target_tss",
-                (plan.get("workout") or {}).get(
-                    "estimated_tss", plan.get("target_tss", 0)
-                ),
-            ) or plan.get("target_tss", 0) or 0)
-            for plan in week_plans
-            if not plan.get("completed")
+
+        target_week_tss = float(
+            week_plans[0].get("week_target_tss", 0) or 0
         )
+
+        # ---------------------------------------------------------
+        # Weekly zone targets generated by the planner
+        # ---------------------------------------------------------
+        week_budget = next(
+            (
+                plan.get("intensity_budget")
+                for plan in week_plans
+                if isinstance(plan.get("intensity_budget"), dict)
+            ),
+            None,
+        )
+
+        weekly_zone_targets = {
+            "Zone 1+2": 0.0,
+            "Zone 3": 0.0,
+            "Zone 4+": 0.0,
+        }
+
+        if week_budget:
+            budget_zones = week_budget.get("zone_minutes", {})
+
+            weekly_zone_targets["Zone 1+2"] = float(
+                budget_zones.get("Zone 1+2", 0) or 0
+            )
+            weekly_zone_targets["Zone 3"] = float(
+                budget_zones.get("Zone 3", 0) or 0
+            )
+            weekly_zone_targets["Zone 4+"] = float(
+                budget_zones.get("Zone 4+", 0) or 0
+            )
+
+        # Fallback if the planner did not provide an intensity budget
+        if not any(weekly_zone_targets.values()):
+            weekly_zone_targets["Zone 1+2"] = target_week_tss * 0.6 * 0.6
+            weekly_zone_targets["Zone 3"] = target_week_tss * 0.1 * 0.6
+            weekly_zone_targets["Zone 4+"] = target_week_tss * 0.3 * 0.6 * 0.7
+
+        # ---------------------------------------------------------
+        # Calculate completed / planned TSS
+        # ---------------------------------------------------------
+        # Planner's weekly TSS target
+        target_week_tss = float(
+            week_plans[0].get("week_target_tss", 0) or 0
+        )
+
+        # TSS represented by the actual workouts assigned to this week.
+        # Rest days and days without a workout contribute 0.
+        planned_workouts_tss = sum(
+            float((plan.get("workout") or {}).get("target_tss",
+                (plan.get("workout") or {}).get("estimated_tss", 0)) or 0)
+            for plan in week_plans
+            if not plan.get("completed") and not plan.get("rest") and plan.get("workout")
+        )
+
+        week_dates = {pd.to_datetime(plan.get("date")).date() for plan in week_plans}
+        completed_week_tss = sum(float(activity_by_date.get(d, 0) or 0) for d in week_dates if d <= today)
+        total_week_tss = planned_workouts_tss + completed_week_tss
+        remaining_week_budget = max(0.0, target_week_tss - completed_week_tss)
+
         week_dates = {
             pd.to_datetime(plan.get("date")).date()
             for plan in week_plans
         }
+
         completed_week_tss = sum(
             float(activity_by_date.get(activity_date, 0) or 0)
             for activity_date in week_dates
             if activity_date <= today
         )
-        total_week_tss = planned_week_tss + completed_week_tss
-        remaining_week_budget = target_week_tss - completed_week_tss
-        week_label = (
-            f"Week {week_number} · target {week_plans[0]['week_target_tss']} TSS"
-            f" · covered {total_week_tss:.0f} TSS"
-            f" ({completed_week_tss:.0f} completed + {planned_week_tss:.0f} planned)"
-            f" · budget remaining {remaining_week_budget:.0f} TSS"
+
+        total_week_tss = planned_workouts_tss + completed_week_tss
+        remaining_week_budget = max(
+            0.0,
+            target_week_tss - completed_week_tss,
         )
+
+        # ---------------------------------------------------------
+        # Week header
+        # ---------------------------------------------------------
+        week_title = f"Week {week_number}"
+
         if len(week_plans) < 7:
-            week_label += " · partial week"
+            week_title += " · partial week"
+
         if week_plans[0].get("deload"):
-            week_label += " · deload"
+            week_title += " · deload"
+
         st.markdown(
-            f'<div style="font-size:12px;font-weight:700;margin:10px 0 4px;">'
-            f'{week_label}</div>',
+            f'<div style="font-size:13px;font-weight:700;margin:14px 0 7px;">'
+            f'{week_title}'
+            f'</div>',
             unsafe_allow_html=True,
         )
-        if len(week_plans) == 7 and abs(total_week_tss - target_week_tss) >= max(20, target_week_tss * 0.1):
-            st.warning(
-                "This week's planned TSS cannot closely match the target with the "
-                "current weekly availability and workout library."
+
+        # ---------------------------------------------------------
+        # Week summary + 7-day plan
+        # ---------------------------------------------------------
+        summary_col, plan_col = st.columns([1, 7], gap="small")
+        # ---------------------------------------------------------
+        # Weekly summary table
+        # ---------------------------------------------------------
+        with summary_col:
+
+            st.markdown(
+                """
+                <div style="
+                    border:1px solid #e1e6ea;
+                    border-radius:8px;
+                    overflow:hidden;
+                    background:#ffffff;
+                    margin-bottom:4px;
+                ">
+                """,
+                unsafe_allow_html=True,
             )
-        plans_by_day = {plan["day"]: plan for plan in week_plans}
-        week_cols = st.columns(7, gap="small")
-        for day, col in zip(DAYS, week_cols):
-            with col:
-                plan = plans_by_day.get(day)
-                if not plan:
-                    st.markdown('<div style="height:48px;"></div>', unsafe_allow_html=True)
-                    continue
-                if plan.get("rest"):
-                    training_label = "Rest"
-                else:
-                    category = plan.get("category", "Endurance")
-                    duration = get_workout_duration(plan.get("workout"))
-                    hours, minutes = divmod(duration, 60)
-                    duration_text = f"{hours}h {minutes:02d}min" if hours else f"{minutes}min"
-                    training_label = f"{category} · {duration_text}"
-                color = "#94A3B8" if plan.get("rest") else CATEGORY_COLORS.get(category, "#64748B")
+
+            summary_rows = [
+                ("Planned TSS", f"{target_week_tss:.0f}"),
+                ("Planned workouts TSS", f"{planned_workouts_tss:.0f}"),
+                ("Zone 1+2", format_minutes(weekly_zone_targets["Zone 1+2"])),
+                ("Zone 3", format_minutes(weekly_zone_targets["Zone 3"])),
+                ("Zone 4+", format_minutes(weekly_zone_targets["Zone 4+"])),
+            ]
+
+            for index, (label, value) in enumerate(summary_rows):
+
+                border = "" if index == len(summary_rows) - 1 else (
+                    "border-bottom:1px solid #edf0f2;"
+                )
+
+                value_color = {
+                    "Zone 1+2": "#6f9bb2",
+                    "Zone 3": "#d39a45",
+                    "Zone 4+": "#b85c5c",
+                }.get(label, "#17212b")
+
                 st.markdown(
-                    f'<div style="border-top:3px solid {color};background:{color}12;'
-                    'border-radius:6px;padding:5px 4px;height:48px;text-align:center;'
-                    'overflow:hidden;">'
-                    f'<div style="font-size:9px;color:#64748B;">{day[:3]} · {plan["date"][5:]}</div>'
-                    f'<div style="font-size:10px;font-weight:700;color:{color};margin-top:5px;">'
-                    f'{training_label}</div></div>',
+                    f'<div style="display:flex;justify-content:space-between;align-items:center;padding:7px 9px;{border}">'
+                    f'<span style="font-size:10px;color:#687581;">{label}</span>'
+                    f'<span style="font-size:11px;font-weight:700;color:{value_color};">{value}</span>'
+                    f'</div>',
                     unsafe_allow_html=True,
                 )
-                if plan.get("workout"):
-                    if st.button("View", key=f"full_plan_details_{plan['date']}", use_container_width=True):
-                        workout_details_dialog(plan["workout"])
 
-st.stop()
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # ---------------------------------------------------------
+        # 7-day workout plan
+        # ---------------------------------------------------------
+        with plan_col:
+
+
+            plans_by_day = {
+                plan["day"]: plan
+                for plan in week_plans
+            }
+
+            week_cols = st.columns(7, gap="small")
+
+            for day, col in zip(DAYS, week_cols):
+
+                with col:
+
+                    plan = plans_by_day.get(day)
+
+                    if not plan:
+                        st.markdown(
+                            '<div style="height:48px;"></div>',
+                            unsafe_allow_html=True,
+                        )
+                        continue
+
+                    if plan.get("rest"):
+                        training_label = "Rest"
+                        color = "#94A3B8"
+
+                    else:
+                        category = plan.get(
+                            "category",
+                            "Endurance",
+                        )
+
+                        duration = get_workout_duration(
+                            plan.get("workout")
+                        )
+
+                        hours, minutes = divmod(
+                            duration,
+                            60,
+                        )
+
+                        duration_text = (
+                            f"{hours}h {minutes:02d}min"
+                            if hours
+                            else f"{minutes}min"
+                        )
+
+                        training_label = (
+                            f"{category} · {duration_text}"
+                        )
+
+                        color = CATEGORY_COLORS.get(
+                            category,
+                            "#64748B",
+                        )
+
+                    st.markdown(
+                        f"""<div style="border-top:3px solid {color};background:{color}12;border-radius:7px;padding:7px 4px;height:64px;text-align:center;overflow:hidden;box-sizing:border-box;">
+                        <div style="font-size:9px;color:#64748B;">{day[:3]} · {plan["date"][5:]}</div>
+                        <div style="font-size:10px;font-weight:700;color:{color};margin-top:6px;">{category}</div>
+                        <div style="font-size:9px;color:#64748B;margin-top:3px;">{duration_text}</div>
+                        </div>""",
+                        unsafe_allow_html=True,
+                    )
+                    if plan.get("workout"):
+
+                        if st.button(
+                            "View",
+                            key=f"full_plan_details_{plan['date']}",
+                            use_container_width=True,
+                        ):
+                            workout_details_dialog(
+                                plan["workout"]
+                            )
+

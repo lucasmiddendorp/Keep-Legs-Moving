@@ -299,12 +299,11 @@ latest_activities['Avg Heart Rate'] = latest_activities['average_heartrate'].map
 latest_activities['Time Z1 (min)'] = latest_activities['time_z1_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
 latest_activities['Time Z2 (min)'] = latest_activities['time_z2_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
 latest_activities['Time Z3 (min)'] = latest_activities['time_z3_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
-latest_activities['Time Z4 (min)'] = latest_activities['time_z4_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
-latest_activities['Time Z5 (min)'] = latest_activities['time_z5_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
+latest_activities['Time Z4+ (min)'] = latest_activities['time_z4_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
 
 st.dataframe(
     latest_activities[
-        ["Date", "Activity", "Ride Length", "Time", "Stress", "Normalized Power", "Avg Heart Rate", "Time Z1 (min)", "Time Z2 (min)", "Time Z3 (min)", "Time Z4 (min)", "Time Z5 (min)"]
+        ["Date", "Activity", "Ride Length", "Time", "Stress", "Normalized Power", "Avg Heart Rate", "Time Z1 (min)", "Time Z2 (min)", "Time Z3 (min)", "Time Z4+ (min)"]
     ],
     width="stretch",
     hide_index=True,

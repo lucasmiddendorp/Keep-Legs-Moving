@@ -93,6 +93,11 @@ workout_builder = st.Page(
     icon="🏋️",
 )
 
+workout_library = st.Page(
+    "pages/workout_library.py",
+    title="Workout Library",
+    icon="📚",
+)
 
 # --------------------------------------------------
 # Authentication
@@ -173,6 +178,7 @@ else:
                     profile,
                     settings_availability,
                     workout_builder,
+                    workout_library,
                 ]
             )
 
