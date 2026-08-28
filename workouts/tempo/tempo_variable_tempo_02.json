@@ -1,0 +1,104 @@
+{
+  "id": "tempo_variable_tempo_02",
+  "name": "Variable Tempo 02",
+  "category": "Tempo",
+  "subtype": "variable_tempo",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 720,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Variable Tempo focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.72,
+  "tags": [
+    "tempo",
+    "variable_tempo",
+    "variable_tempo",
+    "moderate",
+    "aerobic"
+  ],
+  "duration_minutes": 70,
+  "estimated_tss": 57,
+  "target_tss": 57,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_variable_tempo_02.fit"
+}

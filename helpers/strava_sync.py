@@ -3,6 +3,8 @@ import traceback
 
 from Strava.strava_data import update_strava_data
 from Strava.strava_user import get_valid_access_token
+from helpers.database import load_training_plan, save_training_plan
+from training_planner.periodization import reforecast_plan
 
 
 def update_strava():
@@ -22,6 +24,10 @@ def update_strava():
         progress_bar.progress(30)
 
         activities, new_activities = update_strava_data(username,access_token)
+
+        saved_plan = load_training_plan(username)
+        if saved_plan:
+            save_training_plan(username, reforecast_plan(saved_plan, activities))
 
         status.write("⚡ Updating power data...")
         progress_bar.progress(80)

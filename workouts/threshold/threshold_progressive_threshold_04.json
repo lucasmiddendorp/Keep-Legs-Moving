@@ -1,0 +1,96 @@
+{
+  "id": "threshold_progressive_threshold_04",
+  "name": "Progressive Threshold 04",
+  "category": "Threshold",
+  "subtype": "progressive_threshold",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Progressive Threshold focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 420,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 420,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 420,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.75,
+  "tags": [
+    "threshold",
+    "progressive_threshold",
+    "progressive_threshold",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 58,
+  "estimated_tss": 49,
+  "target_tss": 49,
+  "interval_count": 3,
+  "interval_duration": 420,
+  "recovery_duration": 240,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_progressive_threshold_04.fit"
+}

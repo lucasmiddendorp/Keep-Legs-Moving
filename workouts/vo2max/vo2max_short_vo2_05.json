@@ -1,0 +1,112 @@
+{
+  "id": "vo2max_short_vo2_05",
+  "name": "Short Vo2 05",
+  "category": "VO2max",
+  "subtype": "short_vo2",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 1020,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Short Vo2 focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 60,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 60,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 60,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 60,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 60,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 60,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 60,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 60,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.75,
+  "tags": [
+    "vo2max",
+    "short_vo2",
+    "short_vo2",
+    "high-intensity",
+    "hard"
+  ],
+  "duration_minutes": 38,
+  "estimated_tss": 28,
+  "target_tss": 28,
+  "interval_count": 4,
+  "interval_duration": 60,
+  "recovery_duration": 60,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_short_vo2_05.fit"
+}

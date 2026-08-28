@@ -1,0 +1,65 @@
+{
+  "id": "endurance_z2_tempo_06",
+  "name": "Z2 Tempo 06",
+  "category": "Endurance",
+  "subtype": "z2_tempo",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Z2 Tempo focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance block",
+      "duration_seconds": 6180,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo finish",
+      "duration_seconds": 600,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 480,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.69,
+  "tags": [
+    "endurance",
+    "z2_tempo",
+    "z2_tempo",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 136,
+  "estimated_tss": 108,
+  "target_tss": 108,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_z2_tempo_06.fit"
+}

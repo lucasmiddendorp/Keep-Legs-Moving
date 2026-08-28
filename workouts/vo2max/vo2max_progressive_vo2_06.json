@@ -1,0 +1,96 @@
+{
+  "id": "vo2max_progressive_vo2_06",
+  "name": "Progressive Vo2 06",
+  "category": "VO2max",
+  "subtype": "progressive_vo2",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 1080,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Progressive Vo2 focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 240,
+      "intensity": 117,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 240,
+      "intensity": 117,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 240,
+      "intensity": 117,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.84,
+  "tags": [
+    "vo2max",
+    "progressive_vo2",
+    "progressive_vo2",
+    "high-intensity",
+    "hard"
+  ],
+  "duration_minutes": 52,
+  "estimated_tss": 49,
+  "target_tss": 49,
+  "interval_count": 3,
+  "interval_duration": 240,
+  "recovery_duration": 240,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_progressive_vo2_06.fit"
+}

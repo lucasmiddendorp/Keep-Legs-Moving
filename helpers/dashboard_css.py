@@ -11,19 +11,7 @@ def inject_card_css():
            General cards
         -------------------- */
 
-        .modern-card {
-
-            background:white;
-            border-radius:18px;
-            padding:20px;
-            height:100%;
-
-            border:1px solid #ede9fe;
-
-            box-shadow:
-            0px 4px 20px rgba(124,58,237,0.06);
-
-        }
+        .modern-card { background:#fff; border-radius:8px; padding:18px; height:100%; border:1px solid #dfe5ea; box-shadow:0 2px 8px rgba(23,33,43,.04); }
 
 
         .card-title {
@@ -31,11 +19,11 @@ def inject_card_css():
             font-size:14px;
             font-weight:700;
 
-            color:#64748b;
+            color:#6b7785;
 
             text-transform:uppercase;
 
-            letter-spacing:0.06em;
+            letter-spacing:0.04em;
 
         }
 
@@ -44,7 +32,7 @@ def inject_card_css():
 
             margin-top:12px;
 
-            font-size:28px;
+            font-size:26px;
 
             font-weight:800;
 

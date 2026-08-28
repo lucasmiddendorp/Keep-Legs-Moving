@@ -1,6 +1,6 @@
 import streamlit as st
 from helpers.style import apply_global_style
-from helpers.auth import get_authenticator
+from helpers.auth import logout_user
 
 apply_global_style()
 
@@ -55,8 +55,6 @@ st.divider()
 
 st.subheader("Session")
 
-authenticator, config = get_authenticator()
-
 if st.button("🚪 Log out", type="secondary", use_container_width=True):
-    authenticator.logout(location="unrendered")
+    logout_user()
     st.rerun()

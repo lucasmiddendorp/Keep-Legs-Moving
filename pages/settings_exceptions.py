@@ -160,6 +160,9 @@ if "selected_date" in st.session_state:
     )
 
 
+    current_hours = int(round(float(current_hours or 0)))
+    current_hours = max(0, min(6, current_hours))
+
     hours = st.slider(
         "Available training hours",
         min_value=0,

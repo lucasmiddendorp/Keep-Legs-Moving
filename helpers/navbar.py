@@ -58,10 +58,10 @@ def render_navbar():
             min-width:90px !important;
 
             background:#ffffff;
-
-            border-right:1px solid #e5e7eb;
-
-        }
+                        width:210px !important;
+                        min-width:210px !important;
+                        background:#202a33;
+                        border-right:1px solid #34424d;
 
 
         section[data-testid="stSidebar"] > div {
@@ -69,11 +69,13 @@ def render_navbar():
             padding:20px 10px;
 
         }
+                        width:180px;
 
 
-
-        /* Hide button text */
-
+                        background:transparent;
+                        color:#d9e1e7;
+                        font-size:13px;
+                        text-align:left;
         section[data-testid="stSidebar"] button {
 
             height:45px;
@@ -82,8 +84,8 @@ def render_navbar():
 
             border-radius:14px;
 
-            border:none;
-
+                        background:#34424d;
+                        color:#ffffff;
             background:white;
 
             font-size:0;
@@ -116,7 +118,7 @@ def render_navbar():
 
 
         /* Tooltip */
-
+                        if st.button(f"{icon}  {page}", key=f"nav_{page}"):
         section[data-testid="stSidebar"] button:hover::after {
 
 
@@ -161,7 +163,7 @@ def render_navbar():
     with st.sidebar:
 
 
-        render_logo()
+        # render_logo()
 
 
         pages = [

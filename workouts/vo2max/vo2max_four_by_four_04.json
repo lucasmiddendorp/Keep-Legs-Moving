@@ -1,0 +1,112 @@
+{
+  "id": "vo2max_four_by_four_04",
+  "name": "Four By Four 04",
+  "category": "VO2max",
+  "subtype": "four_by_four",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 960,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Four By Four focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 240,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 240,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 240,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 240,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.84,
+  "tags": [
+    "vo2max",
+    "four_by_four",
+    "four_by_four",
+    "high-intensity",
+    "hard"
+  ],
+  "duration_minutes": 60,
+  "estimated_tss": 56,
+  "target_tss": 56,
+  "interval_count": 4,
+  "interval_duration": 240,
+  "recovery_duration": 240,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_four_by_four_04.fit"
+}

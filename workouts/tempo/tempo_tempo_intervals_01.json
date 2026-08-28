@@ -1,0 +1,112 @@
+{
+  "id": "tempo_tempo_intervals_01",
+  "name": "Tempo Intervals 01",
+  "category": "Tempo",
+  "subtype": "tempo_intervals",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 660,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo Intervals focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.76,
+  "tags": [
+    "tempo",
+    "tempo_intervals",
+    "tempo_intervals",
+    "moderate",
+    "aerobic"
+  ],
+  "duration_minutes": 76,
+  "estimated_tss": 71,
+  "target_tss": 71,
+  "interval_count": 1,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_tempo_intervals_01.fit"
+}

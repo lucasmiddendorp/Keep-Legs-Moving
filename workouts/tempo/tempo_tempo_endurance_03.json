@@ -1,0 +1,80 @@
+{
+  "id": "tempo_tempo_endurance_03",
+  "name": "Tempo Endurance 03",
+  "category": "Tempo",
+  "subtype": "tempo_endurance",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 780,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo Endurance focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 720,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 720,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 720,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.73,
+  "tags": [
+    "tempo",
+    "tempo_endurance",
+    "tempo_endurance",
+    "moderate",
+    "aerobic"
+  ],
+  "duration_minutes": 64,
+  "estimated_tss": 55,
+  "target_tss": 55,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 300,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_tempo_endurance_03.fit"
+}

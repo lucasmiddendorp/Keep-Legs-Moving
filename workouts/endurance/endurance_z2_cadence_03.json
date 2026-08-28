@@ -1,0 +1,81 @@
+{
+  "id": "endurance_z2_cadence_03",
+  "name": "Z2 Cadence 03",
+  "category": "Endurance",
+  "subtype": "z2_cadence",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 660,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Z2 Cadence focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 480,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.67,
+  "tags": [
+    "endurance",
+    "z2_cadence",
+    "z2_cadence",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 60,
+  "estimated_tss": 44,
+  "target_tss": 44,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_z2_cadence_03.fit"
+}

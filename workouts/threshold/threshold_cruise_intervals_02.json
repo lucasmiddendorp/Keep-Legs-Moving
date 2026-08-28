@@ -1,0 +1,96 @@
+{
+  "id": "threshold_cruise_intervals_02",
+  "name": "Cruise Intervals 02",
+  "category": "Threshold",
+  "subtype": "cruise_intervals",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 720,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cruise Intervals focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 600,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 600,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 600,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.82,
+  "tags": [
+    "threshold",
+    "cruise_intervals",
+    "cruise_intervals",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 64,
+  "estimated_tss": 63,
+  "target_tss": 63,
+  "interval_count": 4,
+  "interval_duration": 600,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_cruise_intervals_02.fit"
+}

@@ -1,52 +1,34 @@
 from dataclasses import dataclass
 import streamlit as st
-import Strava.strava_config as strava_config
-import pandas as pd
-import yaml
-from yaml.loader import SafeLoader
-
-
-def get_user_settings(username):
-
-    with open("auth_config.yaml") as f:
-        config = yaml.load(f, Loader=SafeLoader)
-
-    return config["credentials"]["usernames"].get(username, {})
+from Strava.strava_user import get_user_settings
 
 
 def get_user_ftp(username):
-
     settings = get_user_settings(username)
+    return settings.get("ftp", 0)
 
-    return settings.get("settings", {}).get("ftp", 0)
 
 @dataclass
 class PacingSettings:
     rider_weight: float
     bike_weight: float
     gear_weight: float
-
     ftp: int
     target_if: float
     max_ftp_fraction: float
     min_ftp_fraction: float
     pacing_aggression: float
-
     min_section_km: float
-
     reference_speed_kmh: float
     max_speed_kmh: float
-
     cda_normal: float
     cda_aero: float
     crr: float
     drivetrain_efficiency: float
     air_density: float
-
     coast_grade_threshold: float
     coast_speed_cap: float
     aero_pos_speed: float
-
     wind_speed: float
     wind_from_deg: float
 
@@ -56,14 +38,16 @@ class PacingSettings:
 
     @classmethod
     def from_ui(cls):
-
         st.subheader("Rider And Bike")
+
+        username = st.session_state["username"]
+        user_settings = get_user_settings(username)
 
         rider_weight = st.number_input(
             "Rider weight (kg)",
             min_value=30.0,
             max_value=130.0,
-            value=75.0,
+            value=float(user_settings.get("weight", 75)),
             step=0.5
         )
 
@@ -83,13 +67,9 @@ class PacingSettings:
             step=0.5
         )
 
-
         st.subheader("NP Pacing Target")
 
-
-        username = st.session_state.username
-
-        pacing_ftp = get_user_ftp(username)
+        pacing_ftp = float(user_settings.get("ftp", 300))
 
         target_if_percent = st.number_input(
             "Target IF (% FTP)",
@@ -163,7 +143,6 @@ class PacingSettings:
             step=1.0
         )
 
-
         st.subheader("Model Assumptions")
 
         cda_normal = st.number_input(
@@ -223,41 +202,26 @@ class PacingSettings:
             step=5
         )
 
-
         return cls(
             rider_weight=rider_weight,
             bike_weight=bike_weight,
             gear_weight=gear_weight,
-
             ftp=pacing_ftp,
-
             target_if=target_if_percent / 100,
             max_ftp_fraction=max_ftp_percent / 100,
             min_ftp_fraction=min_ftp_percent / 100,
-
             pacing_aggression=pacing_aggression,
-
             reference_speed_kmh=35,
-            
             min_section_km=min_section_km,
-
             max_speed_kmh=max_speed_kmh,
-
             cda_normal=cda_normal,
             cda_aero=cda_aero,
-
             crr=crr,
-
             drivetrain_efficiency=drivetrain_efficiency,
-
             air_density=air_density,
-
             wind_speed=wind_speed_kmh / 3.6,
             wind_from_deg=wind_from_deg,
-
             coast_grade_threshold=coast_grade_threshold,
             coast_speed_cap=coast_speed_cap,
-
             aero_pos_speed=aero_pos_speed,
         )
-    

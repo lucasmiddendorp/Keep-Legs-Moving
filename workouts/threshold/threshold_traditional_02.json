@@ -1,0 +1,96 @@
+{
+  "id": "threshold_traditional_02",
+  "name": "Traditional 02",
+  "category": "Threshold",
+  "subtype": "traditional",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 720,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Traditional focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 420,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 420,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 420,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.79,
+  "tags": [
+    "threshold",
+    "traditional",
+    "traditional",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 58,
+  "estimated_tss": 52,
+  "target_tss": 52,
+  "interval_count": 3,
+  "interval_duration": 420,
+  "recovery_duration": 240,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_traditional_02.fit"
+}

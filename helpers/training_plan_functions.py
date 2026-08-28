@@ -6,10 +6,8 @@ import pandas as pd
 import Strava.strava_config as strava_config
 
 from Strava.strava_user import get_training_goal, get_user_settings
-from helpers.availability import load_availability
 from helpers.metrics import calculate_training_load
 from helpers.fit_generator import generate_fit_workout
-from training_planner.planner import create_training_plan
 
 CATEGORIES = {"VO2max": "VO2max", "Threshold": "Threshold", "Tempo": "Tempo", "Endurance": "Endurance"}
 LEVELS = {"A": 20, "B": 40, "C": 60, "D": 80, "E": 100}
@@ -28,6 +26,8 @@ def load_workouts(library_path):
     for file in Path(library_path).rglob("*.json"):
         try:
             data = json.loads(file.read_text(encoding="utf-8"))
+            if not isinstance(data, dict) or "category" not in data or "steps" not in data:
+                continue
             data["_file"] = str(file)
             data["_category"] = data.get("category", file.parent.name)
             data["_level"] = data.get("level", file.name[0].upper())
@@ -103,22 +103,18 @@ def generate_workout_fit(workout, sport="Cycling", ftp=290, threshold_pace=6.0):
 def _parse_goal_date(goal_date):
     if not goal_date:
         return None
-
     try:
         return datetime.fromisoformat(str(goal_date)).date()
-    except Exception:
+    except ValueError:
         return None
 
 
 def _planning_week_number(goal_date):
-    """Return 1..4 planning-cycle week number."""
     goal_day = _parse_goal_date(goal_date)
     if goal_day:
         days_to_goal = (goal_day - date.today()).days
         if days_to_goal >= 0:
-            # Count backwards from goal week in a 4-week cycle.
             return ((days_to_goal // 7) % 4) + 1
-
     return (date.today().isocalendar().week % 4) + 1
 
 
@@ -196,32 +192,6 @@ def calculate_previous_week_tss(username):
     if tss_column is None:
         return 0.0
     return round(float(previous_week[tss_column].fillna(0).sum()), 0)
-
-def build_week(target, username, workouts=None):
-    """Build a weekly structure using availability, progression, and goal context."""
-    settings = get_user_settings(username)
-    goal = get_training_goal(username)
-
-    progression = float(settings.get("training_progression", 8) or 8)
-    athlete_level = settings.get("athlete_level", "Amateur")
-    goal_name = goal.get("name") if isinstance(goal, dict) else None
-    goal_date = goal.get("goal_date") if isinstance(goal, dict) else None
-    week_number = _planning_week_number(goal_date)
-
-    availability = load_availability(username).get("weekly", {})
-
-    schedule = create_training_plan(
-        weekly_tss=target,
-        progression=progression,
-        availability=availability,
-        goal=goal_name,
-        goal_date=goal_date,
-        workouts=workouts,
-        week_number=week_number,
-        athlete_level=athlete_level,
-    )
-
-    return schedule
 
 def calculate_weekly_tss(training_plan):
     """Calculate the total TSS of the current weekly plan."""

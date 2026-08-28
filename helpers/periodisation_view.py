@@ -1,7 +1,6 @@
-from datetime import date
+from datetime import date, datetime
 import streamlit as st
 from Strava.strava_user import get_training_goal
-from helpers.training_plan_functions import _parse_goal_date
 
 PHASE_COLORS = {
     "Base": "#3B82F6",
@@ -30,6 +29,15 @@ def build_phases(weeks_to_goal):
     if phases:
         phases[-1]["weeks"] += remaining
     return phases
+
+
+def _parse_goal_date(goal_date):
+    if not goal_date:
+        return None
+    try:
+        return datetime.fromisoformat(str(goal_date)).date()
+    except ValueError:
+        return None
 
 def show_periodisation_dialog(username):
     goal = get_training_goal(username)

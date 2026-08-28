@@ -3,12 +3,15 @@ import pandas as pd
 
 # import pages.settings_availability as availability_page
 # import pages.settings_exceptions as exceptions_page
-from Strava.strava_user import get_user_settings, save_user_settings, load_config
+from Strava.strava_user import get_user_settings, save_user_settings
 
 from Strava.strava_user import (get_training_goal,save_training_goal)
+from helpers.availability_ui import render_weekly_availability
+from helpers.style import apply_global_style
 
+apply_global_style()
 
-st.title("⚙️ Settings")
+st.title("Settings")
 
 
 username = st.session_state["username"]
@@ -42,6 +45,13 @@ selected_section = st.segmented_control(
 
 if selected_section:
     st.session_state.settings_section = selected_section
+
+if st.session_state.settings_section == "Weekly Availability":
+    render_weekly_availability(username)
+    st.stop()
+
+if st.session_state.settings_section == "Exceptions":
+    st.switch_page("pages/settings_exceptions.py")
 
 if st.session_state.settings_section == "Athlete Profile":
 
@@ -197,6 +207,26 @@ if selected_section == "Training Goal":
         min_value=pd.Timestamp.today().date(),
     )
 
+    event_distance_km = st.number_input(
+        "Event distance (km)",
+        min_value=0.0,
+        value=float(current_goal.get("event_distance_km") or 0),
+        step=5.0,
+    )
+    event_climb_m = st.number_input(
+        "Event climbing (m)",
+        min_value=0.0,
+        value=float(current_goal.get("event_climb_m") or 0),
+        step=100.0,
+    )
+    event_type = st.selectbox(
+        "Event type",
+        ["endurance", "race", "time_trial"],
+        index=["endurance", "race", "time_trial"].index(
+            current_goal.get("event_type") or "endurance"
+        ),
+    )
+
     st.caption(
         "Your goal influences how your weekly training load is distributed. "
         "For example, Gran Fondo prioritizes endurance, while Criterium places "
@@ -208,6 +238,9 @@ if selected_section == "Training Goal":
             username,
             goal,
             goal_date,
+            event_distance_km=event_distance_km or None,
+            event_climb_m=event_climb_m or None,
+            event_type=event_type,
         )
 
         st.success("Training goal saved.")

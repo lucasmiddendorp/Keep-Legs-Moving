@@ -1,0 +1,104 @@
+{
+  "id": "threshold_threshold_ladder_02",
+  "name": "Threshold Ladder 02",
+  "category": "Threshold",
+  "subtype": "threshold_ladder",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 720,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold Ladder focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ladder interval 1",
+      "duration_seconds": 240,
+      "intensity": 95,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ladder interval 2",
+      "duration_seconds": 300,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ladder interval 3",
+      "duration_seconds": 360,
+      "intensity": 97,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ladder interval 4",
+      "duration_seconds": 420,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.8,
+  "tags": [
+    "threshold",
+    "threshold_ladder",
+    "threshold_ladder",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 56,
+  "estimated_tss": 52,
+  "target_tss": 52,
+  "interval_count": 4,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_threshold_ladder_02.fit"
+}

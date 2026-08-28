@@ -1,0 +1,88 @@
+{
+  "id": "tempo_progressive_tempo_04",
+  "name": "Progressive Tempo 04",
+  "category": "Tempo",
+  "subtype": "progressive_tempo",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Progressive Tempo focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 660,
+      "intensity": 78,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 660,
+      "intensity": 79,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 660,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.71,
+  "tags": [
+    "tempo",
+    "progressive_tempo",
+    "progressive_tempo",
+    "moderate",
+    "aerobic"
+  ],
+  "duration_minutes": 64,
+  "estimated_tss": 52,
+  "target_tss": 52,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_progressive_tempo_04.fit"
+}

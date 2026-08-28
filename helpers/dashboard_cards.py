@@ -25,18 +25,16 @@ def render_metric_circle(title, value, percentage, subtitle, color):
             <style>
                 .metric-wrapper {{
                     text-align: center;
-                    font-family: sans-serif;
+                    font-family: "DM Sans", "Segoe UI", sans-serif;
                 }}
                 .metric-ring {{
                     width: 150px;
                     height: 150px;
                     border-radius: 50%;
-                    background: conic-gradient(
-                        {color} 0deg,
-                        {color} {percentage * 3.6}deg,
-                        #eeeeee {percentage * 3.6}deg,
-                        #eeeeee 360deg
-                    );
+                    background: #e6ebef;
+                    border: 10px solid #e6ebef;
+                    border-top-color: {color};
+                    border-right-color: {color};
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -50,24 +48,24 @@ def render_metric_circle(title, value, percentage, subtitle, color):
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+                    box-shadow: 0 2px 8px rgba(23, 33, 43, 0.06);
                 }}
                 .metric-value {{
                     font-size: 32px;
                     font-weight: 800;
-                    color: #111827;
+                    color: #17212b;
                 }}
                 .metric-title {{
                     margin-top: 15px;
                     font-size: 15px;
                     font-weight: 700;
-                    color: #475569;
+                    color: #526170;
                     text-transform: uppercase;
                     letter-spacing: 0.08em;
                 }}
                 .metric-subtitle {{
                     margin-top: 5px;
-                    color: #64748b;
+                    color: #6b7785;
                     font-size: 14px;
                 }}
             </style>
@@ -101,19 +99,19 @@ def render_readiness_card(label, note, color):
             <style>
                 .modern-card {{
                     background: white;
-                    border-radius: 18px;
+                    border-radius: 8px;
                     padding: 20px;
                     height: 100%;
-                    border: 1px solid #ede9fe;
-                    box-shadow: 0px 4px 20px rgba(124,58,237,0.06);
-                    font-family: sans-serif;
+                    border: 1px solid #dfe5ea;
+                    box-shadow: 0 2px 8px rgba(23,33,43,.04);
+                    font-family: "DM Sans", "Segoe UI", sans-serif;
                 }}
                 .card-title {{
                     font-size: 14px;
                     font-weight: 700;
-                    color: #64748b;
+                    color: #6b7785;
                     text-transform: uppercase;
-                    letter-spacing: 0.06em;
+                    letter-spacing: 0.04em;
                 }}
                 .card-main {{
                     margin-top: 12px;
@@ -122,7 +120,7 @@ def render_readiness_card(label, note, color):
                 }}
                 .card-note {{
                     margin-top: 8px;
-                    color: #64748b;
+                    color: #6b7785;
                     font-size: 14px;
                 }}
             </style>
@@ -169,19 +167,19 @@ def render_fatigue_card(fatigue_label, atl, delta):
             <style>
                 .modern-card {{
                     background: white;
-                    border-radius: 18px;
+                    border-radius: 8px;
                     padding: 20px;
                     height: 100%;
-                    border: 1px solid #ede9fe;
-                    box-shadow: 0px 4px 20px rgba(124,58,237,0.06);
-                    font-family: sans-serif;
+                    border: 1px solid #dfe5ea;
+                    box-shadow: 0 2px 8px rgba(23,33,43,.04);
+                    font-family: "DM Sans", "Segoe UI", sans-serif;
                 }}
                 .card-title {{
                     font-size: 14px;
                     font-weight: 700;
-                    color: #64748b;
+                    color: #6b7785;
                     text-transform: uppercase;
-                    letter-spacing: 0.06em;
+                    letter-spacing: 0.04em;
                 }}
                 .card-main {{
                     margin-top: 12px;
@@ -190,7 +188,7 @@ def render_fatigue_card(fatigue_label, atl, delta):
                 }}
                 .card-note {{
                     margin-top: 8px;
-                    color: #64748b;
+                    color: #6b7785;
                     font-size: 14px;
                 }}
             </style>
@@ -225,17 +223,17 @@ def render_ramp_card(ramp_label, ramp_rate, position):
             <style>
                 .modern-card {{
                     background: white;
-                    border-radius: 18px;
+                    border-radius: 8px;
                     padding: 20px;
                     height: 100%;
-                    border: 1px solid #ede9fe;
-                    box-shadow: 0px 4px 20px rgba(124,58,237,0.06);
-                    font-family: sans-serif;
+                    border: 1px solid #dfe5ea;
+                    box-shadow: 0 2px 8px rgba(23,33,43,.04);
+                    font-family: "DM Sans", "Segoe UI", sans-serif;
                 }}
                 .card-title {{
                     font-size: 14px;
                     font-weight: 700;
-                    color: #64748b;
+                    color: #6b7785;
                     text-transform: uppercase;
                     letter-spacing: 0.06em;
                 }}
@@ -246,7 +244,7 @@ def render_ramp_card(ramp_label, ramp_rate, position):
                 }}
                 .card-note {{
                     margin-top: 8px;
-                    color: #64748b;
+                    color: #6b7785;
                     font-size: 14px;
                 }}
                 .ramp-container {{
@@ -262,12 +260,12 @@ def render_ramp_card(ramp_label, ramp_rate, position):
                 .ramp-segment:nth-child(1) {{ background: #ddd6fe; }}
                 .ramp-segment:nth-child(2) {{ background: #c4b5fd; }}
                 .ramp-segment:nth-child(3) {{ background: #a78bfa; }}
-                .ramp-segment:nth-child(4) {{ background: #7c3aed; }}
+                .ramp-segment:nth-child(4) {{ background: #2f6f8f; }}
                 .ramp-labels {{
                     display: flex;
                     justify-content: space-between;
                     margin-top: 8px;
-                    color: #64748b;
+                    color: #6b7785;
                     font-size: 12px;
                 }}
             </style>
@@ -279,7 +277,7 @@ def render_ramp_card(ramp_label, ramp_rate, position):
 
 
                 <div class="card-main"
-                style="color:#7c3aed">
+                style="color:#2f6f8f">
                     {ramp_label}
                 </div>
 

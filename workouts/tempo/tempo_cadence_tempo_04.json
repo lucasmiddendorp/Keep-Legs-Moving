@@ -1,0 +1,104 @@
+{
+  "id": "tempo_cadence_tempo_04",
+  "name": "Cadence Tempo 04",
+  "category": "Tempo",
+  "subtype": "cadence_tempo",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence Tempo focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.73,
+  "tags": [
+    "tempo",
+    "cadence_tempo",
+    "cadence_tempo",
+    "moderate",
+    "aerobic"
+  ],
+  "duration_minutes": 70,
+  "estimated_tss": 60,
+  "target_tss": 60,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_cadence_tempo_04.fit"
+}

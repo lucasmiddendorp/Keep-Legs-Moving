@@ -1,6 +1,7 @@
 import os
 import json
 from datetime import datetime, timedelta
+from helpers.database import get_connection, get_user_id
 from helpers.user_cache import get_user_cache_paths
 
 
@@ -32,27 +33,80 @@ def get_availability_file(username):
 
 
 def load_availability(username):
+    user_id = get_user_id(username)
+    if user_id is None:
+        return json.loads(json.dumps(DEFAULT_AVAILABILITY))
 
-    path = get_availability_file(username)
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT day, available, hours, start_time, end_time
+                FROM availability_weekly WHERE user_id = %s
+            """, (user_id,))
+            weekly_rows = cur.fetchall()
+            cur.execute("""
+                SELECT date, available, hours, start_time, end_time
+                FROM availability_exceptions WHERE user_id = %s
+            """, (user_id,))
+            exception_rows = cur.fetchall()
+    finally:
+        conn.close()
 
-    if not os.path.exists(path):
-        save_availability(username, DEFAULT_AVAILABILITY)
-        return DEFAULT_AVAILABILITY
+    if not weekly_rows and not exception_rows:
+        try:
+            with open(get_availability_file(username), "r") as file:
+                legacy = json.load(file)
+            save_availability(username, legacy)
+            return legacy
+        except FileNotFoundError:
+            return json.loads(json.dumps(DEFAULT_AVAILABILITY))
 
-    with open(path, "r") as file:
-        return json.load(file)
+    weekly = json.loads(json.dumps(DEFAULT_AVAILABILITY["weekly"]))
+    for day, available, hours, start, end in weekly_rows:
+        weekly[day] = {"available": available, "hours": hours or 0,
+                       "start": start, "end": end}
+
+    exceptions = {}
+    for exception_date, available, hours, start, end in exception_rows:
+        exceptions[exception_date.isoformat()] = {
+            "available": available, "hours": hours or 0,
+            "start": start, "end": end,
+        }
+    return {"weekly": weekly, "exceptions": exceptions}
 
 
 def save_availability(username, availability):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
 
-    path = get_availability_file(username)
-
-    with open(path, "w") as file:
-        json.dump(
-            availability,
-            file,
-            indent=4
-        )
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            for day, data in availability.get("weekly", {}).items():
+                cur.execute("""
+                    INSERT INTO availability_weekly
+                        (user_id, day, available, hours, start_time, end_time)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (user_id, day) DO UPDATE SET
+                        available = EXCLUDED.available, hours = EXCLUDED.hours,
+                        start_time = EXCLUDED.start_time, end_time = EXCLUDED.end_time
+                """, (user_id, day, data.get("available", False),
+                       data.get("hours", 0), data.get("start"), data.get("end")))
+            for exception_date, data in availability.get("exceptions", {}).items():
+                cur.execute("""
+                    INSERT INTO availability_exceptions
+                        (user_id, date, available, hours, start_time, end_time)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (user_id, date) DO UPDATE SET
+                        available = EXCLUDED.available, hours = EXCLUDED.hours,
+                        start_time = EXCLUDED.start_time, end_time = EXCLUDED.end_time
+                """, (user_id, exception_date, data.get("available", False),
+                       data.get("hours", 0), data.get("start"), data.get("end")))
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def update_weekly_availability(username, weekly):
@@ -68,30 +122,26 @@ def update_weekly_availability(username, weekly):
 
 
 def update_exception(username, date, data):
-
     availability = load_availability(username)
-
     availability["exceptions"][str(date)] = data
-
-    save_availability(
-        username,
-        availability
-    )
+    save_availability(username, availability)
 
 
 def remove_exception(username, date):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
 
-    availability = load_availability(username)
-
-    date = str(date)
-
-    if date in availability["exceptions"]:
-        del availability["exceptions"][date]
-
-    save_availability(
-        username,
-        availability
-    )
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "DELETE FROM availability_exceptions WHERE user_id = %s AND date = %s",
+                (user_id, date),
+            )
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def get_day_availability(username, date):
@@ -132,19 +182,11 @@ def get_available_hours(username, start_date, days=7):
 
         if day["available"]:
 
-            start = datetime.strptime(
-                day["start"],
-                "%H:%M"
-            )
-
-            end = datetime.strptime(
-                day["end"],
-                "%H:%M"
-            )
-
-            hours = (
-                end-start
-            ).seconds / 3600
+            hours = day.get("hours", 0)
+            if not hours and day.get("start") and day.get("end"):
+                start = datetime.strptime(day["start"], "%H:%M")
+                end = datetime.strptime(day["end"], "%H:%M")
+                hours = (end - start).seconds / 3600
 
             available.append(
                 {

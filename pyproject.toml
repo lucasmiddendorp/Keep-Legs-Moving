@@ -20,6 +20,8 @@ gpxpy = "^1.6.2"
 pyyaml = "^6.0.3"
 streamlit-authenticator = "^0.4.2"
 fit-tool = "^0.9.16"
+psycopg2-binary = ">=2.9"
+bcrypt = ">=4.0"
 
 [build-system]
 requires = ["poetry-core"]

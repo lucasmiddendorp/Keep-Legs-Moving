@@ -1,0 +1,57 @@
+{
+  "id": "endurance_recovery_endurance_04",
+  "name": "Recovery Endurance 04",
+  "category": "Endurance",
+  "subtype": "recovery_endurance",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 720,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery Endurance focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance ride",
+      "duration_seconds": 4620,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 540,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.6,
+  "tags": [
+    "endurance",
+    "recovery_endurance",
+    "recovery_endurance",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 98,
+  "estimated_tss": 58,
+  "target_tss": 58,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 30,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_recovery_endurance_04.fit"
+}

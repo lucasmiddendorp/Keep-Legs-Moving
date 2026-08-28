@@ -24,34 +24,38 @@ def red_button():
     )
 
 def apply_global_style():
-
-
-        st.markdown(
+    st.markdown(
         """
         <style>
-
-        .dashboard-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: #1e1b4b;
-            margin-bottom: 20px;
+        :root {
+            --ink: #17212b;
+            --muted: #6b7785;
+            --line: #dfe5ea;
+            --surface: #ffffff;
+            --canvas: #f5f7f8;
+            --accent: #2f6f8f;
         }
 
-        /* Remove default Streamlit padding */
-        .block-container {
-            padding-top: 2rem;
-        }
-
-        /* Sidebar */
-        section[data-testid="stSidebar"] {
-            padding-top: 1rem;
-        }
-
-        /* Metric cards */
-        div[data-testid="metric-container"] {
-            border-radius: 10px;
-            padding: 10px;
-        }
+        html, body, [class*="css"] { font-family: "DM Sans", "Segoe UI", sans-serif; }
+        .stApp { background: var(--canvas); color: var(--ink); }
+        .block-container { max-width: 1440px; padding: 2.25rem 3.5rem 4rem; }
+        .dashboard-title { font-size: 2rem; line-height: 1.15; font-weight: 700; color: var(--ink); margin: 0 0 .45rem; letter-spacing: 0; }
+        .page-kicker { color: var(--muted); font-size: .9rem; margin-bottom: 1.8rem; }
+        h1, h2, h3 { color: var(--ink); letter-spacing: 0; }
+        h2 { font-size: 1.2rem; margin-top: 2rem; }
+        h3 { font-size: 1rem; }
+        p, label, [data-testid="stCaptionContainer"] { color: var(--muted); }
+        hr { border-color: var(--line); }
+        div[data-testid="stMetric"] { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.1rem; box-shadow: 0 2px 8px rgba(23,33,43,.04); }
+        div[data-testid="stMetricLabel"] { color: var(--muted); font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; }
+        div[data-testid="stMetricValue"] { color: var(--ink); font-size: 1.8rem; font-weight: 700; }
+        .stButton > button, .stDownloadButton > button { border-radius: 6px; border: 1px solid var(--line); min-height: 2.5rem; font-weight: 600; }
+        .stButton > button[kind="primary"] { background: var(--accent); border-color: var(--accent); color: white; }
+        .stButton > button:hover { border-color: var(--accent); color: var(--accent); }
+        [data-testid="stSidebar"] { background: #202a33; }
+        [data-testid="stSidebar"] * { color: #d9e1e7; }
+        [data-testid="stSidebar"] button { color: #d9e1e7 !important; }
+        input, textarea, [data-baseweb="select"] > div { border-color: var(--line) !important; border-radius: 6px !important; }
 
         </style>
         """,

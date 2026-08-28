@@ -1,0 +1,57 @@
+{
+  "id": "endurance_progressive_z2_05",
+  "name": "Progressive Z2 05",
+  "category": "Endurance",
+  "subtype": "progressive_z2",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 780,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Progressive Z2 focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance ride",
+      "duration_seconds": 6000,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.66,
+  "tags": [
+    "endurance",
+    "progressive_z2",
+    "progressive_z2",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 124,
+  "estimated_tss": 90,
+  "target_tss": 90,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_progressive_z2_05.fit"
+}

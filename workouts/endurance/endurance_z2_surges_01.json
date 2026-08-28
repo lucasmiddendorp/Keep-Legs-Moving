@@ -1,0 +1,81 @@
+{
+  "id": "endurance_z2_surges_01",
+  "name": "Z2 Surges 01",
+  "category": "Endurance",
+  "subtype": "z2_surges",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 540,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Z2 Surges focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance block",
+      "duration_seconds": 900,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Controlled surge",
+      "duration_seconds": 1800,
+      "intensity": 85,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance block",
+      "duration_seconds": 900,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Controlled surge",
+      "duration_seconds": 1800,
+      "intensity": 85,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 540,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.78,
+  "tags": [
+    "endurance",
+    "z2_surges",
+    "z2_surges",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 108,
+  "estimated_tss": 106,
+  "target_tss": 106,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_z2_surges_01.fit"
+}

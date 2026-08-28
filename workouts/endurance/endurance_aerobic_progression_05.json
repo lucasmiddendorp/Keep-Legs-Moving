@@ -1,0 +1,57 @@
+{
+  "id": "endurance_aerobic_progression_05",
+  "name": "Aerobic Progression 05",
+  "category": "Endurance",
+  "subtype": "aerobic_progression",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 780,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Aerobic Progression focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance ride",
+      "duration_seconds": 7800,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.64,
+  "tags": [
+    "endurance",
+    "aerobic_progression",
+    "aerobic_progression",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 154,
+  "estimated_tss": 105,
+  "target_tss": 105,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_aerobic_progression_05.fit"
+}

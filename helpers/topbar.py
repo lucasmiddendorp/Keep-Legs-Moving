@@ -15,11 +15,9 @@ def render_topbar():
             justify-content:space-between;
             align-items:center;
 
-            padding:12px 20px;
+            padding:10px 0 18px;
 
-            background:white;
-
-            border-bottom:1px solid #e5e7eb;
+            background:transparent;
 
             margin-bottom:25px;
 
@@ -28,17 +26,17 @@ def render_topbar():
 
         .topbar-title {
 
-            font-size:24px;
-            font-weight:800;
-            color:#0f172a;
+            font-size:18px;
+            font-weight:700;
+            color:#17212b;
 
         }
 
 
         .topbar-subtitle {
 
-            font-size:13px;
-            color:#64748b;
+            font-size:12px;
+            color:#6b7785;
 
         }
 
@@ -93,7 +91,7 @@ def render_topbar():
             )
 
             if st.button(
-                "🔄 Sync Strava",
+                "Sync Strava",
                 use_container_width=True,
                 disabled=not strava_connected,
             ):
@@ -103,7 +101,7 @@ def render_topbar():
         with col2:
 
             if st.button(
-                "👤 Profile",
+                "Profile",
                 use_container_width=True
             ):
                 st.switch_page("pages/profile.py")

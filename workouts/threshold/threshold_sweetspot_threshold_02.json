@@ -1,0 +1,96 @@
+{
+  "id": "threshold_sweetspot_threshold_02",
+  "name": "Sweetspot Threshold 02",
+  "category": "Threshold",
+  "subtype": "sweetspot_threshold",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 720,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Sweetspot Threshold focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 720,
+      "intensity": 90,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 720,
+      "intensity": 90,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 720,
+      "intensity": 90,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.79,
+  "tags": [
+    "threshold",
+    "sweetspot_threshold",
+    "sweetspot_threshold",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 70,
+  "estimated_tss": 66,
+  "target_tss": 66,
+  "interval_count": 3,
+  "interval_duration": 720,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_sweetspot_threshold_02.fit"
+}

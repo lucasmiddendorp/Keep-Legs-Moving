@@ -1,43 +1,10 @@
-import os
-import json
-
-from helpers.availability import get_availability_file
+from helpers.availability import remove_exception as remove_availability_exception
+from helpers.availability import update_exception
 
 
 def save_exception(username, date, data):
-
-    path = get_availability_file(username)
-
-    with open(path, "r") as file:
-        availability = json.load(file)
-
-
-    availability["exceptions"][str(date)] = data
-
-
-    with open(path, "w") as file:
-        json.dump(
-            availability,
-            file,
-            indent=4
-        )
+    update_exception(username, date, data)
 
 
 def remove_exception(username, date):
-
-    path = get_availability_file(username)
-
-    with open(path, "r") as file:
-        availability = json.load(file)
-
-
-    if str(date) in availability["exceptions"]:
-        del availability["exceptions"][str(date)]
-
-
-    with open(path, "w") as file:
-        json.dump(
-            availability,
-            file,
-            indent=4
-        )
+    remove_availability_exception(username, date)

@@ -1,29 +1,13 @@
 import secrets
 import streamlit as st
 
-from Strava.strava_auth import (
-    get_authorization_url,
-)
-from Strava.strava_user import (
-    clear_pending_user,
-    save_pending_user,
-)
-
-
-# --------------------------------------------------
-# Require logged-in user
-# --------------------------------------------------
-
+from Strava.strava_auth import get_authorization_url
+from Strava.strava_user import save_pending_user
 username = st.session_state.get("username")
 
 if not username:
     st.error("You must be logged in.")
     st.stop()
-
-
-# --------------------------------------------------
-# Connect screen
-# --------------------------------------------------
 
 st.title("Connect Strava")
 
@@ -32,20 +16,17 @@ st.write(
     "activities and power data."
 )
 
+expected_state = secrets.token_urlsafe(32)
 
-# --------------------------------------------------
-# Persist the user initiating the OAuth flow
-# --------------------------------------------------
+save_pending_user(
+    username,
+    expected_state
+)
 
-if "strava_oauth_state" not in st.session_state:
+auth_url = get_authorization_url(
+    state=expected_state
+)
 
-    st.session_state["strava_oauth_state"] = (secrets.token_urlsafe(32))
-
-expected_state = st.session_state["strava_oauth_state"]
-clear_pending_user()
-save_pending_user(username,state=expected_state)
-
-auth_url = get_authorization_url(state=expected_state)
 st.link_button(
     "Connect with Strava",
     auth_url,

@@ -1,0 +1,80 @@
+{
+  "id": "threshold_double_threshold_01",
+  "name": "Double Threshold 01",
+  "category": "Threshold",
+  "subtype": "double_threshold",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 660,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Double Threshold focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 660,
+      "intensity": 94,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 660,
+      "intensity": 94,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.79,
+  "tags": [
+    "threshold",
+    "double_threshold",
+    "double_threshold",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 52,
+  "estimated_tss": 48,
+  "target_tss": 48,
+  "interval_count": 2,
+  "interval_duration": 660,
+  "recovery_duration": 240,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_double_threshold_01.fit"
+}

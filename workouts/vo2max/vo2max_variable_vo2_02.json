@@ -1,0 +1,168 @@
+{
+  "id": "vo2max_variable_vo2_02",
+  "name": "Variable Vo2 02",
+  "category": "VO2max",
+  "subtype": "variable_vo2",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Variable Vo2 focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 1",
+      "duration_seconds": 120,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 2",
+      "duration_seconds": 180,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 3",
+      "duration_seconds": 240,
+      "intensity": 114,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 1",
+      "duration_seconds": 120,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 2",
+      "duration_seconds": 180,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 3",
+      "duration_seconds": 240,
+      "intensity": 114,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 1",
+      "duration_seconds": 120,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 2",
+      "duration_seconds": 180,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval 3",
+      "duration_seconds": 240,
+      "intensity": 114,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.92,
+  "tags": [
+    "vo2max",
+    "variable_vo2",
+    "variable_vo2",
+    "high-intensity",
+    "hard"
+  ],
+  "duration_minutes": 66,
+  "estimated_tss": 77,
+  "target_tss": 77,
+  "interval_count": 9,
+  "interval_duration": 120,
+  "recovery_duration": 120,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_variable_vo2_02.fit"
+}

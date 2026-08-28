@@ -1,0 +1,56 @@
+{
+  "id": "tempo_tempo_ladder_04",
+  "name": "Tempo Ladder 04",
+  "category": "Tempo",
+  "subtype": "tempo_ladder",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo Ladder focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 360,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.64,
+  "tags": [
+    "tempo",
+    "tempo_ladder",
+    "tempo_ladder",
+    "moderate",
+    "aerobic"
+  ],
+  "duration_minutes": 32,
+  "estimated_tss": 21,
+  "target_tss": 21,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_tempo_ladder_04.fit"
+}

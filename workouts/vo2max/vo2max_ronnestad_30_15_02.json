@@ -1,0 +1,112 @@
+{
+  "id": "vo2max_ronnestad_30_15_02",
+  "name": "Ronnestad 30 15 02",
+  "category": "VO2max",
+  "subtype": "ronnestad_30_15",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 15 focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 1800,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 900,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 1800,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 900,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 1800,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 900,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 1800,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 900,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 1.01,
+  "tags": [
+    "vo2max",
+    "ronnestad_30_15",
+    "ronnestad_30_15",
+    "high-intensity",
+    "hard"
+  ],
+  "duration_minutes": 206,
+  "estimated_tss": 304,
+  "target_tss": 304,
+  "interval_count": 4,
+  "interval_duration": 1800,
+  "recovery_duration": 900,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_ronnestad_30_15_02.fit"
+}

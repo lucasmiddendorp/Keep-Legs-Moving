@@ -1,0 +1,80 @@
+{
+  "id": "threshold_broken_threshold_03",
+  "name": "Broken Threshold 03",
+  "category": "Threshold",
+  "subtype": "broken_threshold",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 780,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Broken Threshold focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 600,
+      "intensity": 97,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 300,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 600,
+      "intensity": 97,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 300,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.79,
+  "tags": [
+    "threshold",
+    "broken_threshold",
+    "broken_threshold",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 54,
+  "estimated_tss": 49,
+  "target_tss": 49,
+  "interval_count": 2,
+  "interval_duration": 600,
+  "recovery_duration": 300,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_broken_threshold_03.fit"
+}

@@ -1,0 +1,96 @@
+{
+  "id": "vo2max_repeated_vo2_blocks_01",
+  "name": "Repeated Vo2 Blocks 01",
+  "category": "VO2max",
+  "subtype": "repeated_vo2_blocks",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 780,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Repeated Vo2 Blocks focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 180,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 180,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 180,
+      "intensity": 112,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.8,
+  "tags": [
+    "vo2max",
+    "repeated_vo2_blocks",
+    "repeated_vo2_blocks",
+    "high-intensity",
+    "hard"
+  ],
+  "duration_minutes": 42,
+  "estimated_tss": 36,
+  "target_tss": 36,
+  "interval_count": 3,
+  "interval_duration": 180,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_repeated_vo2_blocks_01.fit"
+}

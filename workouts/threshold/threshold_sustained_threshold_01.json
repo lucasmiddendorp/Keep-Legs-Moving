@@ -1,0 +1,56 @@
+{
+  "id": "threshold_sustained_threshold_01",
+  "name": "Sustained Threshold 01",
+  "category": "Threshold",
+  "subtype": "sustained_threshold",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 660,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Sustained Threshold focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Work interval",
+      "duration_seconds": 1860,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.82,
+  "tags": [
+    "threshold",
+    "sustained_threshold",
+    "sustained_threshold",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 54,
+  "estimated_tss": 56,
+  "target_tss": 56,
+  "interval_count": 1,
+  "interval_duration": 1860,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_sustained_threshold_01.fit"
+}

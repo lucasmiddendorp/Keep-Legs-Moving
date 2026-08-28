@@ -5,22 +5,28 @@ from helpers.topbar import render_topbar
 from Strava.strava_user import get_user_strava
 from Strava.strava_oauth import handle_strava_callback
 
+from helpers.database import init_database
+
 
 st.set_page_config(
     page_title="Performance Dashboard",
     page_icon="🚴",
-    layout="wide"
+    layout="wide",
 )
 
+init_database()
+
+
+# --------------------------------------------------
+# Handle Strava OAuth callback
+# --------------------------------------------------
 
 callback_status = handle_strava_callback()
 
 if callback_status == "success":
-
     st.rerun()
 
 if callback_status == "error":
-
     st.stop()
 
 
@@ -31,54 +37,54 @@ if callback_status == "error":
 login = st.Page(
     "pages/login.py",
     title="Login",
-    icon="🔑"
+    icon="🔑",
 )
 
 connect_strava = st.Page(
     "pages/connect_strava.py",
     title="Connect Strava",
-    icon="🔗"
+    icon="🔗",
 )
 
 dashboard = st.Page(
     "pages/dashboard.py",
     title="Dashboard",
-    icon="🏠"
+    icon="🏠",
 )
 
 course_pacing = st.Page(
     "pages/course_pacing.py",
     title="Course Pacing",
-    icon="📊"
+    icon="📊",
 )
 
 pacing_comparison = st.Page(
     "pages/pacing_comparison.py",
     title="Pacing Comparison",
-    icon="🗺️"
+    icon="🗺️",
 )
 
 training = st.Page(
     "pages/training_plan.py",
     title="Training Plan",
-    icon="📅"
+    icon="📅",
 )
 
 settings = st.Page(
     "pages/settings.py",
     title="Settings",
-    icon="⚙️"
+    icon="⚙️",
 )
 
 profile = st.Page(
     "pages/profile.py",
     title="Profile",
-    icon="👤"
+    icon="👤",
 )
 
 settings_availability = st.Page(
     "pages/settings_availability.py",
-    title="Weekly Availability"
+    title="Weekly Availability",
 )
 
 workout_builder = st.Page(
@@ -87,8 +93,9 @@ workout_builder = st.Page(
     icon="🏋️",
 )
 
+
 # --------------------------------------------------
-# Authentication routing
+# Authentication
 # --------------------------------------------------
 
 authenticated = (
@@ -97,7 +104,7 @@ authenticated = (
 
 
 # --------------------------------------------------
-# NOT LOGGED IN
+# Not logged in
 # --------------------------------------------------
 
 if not authenticated:
@@ -108,14 +115,13 @@ if not authenticated:
 
 
 # --------------------------------------------------
-# LOGGED IN
+# Logged in
 # --------------------------------------------------
 
 else:
 
     username = st.session_state.get("username")
 
-    # Safety check
     if not username:
 
         st.session_state["authentication_status"] = None
@@ -134,12 +140,12 @@ else:
 
         strava_connected = (
             isinstance(strava, dict)
-            and bool(strava.get("connected"))
-            and bool(strava.get("access_token"))
+            and strava.get("connected", False)
+            and strava.get("access_token")
         )
 
         # ------------------------------------------
-        # Strava NOT connected
+        # Strava not connected
         # ------------------------------------------
 
         if not strava_connected:
@@ -166,7 +172,8 @@ else:
                     settings,
                     profile,
                     settings_availability,
-                    workout_builder,                 ]
+                    workout_builder,
+                ]
             )
 
 
