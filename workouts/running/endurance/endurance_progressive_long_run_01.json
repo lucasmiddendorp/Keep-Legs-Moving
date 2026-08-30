@@ -1,0 +1,58 @@
+{
+  "id": "endurance_progressive_long_run_01",
+  "name": "Progressive Long Run 01",
+  "category": "Endurance",
+  "subtype": "progressive_long_run",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 360,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Long aerobic block",
+      "duration_seconds": 3780,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Progressive finish",
+      "duration_seconds": 1200,
+      "intensity": 77,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.7,
+  "sport": "Running",
+  "tags": [
+    "endurance",
+    "progressive_long_run",
+    "progressive_long_run",
+    "long-run",
+    "aerobic",
+    "easy"
+  ],
+  "duration_minutes": 95,
+  "estimated_tss": 76,
+  "target_tss": 76,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_progressive_long_run_01.fit"
+}

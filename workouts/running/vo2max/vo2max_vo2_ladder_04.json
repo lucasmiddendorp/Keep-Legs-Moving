@@ -1,0 +1,114 @@
+{
+  "id": "vo2max_vo2_ladder_04",
+  "name": "Vo2 Ladder 04",
+  "category": "VO2max",
+  "subtype": "vo2_ladder",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 360,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "VO2max interval 1",
+      "duration_seconds": 120,
+      "intensity": 106,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "VO2max interval 2",
+      "duration_seconds": 120,
+      "intensity": 107,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "VO2max interval 3",
+      "duration_seconds": 120,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "VO2max interval 4",
+      "duration_seconds": 120,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "VO2max interval 5",
+      "duration_seconds": 120,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.87,
+  "sport": "Running",
+  "tags": [
+    "vo2max",
+    "vo2_ladder",
+    "vo2_ladder",
+    "vo2max",
+    "high-intensity",
+    "hard"
+  ],
+  "duration_minutes": 29,
+  "estimated_tss": 32,
+  "target_tss": 32,
+  "interval_count": 5,
+  "interval_duration": 0,
+  "recovery_duration": 120,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_vo2_ladder_04.fit"
+}

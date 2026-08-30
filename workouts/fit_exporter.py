@@ -4,10 +4,10 @@ from helpers.fit_generator import generate_fit_workout
 from .workout_definitions import Workout
 
 
-def export_workout(workout: Workout) -> bytes:
+def export_workout(workout: Workout, ftp: int) -> bytes:
     return generate_fit_workout(
         sport="Cycling",
         name=workout.name,
         steps=[step.__dict__ for step in workout.steps],
-        ftp=250,
+        ftp=ftp,
     )

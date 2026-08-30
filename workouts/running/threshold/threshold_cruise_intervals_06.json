@@ -1,0 +1,82 @@
+{
+  "id": "threshold_cruise_intervals_06",
+  "name": "Cruise Intervals 06",
+  "category": "Threshold",
+  "subtype": "cruise_intervals",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 480,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold interval 2",
+      "duration_seconds": 480,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold interval 3",
+      "duration_seconds": 480,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.87,
+  "sport": "Running",
+  "tags": [
+    "threshold",
+    "cruise_intervals",
+    "cruise_intervals",
+    "threshold",
+    "hard",
+    "race-specific"
+  ],
+  "duration_minutes": 40,
+  "estimated_tss": 47,
+  "target_tss": 47,
+  "interval_count": 3,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_cruise_intervals_06.fit"
+}

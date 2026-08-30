@@ -1,0 +1,98 @@
+{
+  "id": "tempo_tempo_endurance_05",
+  "name": "Tempo Endurance 05",
+  "category": "Tempo",
+  "subtype": "tempo_endurance",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 420,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Tempo block 1",
+      "duration_seconds": 1020,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Tempo block 2",
+      "duration_seconds": 1020,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Tempo block 3",
+      "duration_seconds": 1020,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Tempo block 4",
+      "duration_seconds": 1020,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.77,
+  "sport": "Running",
+  "tags": [
+    "tempo",
+    "tempo_endurance",
+    "tempo_endurance",
+    "tempo",
+    "aerobic",
+    "moderate"
+  ],
+  "duration_minutes": 90,
+  "estimated_tss": 86,
+  "target_tss": 86,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_tempo_endurance_05.fit"
+}

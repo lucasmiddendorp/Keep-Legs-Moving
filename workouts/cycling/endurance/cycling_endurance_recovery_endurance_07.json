@@ -1,0 +1,62 @@
+{
+  "id": "cycling_endurance_recovery_endurance_07",
+  "name": "Recovery Endurance 07",
+  "category": "Endurance",
+  "subtype": "recovery_endurance",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 900,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery Endurance focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance ride",
+      "duration_seconds": 6060,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 540,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.6,
+  "tags": [
+    "cycling",
+    "endurance",
+    "recovery_endurance",
+    "recovery_endurance",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 126,
+  "estimated_tss": 74,
+  "target_tss": 74,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 30,
+  "sets": 1,
+  "zones": {
+    "Anaerobic": 125.5
+  },
+  "fit_filename": "cycling/endurance/cycling_endurance_recovery_endurance_07.fit"
+}

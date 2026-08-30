@@ -21,17 +21,18 @@ DURATION_RANGES = {
 }
 
 @st.cache_data
-def get_library(category):
-    return [w for w in load_workouts(LIBRARY_PATH) if w.get("_category") == category]
+def get_library(sport, category):
+    sport_path = LIBRARY_PATH / sport.lower()
+    return [w for w in load_workouts(sport_path) if w.get("_category") == category]
 
 def get_duration(workout):
     return sum(float(s.get("duration_seconds", 0) or 0) for s in workout.get("steps", [])) / 60
 
-def render_preview(workout, key):
+def render_preview(workout, key, sport):
     steps = workout_to_plot_steps(workout)
     if not steps:
         return
-    fig = plot_workout_summary(steps, sport="Cycling")
+    fig = plot_workout_summary(steps, sport=sport)
     fig.update_layout(
         height=100,
         margin=dict(l=5, r=5, t=3, b=3),
@@ -41,14 +42,14 @@ def render_preview(workout, key):
     st.plotly_chart(fig, width="stretch", config={"displayModeBar": False}, key=key)
 
 @st.dialog("Workout details")
-def workout_details(workout):
+def workout_details(workout, sport):
     duration = round(get_duration(workout))
     tss = float(workout.get("target_tss", workout.get("estimated_tss", 0)) or 0)
     target_if = float(workout.get("target_if", 0) or 0)
 
     st.subheader(workout.get("name", "Workout"))
     st.caption(f"{workout.get('_category', 'Workout')} · {duration} min · IF {target_if:.2f} · {tss:.0f} TSS")
-    render_preview(workout, f"details_{workout.get('_file', workout.get('name'))}")
+    render_preview(workout, f"details_{workout.get('_file', workout.get('name'))}", sport)
 
     try:
         fit_bytes, filename = generate_workout_fit(workout)
@@ -63,11 +64,27 @@ def workout_details(workout):
         st.warning("FIT file unavailable for this workout.")
 
 st.markdown('<div class="dashboard-title">Workout Library</div>', unsafe_allow_html=True)
-st.caption("Find a workout based on the type and time you have available.")
+st.caption("Find a workout based on the sport, type and time you have available.")
+
+sport = st.segmented_control(
+    "Sport",
+    ["Cycling", "Running"],
+    default="Cycling",
+    key="workout_library_sport",
+)
+
+if sport is None:
+    sport = "Cycling"
+
+sport_path = LIBRARY_PATH / sport.lower()
+
+if not sport_path.exists():
+    st.warning(f"No {sport.lower()} workout library found.")
+    st.stop()
 
 categories = sorted({
     w.get("_category")
-    for w in load_workouts(LIBRARY_PATH)
+    for w in load_workouts(sport_path)
     if w.get("_category")
 })
 
@@ -77,19 +94,21 @@ with col1:
     category = st.selectbox(
         "Workout type",
         ["Select a type"] + categories,
+        key="library_category",
     )
 
 with col2:
     duration_range = st.selectbox(
         "Duration",
         ["Select a duration"] + list(DURATION_RANGES),
+        key="library_duration",
     )
 
 if category == "Select a type" or duration_range == "Select a duration":
     st.info("Select a workout type and duration to browse the library.")
     st.stop()
 
-workouts = get_library(category)
+workouts = get_library(sport, category)
 min_duration, max_duration = DURATION_RANGES[duration_range]
 
 workouts = [
@@ -123,11 +142,11 @@ for i, workout in enumerate(workouts):
             unsafe_allow_html=True,
         )
 
-        render_preview(workout, f"preview_{i}")
+        render_preview(workout, f"preview_{sport}_{i}", sport)
 
         if st.button(
             "View workout",
-            key=f"view_{i}",
+            key=f"view_{sport}_{i}",
             use_container_width=True,
         ):
-            workout_details(workout)
+            workout_details(workout, sport)

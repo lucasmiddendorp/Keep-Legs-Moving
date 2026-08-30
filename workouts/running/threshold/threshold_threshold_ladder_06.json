@@ -1,0 +1,82 @@
+{
+  "id": "threshold_threshold_ladder_06",
+  "name": "Threshold Ladder 06",
+  "category": "Threshold",
+  "subtype": "threshold_ladder",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Threshold ladder 1",
+      "duration_seconds": 300,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold ladder 2",
+      "duration_seconds": 420,
+      "intensity": 99,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold ladder 3",
+      "duration_seconds": 540,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.89,
+  "sport": "Running",
+  "tags": [
+    "threshold",
+    "threshold_ladder",
+    "threshold_ladder",
+    "threshold",
+    "hard",
+    "race-specific"
+  ],
+  "duration_minutes": 35,
+  "estimated_tss": 43,
+  "target_tss": 43,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 120,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_threshold_ladder_06.fit"
+}

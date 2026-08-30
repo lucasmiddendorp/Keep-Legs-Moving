@@ -1,0 +1,102 @@
+{
+  "id": "cycling_endurance_z2_cadence_06",
+  "name": "Z2 Cadence 06",
+  "category": "Endurance",
+  "subtype": "z2_cadence",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Z2 Cadence focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cadence block",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 480,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.67,
+  "tags": [
+    "cycling",
+    "endurance",
+    "z2_cadence",
+    "z2_cadence",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 82,
+  "estimated_tss": 62,
+  "target_tss": 62,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "zones": {
+    "Anaerobic": 82.5
+  },
+  "fit_filename": "cycling/endurance/cycling_endurance_z2_cadence_06.fit"
+}

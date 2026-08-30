@@ -1,0 +1,50 @@
+{
+  "id": "threshold_sustained_threshold_05",
+  "name": "Sustained Threshold 05",
+  "category": "Threshold",
+  "subtype": "sustained_threshold",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 420,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Sustained threshold",
+      "duration_seconds": 2100,
+      "intensity": 95,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.89,
+  "sport": "Running",
+  "tags": [
+    "threshold",
+    "sustained_threshold",
+    "sustained_threshold",
+    "threshold",
+    "hard",
+    "race-specific"
+  ],
+  "duration_minutes": 48,
+  "estimated_tss": 61,
+  "target_tss": 61,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_sustained_threshold_05.fit"
+}

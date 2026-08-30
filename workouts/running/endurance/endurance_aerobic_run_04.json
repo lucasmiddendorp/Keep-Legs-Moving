@@ -1,0 +1,50 @@
+{
+  "id": "endurance_aerobic_run_04",
+  "name": "Aerobic Run 04",
+  "category": "Endurance",
+  "subtype": "aerobic_run",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 660,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Easy running",
+      "duration_seconds": 4500,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 480,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.69,
+  "sport": "Running",
+  "tags": [
+    "endurance",
+    "aerobic_run",
+    "aerobic_run",
+    "easy",
+    "aerobic",
+    "running"
+  ],
+  "duration_minutes": 94,
+  "estimated_tss": 74,
+  "target_tss": 74,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_aerobic_run_04.fit"
+}

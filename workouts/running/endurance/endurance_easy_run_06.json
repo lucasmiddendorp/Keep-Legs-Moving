@@ -1,0 +1,50 @@
+{
+  "id": "endurance_easy_run_06",
+  "name": "Easy Run 06",
+  "category": "Endurance",
+  "subtype": "easy_run",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 600,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Easy running",
+      "duration_seconds": 4500,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 480,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.65,
+  "sport": "Running",
+  "tags": [
+    "endurance",
+    "easy_run",
+    "easy_run",
+    "easy",
+    "aerobic",
+    "running"
+  ],
+  "duration_minutes": 93,
+  "estimated_tss": 65,
+  "target_tss": 65,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_easy_run_06.fit"
+}

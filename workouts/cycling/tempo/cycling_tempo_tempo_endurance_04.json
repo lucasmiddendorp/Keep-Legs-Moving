@@ -1,0 +1,77 @@
+{
+  "id": "cycling_tempo_tempo_endurance_04",
+  "name": "Tempo Endurance 04",
+  "category": "Tempo",
+  "subtype": "tempo_endurance",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 840,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo Endurance focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 780,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 300,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 780,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.7,
+  "tags": [
+    "cycling",
+    "tempo",
+    "tempo_endurance",
+    "tempo_endurance",
+    "moderate",
+    "aerobic"
+  ],
+  "duration_minutes": 56,
+  "estimated_tss": 44,
+  "target_tss": 44,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 300,
+  "sets": 1,
+  "zones": {
+    "Anaerobic": 56.5
+  },
+  "fit_filename": "cycling/tempo/cycling_tempo_tempo_endurance_04.fit"
+}

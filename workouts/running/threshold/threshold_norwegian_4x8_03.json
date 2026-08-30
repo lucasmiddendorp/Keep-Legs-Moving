@@ -1,0 +1,99 @@
+{
+  "id": "threshold_norwegian_4x8_03",
+  "name": "Norwegian 4X8 03",
+  "category": "Threshold",
+  "subtype": "norwegian_4x8",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Norwegian interval 1",
+      "duration_seconds": 480,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Norwegian interval 2",
+      "duration_seconds": 480,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Norwegian interval 3",
+      "duration_seconds": 480,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Norwegian interval 4",
+      "duration_seconds": 480,
+      "intensity": 98,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.9,
+  "sport": "Running",
+  "tags": [
+    "threshold",
+    "norwegian_4x8",
+    "norwegian_4x8",
+    "norwegian",
+    "threshold",
+    "controlled",
+    "running"
+  ],
+  "duration_minutes": 49,
+  "estimated_tss": 62,
+  "target_tss": 62,
+  "interval_count": 4,
+  "interval_duration": 0,
+  "recovery_duration": 120,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_norwegian_4x8_03.fit"
+}

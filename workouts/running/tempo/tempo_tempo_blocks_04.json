@@ -1,0 +1,82 @@
+{
+  "id": "tempo_tempo_blocks_04",
+  "name": "Tempo Blocks 04",
+  "category": "Tempo",
+  "subtype": "tempo_blocks",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 360,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Tempo block 1",
+      "duration_seconds": 780,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Tempo block 2",
+      "duration_seconds": 780,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Tempo block 3",
+      "duration_seconds": 780,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.79,
+  "sport": "Running",
+  "tags": [
+    "tempo",
+    "tempo_blocks",
+    "tempo_blocks",
+    "tempo",
+    "aerobic",
+    "moderate"
+  ],
+  "duration_minutes": 56,
+  "estimated_tss": 57,
+  "target_tss": 57,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_tempo_blocks_04.fit"
+}

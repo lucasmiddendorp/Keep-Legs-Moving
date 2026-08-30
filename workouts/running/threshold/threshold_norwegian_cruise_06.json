@@ -1,0 +1,115 @@
+{
+  "id": "threshold_norwegian_cruise_06",
+  "name": "Norwegian Cruise 06",
+  "category": "Threshold",
+  "subtype": "norwegian_cruise",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Norwegian interval 1",
+      "duration_seconds": 480,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 60,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Norwegian interval 2",
+      "duration_seconds": 480,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 60,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Norwegian interval 3",
+      "duration_seconds": 480,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 60,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Norwegian interval 4",
+      "duration_seconds": 480,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 60,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Norwegian interval 5",
+      "duration_seconds": 480,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.9,
+  "sport": "Running",
+  "tags": [
+    "threshold",
+    "norwegian_cruise",
+    "norwegian_cruise",
+    "norwegian",
+    "threshold",
+    "controlled",
+    "running"
+  ],
+  "duration_minutes": 54,
+  "estimated_tss": 71,
+  "target_tss": 71,
+  "interval_count": 5,
+  "interval_duration": 0,
+  "recovery_duration": 60,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_norwegian_cruise_06.fit"
+}

@@ -1,0 +1,66 @@
+{
+  "id": "tempo_progressive_tempo_06",
+  "name": "Progressive Tempo 06",
+  "category": "Tempo",
+  "subtype": "progressive_tempo",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Progressive tempo 1",
+      "duration_seconds": 600,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Progressive tempo 2",
+      "duration_seconds": 600,
+      "intensity": 83,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.76,
+  "sport": "Running",
+  "tags": [
+    "tempo",
+    "progressive_tempo",
+    "progressive_tempo",
+    "tempo",
+    "aerobic",
+    "moderate"
+  ],
+  "duration_minutes": 32,
+  "estimated_tss": 30,
+  "target_tss": 30,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 120,
+  "sets": 1,
+  "fit_filename": "tempo/tempo_progressive_tempo_06.fit"
+}

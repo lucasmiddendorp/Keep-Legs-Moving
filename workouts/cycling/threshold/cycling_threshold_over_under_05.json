@@ -1,0 +1,117 @@
+{
+  "id": "cycling_threshold_over_under_05",
+  "name": "Over Under 05",
+  "category": "Threshold",
+  "subtype": "over_under",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 900,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over Under focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Under",
+      "duration_seconds": 120,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over",
+      "duration_seconds": 120,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Under",
+      "duration_seconds": 120,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over",
+      "duration_seconds": 120,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Under",
+      "duration_seconds": 120,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over",
+      "duration_seconds": 120,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 720,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.75,
+  "tags": [
+    "cycling",
+    "threshold",
+    "over_under",
+    "over_under",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 44,
+  "estimated_tss": 35,
+  "target_tss": 35,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 120,
+  "sets": 1,
+  "zones": {
+    "Anaerobic": 43.5
+  },
+  "fit_filename": "cycling/threshold/cycling_threshold_over_under_05.fit"
+}

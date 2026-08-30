@@ -1,0 +1,62 @@
+{
+  "id": "cycling_endurance_aerobic_progression_07",
+  "name": "Aerobic Progression 07",
+  "category": "Endurance",
+  "subtype": "aerobic_progression",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 900,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Aerobic Progression focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance ride",
+      "duration_seconds": 8760,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 540,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.64,
+  "tags": [
+    "cycling",
+    "endurance",
+    "aerobic_progression",
+    "aerobic_progression",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 170,
+  "estimated_tss": 117,
+  "target_tss": 117,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "zones": {
+    "Anaerobic": 170.5
+  },
+  "fit_filename": "cycling/endurance/cycling_endurance_aerobic_progression_07.fit"
+}

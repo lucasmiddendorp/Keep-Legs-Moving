@@ -1,0 +1,50 @@
+{
+  "id": "endurance_long_run_05",
+  "name": "Long Run 05",
+  "category": "Endurance",
+  "subtype": "long_run",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 420,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Long run",
+      "duration_seconds": 6600,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.68,
+  "sport": "Running",
+  "tags": [
+    "endurance",
+    "long_run",
+    "long_run",
+    "long-run",
+    "aerobic",
+    "easy"
+  ],
+  "duration_minutes": 123,
+  "estimated_tss": 93,
+  "target_tss": 93,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_long_run_05.fit"
+}

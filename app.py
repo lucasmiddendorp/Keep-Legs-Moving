@@ -1,25 +1,33 @@
+
 import streamlit as st
 
-from helpers.navbar import render_navbar
 from helpers.topbar import render_topbar
 from Strava.strava_user import get_user_strava
 from Strava.strava_oauth import handle_strava_callback
-
 from helpers.database import init_database
 
 
+# =========================================================
+# PAGE CONFIG
+# =========================================================
+
 st.set_page_config(
-    page_title="Performance Dashboard",
+    page_title="Keep Legs Moving",
     page_icon="🚴",
     layout="wide",
 )
 
+
+# =========================================================
+# DATABASE
+# =========================================================
+
 init_database()
 
 
-# --------------------------------------------------
-# Handle Strava OAuth callback
-# --------------------------------------------------
+# =========================================================
+# HANDLE STRAVA OAUTH CALLBACK
+# =========================================================
 
 callback_status = handle_strava_callback()
 
@@ -30,56 +38,58 @@ if callback_status == "error":
     st.stop()
 
 
-# --------------------------------------------------
-# Pages
-# --------------------------------------------------
+# =========================================================
+# PAGE DEFINITIONS
+# =========================================================
 
 login = st.Page(
     "pages/login.py",
     title="Login",
-    icon="🔑",
 )
 
 connect_strava = st.Page(
     "pages/connect_strava.py",
     title="Connect Strava",
-    icon="🔗",
 )
+
+
+# ---------------------------------------------------------
+# Main application pages
+# ---------------------------------------------------------
 
 dashboard = st.Page(
     "pages/dashboard.py",
     title="Dashboard",
-    icon="🏠",
 )
 
-course_pacing = st.Page(
+pacing = st.Page(
     "pages/course_pacing.py",
-    title="Course Pacing",
-    icon="📊",
+    title="Pacing",
 )
 
-pacing_comparison = st.Page(
-    "pages/pacing_comparison.py",
-    title="Pacing Comparison",
-    icon="🗺️",
-)
-
-training = st.Page(
+training_plan = st.Page(
     "pages/training_plan.py",
     title="Training Plan",
-    icon="📅",
+)
+
+workouts = st.Page(
+    "pages/workout_library.py",
+    title="Workouts",
+)
+
+
+# ---------------------------------------------------------
+# Secondary / profile pages
+# ---------------------------------------------------------
+
+profile = st.Page(
+    "pages/profile.py",
+    title="Profile",
 )
 
 settings = st.Page(
     "pages/settings.py",
     title="Settings",
-    icon="⚙️",
-)
-
-profile = st.Page(
-    "pages/profile.py",
-    title="Profile",
-    icon="👤",
 )
 
 settings_availability = st.Page(
@@ -87,59 +97,54 @@ settings_availability = st.Page(
     title="Weekly Availability",
 )
 
-workout_builder = st.Page(
-    "pages/workout_builder.py",
-    title="Workout Builder",
-    icon="🏋️",
-)
 
-workout_library = st.Page(
-    "pages/workout_library.py",
-    title="Workout Library",
-    icon="📚",
-)
-
-# --------------------------------------------------
-# Authentication
-# --------------------------------------------------
+# =========================================================
+# AUTHENTICATION
+# =========================================================
 
 authenticated = (
     st.session_state.get("authentication_status") is True
 )
 
 
-# --------------------------------------------------
-# Not logged in
-# --------------------------------------------------
+# =========================================================
+# NOT LOGGED IN
+# =========================================================
 
 if not authenticated:
 
     pg = st.navigation(
-        [login]
+        [login],
+        position="hidden",
     )
 
 
-# --------------------------------------------------
-# Logged in
-# --------------------------------------------------
+# =========================================================
+# LOGGED IN
+# =========================================================
 
 else:
 
     username = st.session_state.get("username")
+
+    # -----------------------------------------------------
+    # Missing username
+    # -----------------------------------------------------
 
     if not username:
 
         st.session_state["authentication_status"] = None
 
         pg = st.navigation(
-            [login]
+            [login],
+            position="hidden",
         )
 
     else:
 
-        # ------------------------------------------
+        # -------------------------------------------------
         # Check Strava connection
-        # ------------------------------------------
+        # -------------------------------------------------
 
         strava = get_user_strava(username)
 
@@ -149,42 +154,42 @@ else:
             and strava.get("access_token")
         )
 
-        # ------------------------------------------
+        # -------------------------------------------------
         # Strava not connected
-        # ------------------------------------------
+        # -------------------------------------------------
 
         if not strava_connected:
 
             pg = st.navigation(
-                [connect_strava]
+                [connect_strava],
+                position="hidden",
             )
 
-        # ------------------------------------------
-        # Strava connected
-        # ------------------------------------------
+        # -------------------------------------------------
+        # Main application
+        # -------------------------------------------------
 
         else:
 
-            render_navbar()
+            # Custom navigation
             render_topbar()
 
             pg = st.navigation(
                 [
                     dashboard,
-                    course_pacing,
-                    pacing_comparison,
-                    training,
-                    settings,
+                    pacing,
+                    training_plan,
+                    workouts,
                     profile,
+                    settings,
                     settings_availability,
-                    workout_builder,
-                    workout_library,
-                ]
+                ],
+                position="hidden",
             )
 
 
-# --------------------------------------------------
-# Run selected page
-# --------------------------------------------------
+# =========================================================
+# RUN SELECTED PAGE
+# =========================================================
 
 pg.run()

@@ -1,0 +1,66 @@
+{
+  "id": "endurance_long_run_finish_06",
+  "name": "Long Run Finish 06",
+  "category": "Endurance",
+  "subtype": "long_run_finish",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Long aerobic block",
+      "duration_seconds": 6180,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo finish",
+      "duration_seconds": 900,
+      "intensity": 76,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Strong finish",
+      "duration_seconds": 600,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.7,
+  "sport": "Running",
+  "tags": [
+    "endurance",
+    "long_run_finish",
+    "long_run_finish",
+    "long-run",
+    "aerobic",
+    "easy"
+  ],
+  "duration_minutes": 138,
+  "estimated_tss": 112,
+  "target_tss": 112,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_long_run_finish_06.fit"
+}

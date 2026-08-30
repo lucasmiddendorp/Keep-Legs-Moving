@@ -1,0 +1,62 @@
+{
+  "id": "cycling_endurance_long_z2_02",
+  "name": "Long Z2 02",
+  "category": "Endurance",
+  "subtype": "long_z2",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 600,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Long Z2 focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance ride",
+      "duration_seconds": 8400,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.67,
+  "tags": [
+    "cycling",
+    "endurance",
+    "long_z2",
+    "long_z2",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 160,
+  "estimated_tss": 119,
+  "target_tss": 119,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "zones": {
+    "Anaerobic": 160.5
+  },
+  "fit_filename": "cycling/endurance/cycling_endurance_long_z2_02.fit"
+}

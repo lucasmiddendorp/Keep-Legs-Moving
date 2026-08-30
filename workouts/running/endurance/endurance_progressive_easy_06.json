@@ -1,0 +1,58 @@
+{
+  "id": "endurance_progressive_easy_06",
+  "name": "Progressive Easy 06",
+  "category": "Endurance",
+  "subtype": "progressive_easy",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 600,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Easy running",
+      "duration_seconds": 2400,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Progressive finish",
+      "duration_seconds": 2400,
+      "intensity": 73,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 480,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.68,
+  "sport": "Running",
+  "tags": [
+    "endurance",
+    "progressive_easy",
+    "progressive_easy",
+    "easy",
+    "aerobic",
+    "running"
+  ],
+  "duration_minutes": 98,
+  "estimated_tss": 76,
+  "target_tss": 76,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_progressive_easy_06.fit"
+}

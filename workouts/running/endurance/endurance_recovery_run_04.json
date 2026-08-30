@@ -1,0 +1,50 @@
+{
+  "id": "endurance_recovery_run_04",
+  "name": "Recovery Run 04",
+  "category": "Endurance",
+  "subtype": "recovery_run",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 360,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Easy running",
+      "duration_seconds": 2520,
+      "intensity": 58,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.59,
+  "sport": "Running",
+  "tags": [
+    "endurance",
+    "recovery_run",
+    "recovery_run",
+    "easy",
+    "aerobic",
+    "running"
+  ],
+  "duration_minutes": 53,
+  "estimated_tss": 31,
+  "target_tss": 31,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "endurance/endurance_recovery_run_04.fit"
+}

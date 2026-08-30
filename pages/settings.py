@@ -77,7 +77,7 @@ if st.session_state.settings_section == "Athlete Profile":
         step=5,
     )
 
-    st.write("**Running Threshold Pace (min/km)**")
+    st.write("**Running Threshold Pace (min/km)** - Pace you can run at for 1 hour (or 95% of the pace you can run at for 20 min)")
 
     pace = float(settings.get("threshold_pace", 5.0))
 

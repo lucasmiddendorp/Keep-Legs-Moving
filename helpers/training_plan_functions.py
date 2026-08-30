@@ -2,6 +2,7 @@ from pathlib import Path
 import json
 import re
 from datetime import date, datetime
+from turtle import st
 import pandas as pd
 import Strava.strava_config as strava_config
 
@@ -84,11 +85,24 @@ def workout_to_fit_steps(workout):
         })
     return steps
 
-def generate_workout_fit(workout, sport="Cycling", ftp=290, threshold_pace=6.0):
-    """Generate a FIT file from a library workout."""
+    
+def generate_workout_fit(workout, sport="Cycling"):
+    """Generate a FIT file from a library workout using the user's current settings."""
     steps = workout_to_fit_steps(workout)
     if not steps:
         raise ValueError(f"Workout '{workout.get('name', 'Workout')}' contains no valid steps.")
+    if sport == "Cycling":
+        ftp = float(st.session_state.get("ftp", 0) or 0)
+        if ftp <= 0:
+            raise ValueError("A valid cycling FTP is required.")
+    else:
+        ftp = None
+    if sport == "Running":
+        threshold_pace = float(st.session_state.get("threshold_pace", 0) or 0)
+        if threshold_pace <= 0:
+            raise ValueError("A valid running threshold pace is required.")
+    else:
+        threshold_pace = None
     fit_bytes = generate_fit_workout(
         sport=sport,
         name=workout.get("name", "Workout"),

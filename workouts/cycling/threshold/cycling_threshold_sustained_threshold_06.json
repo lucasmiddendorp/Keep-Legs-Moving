@@ -1,0 +1,61 @@
+{
+  "id": "cycling_threshold_sustained_threshold_06",
+  "name": "Sustained Threshold 06",
+  "category": "Threshold",
+  "subtype": "sustained_threshold",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 960,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Sustained Threshold focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 1800,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.81,
+  "tags": [
+    "cycling",
+    "threshold",
+    "sustained_threshold",
+    "sustained_threshold",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 56,
+  "estimated_tss": 57,
+  "target_tss": 57,
+  "interval_count": 1,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "zones": {
+    "Anaerobic": 56.5
+  },
+  "fit_filename": "cycling/threshold/cycling_threshold_sustained_threshold_06.fit"
+}

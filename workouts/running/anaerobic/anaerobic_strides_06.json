@@ -1,0 +1,114 @@
+{
+  "id": "anaerobic_strides_06",
+  "name": "Strides 06",
+  "category": "Anaerobic",
+  "subtype": "strides",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Easy running",
+      "duration_seconds": 3000,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Stride 1",
+      "duration_seconds": 20,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Fast relaxed acceleration with good running form."
+    },
+    {
+      "name": "Stride recovery 1",
+      "duration_seconds": 60,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Stride 2",
+      "duration_seconds": 20,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Fast relaxed acceleration with good running form."
+    },
+    {
+      "name": "Stride recovery 2",
+      "duration_seconds": 60,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Stride 3",
+      "duration_seconds": 20,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Fast relaxed acceleration with good running form."
+    },
+    {
+      "name": "Stride recovery 3",
+      "duration_seconds": 60,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Stride 4",
+      "duration_seconds": 20,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Fast relaxed acceleration with good running form."
+    },
+    {
+      "name": "Easy running",
+      "duration_seconds": 960,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.67,
+  "sport": "Running",
+  "tags": [
+    "anaerobic",
+    "strides",
+    "strides",
+    "strides",
+    "speed",
+    "running-form"
+  ],
+  "duration_minutes": 80,
+  "estimated_tss": 59,
+  "target_tss": 59,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 60,
+  "sets": 1,
+  "fit_filename": "anaerobic/anaerobic_strides_06.fit"
+}

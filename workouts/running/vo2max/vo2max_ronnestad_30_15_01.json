@@ -1,0 +1,243 @@
+{
+  "id": "vo2max_ronnestad_30_15_01",
+  "name": "Ronnestad 30 15 01",
+  "category": "VO2max",
+  "subtype": "ronnestad_30_15",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 360,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.1",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.1",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.2",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.2",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.3",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.3",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.4",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.4",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.5",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.5",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.6",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.6",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.7",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.7",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.8",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.8",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.9",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.9",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.10",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.10",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.11",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.11",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.12",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 1.12",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ronnestad 30 sec Work 1.13",
+      "duration_seconds": 30,
+      "intensity": 116,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.9,
+  "sport": "Running",
+  "tags": [
+    "vo2max",
+    "ronnestad_30_15",
+    "ronnestad_30_15",
+    "ronnestad",
+    "30-15",
+    "vo2max",
+    "high-intensity"
+  ],
+  "duration_minutes": 22,
+  "estimated_tss": 24,
+  "target_tss": 24,
+  "interval_count": 13,
+  "interval_duration": 30,
+  "recovery_duration": 15,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_ronnestad_30_15_01.fit"
+}

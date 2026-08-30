@@ -1,0 +1,98 @@
+{
+  "id": "threshold_cruise_intervals_05",
+  "name": "Cruise Intervals 05",
+  "category": "Threshold",
+  "subtype": "cruise_intervals",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 420,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 540,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold interval 2",
+      "duration_seconds": 540,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold interval 3",
+      "duration_seconds": 540,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold interval 4",
+      "duration_seconds": 540,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.87,
+  "sport": "Running",
+  "tags": [
+    "threshold",
+    "cruise_intervals",
+    "cruise_intervals",
+    "threshold",
+    "hard",
+    "race-specific"
+  ],
+  "duration_minutes": 58,
+  "estimated_tss": 69,
+  "target_tss": 69,
+  "interval_count": 4,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_cruise_intervals_05.fit"
+}

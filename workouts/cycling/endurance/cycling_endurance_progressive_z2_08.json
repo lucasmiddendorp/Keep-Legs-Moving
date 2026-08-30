@@ -1,0 +1,62 @@
+{
+  "id": "cycling_endurance_progressive_z2_08",
+  "name": "Progressive Z2 08",
+  "category": "Endurance",
+  "subtype": "progressive_z2",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 960,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Progressive Z2 focus",
+      "duration_seconds": 30,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance ride",
+      "duration_seconds": 7440,
+      "intensity": 68,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.67,
+  "tags": [
+    "cycling",
+    "endurance",
+    "progressive_z2",
+    "progressive_z2",
+    "easy",
+    "z2",
+    "aerobic"
+  ],
+  "duration_minutes": 150,
+  "estimated_tss": 111,
+  "target_tss": 111,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "zones": {
+    "Anaerobic": 150.5
+  },
+  "fit_filename": "cycling/endurance/cycling_endurance_progressive_z2_08.fit"
+}

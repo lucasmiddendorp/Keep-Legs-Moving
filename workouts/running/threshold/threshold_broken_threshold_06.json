@@ -1,0 +1,66 @@
+{
+  "id": "threshold_broken_threshold_06",
+  "name": "Broken Threshold 06",
+  "category": "Threshold",
+  "subtype": "broken_threshold",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 900,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold interval 2",
+      "duration_seconds": 900,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.89,
+  "sport": "Running",
+  "tags": [
+    "threshold",
+    "broken_threshold",
+    "broken_threshold",
+    "threshold",
+    "hard",
+    "race-specific"
+  ],
+  "duration_minutes": 44,
+  "estimated_tss": 55,
+  "target_tss": 55,
+  "interval_count": 2,
+  "interval_duration": 0,
+  "recovery_duration": 240,
+  "sets": 1,
+  "fit_filename": "threshold/threshold_broken_threshold_06.fit"
+}
