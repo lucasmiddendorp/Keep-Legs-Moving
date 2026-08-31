@@ -77,6 +77,54 @@
       "description": ""
     },
     {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 480,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 540,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 420,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Cool-down",
       "duration_seconds": 720,
       "intensity": 55,
@@ -85,7 +133,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.71,
+  "target_if": 0.72,
   "tags": [
     "tempo",
     "variable_tempo",
@@ -93,12 +141,19 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 64,
-  "estimated_tss": 50,
-  "target_tss": 50,
+  "duration_minutes": 98,
+  "estimated_tss": 80,
+  "target_tss": 80,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
+<<<<<<< Updated upstream:workouts/tempo/tempo_variable_tempo_02.json
   "fit_filename": "tempo/tempo_variable_tempo_02.fit"
+=======
+  "zones": {
+    "Anaerobic": 97.5
+  },
+  "fit_filename": "cycling/tempo/cycling_tempo_variable_tempo_02.fit"
+>>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_variable_tempo_02.json
 }

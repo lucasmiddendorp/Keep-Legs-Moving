@@ -131,34 +131,6 @@ elif atl < 110:
 else:
     fatigue_label = "Very High"
 
-col1, col2, col3 = st.columns(3)
-with col1:
-    render_metric_circle(
-    "Fitness",
-    ctl,
-    ctl/150*100,
-    f"{fitness_delta:+.0f} this week",
-    "#6366f1"
-)
-
-with col2:
-    render_metric_circle(
-        "Fatigue",
-        atl,
-        atl/150*100,
-        fatigue_label,
-        "#ec4899"
-    )
-
-with col3:
-    render_metric_circle(
-        "Form",
-        tsb,
-        (tsb+50)/100*100,
-        readiness_label,
-        "#22c55e"
-    )
-    
 col1,col2,col3 = st.columns(3)
 
 with col1:

@@ -1,581 +1,692 @@
-from dataclasses import dataclass
-from typing import Optional
+import json
+from pathlib import Path
+import streamlit as st
+import plotly.graph_objects as go
 
+# =========================================================
+# Basic workout calculations
+# =========================================================
+
+def duration_seconds(step):
+    if step.get("duration_type") != "Time":
+        return 0
+    return int(step.get("duration_minutes", 0) or 0) * 60 + int(step.get("duration_seconds", 0) or 0)
+
+def format_duration(seconds):
+    seconds = int(seconds)
+    minutes = seconds // 60
+    remaining = seconds % 60
+    if minutes >= 60:
+        hours = minutes // 60
+        minutes = minutes % 60
+        return f"{hours}:{minutes:02d}:{remaining:02d}"
+    return f"{minutes}:{remaining:02d}"
+
+def make_rest():
+    return {
+        "duration_type": "Time",
+        "duration_minutes": 3,
+        "duration_seconds": 0,
+        "duration_distance": 0,
+        "intensity": 55.0,
+    }
 
 # =========================================================
 # Training zones
 # =========================================================
 
-CYCLING_ZONES = [
-    (0, 55, "Z1", "Recovery"),
-    (55, 76, "Z2", "Endurance"),
-    (76, 91, "Z3", "Tempo"),
-    (91, 106, "Z4", "Threshold"),
-    (106, 121, "Z5", "VO₂max"),
-    (121, 151, "Z6", "Anaerobic"),
-    (151, 999, "Z7", "Neuromuscular"),
-]
+def get_zone(sport, intensity):
+    intensity = float(intensity)
+    if sport == "Cycling":
+        if intensity < 55:
+            return "Z1", "Recovery"
+        if intensity <= 75:
+            return "Z2", "Endurance"
+        if intensity <= 90:
+            return "Z3", "Tempo"
+        if intensity <= 105:
+            return "Z4", "Threshold"
+        if intensity <= 120:
+            return "Z5", "VO₂max"
+        if intensity <= 150:
+            return "Z6", "Anaerobic"
+        return "Z7", "Neuromuscular"
+    if intensity < 76:
+        return "Easy", "Recovery / Easy"
+    if intensity <= 85:
+        return "Aerobic", "Endurance"
+    if intensity <= 95:
+        return "Tempo", "Tempo"
+    if intensity <= 100:
+        return "Threshold", "Threshold"
+    if intensity <= 105:
+        return "VO₂max", "VO₂max"
+    return "Speed", "Anaerobic / Speed"
 
-RUNNING_ZONES = [
-    (0, 76, "Easy", "Recovery / Easy"),
-    (76, 86, "Aerobic", "Endurance"),
-    (86, 96, "Tempo", "Tempo"),
-    (96, 101, "Threshold", "Threshold"),
-    (101, 106, "VO₂max", "VO₂max"),
-    (106, 999, "Speed", "Anaerobic / Speed"),
-]
+def cycling_target_watts(ftp, intensity):
+    return round(float(ftp) * float(intensity) / 100)
 
-
-@dataclass
-class WorkoutStep:
-    name: str
-    duration_type: str
-    duration: float
-    intensity: float
-    repeat: int = 1
-
-
-def get_zone(sport: str, intensity: float):
-    zones = (
-        CYCLING_ZONES
-        if sport == "Cycling"
-        else RUNNING_ZONES
-    )
-
-    for low, high, zone, name in zones:
-        if low <= intensity < high:
-            return zone, name
-
-    return "", ""
-
-
-# =========================================================
-# Cycling
-# =========================================================
-
-def cycling_target_watts(
-    ftp: float,
-    intensity: float,
-) -> int:
-
-    return round(
-        ftp * intensity / 100
-    )
-
-
-# =========================================================
-# Running
-# =========================================================
-
-def pace_to_speed_kmh(pace_seconds_per_km):
-    if pace_seconds_per_km <= 0:
-        return 0
-
-    return 3600 / pace_seconds_per_km
-
-
-def speed_to_pace(speed_kmh):
-
-    if speed_kmh <= 0:
-        return 0
-
-    return 3600 / speed_kmh
-
-
-def running_target_pace(
-    threshold_pace_seconds,
-    intensity,
-):
-    """
-    Running intensity is based on speed.
-
-    100% = threshold pace
-    110% = 10% faster
-    90% = 10% slower
-    """
-
-    threshold_speed = pace_to_speed_kmh(threshold_pace_seconds)
-    target_speed = (threshold_speed * intensity/ 100)
-
-    return speed_to_pace(target_speed)
-
+def running_target_pace(threshold_seconds, intensity):
+    return float(threshold_seconds) / (float(intensity) / 100)
 
 def format_pace(seconds):
+    seconds = max(1, int(round(seconds)))
+    minutes = seconds // 60
+    remaining = seconds % 60
+    return f"{minutes}:{remaining:02d}/km"
 
-    if seconds is None or seconds <= 0:
-        return "--:--"
+# =========================================================
+# Workout structure
+# =========================================================
 
-    minutes = int(seconds // 60)
-    secs = int(round(seconds % 60))
-
-    if secs >= 60:
-        minutes += 1
-        secs = 0
-
-    return f"{minutes}:{secs:02d}/km"
-
-
-import plotly.graph_objects as go
-def plot_workout_summary(workout, sport="cycling"):
-    """
-    Clean visual workout timeline.
-
-    Each workout step is represented as a colored block:
-        x = time
-        y = intensity
-
-    Blocks always start at y=0, so the height of the block
-    represents workout intensity.
-
-    Expected input:
-    [
-        {
+def create_default_workout():
+    return {
+        "warmup": {
             "name": "Warm-up",
-            "duration": 600,
-            "target_low": 70,
-            "target_high": 70,
-            "type": "step",
+            "duration_type": "Time",
+            "duration_minutes": 10,
+            "duration_seconds": 0,
+            "duration_distance": 0,
+            "intensity": 55.0,
         },
-        ...
-    ]
-    """
-
-    import plotly.graph_objects as go
-
-    # =========================================================
-    # Empty workout
-    # =========================================================
-
-    if not workout:
-        return go.Figure()
-
-    sport = str(sport).lower()
-
-    # =========================================================
-    # Training zones
-    # =========================================================
-
-    zones = [
-        ("Recovery", 0, 55),
-        ("Endurance", 55, 75),
-        ("Tempo", 75, 90),
-        ("Threshold", 90, 105),
-        ("VO₂ Max", 105, 120),
-        ("Anaerobic", 120, 140),
-        ("Anaerobic+", 140, 180),
-    ]
-
-    def get_zone(value):
-
-        for name, low, high in zones:
-
-            if low <= value < high:
-                return name
-
-        return "Anaerobic+"
-
-    # =========================================================
-    # Zone colors
-    # =========================================================
-
-    zone_colors = {
-        "Recovery": "#CBD5E1",
-        "Endurance": "#60A5FA",
-        "Tempo": "#34D399",
-        "Threshold": "#FBBF24",
-        "VO₂ Max": "#F97316",
-        "Anaerobic": "#EF4444",
-        "Anaerobic+": "#DC2626",
+        "intervals": [
+            {
+                "name": "Interval 1",
+                "fast": {
+                    "duration_type": "Time",
+                    "duration_minutes": 0,
+                    "duration_seconds": 36,
+                    "duration_distance": 0,
+                    "intensity": 120.0,
+                },
+                "slow": {
+                    "duration_type": "Time",
+                    "duration_minutes": 0,
+                    "duration_seconds": 15,
+                    "duration_distance": 0,
+                    "intensity": 55.0,
+                },
+                "repeat": 13,
+                "rest": make_rest(),
+            }
+        ],
+        "cooldown": {
+            "name": "Cool-down",
+            "duration_type": "Time",
+            "duration_minutes": 10,
+            "duration_seconds": 0,
+            "duration_distance": 0,
+            "intensity": 55.0,
+        },
     }
 
-    # =========================================================
-    # Create figure
-    # =========================================================
+# =========================================================
+# Workout editing controls
+# =========================================================
 
-    fig = go.Figure()
-
-    elapsed = 0.0
-    max_intensity = 0.0
-
-    # =========================================================
-    # Create blocks
-    # =========================================================
-
-    for step in workout:
-
-        # -----------------------------------------------------
-        # Duration
-        # -----------------------------------------------------
-
-        try:
-            duration = float(
-                step.get("duration", 0)
+def edit_duration(step, key_prefix):
+    duration_type = st.selectbox(
+        "Duration",
+        ["Time", "Distance"],
+        index=0 if step.get("duration_type", "Time") == "Time" else 1,
+        key=f"{key_prefix}_type",
+    )
+    step["duration_type"] = duration_type
+    if duration_type == "Time":
+        d1, d2 = st.columns(2)
+        with d1:
+            step["duration_minutes"] = st.number_input(
+                "Minutes",
+                min_value=0,
+                max_value=999,
+                value=int(step.get("duration_minutes", 0) or 0),
+                step=1,
+                key=f"{key_prefix}_minutes",
             )
-        except (TypeError, ValueError):
-
-            duration = 0
-
-        if duration <= 0:
-            continue
-
-        # -----------------------------------------------------
-        # Intensity
-        # -----------------------------------------------------
-
-        try:
-            low = float(
-                step.get(
-                    "target_low",
-                    step.get("target", 50),
-                )
+        with d2:
+            step["duration_seconds"] = st.number_input(
+                "Seconds",
+                min_value=0,
+                max_value=59,
+                value=int(step.get("duration_seconds", 0) or 0),
+                step=1,
+                key=f"{key_prefix}_seconds",
             )
-        except (TypeError, ValueError):
-
-            low = 50.0
-
-        try:
-            high = float(
-                step.get(
-                    "target_high",
-                    step.get("target", low),
-                )
-            )
-        except (TypeError, ValueError):
-
-            high = low
-
-        # -----------------------------------------------------
-        # For a single target, use the target as block height.
-        #
-        # This means:
-        #
-        # 55%  → block reaches 55
-        # 70%  → block reaches 70
-        # 120% → block reaches 120
-        # -----------------------------------------------------
-
-        intensity_low = max(0, low)
-        intensity_high = max(
-            intensity_low,
-            high,
-        )
-
-        # If low == high, the block still has full height.
-        y0 = 0
-        y1 = intensity_high
-
-        start = elapsed
-        end = elapsed + duration
-
-        max_intensity = max(
-            max_intensity,
-            intensity_high,
-        )
-
-        # -----------------------------------------------------
-        # Determine zone
-        # -----------------------------------------------------
-
-        zone = get_zone(
-            (low + high) / 2
-        )
-
-        color = zone_colors.get(
-            zone,
-            "#94A3B8",
-        )
-
-        # -----------------------------------------------------
-        # Add block
-        # -----------------------------------------------------
-
-        fig.add_shape(
-            type="rect",
-
-            x0=start,
-            x1=end,
-
-            y0=y0,
-            y1=y1,
-
-            fillcolor=color,
-
-            line=dict(
-                color=color,
-                width=0,
-            ),
-
-            opacity=0.92,
-
-            layer="above",
-        )
-
-        elapsed = end
-
-    # =========================================================
-    # Very subtle zone background
-    # =========================================================
-
-    # These are deliberately extremely subtle.
-    # The workout blocks remain the main visual element.
-
-    for zone_name, low, high in zones:
-
-        fig.add_hrect(
-            y0=low,
-            y1=high,
-
-            fillcolor=zone_colors[
-                zone_name
-            ],
-
-            opacity=0.025,
-
-            line_width=0,
-
-            layer="below",
-        )
-
-    # =========================================================
-    # Vertical separators between blocks
-    # =========================================================
-
-    elapsed = 0.0
-
-    for i, step in enumerate(workout):
-
-        try:
-            duration = float(
-                step.get("duration", 0)
-            )
-        except (TypeError, ValueError):
-
-            duration = 0
-
-        if duration <= 0:
-            continue
-
-        elapsed += duration
-
-        if i < len(workout) - 1:
-
-            fig.add_vline(
-                x=elapsed,
-
-                line_width=1,
-
-                line_color=(
-                    "rgba(100,116,139,0.12)"
-                ),
-
-                layer="above",
-            )
-
-    # =========================================================
-    # X-axis time formatting
-    # =========================================================
-
-    total_seconds = elapsed
-
-    if total_seconds <= 1800:
-
-        tick_interval = 300
-
-    elif total_seconds <= 3600:
-
-        tick_interval = 300
-
     else:
-
-        tick_interval = 600
-
-    tick_values = list(
-        range(
-            0,
-            int(total_seconds) + 1,
-            tick_interval,
+        step["duration_distance"] = st.number_input(
+            "Distance (km)",
+            min_value=0.1,
+            value=float(step.get("duration_distance", 1.0) or 1.0),
+            step=0.1,
+            key=f"{key_prefix}_distance",
         )
+
+def edit_intensity(step, key_prefix, sport, ftp, running_threshold_seconds):
+    intensity = st.number_input(
+        "% FTP" if sport == "Cycling" else "% Threshold",
+        min_value=1.0,
+        max_value=250.0,
+        value=float(step.get("intensity", 55.0) or 55.0),
+        step=1.0,
+        key=f"{key_prefix}_intensity",
     )
-
-    # Always show the end of the workout
-    if (
-        not tick_values
-        or tick_values[-1] != int(total_seconds)
-    ):
-
-        tick_values.append(
-            int(total_seconds)
-        )
-
-    def format_time(seconds):
-
-        seconds = int(seconds)
-
-        minutes = seconds // 60
-        remaining = seconds % 60
-
-        if minutes >= 60:
-
-            hours = minutes // 60
-            minutes = minutes % 60
-
-            return (
-                f"{hours}:{minutes:02d}"
-            )
-
-        return (
-            f"{minutes}:{remaining:02d}"
-        )
-
-    tick_labels = [
-        format_time(value)
-        for value in tick_values
-    ]
-
-    # =========================================================
-    # Y-axis title
-    # =========================================================
-
-    if sport in {"running", "run"}:
-
-        y_title = "% Threshold Pace"
-
+    step["intensity"] = intensity
+    zone, zone_name = get_zone(sport, intensity)
+    if sport == "Cycling":
+        target_text = f"{cycling_target_watts(ftp, intensity)} W"
     else:
+        target_text = format_pace(running_target_pace(running_threshold_seconds, intensity))
+    st.caption(f"**{intensity:.0f}%** · {zone} · {zone_name} · **{target_text}**")
 
-        y_title = "% FTP"
+def edit_interval_section(section, key_prefix, title, emoji, sport, ftp, running_threshold_seconds):
+    st.markdown(f"**{emoji} {title}**")
+    c1, c2 = st.columns([1.4, 1])
+    with c1:
+        edit_duration(section, key_prefix)
+    with c2:
+        edit_intensity(section, key_prefix, sport, ftp, running_threshold_seconds)
 
-    # =========================================================
-    # Layout
-    # =========================================================
+# =========================================================
+# Flatten workout
+# =========================================================
 
-    fig.update_layout(
+def flatten_workout(workout):
+    flat_steps = []
+    warmup = workout["warmup"]
+    flat_steps.append({
+        "name": "Warm-up",
+        "duration_type": warmup.get("duration_type", "Time"),
+        "duration_minutes": warmup.get("duration_minutes", 0),
+        "duration_seconds": warmup.get("duration_seconds", 0),
+        "duration_distance": warmup.get("duration_distance", 0),
+        "intensity": warmup.get("intensity", 55),
+        "repeat": 1,
+    })
+    intervals = workout["intervals"]
+    for i, interval in enumerate(intervals):
+        fast = interval["fast"]
+        slow = interval["slow"]
+        repeat = int(interval.get("repeat", 1))
+        for _ in range(repeat):
+            flat_steps.append({
+                "name": f"{interval['name']} - Fast",
+                "duration_type": fast.get("duration_type", "Time"),
+                "duration_minutes": fast.get("duration_minutes", 0),
+                "duration_seconds": fast.get("duration_seconds", 0),
+                "duration_distance": fast.get("duration_distance", 0),
+                "intensity": fast.get("intensity", 100),
+                "repeat": 1,
+            })
+            flat_steps.append({
+                "name": f"{interval['name']} - Slow",
+                "duration_type": slow.get("duration_type", "Time"),
+                "duration_minutes": slow.get("duration_minutes", 0),
+                "duration_seconds": slow.get("duration_seconds", 0),
+                "duration_distance": slow.get("duration_distance", 0),
+                "intensity": slow.get("intensity", 55),
+                "repeat": 1,
+            })
+        if i < len(intervals) - 1:
+            rest = interval.get("rest", make_rest())
+            flat_steps.append({
+                "name": "Rest between intervals",
+                "duration_type": rest.get("duration_type", "Time"),
+                "duration_minutes": rest.get("duration_minutes", 0),
+                "duration_seconds": rest.get("duration_seconds", 0),
+                "duration_distance": rest.get("duration_distance", 0),
+                "intensity": rest.get("intensity", 55),
+                "repeat": 1,
+            })
+    cooldown = workout["cooldown"]
+    flat_steps.append({
+        "name": "Cool-down",
+        "duration_type": cooldown.get("duration_type", "Time"),
+        "duration_minutes": cooldown.get("duration_minutes", 0),
+        "duration_seconds": cooldown.get("duration_seconds", 0),
+        "duration_distance": cooldown.get("duration_distance", 0),
+        "intensity": cooldown.get("intensity", 55),
+        "repeat": 1,
+    })
+    return flat_steps
 
-        # Make it wide and relatively short.
-        # This makes it feel like a workout timeline
-        # rather than a conventional chart.
-        height=320,
-
-        margin=dict(
-            l=45,
-            r=10,
-            t=10,
-            b=40,
-        ),
-
-        plot_bgcolor="rgba(0,0,0,0)",
-
-        paper_bgcolor="rgba(0,0,0,0)",
-
-        showlegend=False,
-
-        hovermode=False,
-
-        # -----------------------------------------------------
-        # X axis
-        # -----------------------------------------------------
-
-        xaxis=dict(
-
-            title=None,
-
-            range=[
-                0,
-                max(
-                    total_seconds,
-                    1,
-                ),
-            ],
-
-            tickmode="array",
-
-            tickvals=tick_values,
-
-            ticktext=tick_labels,
-
-            showgrid=False,
-
-            zeroline=False,
-
-            showline=False,
-
-            fixedrange=True,
-
-            ticks="",
-        ),
-
-        # -----------------------------------------------------
-        # Y axis
-        # -----------------------------------------------------
-
-        yaxis=dict(
-
-            title=y_title,
-
-            range=[
-                0,
-                max(
-                    130,
-                    max_intensity * 1.05,
-                ),
-            ],
-
-            showgrid=False,
-
-            zeroline=False,
-
-            showline=False,
-
-            fixedrange=True,
-
-            ticks="",
-
-            tickfont=dict(
-                size=10,
-            ),
-
-            title_font=dict(
-                size=11,
-            ),
-        ),
-    )
-
-    # =========================================================
-    # Make Plotly use all available width
-    # =========================================================
-
-    fig.update_xaxes(
-        automargin=True,
-    )
-
-    fig.update_yaxes(
-        automargin=True,
-    )
-
-    return fig
-
+# =========================================================
+# Workout TSS
+# =========================================================
 
 def calculate_workout_tss(steps, ftp):
-    """Calculate planned cycling TSS from workout steps."""
-    if not ftp or ftp <= 0:
-        return 0.0
-
-    tss = 0.0
-
+    total_tss = 0.0
     for step in steps:
-        if step.get("duration_type", "Time") != "Time":
-            continue
-
-        duration = (
-            step.get("duration_minutes", 0) * 60
-            + step.get("duration_seconds", 0)
-        )
-
+        duration = duration_seconds(step)
         if duration <= 0:
             continue
+        intensity = float(step.get("intensity", 55)) / 100
+        hours = duration / 3600
+        total_tss += hours * intensity ** 2 * 100
+    return total_tss
 
-        intensity = float(step.get("intensity", 0))
-        intensity_factor = intensity / 100
+# =========================================================
+# Workout preview
+# =========================================================
 
-        tss += (duration / 3600) * (intensity_factor ** 2) * 100
+def plot_workout_summary(steps, sport="Cycling"):
+    fig = go.Figure()
+    current_time = 0
+    for step in steps:
+        duration = float(step.get("duration", 0))
+        if duration <= 0:
+            continue
+        low = float(step.get("target_low", 55))
+        high = float(step.get("target_high", low))
+        fig.add_trace(go.Scatter(
+            x=[current_time, current_time + duration, current_time + duration, current_time],
+            y=[low, low, high, high],
+            fill="toself",
+            mode="lines",
+            line=dict(width=0),
+            hoverinfo="skip",
+            showlegend=False,
+        ))
+        current_time += duration
+    fig.update_layout(
+        height=260,
+        margin=dict(l=10, r=10, t=10, b=30),
+        xaxis_title="Time",
+        yaxis_title="% FTP" if sport == "Cycling" else "% Threshold",
+        showlegend=False,
+    )
+    return fig
 
-    return tss
+# =========================================================
+# Save workout to library
+# =========================================================
+
+def save_workout_to_library(workout, sport, category):
+    root = Path(__file__).resolve().parent.parent
+    library_path = root / "workouts" / sport.lower()
+    library_path.mkdir(parents=True, exist_ok=True)
+    safe_name = "".join(c if c.isalnum() or c in " _-" else "_" for c in workout["name"]).strip()
+    filename = f"{safe_name}.json"
+    path = library_path / filename
+    counter = 2
+    while path.exists():
+        path = library_path / f"{safe_name}_{counter}.json"
+        counter += 1
+    workout["_category"] = category
+    workout["_sport"] = sport
+    workout["_file"] = path.name
+    steps = flatten_workout(workout)
+    workout["estimated_tss"] = calculate_workout_tss(steps, workout.get("_ftp", 290))
+    workout["target_tss"] = workout["estimated_tss"]
+    workout["duration_seconds"] = sum(duration_seconds(step) for step in steps)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(workout, f, indent=2)
+    return path
+
+
+# =========================================================
+# Workout builder dialog
+# =========================================================
+@st.dialog("Create workout", width="large")
+def workout_builder_dialog(sport="Cycling", save_callback=None):
+    # =====================================================
+    # User settings
+    # =====================================================
+    username = st.session_state.get("username")
+    if not username:
+        st.error("Please log in first.")
+        return
+    try:
+        from Strava.strava_user import get_user_settings
+        settings = get_user_settings(username)
+    except Exception:
+        settings = {}
+    ftp = float(settings.get("ftp", 290) or 290)
+    running_threshold = float(settings.get("threshold_pace", 6.0) or 6.0)
+    running_threshold_seconds = running_threshold * 60
+    # =====================================================
+    # Initialize workout
+    # =====================================================
+    if "library_workout" not in st.session_state:
+        st.session_state.library_workout = create_default_workout()
+    workout = st.session_state.library_workout
+    # =====================================================
+    # Compact dialog styling
+    # =====================================================
+    st.markdown("""
+    <style>
+    [data-testid="stDialog"] [data-testid="stVerticalBlock"] {
+        gap: 0.25rem;
+    }
+    [data-testid="stDialog"] .block-container {
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+    }
+    [data-testid="stDialog"] h3 {
+        margin-bottom: 0.2rem;
+    }
+    [data-testid="stDialog"] hr {
+        margin: 0.4rem 0;
+    }
+    .builder-section {
+        font-size: 11px;
+        font-weight: 700;
+        color: #64748B;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin: 8px 0 4px 0;
+    }
+    .builder-card {
+        border: 1px solid #E5E7EB;
+        border-radius: 9px;
+        padding: 8px 10px;
+        margin-bottom: 6px;
+        background: #FFFFFF;
+    }
+    .builder-step-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: #17212B;
+        margin-bottom: 2px;
+    }
+    .builder-muted {
+        font-size: 10px;
+        color: #64748B;
+    }
+    [data-testid="stDialog"] [data-testid="stNumberInput"] {
+        margin-bottom: 0;
+    }
+    [data-testid="stDialog"] [data-testid="stSelectbox"] {
+        margin-bottom: 0;
+    }
+    [data-testid="stDialog"] [data-testid="stTextInput"] {
+        margin-bottom: 0;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    # =====================================================
+    # Header
+    # =====================================================
+    st.markdown("### Create workout")
+    st.caption("Build a structured workout and add it to your library.")
+    header_left, header_middle, header_right = st.columns([2.2, 1, 1])
+    with header_left:
+        workout_name = st.text_input(
+            "Workout name",
+            value=st.session_state.get("library_workout_name", f"{sport} Workout"),
+            key="library_workout_name",
+        )
+    with header_middle:
+        selected_sport = st.selectbox(
+            "Sport",
+            ["Cycling", "Running"],
+            index=0 if sport == "Cycling" else 1,
+            key="library_builder_sport",
+        )
+    with header_right:
+        workout_type = st.selectbox(
+            "Workout type",
+            ["Endurance", "Recovery", "Tempo", "Threshold", "VO₂max", "Intervals", "Race", "Other"],
+            key="library_builder_type",
+        )
+    if selected_sport == "Cycling":
+        st.caption(f"FTP **{ftp:.0f} W**")
+    else:
+        st.caption(f"Threshold pace **{format_pace(running_threshold_seconds)}**")
+    # =====================================================
+    # Local editing helpers
+    # =====================================================
+    def edit_duration_compact(step, key_prefix):
+        duration_type = st.selectbox(
+            "Duration",
+            ["Time", "Distance"],
+            index=0 if step.get("duration_type", "Time") == "Time" else 1,
+            key=f"{key_prefix}_type",
+        )
+        step["duration_type"] = duration_type
+        if duration_type == "Time":
+            c1, c2 = st.columns(2)
+            with c1:
+                step["duration_minutes"] = st.number_input(
+                    "Min",
+                    min_value=0,
+                    max_value=999,
+                    value=int(step.get("duration_minutes", 0) or 0),
+                    step=1,
+                    key=f"{key_prefix}_minutes",
+                )
+            with c2:
+                step["duration_seconds"] = st.number_input(
+                    "Sec",
+                    min_value=0,
+                    max_value=59,
+                    value=int(step.get("duration_seconds", 0) or 0),
+                    step=1,
+                    key=f"{key_prefix}_seconds",
+                )
+        else:
+            step["duration_distance"] = st.number_input(
+                "km",
+                min_value=0.1,
+                value=float(step.get("duration_distance", 1.0) or 1.0),
+                step=0.1,
+                key=f"{key_prefix}_distance",
+            )
+    def edit_intensity_compact(step, key_prefix):
+        intensity = st.number_input(
+            "% FTP" if selected_sport == "Cycling" else "% Threshold",
+            min_value=1.0,
+            max_value=250.0,
+            value=float(step.get("intensity", 55.0) or 55.0),
+            step=1.0,
+            key=f"{key_prefix}_intensity",
+        )
+        step["intensity"] = intensity
+        zone, zone_name = get_zone(selected_sport, intensity)
+        if selected_sport == "Cycling":
+            target_text = f"{cycling_target_watts(ftp, intensity)} W"
+        else:
+            target_text = format_pace(
+                running_target_pace(running_threshold_seconds, intensity)
+            )
+        st.caption(f"**{intensity:.0f}%** · {zone} · {zone_name} · **{target_text}**")
+    # =====================================================
+    # Training zones
+    # =====================================================
+    with st.expander("Training zones", expanded=False):
+        if selected_sport == "Cycling":
+            zones = [
+                ("Z1", "<55%", "Recovery"),
+                ("Z2", "55–75%", "Endurance"),
+                ("Z3", "76–90%", "Tempo"),
+                ("Z4", "91–105%", "Threshold"),
+                ("Z5", "106–120%", "VO₂max"),
+                ("Z6", "121–150%", "Anaerobic"),
+                ("Z7", ">150%", "Neuromuscular"),
+            ]
+        else:
+            zones = [
+                ("Easy", "<76%", "Recovery / Easy"),
+                ("Aerobic", "76–85%", "Endurance"),
+                ("Tempo", "86–95%", "Tempo"),
+                ("Threshold", "96–100%", "Threshold"),
+                ("VO₂max", "101–105%", "VO₂max"),
+                ("Speed", ">105%", "Speed"),
+            ]
+        zone_cols = st.columns(4)
+        for i, (zone, percentage, description) in enumerate(zones):
+            with zone_cols[i % 4]:
+                st.caption(f"**{zone}** {percentage}")
+                st.caption(description)
+    # =====================================================
+    # Warm-up
+    # =====================================================
+    st.markdown('<div class="builder-section">Warm-up</div>', unsafe_allow_html=True)
+    with st.container(border=True):
+        c1, c2 = st.columns([1.3, 1])
+        with c1:
+            edit_duration_compact(workout["warmup"], "library_warmup")
+        with c2:
+            edit_intensity_compact(workout["warmup"], "library_warmup")
+    # =====================================================
+    # Intervals
+    # =====================================================
+    st.markdown('<div class="builder-section">Intervals</div>', unsafe_allow_html=True)
+    for i, interval in enumerate(workout["intervals"]):
+        interval.setdefault("rest", make_rest())
+        with st.container(border=True):
+            header_col, repeat_col, delete_col = st.columns([4, 1, 0.4])
+            with header_col:
+                interval["name"] = st.text_input(
+                    "Interval name",
+                    value=interval.get("name", f"Interval {i + 1}"),
+                    key=f"library_interval_name_{i}",
+                    label_visibility="collapsed",
+                )
+            with repeat_col:
+                interval["repeat"] = st.number_input(
+                    "Repeat",
+                    min_value=1,
+                    max_value=100,
+                    value=int(interval.get("repeat", 1)),
+                    step=1,
+                    key=f"library_interval_repeat_{i}",
+                )
+            with delete_col:
+                if len(workout["intervals"]) > 1:
+                    if st.button("✕", key=f"library_delete_interval_{i}"):
+                        workout["intervals"].pop(i)
+                        st.rerun()
+            fast_col, slow_col = st.columns(2)
+            with fast_col:
+                st.markdown("**🟠 Fast**")
+                edit_duration_compact(interval["fast"], f"library_interval_{i}_fast")
+                edit_intensity_compact(interval["fast"], f"library_interval_{i}_fast")
+            with slow_col:
+                st.markdown("**🔵 Slow**")
+                edit_duration_compact(interval["slow"], f"library_interval_{i}_slow")
+                edit_intensity_compact(interval["slow"], f"library_interval_{i}_slow")
+            fast_seconds = duration_seconds(interval["fast"])
+            slow_seconds = duration_seconds(interval["slow"])
+            repeat = int(interval.get("repeat", 1))
+            total_interval_seconds = (fast_seconds + slow_seconds) * repeat
+            if total_interval_seconds > 0:
+                st.caption(
+                    f"{repeat} × ({format_duration(fast_seconds)} fast + "
+                    f"{format_duration(slow_seconds)} slow) · "
+                    f"**{format_duration(total_interval_seconds)}**"
+                )
+        if i < len(workout["intervals"]) - 1:
+            rest = interval["rest"]
+            with st.container(border=True):
+                st.markdown("**Recovery between intervals**")
+                c1, c2 = st.columns([1.3, 1])
+                with c1:
+                    edit_duration_compact(rest, f"library_interval_{i}_rest")
+                with c2:
+                    edit_intensity_compact(rest, f"library_interval_{i}_rest")
+    # =====================================================
+    # Add interval
+    # =====================================================
+    if st.button("＋ Add interval", use_container_width=True, key="library_add_interval"):
+        index = len(workout["intervals"]) + 1
+        workout["intervals"].append({
+            "name": f"Interval {index}",
+            "fast": {
+                "duration_type": "Time",
+                "duration_minutes": 1,
+                "duration_seconds": 0,
+                "duration_distance": 0,
+                "intensity": 110.0,
+            },
+            "slow": {
+                "duration_type": "Time",
+                "duration_minutes": 1,
+                "duration_seconds": 0,
+                "duration_distance": 0,
+                "intensity": 55.0,
+            },
+            "repeat": 5,
+            "rest": make_rest(),
+        })
+        st.rerun()
+    # =====================================================
+    # Cool-down
+    # =====================================================
+    st.markdown('<div class="builder-section">Cool-down</div>', unsafe_allow_html=True)
+    with st.container(border=True):
+        c1, c2 = st.columns([1.3, 1])
+        with c1:
+            edit_duration_compact(workout["cooldown"], "library_cooldown")
+        with c2:
+            edit_intensity_compact(workout["cooldown"], "library_cooldown")
+    # =====================================================
+    # Calculate workout summary
+    # =====================================================
+    steps = flatten_workout(workout)
+    total_seconds = sum(duration_seconds(step) for step in steps)
+    workout_tss = calculate_workout_tss(steps, ftp)
+    st.markdown('<div class="builder-section">Summary</div>', unsafe_allow_html=True)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.metric("Duration", format_duration(total_seconds))
+    with c2:
+        st.metric("Intervals", len(workout["intervals"]))
+    with c3:
+        st.metric("TSS", f"{workout_tss:.0f}")
+    # =====================================================
+    # Workout preview
+    # =====================================================
+    with st.expander("Workout preview", expanded=True):
+        plot_steps = []
+        for step in steps:
+            duration = duration_seconds(step)
+            if duration <= 0:
+                continue
+            intensity = float(step.get("intensity", 55))
+            plot_steps.append({
+                "name": step.get("name", "Step"),
+                "duration": duration,
+                "target_low": intensity,
+                "target_high": intensity,
+                "type": "step",
+            })
+        if plot_steps:
+            fig = plot_workout_summary(plot_steps, sport=selected_sport)
+            fig.update_layout(
+                height=170,
+                margin=dict(l=5, r=5, t=5, b=5),
+            )
+            st.plotly_chart(
+                fig,
+                width="stretch",
+                config={"displayModeBar": False},
+                key="library_builder_preview",
+            )
+    # =====================================================
+    # Save workout
+    # =====================================================
+    if st.button(
+        "＋ Add workout to library",
+        type="primary",
+        use_container_width=True,
+        key="save_library_workout",
+    ):
+        if not workout_name.strip():
+            st.error("Please enter a workout name.")
+            return
+        workout_data = {
+            "name": workout_name.strip(),
+            "_category": workout_type,
+            "sport": selected_sport,
+            "steps": steps,
+            "target_tss": workout_tss,
+            "estimated_tss": workout_tss,
+        }
+        if save_callback:
+            save_callback(workout_data)
+        else:
+            st.session_state["new_library_workout"] = workout_data
+        st.session_state.pop("library_workout", None)
+        st.session_state.pop("library_workout_name", None)
+        st.success("Workout added to your library.")
+        st.rerun()

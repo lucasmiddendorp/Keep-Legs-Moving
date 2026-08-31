@@ -181,7 +181,7 @@
       "description": ""
     },
     {
-      "name": "30 sec Work 1",
+      "name": "30 sec Work 11",
       "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
@@ -197,7 +197,7 @@
       "description": ""
     },
     {
-      "name": "30 sec Work 2",
+      "name": "30 sec Work 12",
       "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
@@ -213,7 +213,7 @@
       "description": ""
     },
     {
-      "name": "30 sec Work 3",
+      "name": "30 sec Work 13",
       "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
@@ -221,6 +221,7 @@
       "description": ""
     },
     {
+<<<<<<< Updated upstream:workouts/vo2max/vo2max_ronnestad_30_15_02.json
       "name": "15 sec Recovery 3",
       "duration_seconds": 15,
       "intensity": 50,
@@ -333,6 +334,8 @@
       "description": ""
     },
     {
+=======
+>>>>>>> Stashed changes:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_02.json
       "name": "Recovery",
       "duration_seconds": 180,
       "intensity": 50,
@@ -501,7 +504,7 @@
       "description": ""
     },
     {
-      "name": "30 sec Work 1",
+      "name": "30 sec Work 11",
       "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
@@ -517,7 +520,7 @@
       "description": ""
     },
     {
-      "name": "30 sec Work 2",
+      "name": "30 sec Work 12",
       "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
@@ -533,6 +536,7 @@
       "description": ""
     },
     {
+<<<<<<< Updated upstream:workouts/vo2max/vo2max_ronnestad_30_15_02.json
       "name": "30 sec Work 3",
       "duration_seconds": 30,
       "intensity": 115,
@@ -646,6 +650,9 @@
     },
     {
       "name": "30 sec Work 10",
+=======
+      "name": "30 sec Work 13",
+>>>>>>> Stashed changes:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_02.json
       "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
@@ -661,7 +668,11 @@
       "description": ""
     }
   ],
+<<<<<<< Updated upstream:workouts/vo2max/vo2max_ronnestad_30_15_02.json
   "target_if": 0.88,
+=======
+  "target_if": 0.86,
+>>>>>>> Stashed changes:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_02.json
   "tags": [
     "vo2max",
     "ronnestad_30_15",
@@ -669,12 +680,26 @@
     "high-intensity",
     "hard"
   ],
+<<<<<<< Updated upstream:workouts/vo2max/vo2max_ronnestad_30_15_02.json
   "duration_minutes": 64,
   "estimated_tss": 66,
   "target_tss": 66,
   "interval_count": 40,
+=======
+  "duration_minutes": 48,
+  "estimated_tss": 47,
+  "target_tss": 47,
+  "interval_count": 26,
+>>>>>>> Stashed changes:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_02.json
   "interval_duration": 30,
   "recovery_duration": 15,
   "sets": 1,
+<<<<<<< Updated upstream:workouts/vo2max/vo2max_ronnestad_30_15_02.json
   "fit_filename": "vo2max/vo2max_ronnestad_30_15_02.fit"
+=======
+  "zones": {
+    "Anaerobic": 48.5
+  },
+  "fit_filename": "cycling/vo2max/cycling_vo2max_ronnestad_30_15_02.fit"
+>>>>>>> Stashed changes:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_02.json
 }

@@ -2,7 +2,8 @@ import streamlit as st
 import bcrypt
 from helpers.database import get_user, create_user
 
-st.title("🚴 Performance Dashboard")
+st.title("🚴 Keep Legs Moving")
+st.subheader("Performance Analytics")
 
 auth_status = st.session_state.get("authentication_status", None)
 

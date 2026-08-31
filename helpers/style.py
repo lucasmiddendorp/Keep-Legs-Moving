@@ -38,7 +38,7 @@ def apply_global_style():
 
         html, body, [class*="css"] { font-family: "DM Sans", "Segoe UI", sans-serif; }
         .stApp { background: var(--canvas); color: var(--ink); }
-        .block-container { max-width: 1440px; padding: 2.25rem 3.5rem 4rem; }
+        .block-container { max-width: 1440px; padding: 4rem 3.5rem 4rem; }
         .dashboard-title { font-size: 2rem; line-height: 1.15; font-weight: 700; color: var(--ink); margin: 0 0 .45rem; letter-spacing: 0; }
         .page-kicker { color: var(--muted); font-size: .9rem; margin-bottom: 1.8rem; }
         h1, h2, h3 { color: var(--ink); letter-spacing: 0; }

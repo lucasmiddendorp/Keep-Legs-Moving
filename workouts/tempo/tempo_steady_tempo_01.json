@@ -22,7 +22,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 960,
+      "duration_seconds": 1080,
       "intensity": 82,
       "duration_type": "Time",
       "repeat": 1,
@@ -38,23 +38,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 960,
-      "intensity": 82,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 960,
+      "duration_seconds": 1080,
       "intensity": 82,
       "duration_type": "Time",
       "repeat": 1,
@@ -77,12 +61,19 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 76,
-  "estimated_tss": 69,
-  "target_tss": 69,
+  "duration_minutes": 62,
+  "estimated_tss": 54,
+  "target_tss": 54,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
+<<<<<<< Updated upstream:workouts/tempo/tempo_steady_tempo_01.json
   "fit_filename": "tempo/tempo_steady_tempo_01.fit"
+=======
+  "zones": {
+    "Anaerobic": 61.5
+  },
+  "fit_filename": "cycling/tempo/cycling_tempo_steady_tempo_01.fit"
+>>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_steady_tempo_01.json
 }

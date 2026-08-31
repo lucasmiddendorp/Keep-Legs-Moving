@@ -67,7 +67,24 @@ pacing_comparison = st.Page(
 training = st.Page(
     "pages/training_plan.py",
     title="Training Plan",
+<<<<<<< Updated upstream
     icon="📅",
+=======
+)
+
+workouts = st.Page(
+    "pages/workout_library.py",
+    title="Workouts",
+)
+
+# ---------------------------------------------------------
+# Secondary / profile pages
+# ---------------------------------------------------------
+
+profile = st.Page(
+    "pages/profile.py",
+    title="Profile",
+>>>>>>> Stashed changes
 )
 
 settings = st.Page(
@@ -165,15 +182,26 @@ else:
 
         else:
 
+<<<<<<< Updated upstream
             render_navbar()
             render_topbar()
+=======
+            # Custom navigation
+>>>>>>> Stashed changes
 
             pg = st.navigation(
                 [
                     dashboard,
+<<<<<<< Updated upstream
                     course_pacing,
                     pacing_comparison,
                     training,
+=======
+                    pacing,
+                    training_plan,
+                    workouts,
+                                        profile,
+>>>>>>> Stashed changes
                     settings,
                     profile,
                     settings_availability,
@@ -182,6 +210,7 @@ else:
                 ]
             )
 
+            render_topbar()
 
 # --------------------------------------------------
 # Run selected page

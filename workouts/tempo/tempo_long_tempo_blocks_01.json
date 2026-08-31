@@ -22,7 +22,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 1260,
+      "duration_seconds": 1080,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -38,23 +38,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 1260,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 1260,
+      "duration_seconds": 1080,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -69,7 +53,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.75,
+  "target_if": 0.73,
   "tags": [
     "tempo",
     "long_tempo_blocks",
@@ -77,12 +61,19 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 92,
-  "estimated_tss": 82,
-  "target_tss": 82,
+  "duration_minutes": 62,
+  "estimated_tss": 52,
+  "target_tss": 52,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
+<<<<<<< Updated upstream:workouts/tempo/tempo_long_tempo_blocks_01.json
   "fit_filename": "tempo/tempo_long_tempo_blocks_01.fit"
+=======
+  "zones": {
+    "Anaerobic": 61.5
+  },
+  "fit_filename": "cycling/tempo/cycling_tempo_long_tempo_blocks_01.fit"
+>>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_long_tempo_blocks_01.json
 }

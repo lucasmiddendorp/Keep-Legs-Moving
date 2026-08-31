@@ -13,82 +13,55 @@ def _safe_number(value, default=0.0):
         return default
 
 
-
-def render_metric_circle(title, value, percentage, subtitle, color):
-
-    percentage = max(0, min(float(percentage), 100))
-    value = float(value)
-
-    components.html(
-        dedent(
-            f"""
-            <style>
-                .metric-wrapper {{
-                    text-align: center;
-                    font-family: "DM Sans", "Segoe UI", sans-serif;
-                }}
-                .metric-ring {{
-                    width: 150px;
-                    height: 150px;
-                    border-radius: 50%;
-                    background: #e6ebef;
-                    border: 10px solid #e6ebef;
-                    border-top-color: {color};
-                    border-right-color: {color};
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto;
-                }}
-                .metric-inner {{
-                    width: 120px;
-                    height: 120px;
-                    border-radius: 50%;
-                    background: white;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    box-shadow: 0 2px 8px rgba(23, 33, 43, 0.06);
-                }}
-                .metric-value {{
-                    font-size: 32px;
-                    font-weight: 800;
-                    color: #17212b;
-                }}
-                .metric-title {{
-                    margin-top: 15px;
-                    font-size: 15px;
-                    font-weight: 700;
-                    color: #526170;
-                    text-transform: uppercase;
-                    letter-spacing: 0.08em;
-                }}
-                .metric-subtitle {{
-                    margin-top: 5px;
-                    color: #6b7785;
-                    font-size: 14px;
-                }}
-            </style>
+def render_metric_circle(title, percentage, subtitle, color):
+    percentage=max(0,min(float(percentage),100))
+    st.markdown(
+        f"""
+        <div style="text-align:center;font-family:'DM Sans','Segoe UI',sans-serif;">
             <div style="
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+                width:82px;
+                height:82px;
+                border-radius:50%;
+                background:conic-gradient({color} {percentage}%,#e6ebef {percentage}%);
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                margin:0 auto;
             ">
-                <div class="metric-wrapper">
-                    <div class="metric-ring">
-                        <div class="metric-inner">
-                            <div class="metric-value">{value:.0f}</div>
-                        </div>
-                    </div>
-                    <div class="metric-title">{title}</div>
-                    <div class="metric-subtitle">{subtitle}</div>
+                <div style="
+                    width:66px;
+                    height:66px;
+                    border-radius:50%;
+                    background:white;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    box-shadow:0 1px 5px rgba(23,33,43,.08);
+                ">
+                    <div style="
+                        font-size:17px;
+                        font-weight:800;
+                        color:#17212b;
+                    ">{percentage:.0f}%</div>
                 </div>
             </div>
-            """
-        ),
-        height=190
+            <div style="
+                margin-top:8px;
+                font-size:10px;
+                font-weight:700;
+                color:#526170;
+                text-transform:uppercase;
+                letter-spacing:.05em;
+            ">{title}</div>
+            <div style="
+                margin-top:2px;
+                font-size:9px;
+                color:#8a96a3;
+            ">{subtitle}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
-
 
 
 def render_readiness_card(label, note, color):

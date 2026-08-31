@@ -336,6 +336,7 @@ def save_training_goal(
     event_distance_km=None,
     event_climb_m=None,
     event_type=None,
+    sport=None,
 ):
     user_id = get_user_id(username)
 
@@ -349,16 +350,17 @@ def save_training_goal(
             cur.execute("""
                 INSERT INTO training_goals (
                     user_id, name, goal_date, event_distance_km,
-                    event_climb_m, event_type
+                    event_climb_m, event_type, sport
                 )
-                VALUES (%s, %s, %s, %s, %s, %s)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (user_id)
                 DO UPDATE SET
                     name = EXCLUDED.name,
                     goal_date = EXCLUDED.goal_date,
                     event_distance_km = EXCLUDED.event_distance_km,
                     event_climb_m = EXCLUDED.event_climb_m,
-                    event_type = EXCLUDED.event_type
+                    event_type = EXCLUDED.event_type,
+                    sport = EXCLUDED.sport
             """, (
                 user_id,
                 goal_name,
@@ -366,6 +368,7 @@ def save_training_goal(
                 event_distance_km,
                 event_climb_m,
                 event_type,
+                sport,
             ))
 
         conn.commit()
