@@ -125,41 +125,45 @@ def create_default_workout():
 # =========================================================
 
 def edit_duration(step, key_prefix):
-    duration_type = st.selectbox(
-        "Duration",
-        ["Time", "Distance"],
-        index=0 if step.get("duration_type", "Time") == "Time" else 1,
-        key=f"{key_prefix}_type",
-    )
-    step["duration_type"] = duration_type
-    if duration_type == "Time":
-        d1, d2 = st.columns(2)
-        with d1:
-            step["duration_minutes"] = st.number_input(
-                "Minutes",
-                min_value=0,
-                max_value=999,
-                value=int(step.get("duration_minutes", 0) or 0),
-                step=1,
-                key=f"{key_prefix}_minutes",
-            )
-        with d2:
-            step["duration_seconds"] = st.number_input(
-                "Seconds",
-                min_value=0,
-                max_value=59,
-                value=int(step.get("duration_seconds", 0) or 0),
-                step=1,
-                key=f"{key_prefix}_seconds",
-            )
-    else:
-        step["duration_distance"] = st.number_input(
-            "Distance (km)",
-            min_value=0.1,
-            value=float(step.get("duration_distance", 1.0) or 1.0),
-            step=0.1,
-            key=f"{key_prefix}_distance",
+    type_col, value_col = st.columns([0.85, 2.15])
+    with type_col:
+        duration_type = st.selectbox(
+            "Duration",
+            ["Time", "Distance"],
+            index=0 if step.get("duration_type", "Time") == "Time" else 1,
+            key=f"{key_prefix}_type",
+            label_visibility="collapsed",
         )
+    step["duration_type"] = duration_type
+    with value_col:
+        if duration_type == "Time":
+            min_col, sec_col = st.columns(2)
+            with min_col:
+                step["duration_minutes"] = st.number_input(
+                    "Min",
+                    min_value=0,
+                    max_value=999,
+                    value=int(step.get("duration_minutes", 0) or 0),
+                    step=1,
+                    key=f"{key_prefix}_minutes",
+                )
+            with sec_col:
+                step["duration_seconds"] = st.number_input(
+                    "Sec",
+                    min_value=0,
+                    max_value=59,
+                    value=int(step.get("duration_seconds", 0) or 0),
+                    step=1,
+                    key=f"{key_prefix}_seconds",
+                )
+        else:
+            step["duration_distance"] = st.number_input(
+                "km",
+                min_value=0.1,
+                value=float(step.get("duration_distance", 1.0) or 1.0),
+                step=0.1,
+                key=f"{key_prefix}_distance",
+            )
 
 def edit_intensity(step, key_prefix, sport, ftp, running_threshold_seconds):
     intensity = st.number_input(
@@ -180,7 +184,7 @@ def edit_intensity(step, key_prefix, sport, ftp, running_threshold_seconds):
 
 def edit_interval_section(section, key_prefix, title, emoji, sport, ftp, running_threshold_seconds):
     st.markdown(f"**{emoji} {title}**")
-    c1, c2 = st.columns([1.4, 1])
+    c1, c2 = st.columns([1.45, 1])
     with c1:
         edit_duration(section, key_prefix)
     with c2:
@@ -322,15 +326,12 @@ def save_workout_to_library(workout, sport, category):
         json.dump(workout, f, indent=2)
     return path
 
-
 # =========================================================
 # Workout builder dialog
 # =========================================================
+
 @st.dialog("Create workout", width="large")
 def workout_builder_dialog(sport="Cycling", save_callback=None):
-    # =====================================================
-    # User settings
-    # =====================================================
     username = st.session_state.get("username")
     if not username:
         st.error("Please log in first.")
@@ -343,69 +344,77 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
     ftp = float(settings.get("ftp", 290) or 290)
     running_threshold = float(settings.get("threshold_pace", 6.0) or 6.0)
     running_threshold_seconds = running_threshold * 60
-    # =====================================================
-    # Initialize workout
-    # =====================================================
     if "library_workout" not in st.session_state:
         st.session_state.library_workout = create_default_workout()
     workout = st.session_state.library_workout
+
     # =====================================================
     # Compact dialog styling
     # =====================================================
+
     st.markdown("""
     <style>
     [data-testid="stDialog"] [data-testid="stVerticalBlock"] {
-        gap: 0.25rem;
+        gap: 0.15rem;
     }
     [data-testid="stDialog"] .block-container {
-        padding-top: 0.4rem;
-        padding-bottom: 0.4rem;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
     }
     [data-testid="stDialog"] h3 {
-        margin-bottom: 0.2rem;
+        margin: 0 0 0.15rem 0;
+        font-size: 20px;
     }
     [data-testid="stDialog"] hr {
-        margin: 0.4rem 0;
+        margin: 0.3rem 0;
+    }
+    [data-testid="stDialog"] [data-testid="stCaptionContainer"] {
+        margin-top: -2px;
+        margin-bottom: 2px;
+    }
+    [data-testid="stDialog"] [data-testid="stNumberInput"],
+    [data-testid="stDialog"] [data-testid="stSelectbox"],
+    [data-testid="stDialog"] [data-testid="stTextInput"] {
+        margin-bottom: 0;
+    }
+    [data-testid="stDialog"] [data-testid="stWidgetLabel"] {
+        font-size: 10px;
+        margin-bottom: 1px;
+    }
+    [data-testid="stDialog"] input {
+        min-height: 32px;
+        height: 32px;
+    }
+    [data-testid="stDialog"] button {
+        min-height: 32px;
     }
     .builder-section {
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 700;
         color: #64748B;
         text-transform: uppercase;
         letter-spacing: 0.06em;
-        margin: 8px 0 4px 0;
+        margin: 6px 0 2px 0;
     }
     .builder-card {
         border: 1px solid #E5E7EB;
         border-radius: 9px;
-        padding: 8px 10px;
-        margin-bottom: 6px;
+        padding: 7px 9px;
+        margin-bottom: 5px;
         background: #FFFFFF;
     }
-    .builder-step-title {
+    .interval-title {
         font-size: 12px;
         font-weight: 700;
         color: #17212B;
-        margin-bottom: 2px;
-    }
-    .builder-muted {
-        font-size: 10px;
-        color: #64748B;
-    }
-    [data-testid="stDialog"] [data-testid="stNumberInput"] {
-        margin-bottom: 0;
-    }
-    [data-testid="stDialog"] [data-testid="stSelectbox"] {
-        margin-bottom: 0;
-    }
-    [data-testid="stDialog"] [data-testid="stTextInput"] {
-        margin-bottom: 0;
     }
     </style>
     """, unsafe_allow_html=True)
+
     # =====================================================
     # Header
     # =====================================================
+
     st.markdown("### Create workout")
     st.caption("Build a structured workout and add it to your library.")
     header_left, header_middle, header_right = st.columns([2.2, 1, 1])
@@ -428,49 +437,56 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
             ["Endurance", "Recovery", "Tempo", "Threshold", "VO₂max", "Intervals", "Race", "Other"],
             key="library_builder_type",
         )
+
     if selected_sport == "Cycling":
         st.caption(f"FTP **{ftp:.0f} W**")
     else:
         st.caption(f"Threshold pace **{format_pace(running_threshold_seconds)}**")
+
     # =====================================================
     # Local editing helpers
     # =====================================================
+
     def edit_duration_compact(step, key_prefix):
-        duration_type = st.selectbox(
-            "Duration",
-            ["Time", "Distance"],
-            index=0 if step.get("duration_type", "Time") == "Time" else 1,
-            key=f"{key_prefix}_type",
-        )
-        step["duration_type"] = duration_type
-        if duration_type == "Time":
-            c1, c2 = st.columns(2)
-            with c1:
-                step["duration_minutes"] = st.number_input(
-                    "Min",
-                    min_value=0,
-                    max_value=999,
-                    value=int(step.get("duration_minutes", 0) or 0),
-                    step=1,
-                    key=f"{key_prefix}_minutes",
-                )
-            with c2:
-                step["duration_seconds"] = st.number_input(
-                    "Sec",
-                    min_value=0,
-                    max_value=59,
-                    value=int(step.get("duration_seconds", 0) or 0),
-                    step=1,
-                    key=f"{key_prefix}_seconds",
-                )
-        else:
-            step["duration_distance"] = st.number_input(
-                "km",
-                min_value=0.1,
-                value=float(step.get("duration_distance", 1.0) or 1.0),
-                step=0.1,
-                key=f"{key_prefix}_distance",
+        type_col, input_col = st.columns([0.75, 2.25])
+        with type_col:
+            duration_type = st.selectbox(
+                "Duration",
+                ["Time", "Distance"],
+                index=0 if step.get("duration_type", "Time") == "Time" else 1,
+                key=f"{key_prefix}_type",
             )
+        step["duration_type"] = duration_type
+        with input_col:
+            if duration_type == "Time":
+                min_col, sec_col = st.columns(2)
+                with min_col:
+                    step["duration_minutes"] = st.number_input(
+                        "Min",
+                        min_value=0,
+                        max_value=999,
+                        value=int(step.get("duration_minutes", 0) or 0),
+                        step=1,
+                        key=f"{key_prefix}_minutes",
+                    )
+                with sec_col:
+                    step["duration_seconds"] = st.number_input(
+                        "Sec",
+                        min_value=0,
+                        max_value=59,
+                        value=int(step.get("duration_seconds", 0) or 0),
+                        step=1,
+                        key=f"{key_prefix}_seconds",
+                    )
+            else:
+                step["duration_distance"] = st.number_input(
+                    "km",
+                    min_value=0.1,
+                    value=float(step.get("duration_distance", 1.0) or 1.0),
+                    step=0.1,
+                    key=f"{key_prefix}_distance",
+                )
+
     def edit_intensity_compact(step, key_prefix):
         intensity = st.number_input(
             "% FTP" if selected_sport == "Cycling" else "% Threshold",
@@ -489,9 +505,11 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
                 running_target_pace(running_threshold_seconds, intensity)
             )
         st.caption(f"**{intensity:.0f}%** · {zone} · {zone_name} · **{target_text}**")
+
     # =====================================================
     # Training zones
     # =====================================================
+
     with st.expander("Training zones", expanded=False):
         if selected_sport == "Cycling":
             zones = [
@@ -517,24 +535,31 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
             with zone_cols[i % 4]:
                 st.caption(f"**{zone}** {percentage}")
                 st.caption(description)
+
     # =====================================================
     # Warm-up
     # =====================================================
+
     st.markdown('<div class="builder-section">Warm-up</div>', unsafe_allow_html=True)
     with st.container(border=True):
-        c1, c2 = st.columns([1.3, 1])
+        c1, c2 = st.columns([1.45, 1])
         with c1:
             edit_duration_compact(workout["warmup"], "library_warmup")
         with c2:
             edit_intensity_compact(workout["warmup"], "library_warmup")
+
     # =====================================================
     # Intervals
     # =====================================================
+
     st.markdown('<div class="builder-section">Intervals</div>', unsafe_allow_html=True)
+
     for i, interval in enumerate(workout["intervals"]):
         interval.setdefault("rest", make_rest())
+
         with st.container(border=True):
-            header_col, repeat_col, delete_col = st.columns([4, 1, 0.4])
+            header_col, repeat_col, delete_col = st.columns([4, 1, 0.5])
+
             with header_col:
                 interval["name"] = st.text_input(
                     "Interval name",
@@ -542,6 +567,7 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
                     key=f"library_interval_name_{i}",
                     label_visibility="collapsed",
                 )
+
             with repeat_col:
                 interval["repeat"] = st.number_input(
                     "Repeat",
@@ -551,44 +577,83 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
                     step=1,
                     key=f"library_interval_repeat_{i}",
                 )
+
             with delete_col:
                 if len(workout["intervals"]) > 1:
-                    if st.button("✕", key=f"library_delete_interval_{i}"):
+                    if st.button(
+                        "✕",
+                        key=f"library_delete_interval_{i}",
+                        help="Delete interval",
+                    ):
                         workout["intervals"].pop(i)
                         st.rerun()
+
             fast_col, slow_col = st.columns(2)
+
             with fast_col:
                 st.markdown("**🟠 Fast**")
-                edit_duration_compact(interval["fast"], f"library_interval_{i}_fast")
-                edit_intensity_compact(interval["fast"], f"library_interval_{i}_fast")
+                edit_duration_compact(
+                    interval["fast"],
+                    f"library_interval_{i}_fast",
+                )
+                edit_intensity_compact(
+                    interval["fast"],
+                    f"library_interval_{i}_fast",
+                )
+
             with slow_col:
                 st.markdown("**🔵 Slow**")
-                edit_duration_compact(interval["slow"], f"library_interval_{i}_slow")
-                edit_intensity_compact(interval["slow"], f"library_interval_{i}_slow")
+                edit_duration_compact(
+                    interval["slow"],
+                    f"library_interval_{i}_slow",
+                )
+                edit_intensity_compact(
+                    interval["slow"],
+                    f"library_interval_{i}_slow",
+                )
+
             fast_seconds = duration_seconds(interval["fast"])
             slow_seconds = duration_seconds(interval["slow"])
             repeat = int(interval.get("repeat", 1))
             total_interval_seconds = (fast_seconds + slow_seconds) * repeat
+
             if total_interval_seconds > 0:
                 st.caption(
                     f"{repeat} × ({format_duration(fast_seconds)} fast + "
                     f"{format_duration(slow_seconds)} slow) · "
                     f"**{format_duration(total_interval_seconds)}**"
                 )
+
         if i < len(workout["intervals"]) - 1:
             rest = interval["rest"]
+
             with st.container(border=True):
                 st.markdown("**Recovery between intervals**")
-                c1, c2 = st.columns([1.3, 1])
+                c1, c2 = st.columns([1.45, 1])
+
                 with c1:
-                    edit_duration_compact(rest, f"library_interval_{i}_rest")
+                    edit_duration_compact(
+                        rest,
+                        f"library_interval_{i}_rest",
+                    )
+
                 with c2:
-                    edit_intensity_compact(rest, f"library_interval_{i}_rest")
+                    edit_intensity_compact(
+                        rest,
+                        f"library_interval_{i}_rest",
+                    )
+
     # =====================================================
     # Add interval
     # =====================================================
-    if st.button("＋ Add interval", use_container_width=True, key="library_add_interval"):
+
+    if st.button(
+        "＋ Add interval",
+        use_container_width=True,
+        key="library_add_interval",
+    ):
         index = len(workout["intervals"]) + 1
+
         workout["intervals"].append({
             "name": f"Interval {index}",
             "fast": {
@@ -608,41 +673,66 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
             "repeat": 5,
             "rest": make_rest(),
         })
+
         st.rerun()
+
     # =====================================================
     # Cool-down
     # =====================================================
+
     st.markdown('<div class="builder-section">Cool-down</div>', unsafe_allow_html=True)
+
     with st.container(border=True):
-        c1, c2 = st.columns([1.3, 1])
+        c1, c2 = st.columns([1.45, 1])
+
         with c1:
-            edit_duration_compact(workout["cooldown"], "library_cooldown")
+            edit_duration_compact(
+                workout["cooldown"],
+                "library_cooldown",
+            )
+
         with c2:
-            edit_intensity_compact(workout["cooldown"], "library_cooldown")
+            edit_intensity_compact(
+                workout["cooldown"],
+                "library_cooldown",
+            )
+
     # =====================================================
-    # Calculate workout summary
+    # Summary
     # =====================================================
+
     steps = flatten_workout(workout)
     total_seconds = sum(duration_seconds(step) for step in steps)
     workout_tss = calculate_workout_tss(steps, ftp)
+
     st.markdown('<div class="builder-section">Summary</div>', unsafe_allow_html=True)
+
     c1, c2, c3 = st.columns(3)
+
     with c1:
         st.metric("Duration", format_duration(total_seconds))
+
     with c2:
         st.metric("Intervals", len(workout["intervals"]))
+
     with c3:
         st.metric("TSS", f"{workout_tss:.0f}")
+
     # =====================================================
     # Workout preview
     # =====================================================
+
     with st.expander("Workout preview", expanded=True):
         plot_steps = []
+
         for step in steps:
             duration = duration_seconds(step)
+
             if duration <= 0:
                 continue
+
             intensity = float(step.get("intensity", 55))
+
             plot_steps.append({
                 "name": step.get("name", "Step"),
                 "duration": duration,
@@ -650,21 +740,29 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
                 "target_high": intensity,
                 "type": "step",
             })
+
         if plot_steps:
-            fig = plot_workout_summary(plot_steps, sport=selected_sport)
+            fig = plot_workout_summary(
+                plot_steps,
+                sport=selected_sport,
+            )
+
             fig.update_layout(
                 height=170,
                 margin=dict(l=5, r=5, t=5, b=5),
             )
+
             st.plotly_chart(
                 fig,
                 width="stretch",
                 config={"displayModeBar": False},
                 key="library_builder_preview",
             )
+
     # =====================================================
     # Save workout
     # =====================================================
+
     if st.button(
         "＋ Add workout to library",
         type="primary",
@@ -674,6 +772,7 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
         if not workout_name.strip():
             st.error("Please enter a workout name.")
             return
+
         workout_data = {
             "name": workout_name.strip(),
             "_category": workout_type,
@@ -682,11 +781,14 @@ def workout_builder_dialog(sport="Cycling", save_callback=None):
             "target_tss": workout_tss,
             "estimated_tss": workout_tss,
         }
+
         if save_callback:
             save_callback(workout_data)
         else:
             st.session_state["new_library_workout"] = workout_data
+
         st.session_state.pop("library_workout", None)
         st.session_state.pop("library_workout_name", None)
+
         st.success("Workout added to your library.")
         st.rerun()

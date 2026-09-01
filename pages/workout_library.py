@@ -55,10 +55,6 @@ def workout_details(workout, sport):
     st.subheader(workout.get("name", "Workout"))
     st.caption(f"{workout.get('_category', 'Workout')} · {duration} min · IF {target_if:.2f} · {tss:.0f} TSS")
     render_preview(workout, f"details_{workout.get('_file', workout.get('name'))}", sport)
-
-=======
-    render_preview(workout, f"details_{workout.get('_file', workout.get('name'))}", sport)
->>>>>>> Stashed changes
     try:
         fit_bytes, filename = generate_workout_fit(workout)
         st.download_button(
@@ -70,6 +66,39 @@ def workout_details(workout, sport):
         )
     except Exception:
         st.warning("FIT file unavailable for this workout.")
+
+# =========================================================
+# Add workout button
+# =========================================================
+
+st.markdown("""
+<style>
+.add-workout-button button {
+    background: #ffffff !important;
+    color: #17212b !important;
+    border: 1px solid #dfe4e8 !important;
+    border-radius: 9px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+.add-workout-button button:hover {
+    background: #f7f8f9 !important;
+    border-color: #cfd5da !important;
+    color: #17212b !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+add_col, spacer = st.columns([1, 5])
+
+with add_col:
+    st.markdown('<div class="add-workout-button">', unsafe_allow_html=True)
+    if st.button("＋ Add workout", use_container_width=True, key="open_workout_builder"):
+        st.session_state.pop("library_workout", None)
+        st.session_state.pop("library_workout_name", None)
+        workout_builder_dialog()
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # =========================================================
 # Page header
@@ -156,13 +185,7 @@ for i, workout in enumerate(workouts):
             """,
             unsafe_allow_html=True,
         )
-<<<<<<< Updated upstream
-
         render_preview(workout, f"preview_{sport}_{i}", sport)
-
-=======
-        render_preview(workout, f"preview_{sport}_{i}", sport)
->>>>>>> Stashed changes
         if st.button(
             "View workout",
             key=f"view_{sport}_{i}",
