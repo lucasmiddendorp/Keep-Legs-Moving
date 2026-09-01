@@ -2,11 +2,15 @@ from pathlib import Path
 import streamlit as st
 from helpers.style import apply_global_style
 from helpers.dashboard_css import inject_card_css
-from helpers.workout_builder import plot_workout_summary
+from helpers.workout_builder import plot_workout_summary, workout_builder_dialog
 from helpers.training_plan_functions import load_workouts, workout_to_plot_steps, generate_workout_fit
 
 apply_global_style()
 inject_card_css()
+
+# =========================================================
+# Library paths and filters
+# =========================================================
 
 ROOT = Path(__file__).resolve().parent.parent
 LIBRARY_PATH = ROOT / "workouts"
@@ -26,7 +30,9 @@ def get_library(sport, category):
     return [w for w in load_workouts(sport_path) if w.get("_category") == category]
 
 def get_duration(workout):
-    return sum(float(s.get("duration_seconds", 0) or 0) for s in workout.get("steps", [])) / 60
+    if workout.get("duration_seconds") is not None:
+        return float(workout.get("duration_seconds", 0) or 0) / 60
+    return sum(float(s.get("duration_seconds", 0) or 0) + float(s.get("duration_minutes", 0) or 0) * 60 for s in workout.get("steps", [])) / 60
 
 def render_preview(workout, key, sport):
     steps = workout_to_plot_steps(workout)
@@ -46,11 +52,13 @@ def workout_details(workout, sport):
     duration = round(get_duration(workout))
     tss = float(workout.get("target_tss", workout.get("estimated_tss", 0)) or 0)
     target_if = float(workout.get("target_if", 0) or 0)
-
     st.subheader(workout.get("name", "Workout"))
     st.caption(f"{workout.get('_category', 'Workout')} · {duration} min · IF {target_if:.2f} · {tss:.0f} TSS")
     render_preview(workout, f"details_{workout.get('_file', workout.get('name'))}", sport)
 
+=======
+    render_preview(workout, f"details_{workout.get('_file', workout.get('name'))}", sport)
+>>>>>>> Stashed changes
     try:
         fit_bytes, filename = generate_workout_fit(workout)
         st.download_button(
@@ -62,6 +70,10 @@ def workout_details(workout, sport):
         )
     except Exception:
         st.warning("FIT file unavailable for this workout.")
+
+# =========================================================
+# Page header
+# =========================================================
 
 st.markdown('<div class="dashboard-title">Workout Library</div>', unsafe_allow_html=True)
 st.caption("Find a workout based on the sport, type and time you have available.")
@@ -122,6 +134,10 @@ if not workouts:
     st.info("No workouts found for this type and duration.")
     st.stop()
 
+# =========================================================
+# Workout cards
+# =========================================================
+
 cols = st.columns(3, gap="small")
 
 for i, workout in enumerate(workouts):
@@ -129,7 +145,6 @@ for i, workout in enumerate(workouts):
         duration = round(get_duration(workout))
         tss = float(workout.get("target_tss", workout.get("estimated_tss", 0)) or 0)
         target_if = float(workout.get("target_if", 0) or 0)
-
         st.markdown(
             f"""
             <div style="border:1px solid #e1e6ea;border-radius:10px;background:#fff;padding:10px 10px 5px;">
@@ -141,9 +156,13 @@ for i, workout in enumerate(workouts):
             """,
             unsafe_allow_html=True,
         )
+<<<<<<< Updated upstream
 
         render_preview(workout, f"preview_{sport}_{i}", sport)
 
+=======
+        render_preview(workout, f"preview_{sport}_{i}", sport)
+>>>>>>> Stashed changes
         if st.button(
             "View workout",
             key=f"view_{sport}_{i}",

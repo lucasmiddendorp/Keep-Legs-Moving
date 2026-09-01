@@ -214,6 +214,233 @@
       "description": ""
     },
     {
+      "name": "30 sec Work 13",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 1",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 2",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 3",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 4",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 5",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 6",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 7",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 8",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 9",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 10",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 11",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 12",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 15.0,
+<<<<<<< HEAD:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_04.json
+=======
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 13",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+>>>>>>> main:workouts/vo2max/vo2max_ronnestad_30_15_04.json
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "30 sec Work 1",
       "duration_seconds": 30,
       "intensity": 115,
@@ -399,7 +626,23 @@
     },
     {
       "name": "Recovery",
-      "duration_seconds": 15.0,
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 13",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -414,8 +657,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 1",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -430,8 +673,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 2",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -446,8 +689,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 3",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -462,8 +705,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 4",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -478,8 +721,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 5",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -494,8 +737,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 6",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -510,8 +753,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 7",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -526,8 +769,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 8",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -542,8 +785,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 9",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -558,8 +801,8 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 15.0,
+      "name": "15 sec Recovery 10",
+      "duration_seconds": 15,
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
@@ -567,6 +810,22 @@
     },
     {
       "name": "30 sec Work 11",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "15 sec Recovery 11",
+      "duration_seconds": 15,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "30 sec Work 12",
       "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
@@ -582,7 +841,7 @@
       "description": ""
     },
     {
-      "name": "30 sec Work 12",
+      "name": "30 sec Work 13",
       "duration_seconds": 30,
       "intensity": 115,
       "duration_type": "Time",
@@ -607,15 +866,39 @@
     "high-intensity",
     "hard"
   ],
+<<<<<<< HEAD:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_04.json
   "duration_minutes": 54,
   "estimated_tss": 59,
   "target_tss": 59,
+=======
+<<<<<<< Updated upstream:workouts/vo2max/vo2max_ronnestad_30_15_04.json
+  "duration_minutes": 60,
+  "estimated_tss": 61,
+  "target_tss": 61,
+>>>>>>> main:workouts/vo2max/vo2max_ronnestad_30_15_04.json
   "interval_count": 36,
+=======
+  "duration_minutes": 74,
+  "estimated_tss": 82,
+  "target_tss": 82,
+  "interval_count": 52,
+>>>>>>> Stashed changes:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_04.json
   "interval_duration": 30,
   "recovery_duration": 15.0,
   "sets": 1,
+<<<<<<< HEAD:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_04.json
   "zones": {
     "Anaerobic": 54.2
   },
   "fit_filename": "cycling/vo2max/cycling_vo2max_ronnestad_30_15_04.fit"
+=======
+<<<<<<< Updated upstream:workouts/vo2max/vo2max_ronnestad_30_15_04.json
+  "fit_filename": "vo2max/vo2max_ronnestad_30_15_04.fit"
+=======
+  "zones": {
+    "Anaerobic": 74.5
+  },
+  "fit_filename": "cycling/vo2max/cycling_vo2max_ronnestad_30_15_04.fit"
+>>>>>>> Stashed changes:workouts/cycling/vo2max/cycling_vo2max_ronnestad_30_15_04.json
+>>>>>>> main:workouts/vo2max/vo2max_ronnestad_30_15_04.json
 }

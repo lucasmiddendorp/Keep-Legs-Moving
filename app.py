@@ -172,7 +172,12 @@ else:
         else:
 
             # Custom navigation
+<<<<<<< Updated upstream
+            render_navbar()
             render_topbar()
+=======
+            # Custom navigation
+>>>>>>> Stashed changes
 
             pg = st.navigation(
                 [
@@ -183,8 +188,9 @@ else:
                     profile,
                     settings,
                     settings_availability,
-                ],
-                position="hidden",
+                    workout_builder,
+                    workout_library,
+                ]
             )
 
 

@@ -23,7 +23,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 600,
+      "duration_seconds": 480,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,7 +39,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 600,
+      "duration_seconds": 480,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -55,7 +55,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 600,
+      "duration_seconds": 480,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -71,7 +71,39 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 600,
+      "duration_seconds": 480,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 480,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 480,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -95,15 +127,26 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 74,
-  "estimated_tss": 64,
-  "target_tss": 64,
+  "duration_minutes": 88,
+  "estimated_tss": 76,
+  "target_tss": 76,
   "interval_count": 1,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
+<<<<<<< HEAD:workouts/cycling/tempo/cycling_tempo_tempo_intervals_02.json
   "zones": {
     "Anaerobic": 73.5
   },
   "fit_filename": "cycling/tempo/cycling_tempo_tempo_intervals_02.fit"
+=======
+<<<<<<< Updated upstream:workouts/tempo/tempo_tempo_intervals_02.json
+  "fit_filename": "tempo/tempo_tempo_intervals_02.fit"
+=======
+  "zones": {
+    "Anaerobic": 87.5
+  },
+  "fit_filename": "cycling/tempo/cycling_tempo_tempo_intervals_02.fit"
+>>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_tempo_intervals_02.json
+>>>>>>> main:workouts/tempo/tempo_tempo_intervals_02.json
 }

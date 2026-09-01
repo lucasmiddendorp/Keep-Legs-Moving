@@ -23,7 +23,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 960,
+      "duration_seconds": 900,
       "intensity": 82,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,7 +39,87 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 960,
+      "duration_seconds": 900,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 900,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 900,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 900,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 900,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 900,
       "intensity": 82,
       "duration_type": "Time",
       "repeat": 1,
@@ -54,7 +134,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.73,
+  "target_if": 0.77,
   "tags": [
     "cycling",
     "tempo",
@@ -63,15 +143,26 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 60,
-  "estimated_tss": 51,
-  "target_tss": 51,
+  "duration_minutes": 148,
+  "estimated_tss": 139,
+  "target_tss": 139,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
+<<<<<<< HEAD:workouts/cycling/tempo/cycling_tempo_steady_tempo_04.json
   "zones": {
     "Anaerobic": 60.5
   },
   "fit_filename": "cycling/tempo/cycling_tempo_steady_tempo_04.fit"
+=======
+<<<<<<< Updated upstream:workouts/tempo/tempo_steady_tempo_04.json
+  "fit_filename": "tempo/tempo_steady_tempo_04.fit"
+=======
+  "zones": {
+    "Anaerobic": 148.5
+  },
+  "fit_filename": "cycling/tempo/cycling_tempo_steady_tempo_04.fit"
+>>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_steady_tempo_04.json
+>>>>>>> main:workouts/tempo/tempo_steady_tempo_04.json
 }

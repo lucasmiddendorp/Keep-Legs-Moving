@@ -23,7 +23,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 720,
+      "duration_seconds": 600,
       "intensity": 88,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,7 +39,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 720,
+      "duration_seconds": 600,
       "intensity": 88,
       "duration_type": "Time",
       "repeat": 1,
@@ -55,7 +55,39 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 720,
+      "duration_seconds": 600,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 600,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Tempo block",
+      "duration_seconds": 600,
       "intensity": 88,
       "duration_type": "Time",
       "repeat": 1,
@@ -70,7 +102,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.78,
+  "target_if": 0.79,
   "tags": [
     "cycling",
     "tempo",
@@ -79,15 +111,26 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 66,
-  "estimated_tss": 63,
-  "target_tss": 63,
+  "duration_minutes": 86,
+  "estimated_tss": 83,
+  "target_tss": 83,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
+<<<<<<< HEAD:workouts/cycling/tempo/cycling_tempo_sweetspot_tempo_02.json
   "zones": {
     "Anaerobic": 66.5
   },
   "fit_filename": "cycling/tempo/cycling_tempo_sweetspot_tempo_02.fit"
+=======
+<<<<<<< Updated upstream:workouts/tempo/tempo_sweetspot_tempo_02.json
+  "fit_filename": "tempo/tempo_sweetspot_tempo_02.fit"
+=======
+  "zones": {
+    "Anaerobic": 86.5
+  },
+  "fit_filename": "cycling/tempo/cycling_tempo_sweetspot_tempo_02.fit"
+>>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_sweetspot_tempo_02.json
+>>>>>>> main:workouts/tempo/tempo_sweetspot_tempo_02.json
 }

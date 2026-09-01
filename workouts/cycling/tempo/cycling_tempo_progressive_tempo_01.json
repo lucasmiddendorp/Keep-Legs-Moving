@@ -23,7 +23,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 660,
+      "duration_seconds": 540,
       "intensity": 78,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,7 +39,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 660,
+      "duration_seconds": 540,
       "intensity": 79,
       "duration_type": "Time",
       "repeat": 1,
@@ -55,7 +55,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 660,
+      "duration_seconds": 540,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -71,7 +71,7 @@
     },
     {
       "name": "Tempo block",
-      "duration_seconds": 660,
+      "duration_seconds": 540,
       "intensity": 81,
       "duration_type": "Time",
       "repeat": 1,
@@ -86,7 +86,7 @@
       "description": ""
     }
   ],
-  "target_if": 0.72,
+  "target_if": 0.71,
   "tags": [
     "cycling",
     "tempo",
@@ -95,15 +95,26 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 76,
-  "estimated_tss": 63,
-  "target_tss": 63,
+  "duration_minutes": 68,
+  "estimated_tss": 54,
+  "target_tss": 54,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
+<<<<<<< HEAD:workouts/cycling/tempo/cycling_tempo_progressive_tempo_01.json
   "zones": {
     "Anaerobic": 75.5
   },
   "fit_filename": "cycling/tempo/cycling_tempo_progressive_tempo_01.fit"
+=======
+<<<<<<< Updated upstream:workouts/tempo/tempo_progressive_tempo_01.json
+  "fit_filename": "tempo/tempo_progressive_tempo_01.fit"
+=======
+  "zones": {
+    "Anaerobic": 67.5
+  },
+  "fit_filename": "cycling/tempo/cycling_tempo_progressive_tempo_01.fit"
+>>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_progressive_tempo_01.json
+>>>>>>> main:workouts/tempo/tempo_progressive_tempo_01.json
 }

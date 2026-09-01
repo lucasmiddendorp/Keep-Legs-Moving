@@ -52,6 +52,7 @@ def init_database():
             cur.execute("ALTER TABLE training_goals ADD COLUMN IF NOT EXISTS event_distance_km FLOAT")
             cur.execute("ALTER TABLE training_goals ADD COLUMN IF NOT EXISTS event_climb_m FLOAT")
             cur.execute("ALTER TABLE training_goals ADD COLUMN IF NOT EXISTS event_type VARCHAR(50)")
+            cur.execute("ALTER TABLE training_goals ADD COLUMN IF NOT EXISTS sport VARCHAR(20) DEFAULT 'Cycling'")
 
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS strava_accounts (
