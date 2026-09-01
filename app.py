@@ -156,7 +156,7 @@ else:
         if not strava_connected:
 
             pg = st.navigation(
-                [connect_strava],
+                [connect_strava, profile],
                 position="hidden",
             )
 

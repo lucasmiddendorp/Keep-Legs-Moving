@@ -9,6 +9,10 @@ if not username:
     st.error("You must be logged in.")
     st.stop()
 
+_, profile_col = st.columns([5, 1])
+with profile_col:
+    st.page_link("pages/profile.py", label="Profile")
+
 st.title("Connect Strava")
 
 st.write(

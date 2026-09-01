@@ -15,12 +15,12 @@ TRAINING_ZONES = {
 ZONE_KEYS = tuple(TRAINING_ZONES.keys())
 
 HR_ZONES = {
-    "Recovery": {"min": 0.50, "max": 0.65},
-    "Endurance": {"min": 0.65, "max": 0.75},
-    "Tempo": {"min": 0.75, "max": 0.85},
-    "Threshold": {"min": 0.85, "max": 0.92},
-    "VO2max": {"min": 0.92, "max": 1.00},
-    "Anaerobic": {"min": 1.00, "max": float("inf")}
+    "Recovery": {"min": 0.50, "max": 0.60},
+    "Endurance": {"min": 0.60, "max": 0.72},
+    "Tempo": {"min": 0.72, "max": 0.80},
+    "Threshold": {"min": 0.80, "max": 0.90},
+    "VO2max": {"min": 0.90, "max": 0.97},
+    "Anaerobic": {"min": 0.97, "max": float("inf")}
 }
 
 ZONE_TO_DISPLAY = {
