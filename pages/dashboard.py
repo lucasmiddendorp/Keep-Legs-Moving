@@ -268,14 +268,27 @@ latest_activities["Time"] = latest_activities["moving_time"].map(format_duration
 latest_activities["Stress"] = latest_activities["stress"].map(lambda value: "" if pd.isna(value) else f"{value:.0f}")
 latest_activities["Normalized Power"] = latest_activities["weighted_average_watts"].map(lambda value: "" if pd.isna(value) else f"{value:.0f} W")
 latest_activities['Avg Heart Rate'] = latest_activities['average_heartrate'].map(lambda value: "" if pd.isna(value) else f"{value:.0f} bpm")
-latest_activities['Time Z1 (min)'] = latest_activities['time_z1_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
-latest_activities['Time Z2 (min)'] = latest_activities['time_z2_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
-latest_activities['Time Z3 (min)'] = latest_activities['time_z3_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
-latest_activities['Time Z4+ (min)'] = latest_activities['time_z4_hr'].map(lambda value: "" if pd.isna(value) else f"{value/60:.0f} min")
+
+from helpers.metrics import ZONE_KEYS
+
+def get_zone_time(row, zone_num):
+    activity_type = str(row.get("type", "")).lower()
+    is_cycling = "ride" in activity_type or "virtual" in activity_type or "gravel" in activity_type or "mountain" in activity_type
+    if is_cycling and pd.notna(row.get("time_z1_power")):
+        value = row.get(f"time_z{zone_num}_power")
+    else:
+        value = row.get(f"time_z{zone_num}_hr")
+    return "" if pd.isna(value) or value == 0 else f"{value/60:.0f} min"
+
+zone_columns = []
+for zone_num, zone_name in enumerate(ZONE_KEYS, 1):
+    column = f"Zone {zone_num} ({zone_name})"
+    latest_activities[column] = latest_activities.apply(lambda row, z=zone_num: get_zone_time(row, z), axis=1)
+    zone_columns.append(column)
 
 st.dataframe(
     latest_activities[
-        ["Date", "Activity", "Ride Length", "Time", "Stress", "Normalized Power", "Avg Heart Rate", "Time Z1 (min)", "Time Z2 (min)", "Time Z3 (min)", "Time Z4+ (min)"]
+        ["Date", "Activity", "Ride Length", "Time", "Stress", "Normalized Power", "Avg Heart Rate", *zone_columns]
     ],
     width="stretch",
     hide_index=True,

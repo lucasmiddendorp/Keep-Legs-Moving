@@ -87,14 +87,9 @@ profile = st.Page(
     title="Profile",
 )
 
-settings = st.Page(
-    "pages/settings.py",
-    title="Settings",
-)
-
-settings_availability = st.Page(
-    "pages/settings_availability.py",
-    title="Weekly Availability",
+settings_exceptions = st.Page(
+    "pages/settings_exceptions.py",
+    title="Availability Exceptions",
 )
 
 
@@ -182,8 +177,7 @@ else:
                     training_plan,
                     workouts,
                     profile,
-                    settings,
-                    settings_availability,
+                    settings_exceptions,
                 ]
             )
             render_topbar()

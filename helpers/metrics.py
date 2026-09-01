@@ -14,6 +14,24 @@ TRAINING_ZONES = {
 
 ZONE_KEYS = tuple(TRAINING_ZONES.keys())
 
+HR_ZONES = {
+    "Recovery": {"min": 0.50, "max": 0.65},
+    "Endurance": {"min": 0.65, "max": 0.75},
+    "Tempo": {"min": 0.75, "max": 0.85},
+    "Threshold": {"min": 0.85, "max": 0.92},
+    "VO2max": {"min": 0.92, "max": 1.00},
+    "Anaerobic": {"min": 1.00, "max": float("inf")}
+}
+
+ZONE_TO_DISPLAY = {
+    "Recovery": "Zone 1",
+    "Endurance": "Zone 2",
+    "Tempo": "Zone 3",
+    "Threshold": "Zone 4",
+    "VO2max": "Zone 5+",
+    "Anaerobic": "Zone 5+",
+}
+
 CATEGORY_ZONE_FOCUS = {
     "Endurance": ("Endurance",),
     "Tempo": ("Tempo",),
@@ -27,6 +45,15 @@ def get_training_zone(intensity):
         if limits["min"] <= intensity < limits["max"]:
             return zone
     return "Anaerobic"
+
+def get_hr_zone(hr, max_hr):
+    if max_hr <= 0:
+        return "Recovery"
+    hr_percent = hr / max_hr
+    for zone, limits in HR_ZONES.items():
+        if limits["min"] <= hr_percent < limits["max"]:
+            return zone
+    return "Threshold"
 
 def calculate_training_load(username, ctl_tc, atl_tc, activity_type="All"):
     activity_file, _ = get_user_cache_paths(username)

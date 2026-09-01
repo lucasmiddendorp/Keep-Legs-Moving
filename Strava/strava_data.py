@@ -30,6 +30,14 @@ ACTIVITY_COLUMNS = [
     "time_z2_hr",
     "time_z3_hr",
     "time_z4_hr",
+    "time_z5_hr",
+    "time_z6_hr",
+    "time_z1_power",
+    "time_z2_power",
+    "time_z3_power",
+    "time_z4_power",
+    "time_z5_power",
+    "time_z6_power",
 ]
 
 def get_user_client(access_token):
@@ -166,6 +174,7 @@ def fetch_power_stream(access_token,activity_id):
 
 
 def calculate_hr_zones(stream_df,max_hr):
+    from helpers.metrics import HR_ZONES
     hr=pd.to_numeric(stream_df["heartrate"],errors="coerce")
 
     if hr.notna().sum()==0:
@@ -173,19 +182,60 @@ def calculate_hr_zones(stream_df,max_hr):
             "time_z1_hr":np.nan,
             "time_z2_hr":np.nan,
             "time_z3_hr":np.nan,
-            "time_z4_hr":np.nan
+            "time_z4_hr":np.nan,
+            "time_z5_hr": np.nan,
+            "time_z6_hr":np.nan
         }
 
-    z1=((hr>=0.50*max_hr)&(hr<0.65*max_hr)).sum()
-    z2=((hr>=0.65*max_hr)&(hr<0.75*max_hr)).sum()
-    z3=((hr>=0.75*max_hr)&(hr<0.85*max_hr)).sum()
-    z4=((hr>=0.85*max_hr)).sum()
+    if max_hr <= 0:
+        return {"time_z1_hr": 0, "time_z2_hr": 0, "time_z3_hr": 0, "time_z4_hr": 0, "time_z5_hr":0, "time_z6_hr":0}
+
+    hr_percent = hr / max_hr
+    z1=((hr_percent>=HR_ZONES["Recovery"]["min"])&(hr_percent<HR_ZONES["Recovery"]["max"])).sum()
+    z2=((hr_percent>=HR_ZONES["Endurance"]["min"])&(hr_percent<HR_ZONES["Endurance"]["max"])).sum()
+    z3=((hr_percent>=HR_ZONES["Tempo"]["min"])&(hr_percent<HR_ZONES["Tempo"]["max"])).sum()
+    z4=((hr_percent>=HR_ZONES["Threshold"]["min"])&(hr_percent<HR_ZONES["Threshold"]["max"])).sum()
+    z5=((hr_percent>=HR_ZONES["VO2max"]["min"])&(hr_percent<HR_ZONES["VO2max"]["max"])).sum()
+    z6=((hr_percent>=HR_ZONES["Anaerobic"]["min"])).sum()
 
     return {
         "time_z1_hr":int(z1),
         "time_z2_hr":int(z2),
         "time_z3_hr":int(z3),
-        "time_z4_hr":int(z4)
+        "time_z4_hr":int(z4),
+        "time_z5_hr":int(z5),
+        "time_z6_hr":int(z6)
+    }
+
+def calculate_power_zones(stream_df,ftp):
+    from helpers.metrics import TRAINING_ZONES
+    watts=pd.to_numeric(stream_df["watts"],errors="coerce")
+
+    if watts.notna().sum()==0 or ftp<=0:
+        return {
+            "time_z1_power":np.nan,
+            "time_z2_power":np.nan,
+            "time_z3_power":np.nan,
+            "time_z4_power":np.nan,
+            "time_z5_power":np.nan,
+            "time_z6_power":np.nan
+        }
+
+    intensity = watts / ftp
+    z1=((intensity>=TRAINING_ZONES["Recovery"]["min"])&(intensity<TRAINING_ZONES["Recovery"]["max"])).sum()
+    z2=((intensity>=TRAINING_ZONES["Endurance"]["min"])&(intensity<TRAINING_ZONES["Endurance"]["max"])).sum()
+    z3=((intensity>=TRAINING_ZONES["Tempo"]["min"])&(intensity<TRAINING_ZONES["Tempo"]["max"])).sum()
+    z4=((intensity>=TRAINING_ZONES["Threshold"]["min"])&(intensity<TRAINING_ZONES["Threshold"]["max"])).sum()
+    z5=((intensity>=TRAINING_ZONES["VO2max"]["min"])&(intensity<TRAINING_ZONES["VO2max"]["max"])).sum()
+    z6=((intensity>=TRAINING_ZONES["Anaerobic"]["min"])).sum()
+
+    return {
+        "time_z1_power":int(z1),
+        "time_z2_power":int(z2),
+        "time_z3_power":int(z3),
+        "time_z4_power":int(z4),
+        "time_z5_power":int(z5),
+        "time_z6_power":int(z6)
     }
 
 def update_power_stream_cache(username,access_token,activities):
@@ -223,12 +273,27 @@ def update_hr_zones_from_streams(username,activities,max_hr):
             activities.loc[activities["id"]==activity_id,key]=value
     return activities
 
+def update_power_zones_from_streams(username,activities,ftp):
+    _,power_file=get_user_cache_paths(username)
+    if not os.path.exists(power_file):
+        return activities
+    power_df=pd.read_parquet(power_file)
+    for activity_id in activities["id"]:
+        stream=power_df[power_df["activity_id"]==activity_id]
+        if stream.empty:
+            continue
+        zones=calculate_power_zones(stream,ftp)
+        for key,value in zones.items():
+            activities.loc[activities["id"]==activity_id,key]=value
+    return activities
+
 def calculate_hr_stress(row):
     zones={
         "time_z1_hr":0.55,
         "time_z2_hr":0.75,
         "time_z3_hr":0.85,
         "time_z4_hr":1.0,
+        "time_z5_hr":1.
     }
     stress=0
     for zone,IF in zones.items():
@@ -281,7 +346,7 @@ def update_strava_data(username,access_token):
     print("="*60)
 
     try:
-        print("[1/6] Loading/updating activity cache...")
+        print("[1/7] Loading/updating activity cache...")
 
         activities,new_activities=update_activity_cache(
             username,
@@ -289,14 +354,14 @@ def update_strava_data(username,access_token):
         )
 
         print(
-            "[1/6] Activity cache loaded successfully."
+            "[1/7] Activity cache loaded successfully."
             f" Total activities: {len(activities)}"
             f" | New activities: {len(new_activities)}"
         )
 
         if not new_activities.empty:
             print(
-                f"[2/6] Updating power streams for "
+                f"[2/7] Updating power streams for "
                 f"{len(new_activities)} new activities..."
             )
 
@@ -306,21 +371,21 @@ def update_strava_data(username,access_token):
                 new_activities
             )
 
-            print("[2/6] Power streams updated successfully.")
+            print("[2/7] Power streams updated successfully.")
 
         else:
-            print("[2/6] No new activities. Skipping power streams.")
+            print("[2/7] No new activities. Skipping power streams.")
 
-        print("[3/6] Loading user settings...")
+        print("[3/7] Loading user settings...")
 
         settings=get_user_settings(username)
 
-        print("[3/6] User settings loaded.")
+        print("[3/7] User settings loaded.")
         print("FTP:",settings.get("ftp",200))
         print("Max HR:",settings.get("max_hr",190))
         print("Threshold pace:",settings.get("threshold_pace",5))
 
-        print("[4/6] Updating HR zones...")
+        print("[4/7] Updating HR zones...")
 
         activities=update_hr_zones_from_streams(
             username,
@@ -328,9 +393,19 @@ def update_strava_data(username,access_token):
             settings.get("max_hr",190)
         )
 
-        print("[4/6] HR zones updated successfully.")
+        print("[4/7] HR zones updated successfully.")
 
-        print("[5/6] Calculating activity stress...")
+        print("[5/7] Updating power zones...")
+
+        activities=update_power_zones_from_streams(
+            username,
+            activities,
+            settings.get("ftp",200)
+        )
+
+        print("[5/7] Power zones updated successfully.")
+
+        print("[6/7] Calculating activity stress...")
 
         activities=calculate_activity_stress(
             activities,
@@ -339,9 +414,9 @@ def update_strava_data(username,access_token):
             threshold_pace=settings.get("threshold_pace",5)
         )
 
-        print("[5/6] Activity stress calculated successfully.")
+        print("[6/7] Activity stress calculated successfully.")
 
-        print("[6/6] Saving activity cache...")
+        print("[7/7] Saving activity cache...")
 
         activity_file,_=get_user_cache_paths(username)
 

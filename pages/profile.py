@@ -1,60 +1,20 @@
 import streamlit as st
 from helpers.style import apply_global_style
-from helpers.auth import logout_user
+from helpers.dashboard_css import inject_card_css
+from helpers.profile_page_functions import render_account_section, render_athlete_profile_section, inject_profile_css
 
 apply_global_style()
+inject_card_css()
+inject_profile_css()
 
-st.markdown(
-    """
-    <div class="dashboard-title">
-        My Profile
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-st.subheader("Account")
+st.markdown('<div class="dashboard-title">Profile</div>', unsafe_allow_html=True)
 
 username = st.session_state.get("username", "")
 
-st.text_input(
-    "Username",
-    value=username,
-    disabled=True,
-)
+account_col, athlete_col = st.columns(2, gap="large")
 
-st.text_input(
-    "Email",
-    value=st.session_state.get("email", ""),
-    disabled=True,
-)
+with account_col:
+    render_account_section(username)
 
-st.divider()
-
-st.subheader("Security")
-
-current_password = st.text_input(
-    "Current password",
-    type="password",
-)
-
-new_password = st.text_input(
-    "New password",
-    type="password",
-)
-
-confirm_password = st.text_input(
-    "Confirm new password",
-    type="password",
-)
-
-if st.button("Update password", type="primary"):
-    st.info("Password update functionality coming soon.")
-
-st.divider()
-
-st.subheader("Session")
-
-if st.button("🚪 Log out", type="secondary", use_container_width=True):
-    logout_user()
-    st.rerun()
+with athlete_col:
+    render_athlete_profile_section(username)

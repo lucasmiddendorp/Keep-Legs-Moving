@@ -132,4 +132,4 @@ When asked to modify code:
 - show only the relevant changed code unless the full file is explicitly requested
 - Explain changes with short bullet points, not whole paragraphs
 - do not explain obvious Python syntax
-- do not repeat the user's code unnecessarily
+- do not repeat the user's code unnecessarily Pasport. Pension nodig. U kunt wel via portaal. You can do per post opsturen, gezien in nationaal grounds even duren en is that tech betrouwbaar.

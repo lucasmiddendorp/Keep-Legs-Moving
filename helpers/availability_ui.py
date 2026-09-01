@@ -21,8 +21,8 @@ def render_weekly_availability(username):
     weekly = availability["weekly"]
     updated_weekly = {}
 
-    st.subheader("Weekly Availability")
-    st.write("Set how many hours you are normally available each day.")
+    st.markdown('<div class="profile-section-title">Weekly Availability</div>', unsafe_allow_html=True)
+    st.caption("Set how many hours you are normally available each day.")
 
     columns = st.columns(7, gap="small")
     for column, day in zip(columns, DAYS):

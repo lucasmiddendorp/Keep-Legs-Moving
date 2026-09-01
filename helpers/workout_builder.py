@@ -36,32 +36,16 @@ def make_rest():
 # =========================================================
 
 def get_zone(sport, intensity):
+    from helpers.metrics import get_training_zone
     intensity = float(intensity)
-    if sport == "Cycling":
-        if intensity < 55:
-            return "Z1", "Recovery"
-        if intensity <= 75:
-            return "Z2", "Endurance"
-        if intensity <= 90:
-            return "Z3", "Tempo"
-        if intensity <= 105:
-            return "Z4", "Threshold"
-        if intensity <= 120:
-            return "Z5", "VO₂max"
-        if intensity <= 150:
-            return "Z6", "Anaerobic"
-        return "Z7", "Neuromuscular"
-    if intensity < 76:
-        return "Easy", "Recovery / Easy"
-    if intensity <= 85:
-        return "Aerobic", "Endurance"
-    if intensity <= 95:
-        return "Tempo", "Tempo"
-    if intensity <= 100:
-        return "Threshold", "Threshold"
-    if intensity <= 105:
-        return "VO₂max", "VO₂max"
-    return "Speed", "Anaerobic / Speed"
+    zone = get_training_zone(intensity)
+    if sport == "Running":
+        running_names = {"Recovery": "Easy", "Endurance": "Aerobic", "Tempo": "Tempo", "Threshold": "Threshold", "VO2max": "VO₂max", "Anaerobic": "Speed"}
+        display_name = running_names.get(zone, zone)
+        return zone, display_name
+    cycling_codes = {"Recovery": "Z1", "Endurance": "Z2", "Tempo": "Z3", "Threshold": "Z4", "VO2max": "Z5", "Anaerobic": "Z6"}
+    code = cycling_codes.get(zone, "Z7")
+    return code, zone
 
 def cycling_target_watts(ftp, intensity):
     return round(float(ftp) * float(intensity) / 100)
