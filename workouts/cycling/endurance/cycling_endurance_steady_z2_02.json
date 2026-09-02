@@ -11,15 +11,7 @@
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Steady Z2 focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
       "name": "Endurance ride",
@@ -31,11 +23,11 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 600,
+      "duration_seconds": 480,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
   "target_if": 0.68,
@@ -48,15 +40,12 @@
     "z2",
     "aerobic"
   ],
-  "duration_minutes": 110,
-  "estimated_tss": 85,
-  "target_tss": 85,
+  "duration_minutes": 108,
+  "estimated_tss": 84,
+  "target_tss": 84,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 110.5
-  },
   "fit_filename": "cycling/endurance/cycling_endurance_steady_z2_02.fit"
 }

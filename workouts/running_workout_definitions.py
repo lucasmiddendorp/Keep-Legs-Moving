@@ -1,6 +1,15 @@
 """Structured running workout definitions for the workout library."""
 from dataclasses import asdict, dataclass, field
 from typing import Any
+
+from helpers.metrics import TRAINING_ZONES
+def intensity_to_zone(intensity):
+    ratio = float(intensity) / 100
+    for zone, limits in TRAINING_ZONES.items():
+        if limits["min"] <= ratio < limits["max"]:
+            return zone
+    return "Anaerobic"
+
 @dataclass(frozen=True)
 class Step:
     name: str
@@ -121,7 +130,13 @@ def generate_running_workouts():
                     if i < count - 1 and recover_minutes:
                         steps.append(recovery(recover_minutes))
             workouts.append(build_workout(family, variant, "Threshold", family, steps, ["threshold", "hard", "race-specific"], 5, 5))
-    norwegian = {"norwegian_4x4": (4, 4, 3, 105),"norwegian_5x6": (5, 6, 2, 95),"norwegian_3x10": (3, 10, 2, 94),"norwegian_4x8": (4, 8, 2, 96),"norwegian_double_threshold": (2, 15, 3, 94),"norwegian_cruise": (5, 8, 1, 96)}
+    norwegian = {
+        "norwegian_4x4": (4, 4, 3, 115),
+        "norwegian_5x6": (5, 6, 2, 115),
+        "norwegian_3x10": (3, 10, 2, 112),
+        "norwegian_4x8": (4, 8, 2, 115),
+        "norwegian_double_threshold": (2, 15, 3, 110),
+        "norwegian_cruise": (5, 8, 1, 112)}
     for family, (reps, work_minutes, recover_minutes, intensity) in norwegian.items():
         for variant in range(1, 7):
             count = reps + (variant % 2 if family in {"norwegian_5x6", "norwegian_cruise"} else 0)
@@ -131,7 +146,8 @@ def generate_running_workouts():
                 steps.append(work(work_minutes + (variant % 2 if family == "norwegian_3x10" else 0), current, f"Norwegian interval {i + 1}"))
                 if i < count - 1:
                     steps.append(recovery(recover_minutes, 62))
-            workouts.append(build_workout(family, variant, "Threshold", family, steps, ["norwegian", "threshold", "controlled", "running"], 5, 5    ))
+            category = intensity_to_zone(current)
+            workouts.append(build_workout(family, variant, category, family, steps, ["norwegian", "vo2max", "controlled", "running"], 5, 5))
     ronnestad = {"ronnestad_30_15": (30, 15, 115)}
     for family, (work_seconds, recover_seconds, intensity) in ronnestad.items():
         for variant in range(1, 7):
@@ -156,20 +172,16 @@ def generate_running_workouts():
                 if i < count - 1:
                     steps.append(recovery(recover_minutes, 62))
             workouts.append(build_workout(family, variant, "VO2max", family, steps, ["vo2max", "high-intensity", "hard"], 5, 5))
-    hill_families = {"hill_repeats": (8, 1, 2, 108),"long_hills": (6, 3, 3, 105),"hill_sprints": (10, 0.5, 2, 120)}
+    hill_families = {"hill_repeats": (8, 1, 2, 108), "long_hills": (6, 3, 3, 108), "hill_sprints": (10, 0.5, 2, 125)}
     for family, (reps, work_minutes, recover_minutes, intensity) in hill_families.items():
         for variant in range(1, 7):
             count = reps + variant % 2
             steps = []
             for i in range(count):
-                steps.append(work(work_minutes, intensity + variant % 2, f"Hill repeat {i + 1}"))
+                current_intensity = intensity + variant % 2
+                steps.append(work(work_minutes, current_intensity, f"Hill repeat {i + 1}"))
                 if i < count - 1:
                     steps.append(recovery(recover_minutes, 60))
-            category = "VO2max" if intensity >= 108 else "Threshold"
+            category = intensity_to_zone(current_intensity)
             workouts.append(build_workout(family, variant, category, family, steps, ["hills", "strength", "high-intensity"], 5, 5))
-    for variant in range(1, 7):
-        steps = [work(20 + variant * 5, 65, "Easy running")]
-        steps.extend(strides(4 + variant % 3, 20 + variant % 2 * 5, 60))
-        steps.append(work(10 + variant, 68, "Easy running"))
-        workouts.append(build_workout("strides", variant, "Anaerobic", "strides", steps, ["strides", "speed", "running-form"]))
     return workouts

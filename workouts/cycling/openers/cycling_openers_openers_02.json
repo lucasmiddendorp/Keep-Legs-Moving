@@ -7,22 +7,6 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Openers focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Warm-up",
       "duration_seconds": 720,
       "intensity": 55,
       "duration_type": "Time",
@@ -43,7 +27,7 @@
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
       "name": "Opener",
@@ -59,7 +43,7 @@
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
       "name": "Opener",
@@ -75,7 +59,7 @@
       "intensity": 50,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
       "name": "Cool-down",
@@ -84,34 +68,24 @@
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
-    },
-    {
-      "name": "Cool-down",
-      "duration_seconds": 120,
-      "intensity": 55,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
     }
   ],
-  "target_if": 0.69,
+  "target_if": 0.7,
   "tags": [
     "cycling",
     "openers",
     "openers",
     "openers",
     "openers",
-    "openers"
+    "race-prep",
+    "high-intensity"
   ],
-  "duration_minutes": 36,
-  "estimated_tss": 23,
-  "target_tss": 23,
+  "duration_minutes": 32,
+  "estimated_tss": 20,
+  "target_tss": 20,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 36.0
-  },
   "fit_filename": "cycling/openers/cycling_openers_openers_02.fit"
 }

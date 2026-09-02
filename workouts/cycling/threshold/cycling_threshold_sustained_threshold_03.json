@@ -7,31 +7,15 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 780,
+      "duration_seconds": 600,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Sustained Threshold focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Threshold interval 1",
-      "duration_seconds": 1800,
-      "intensity": 92,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Threshold interval 2",
-      "duration_seconds": 1800,
+      "name": "Sustained threshold 1",
+      "duration_seconds": 2160,
       "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,14 +23,14 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 600,
+      "duration_seconds": 660,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.86,
+  "target_if": 0.84,
   "tags": [
     "cycling",
     "threshold",
@@ -55,15 +39,12 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 84,
-  "estimated_tss": 98,
-  "target_tss": 98,
-  "interval_count": 2,
+  "duration_minutes": 57,
+  "estimated_tss": 62,
+  "target_tss": 62,
+  "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 83.5
-  },
   "fit_filename": "cycling/threshold/cycling_threshold_sustained_threshold_03.fit"
 }

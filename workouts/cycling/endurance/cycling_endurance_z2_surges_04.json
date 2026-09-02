@@ -7,22 +7,14 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 720,
+      "duration_seconds": 540,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Z2 Surges focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Endurance block",
+      "name": "Endurance block 1",
       "duration_seconds": 900,
       "intensity": 68,
       "duration_type": "Time",
@@ -30,7 +22,7 @@
       "description": ""
     },
     {
-      "name": "Controlled surge",
+      "name": "Controlled surge 1",
       "duration_seconds": 30,
       "intensity": 85,
       "duration_type": "Time",
@@ -38,7 +30,15 @@
       "description": ""
     },
     {
-      "name": "Endurance block",
+      "name": "Surge recovery 1",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Endurance block 2",
       "duration_seconds": 900,
       "intensity": 68,
       "duration_type": "Time",
@@ -46,7 +46,7 @@
       "description": ""
     },
     {
-      "name": "Controlled surge",
+      "name": "Controlled surge 2",
       "duration_seconds": 30,
       "intensity": 85,
       "duration_type": "Time",
@@ -55,11 +55,11 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 540,
+      "duration_seconds": 480,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
   "target_if": 0.65,
@@ -72,15 +72,12 @@
     "z2",
     "aerobic"
   ],
-  "duration_minutes": 52,
+  "duration_minutes": 51,
   "estimated_tss": 36,
   "target_tss": 36,
   "interval_count": 0,
   "interval_duration": 0,
-  "recovery_duration": 0,
+  "recovery_duration": 180,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 52.5
-  },
   "fit_filename": "cycling/endurance/cycling_endurance_z2_surges_04.fit"
 }

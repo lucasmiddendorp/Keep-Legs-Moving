@@ -227,12 +227,9 @@ def save_user_settings(
     sessions_per_week=None,
 ):
     user_id = get_user_id(username)
-
     if user_id is None:
         raise ValueError("User does not exist.")
-
     conn = get_connection()
-
     try:
         with conn.cursor() as cur:
             cur.execute("""
@@ -262,14 +259,14 @@ def save_user_settings(
                 )
                 ON CONFLICT (user_id)
                 DO UPDATE SET
-                    ftp = COALESCE(EXCLUDED.ftp, user_settings.ftp),
-                    max_hr = COALESCE(EXCLUDED.max_hr, user_settings.max_hr),
+                    ftp = CASE WHEN EXCLUDED.ftp != 300 THEN EXCLUDED.ftp ELSE user_settings.ftp END,
+                    max_hr = CASE WHEN EXCLUDED.max_hr != 190 THEN EXCLUDED.max_hr ELSE user_settings.max_hr END,
                     threshold_hr = COALESCE(EXCLUDED.threshold_hr, user_settings.threshold_hr),
-                    threshold_pace = COALESCE(EXCLUDED.threshold_pace, user_settings.threshold_pace),
-                    weight = COALESCE(EXCLUDED.weight, user_settings.weight),
-                    athlete_level = COALESCE(EXCLUDED.athlete_level, user_settings.athlete_level),
-                    training_progression = COALESCE(EXCLUDED.training_progression, user_settings.training_progression),
-                    atl_tc = COALESCE(EXCLUDED.atl_tc, user_settings.atl_tc),
+                    threshold_pace = CASE WHEN EXCLUDED.threshold_pace != 5.0 THEN EXCLUDED.threshold_pace ELSE user_settings.threshold_pace END,
+                    weight = CASE WHEN EXCLUDED.weight != 70 THEN EXCLUDED.weight ELSE user_settings.weight END,
+                    athlete_level = CASE WHEN EXCLUDED.athlete_level != 'Amateur' THEN EXCLUDED.athlete_level ELSE user_settings.athlete_level END,
+                    training_progression = CASE WHEN EXCLUDED.training_progression != 8 THEN EXCLUDED.training_progression ELSE user_settings.training_progression END,
+                    atl_tc = CASE WHEN EXCLUDED.atl_tc != 7 THEN EXCLUDED.atl_tc ELSE user_settings.atl_tc END,
                     sessions_per_week = COALESCE(EXCLUDED.sessions_per_week, user_settings.sessions_per_week)
             """, (
                 user_id,
@@ -283,9 +280,7 @@ def save_user_settings(
                 atl_tc,
                 sessions_per_week,
             ))
-
         conn.commit()
-
     finally:
         conn.close()
 
@@ -304,7 +299,7 @@ def get_training_goal(username):
     try:
         with conn.cursor() as cur:
             cur.execute("""
-                SELECT name, goal_date, event_distance_km, event_climb_m, event_type
+                SELECT name, goal_date, event_distance_km, event_climb_m, event_type, sport
                 FROM training_goals
                 WHERE user_id = %s
             """, (user_id,))
@@ -319,6 +314,7 @@ def get_training_goal(username):
 
             return {
                 "name": row[0],
+                "sport": row[5],
                 "goal_date": row[1],
                 "event_distance_km": row[2],
                 "event_climb_m": row[3],

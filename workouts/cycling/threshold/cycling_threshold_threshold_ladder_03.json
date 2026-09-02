@@ -7,22 +7,14 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 780,
+      "duration_seconds": 600,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Threshold Ladder focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Ladder interval 1",
+      "name": "Ladder interval 1.1",
       "duration_seconds": 240,
       "intensity": 95,
       "duration_type": "Time",
@@ -30,15 +22,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1.1",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Ladder interval 2",
+      "name": "Ladder interval 1.2",
       "duration_seconds": 300,
       "intensity": 96,
       "duration_type": "Time",
@@ -46,15 +38,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1.2",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Ladder interval 3",
+      "name": "Ladder interval 1.3",
       "duration_seconds": 360,
       "intensity": 97,
       "duration_type": "Time",
@@ -62,15 +54,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1.3",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Ladder interval 4",
+      "name": "Ladder interval 1.4",
       "duration_seconds": 420,
       "intensity": 98,
       "duration_type": "Time",
@@ -78,15 +70,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1.4",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Ladder interval 5",
+      "name": "Ladder interval 1.5",
       "duration_seconds": 480,
       "intensity": 99,
       "duration_type": "Time",
@@ -95,14 +87,14 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 600,
+      "duration_seconds": 660,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.83,
+  "target_if": 0.84,
   "tags": [
     "cycling",
     "threshold",
@@ -111,15 +103,12 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 66,
+  "duration_minutes": 63,
   "estimated_tss": 66,
   "target_tss": 66,
   "interval_count": 5,
-  "interval_duration": 0,
+  "interval_duration": 240,
   "recovery_duration": 180,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 65.5
-  },
   "fit_filename": "cycling/threshold/cycling_threshold_threshold_ladder_03.fit"
 }

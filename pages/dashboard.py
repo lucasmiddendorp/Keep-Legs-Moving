@@ -6,7 +6,7 @@ import os
 import plotly.graph_objects as go
 from datetime import date
 
-from helpers.style import red_button, apply_global_style
+from helpers.style import apply_global_style
 from helpers.metrics import calculate_training_load, rolling_km, format_duration
 from Strava.strava_data import update_strava_data
 from Strava.strava_user import get_user_strava, get_user_settings

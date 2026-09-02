@@ -7,22 +7,30 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 840,
+      "duration_seconds": 660,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
+      "description": "Progressive warm-up."
+    },
+    {
+      "name": "Threshold interval 1.1",
+      "duration_seconds": 660,
+      "intensity": 97,
+      "duration_type": "Time",
+      "repeat": 1,
       "description": ""
     },
     {
-      "name": "Broken Threshold focus",
-      "duration_seconds": 30,
+      "name": "Recovery 1.1",
+      "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 1",
+      "name": "Threshold interval 1.2",
       "duration_seconds": 660,
       "intensity": 97,
       "duration_type": "Time",
@@ -30,15 +38,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 300,
-      "intensity": 50,
+      "name": "Recovery 1.2",
+      "duration_seconds": 240,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 2",
+      "name": "Threshold interval 1.3",
       "duration_seconds": 660,
       "intensity": 97,
       "duration_type": "Time",
@@ -46,15 +54,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Set recovery 1",
       "duration_seconds": 300,
-      "intensity": 50,
+      "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 3",
+      "name": "Threshold interval 2.1",
       "duration_seconds": 660,
       "intensity": 97,
       "duration_type": "Time",
@@ -62,15 +70,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 300,
-      "intensity": 50,
+      "name": "Recovery 2.1",
+      "duration_seconds": 240,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 1",
+      "name": "Threshold interval 2.2",
       "duration_seconds": 660,
       "intensity": 97,
       "duration_type": "Time",
@@ -78,31 +86,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 300,
-      "intensity": 50,
+      "name": "Recovery 2.2",
+      "duration_seconds": 240,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 2",
-      "duration_seconds": 660,
-      "intensity": 97,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 300,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Threshold interval 3",
+      "name": "Threshold interval 2.3",
       "duration_seconds": 660,
       "intensity": 97,
       "duration_type": "Time",
@@ -111,14 +103,14 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 660,
+      "duration_seconds": 600,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.86,
+  "target_if": 0.87,
   "tags": [
     "cycling",
     "threshold",
@@ -127,15 +119,12 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 116,
-  "estimated_tss": 128,
-  "target_tss": 128,
+  "duration_minutes": 108,
+  "estimated_tss": 127,
+  "target_tss": 127,
   "interval_count": 6,
-  "interval_duration": 0,
-  "recovery_duration": 300,
+  "interval_duration": 660,
+  "recovery_duration": 240,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 116.5
-  },
   "fit_filename": "cycling/threshold/cycling_threshold_broken_threshold_04.fit"
 }

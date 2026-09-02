@@ -1,0 +1,91 @@
+{
+  "id": "cycling_openers_openers_03",
+  "name": "Openers 03",
+  "category": "Openers",
+  "subtype": "openers",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Opener",
+      "duration_seconds": 300,
+      "intensity": 90,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Opener",
+      "duration_seconds": 120,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 240,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Opener",
+      "duration_seconds": 30,
+      "intensity": 130,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 300,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.73,
+  "tags": [
+    "cycling",
+    "openers",
+    "openers",
+    "openers",
+    "openers",
+    "race-prep",
+    "high-intensity"
+  ],
+  "duration_minutes": 36,
+  "estimated_tss": 25,
+  "target_tss": 25,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 240,
+  "sets": 1,
+  "fit_filename": "cycling/openers/cycling_openers_openers_03.fit"
+}

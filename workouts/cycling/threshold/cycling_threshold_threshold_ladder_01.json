@@ -11,18 +11,10 @@
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Threshold Ladder focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Ladder interval 1",
+      "name": "Ladder interval 1.1",
       "duration_seconds": 240,
       "intensity": 95,
       "duration_type": "Time",
@@ -30,15 +22,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1.1",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Ladder interval 2",
+      "name": "Ladder interval 1.2",
       "duration_seconds": 300,
       "intensity": 96,
       "duration_type": "Time",
@@ -46,15 +38,15 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1.2",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Ladder interval 3",
+      "name": "Ladder interval 1.3",
       "duration_seconds": 360,
       "intensity": 97,
       "duration_type": "Time",
@@ -67,10 +59,10 @@
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.77,
+  "target_if": 0.78,
   "tags": [
     "cycling",
     "threshold",
@@ -79,15 +71,12 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 44,
-  "estimated_tss": 38,
-  "target_tss": 38,
+  "duration_minutes": 43,
+  "estimated_tss": 39,
+  "target_tss": 39,
   "interval_count": 3,
-  "interval_duration": 0,
+  "interval_duration": 240,
   "recovery_duration": 180,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 43.5
-  },
   "fit_filename": "cycling/threshold/cycling_threshold_threshold_ladder_01.fit"
 }

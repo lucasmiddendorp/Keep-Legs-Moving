@@ -57,7 +57,11 @@ def work(minutes, intensity, name="Work interval"):
 def work_seconds(seconds, intensity, name="Work interval"):
     return Step(name, round(seconds), intensity)
 def build_workout(family, variant, category, subtype, work_steps, tags, warmup_minutes=10, cooldown_minutes=10):
-    steps = [warmup(warmup_minutes + variant % 3), *work_steps, cooldown(cooldown_minutes + variant % 2)]
+    steps = [*work_steps]
+    if warmup_minutes > 0:
+        steps.insert(0, warmup(warmup_minutes + variant % 3))
+    if cooldown_minutes > 0:
+        steps.append(cooldown(cooldown_minutes + variant % 2))
     return _workout(
         f"cycling_{category.lower()}_{family}_{variant:02d}",
         f"{family.replace('_', ' ').title()} {variant:02d}",
@@ -193,16 +197,16 @@ def generate_workouts():
                     steps.append(recovery(5, 55, f"Set recovery {s + 1}"))
             workouts.append(build_workout(family, variant, "Threshold", family, steps, ["hard", "threshold"], 10, 10))
     tempo_families = {
-        "steady_tempo": (2, 15, 82),
-        "progressive_tempo": (3, 10, 78),
-        "tempo_intervals": (4, 8, 84),
-        "long_tempo_blocks": (2, 20, 80),
-        "tempo_endurance": (2, 12, 80),
-        "cadence_tempo": (4, 8, 82),
-        "sweetspot_tempo": (3, 10, 88),
-        "over_under_tempo": (4, 6, 84),
-        "variable_tempo": (4, 7, 80),
-        "tempo_ladder": (1, 5, 80),
+        "steady_tempo": (4, 30, 82),
+        "progressive_tempo": (5, 25, 78),
+        "tempo_intervals": (6, 20, 84),
+        "long_tempo_blocks": (4, 40, 80),
+        "tempo_endurance": (4, 30, 80),
+        "cadence_tempo": (6, 20, 82),
+        "sweetspot_tempo": (5, 25, 88),
+        "over_under_tempo": (6, 15, 84),
+        "variable_tempo": (6, 18, 80),
+        "tempo_ladder": (5, 20, 80),
     }
     for family, (sets, work_min, intensity) in tempo_families.items():
         for variant in range(1, 7):
@@ -280,7 +284,7 @@ def generate_workouts():
         [work(10, 50, "Warm-up"), work(5, 60, "Ramp"), work(5, 70, "Ramp"), work(5, 80, "Ramp"), work(5, 90, "Ramp"), work(5, 100, "Ramp"), work(5, 110, "Ramp"), work(5, 120, "Ramp"), work(5, 130, "Ramp")],
     ]
     for variant, steps in enumerate(ramp_variants, 1):
-        workouts.append(build_workout("ramp_test", variant, "Testing", "ramp_test", steps, ["test", "ftp", "ramp"], 0, 0))
+        workouts.append(build_workout("ramp_test", variant, "Testing", "ramp_test", steps, ["test", "ftp", "ramp"], 0, 5))
     ftp_variants = [
         [work(15, 55, "Warm-up"), work(5, 100, "FTP test"), recovery(5), work(20, 100, "FTP test"), work(10, 55, "Cool-down")],
         [work(15, 55, "Warm-up"), work(5, 105, "FTP test"), recovery(5), work(20, 105, "FTP test"), work(10, 55, "Cool-down")],

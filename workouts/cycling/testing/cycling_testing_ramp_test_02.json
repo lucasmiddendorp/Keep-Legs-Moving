@@ -1,0 +1,107 @@
+{
+  "id": "cycling_testing_ramp_test_02",
+  "name": "Ramp Test 02",
+  "category": "Testing",
+  "subtype": "ramp_test",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 300,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 90,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Ramp",
+      "duration_seconds": 300,
+      "intensity": 130,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy riding to finish the workout."
+    }
+  ],
+  "target_if": 0.97,
+  "tags": [
+    "cycling",
+    "testing",
+    "ramp_test",
+    "ramp_test",
+    "test",
+    "ftp",
+    "ramp"
+  ],
+  "duration_minutes": 50,
+  "estimated_tss": 68,
+  "target_tss": 68,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "cycling/testing/cycling_testing_ramp_test_02.fit"
+}

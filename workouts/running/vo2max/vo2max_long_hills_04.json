@@ -1,0 +1,130 @@
+{
+  "id": "vo2max_long_hills_04",
+  "name": "Long Hills 04",
+  "category": "VO2max",
+  "subtype": "long_hills",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 360,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Hill repeat 1",
+      "duration_seconds": 180,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Hill repeat 2",
+      "duration_seconds": 180,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Hill repeat 3",
+      "duration_seconds": 180,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Hill repeat 4",
+      "duration_seconds": 180,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Hill repeat 5",
+      "duration_seconds": 180,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Hill repeat 6",
+      "duration_seconds": 180,
+      "intensity": 108,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 300,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.89,
+  "sport": "Running",
+  "tags": [
+    "vo2max",
+    "long_hills",
+    "long_hills",
+    "hills",
+    "strength",
+    "high-intensity"
+  ],
+  "duration_minutes": 44,
+  "estimated_tss": 51,
+  "target_tss": 51,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_long_hills_04.fit"
+}

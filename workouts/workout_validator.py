@@ -16,7 +16,12 @@ def validate_definition(workout: Workout) -> None:
         raise ValueError(f"{workout.id}: target IF is outside 0.30-1.50")
     for step in workout.steps:
         if step.duration_seconds <= 0 or step.repeat <= 0:
-            raise ValueError(f"{workout.id}: invalid step duration/repeat")
+            raise ValueError(
+                f"{workout.id}: invalid step "
+                f"name={step.name!r}, "
+                f"duration_seconds={step.duration_seconds}, "
+                f"repeat={step.repeat}"
+            )
         if not 0 <= step.intensity <= 150:
             raise ValueError(f"{workout.id}: intensity is outside 0-150% FTP")
     if workout.steps[0].name.lower().find("warm") < 0:

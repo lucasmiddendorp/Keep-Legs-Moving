@@ -7,22 +7,14 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 660,
+      "duration_seconds": 480,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Z2 Cadence focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Cadence block",
+      "name": "Cadence block 1",
       "duration_seconds": 600,
       "intensity": 68,
       "duration_type": "Time",
@@ -30,7 +22,15 @@
       "description": ""
     },
     {
-      "name": "Cadence block",
+      "name": "Cadence recovery 1",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Cadence block 2",
       "duration_seconds": 600,
       "intensity": 72,
       "duration_type": "Time",
@@ -38,7 +38,15 @@
       "description": ""
     },
     {
-      "name": "Cadence block",
+      "name": "Cadence recovery 2",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Cadence block 3",
       "duration_seconds": 600,
       "intensity": 68,
       "duration_type": "Time",
@@ -46,7 +54,15 @@
       "description": ""
     },
     {
-      "name": "Cadence block",
+      "name": "Cadence recovery 3",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Cadence block 4",
       "duration_seconds": 600,
       "intensity": 72,
       "duration_type": "Time",
@@ -55,14 +71,14 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 480,
+      "duration_seconds": 540,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.67,
+  "target_if": 0.66,
   "tags": [
     "cycling",
     "endurance",
@@ -72,15 +88,12 @@
     "z2",
     "aerobic"
   ],
-  "duration_minutes": 60,
-  "estimated_tss": 44,
-  "target_tss": 44,
+  "duration_minutes": 63,
+  "estimated_tss": 46,
+  "target_tss": 46,
   "interval_count": 0,
   "interval_duration": 0,
-  "recovery_duration": 0,
+  "recovery_duration": 120,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 59.5
-  },
   "fit_filename": "cycling/endurance/cycling_endurance_z2_cadence_03.fit"
 }

@@ -11,15 +11,7 @@
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Long Z2 focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
       "name": "Endurance ride",
@@ -35,7 +27,7 @@
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
   "target_if": 0.67,
@@ -55,8 +47,5 @@
   "interval_duration": 0,
   "recovery_duration": 0,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 148.5
-  },
   "fit_filename": "cycling/endurance/cycling_endurance_long_z2_01.fit"
 }

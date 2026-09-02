@@ -2,7 +2,8 @@ import json
 from pathlib import Path
 import streamlit as st
 import plotly.graph_objects as go
-
+from helpers.metrics import TRAINING_ZONES
+import numpy as np
 # =========================================================
 # Basic workout calculations
 # =========================================================
@@ -255,32 +256,126 @@ def calculate_workout_tss(steps, ftp):
 # =========================================================
 # Workout preview
 # =========================================================
-
-def plot_workout_summary(steps, sport="Cycling"):
+def plot_workout_summary(steps, sport, ftp=None, threshold_pace=None):
+    import numpy as np
+    import plotly.graph_objects as go
+    from helpers.metrics import TRAINING_ZONES
     fig = go.Figure()
+    zone_colors = {
+        "Recovery": "#FFFFFF",
+        "Endurance": "#3B82F6",
+        "Tempo": "#22C55E",
+        "Threshold": "#F97316",
+        "VO2max": "#EF4444",
+        "Anaerobic": "#991B1B",
+    }
+    def get_zone(intensity):
+        intensity_ratio = float(intensity) / 100
+        for zone, limits in TRAINING_ZONES.items():
+            if limits["min"] <= intensity_ratio < limits["max"]:
+                return zone
+        return "Anaerobic"
+    def pace_to_seconds(pace):
+        if isinstance(pace, (int, float)):
+            return float(pace) * 60
+        minutes, seconds = str(pace).split(":")
+        return float(minutes) * 60 + float(seconds)
+    def seconds_to_pace(seconds):
+        minutes = int(seconds // 60)
+        secs = int(round(seconds % 60))
+        if secs == 60:
+            minutes += 1
+            secs = 0
+        return f"{minutes}:{secs:02d}"
     current_time = 0
+    bars = {zone: {"x": [], "y": [], "width": []} for zone in zone_colors}
+    if sport == "Running":
+        if threshold_pace is None:
+            threshold_pace = 5.0
+        threshold_minutes = pace_to_seconds(threshold_pace) / 60
+        slow_pace = threshold_minutes / 0.50
+        fast_pace = threshold_minutes / 1.40
     for step in steps:
-        duration = float(step.get("duration", 0))
+        duration = float(step.get("duration", 0) or 0)
+        if duration <= 0:
+            duration = (
+                float(step.get("duration_minutes", 0) or 0) * 60
+                + float(step.get("duration_seconds", 0) or 0)
+            )
         if duration <= 0:
             continue
-        low = float(step.get("target_low", 55))
-        high = float(step.get("target_high", low))
-        fig.add_trace(go.Scatter(
-            x=[current_time, current_time + duration, current_time + duration, current_time],
-            y=[low, low, high, high],
-            fill="toself",
-            mode="lines",
-            line=dict(width=0),
-            hoverinfo="skip",
-            showlegend=False,
-        ))
+        if "target_low" in step:
+            target_low = float(step.get("target_low", 55) or 55)
+            target_high = float(step.get("target_high", target_low) or target_low)
+        else:
+            intensity = float(step.get("intensity", 55) or 55)
+            target_low = intensity
+            target_high = intensity
+        if target_low == target_high:
+            center = target_low
+            target_low = max(0, center - 3)
+            target_high = center + 3
+        center_intensity = (target_low + target_high) / 2
+        zone = get_zone(center_intensity)
+        if sport == "Cycling":
+            y_value = (center_intensity / 100) * float(ftp or 300)
+        else:
+            pace_minutes = threshold_minutes / (center_intensity / 100)
+            y_value = slow_pace - pace_minutes
+        bars[zone]["x"].append((current_time + duration / 2) / 60)
+        bars[zone]["y"].append(y_value)
+        bars[zone]["width"].append(duration / 60)
         current_time += duration
+    for zone, values in bars.items():
+        if values["x"]:
+            fig.add_bar(
+                x=values["x"],
+                y=values["y"],
+                width=values["width"],
+                marker_color=zone_colors[zone],
+                marker_line_color="#CBD5E1" if zone == "Recovery" else zone_colors[zone],
+                marker_line_width=1,
+                opacity=0.75,
+                hoverinfo="skip",
+            )
+    if sport == "Cycling":
+        y_axis = dict(
+            title="Power (W)",
+            showgrid=True,
+            zeroline=False,
+            range=[0, float(ftp or 300) * 1.3],
+        )
+    else:
+        y_title = "Pace (min/km)"
+        tick_paces = np.arange(
+            np.ceil(fast_pace * 2) / 2,
+            slow_pace + 0.01,
+            0.5,
+        )
+        tickvals = [slow_pace - pace for pace in tick_paces]
+        ticktext = [seconds_to_pace(pace * 60) for pace in tick_paces]
+        y_axis = dict(
+            title=y_title,
+            showgrid=True,
+            zeroline=False,
+            range=[0, slow_pace - fast_pace],
+            tickvals=tickvals,
+            ticktext=ticktext,
+        )
     fig.update_layout(
         height=260,
-        margin=dict(l=10, r=10, t=10, b=30),
-        xaxis_title="Time",
-        yaxis_title="% FTP" if sport == "Cycling" else "% Threshold",
+        margin=dict(l=55, r=10, t=10, b=35),
+        xaxis=dict(
+            title="Time (minutes)",
+            showgrid=False,
+            zeroline=False,
+        ),
+        yaxis=y_axis,
+        plot_bgcolor="white",
+        paper_bgcolor="white",
         showlegend=False,
+        hovermode=False,
+        barmode="overlay",
     )
     return fig
 

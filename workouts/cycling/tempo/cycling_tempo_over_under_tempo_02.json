@@ -11,195 +11,139 @@
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
+      "description": "Progressive warm-up."
+    },
+    {
+      "name": "Under 1",
+      "duration_seconds": 900,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
       "description": ""
     },
     {
-      "name": "Over Under Tempo focus",
-      "duration_seconds": 30,
+      "name": "Over 1",
+      "duration_seconds": 900,
+      "intensity": 92,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 1",
+      "duration_seconds": 180,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Under",
-      "duration_seconds": 360,
+      "name": "Under 2",
+      "duration_seconds": 900,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Over",
-      "duration_seconds": 360,
+      "name": "Over 2",
+      "duration_seconds": 900,
       "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 2",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Under",
-      "duration_seconds": 360,
+      "name": "Under 3",
+      "duration_seconds": 900,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Over",
-      "duration_seconds": 360,
+      "name": "Over 3",
+      "duration_seconds": 900,
       "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 3",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Under",
-      "duration_seconds": 360,
+      "name": "Under 4",
+      "duration_seconds": 900,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Over",
-      "duration_seconds": 360,
+      "name": "Over 4",
+      "duration_seconds": 900,
       "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 4",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Under",
-      "duration_seconds": 360,
+      "name": "Under 5",
+      "duration_seconds": 900,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Over",
-      "duration_seconds": 360,
+      "name": "Over 5",
+      "duration_seconds": 900,
       "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 5",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Under",
-      "duration_seconds": 360,
+      "name": "Under 6",
+      "duration_seconds": 900,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Over",
-      "duration_seconds": 360,
-      "intensity": 92,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Under",
-      "duration_seconds": 360,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Over",
-      "duration_seconds": 360,
-      "intensity": 92,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Under",
-      "duration_seconds": 360,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Over",
-      "duration_seconds": 360,
-      "intensity": 92,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Under",
-      "duration_seconds": 360,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Over",
-      "duration_seconds": 360,
+      "name": "Over 6",
+      "duration_seconds": 900,
       "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
@@ -207,14 +151,14 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 720,
+      "duration_seconds": 600,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.8,
+  "target_if": 0.84,
   "tags": [
     "cycling",
     "tempo",
@@ -223,26 +167,12 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 142,
-  "estimated_tss": 141,
-  "target_tss": 141,
+  "duration_minutes": 217,
+  "estimated_tss": 244,
+  "target_tss": 244,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
-<<<<<<< HEAD:workouts/cycling/tempo/cycling_tempo_over_under_tempo_02.json
-  "zones": {
-    "Anaerobic": 81.5
-  },
   "fit_filename": "cycling/tempo/cycling_tempo_over_under_tempo_02.fit"
-=======
-<<<<<<< Updated upstream:workouts/tempo/tempo_over_under_tempo_02.json
-  "fit_filename": "tempo/tempo_over_under_tempo_02.fit"
-=======
-  "zones": {
-    "Anaerobic": 141.5
-  },
-  "fit_filename": "cycling/tempo/cycling_tempo_over_under_tempo_02.fit"
->>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_over_under_tempo_02.json
->>>>>>> main:workouts/tempo/tempo_over_under_tempo_02.json
 }

@@ -1,0 +1,67 @@
+{
+  "id": "cycling_testing_ftp_test_03",
+  "name": "Ftp Test 03",
+  "category": "Testing",
+  "subtype": "ftp_test",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 1200,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "FTP test",
+      "duration_seconds": 300,
+      "intensity": 110,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 300,
+      "intensity": 50,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "FTP test",
+      "duration_seconds": 1200,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    }
+  ],
+  "target_if": 0.84,
+  "tags": [
+    "cycling",
+    "testing",
+    "ftp_test",
+    "ftp_test",
+    "test",
+    "ftp",
+    "threshold"
+  ],
+  "duration_minutes": 60,
+  "estimated_tss": 61,
+  "target_tss": 61,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 300,
+  "sets": 1,
+  "fit_filename": "cycling/testing/cycling_testing_ftp_test_03.fit"
+}

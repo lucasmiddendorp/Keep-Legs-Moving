@@ -63,21 +63,22 @@ def render_metric_circle(title, percentage, subtitle, color):
         unsafe_allow_html=True,
     )
 
-
 def render_readiness_card(label, note, color):
-
     components.html(
         dedent(
             f"""
             <style>
                 .modern-card {{
+                    box-sizing: border-box;
                     background: white;
                     border-radius: 8px;
                     padding: 20px;
-                    height: 100%;
+                    height: 190px;
                     border: 1px solid #dfe5ea;
                     box-shadow: 0 2px 8px rgba(23,33,43,.04);
                     font-family: "DM Sans", "Segoe UI", sans-serif;
+                    display: flex;
+                    flex-direction: column;
                 }}
                 .card-title {{
                     font-size: 14px;
@@ -92,60 +93,50 @@ def render_readiness_card(label, note, color):
                     font-weight: 800;
                 }}
                 .card-note {{
-                    margin-top: 8px;
+                    margin-top: auto;
                     color: #6b7785;
                     font-size: 14px;
                 }}
             </style>
             <div class="modern-card">
-
                 <div class="card-title">
                     Today's Readiness
                 </div>
-
-                <div class="card-main"
-                style="color:{color}">
+                <div class="card-main" style="color:{color}">
                     {label}
                 </div>
-
                 <div class="card-note">
                     {note}
                 </div>
-
             </div>
             """
         ),
-        height=170,
+        height=200,
     )
-
 
 
 def render_fatigue_card(fatigue_label, atl, delta):
-
     colors = {
-        "Low":"#22c55e",
-        "Moderate":"#eab308",
-        "High":"#f97316",
+        "Low": "#22c55e",
+        "Moderate": "#eab308",
+        "High": "#f97316",
     }
-
-    color = colors.get(
-        fatigue_label,
-        "#ef4444"
-    )
-
-
+    color = colors.get(fatigue_label, "#ef4444")
     components.html(
         dedent(
             f"""
             <style>
                 .modern-card {{
+                    box-sizing: border-box;
                     background: white;
                     border-radius: 8px;
                     padding: 20px;
-                    height: 100%;
+                    height: 190px;
                     border: 1px solid #dfe5ea;
                     box-shadow: 0 2px 8px rgba(23,33,43,.04);
                     font-family: "DM Sans", "Segoe UI", sans-serif;
+                    display: flex;
+                    flex-direction: column;
                 }}
                 .card-title {{
                     font-size: 14px;
@@ -160,48 +151,44 @@ def render_fatigue_card(fatigue_label, atl, delta):
                     font-weight: 800;
                 }}
                 .card-note {{
-                    margin-top: 8px;
+                    margin-top: auto;
                     color: #6b7785;
                     font-size: 14px;
                 }}
             </style>
             <div class="modern-card">
-
                 <div class="card-title">
                     Fatigue Level
                 </div>
-
-                <div class="card-main"
-                style="color:{color}">
+                <div class="card-main" style="color:{color}">
                     {fatigue_label}
                 </div>
-
                 <div class="card-note">
                     ATL {atl:.1f} · {delta:+.1f} this week
                 </div>
-
             </div>
             """
         ),
-        height=170,
+        height=200,
     )
 
 
-
 def render_ramp_card(ramp_label, ramp_rate, position):
-
     components.html(
         dedent(
             f"""
             <style>
                 .modern-card {{
+                    box-sizing: border-box;
                     background: white;
                     border-radius: 8px;
                     padding: 20px;
-                    height: 100%;
+                    height: 190px;
                     border: 1px solid #dfe5ea;
                     box-shadow: 0 2px 8px rgba(23,33,43,.04);
                     font-family: "DM Sans", "Segoe UI", sans-serif;
+                    display: flex;
+                    flex-direction: column;
                 }}
                 .card-title {{
                     font-size: 14px;
@@ -216,14 +203,15 @@ def render_ramp_card(ramp_label, ramp_rate, position):
                     font-weight: 800;
                 }}
                 .card-note {{
-                    margin-top: 8px;
+                    margin-top: auto;
                     color: #6b7785;
                     font-size: 14px;
                 }}
                 .ramp-container {{
                     display: flex;
                     gap: 5px;
-                    margin-top: 25px;
+                    margin-top: auto;
+                    padding-top: 20px;
                 }}
                 .ramp-segment {{
                     height: 8px;
@@ -243,43 +231,29 @@ def render_ramp_card(ramp_label, ramp_rate, position):
                 }}
             </style>
             <div class="modern-card">
-
                 <div class="card-title">
                     Fitness Momentum
                 </div>
-
-
-                <div class="card-main"
-                style="color:#2f6f8f">
+                <div class="card-main" style="color:#2f6f8f">
                     {ramp_label}
                 </div>
-
-
                 <div class="card-note">
                     {ramp_rate:+.2f} CTL/day over last 7 days
                 </div>
-
-
                 <div class="ramp-container">
-
                     <div class="ramp-segment"></div>
                     <div class="ramp-segment"></div>
                     <div class="ramp-segment"></div>
                     <div class="ramp-segment"></div>
-
                 </div>
-
-
                 <div class="ramp-labels">
                     <span>Recover</span>
                     <span>Build</span>
                     <span>Productive</span>
                     <span>Hard</span>
                 </div>
-
-
             </div>
             """
         ),
-        height=220
+        height=200,
     )

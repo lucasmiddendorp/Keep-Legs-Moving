@@ -7,38 +7,38 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 660,
+      "duration_seconds": 480,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Progressive Z2 focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Endurance ride",
-      "duration_seconds": 5040,
+      "name": "Endurance block",
+      "duration_seconds": 2520,
       "intensity": 68,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Cool-down",
-      "duration_seconds": 480,
-      "intensity": 55,
+      "name": "Progressive finish",
+      "duration_seconds": 2520,
+      "intensity": 74,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 540,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.66,
+  "target_if": 0.69,
   "tags": [
     "cycling",
     "endurance",
@@ -48,15 +48,12 @@
     "z2",
     "aerobic"
   ],
-  "duration_minutes": 104,
-  "estimated_tss": 76,
-  "target_tss": 76,
+  "duration_minutes": 101,
+  "estimated_tss": 80,
+  "target_tss": 80,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 103.5
-  },
   "fit_filename": "cycling/endurance/cycling_endurance_progressive_z2_03.fit"
 }

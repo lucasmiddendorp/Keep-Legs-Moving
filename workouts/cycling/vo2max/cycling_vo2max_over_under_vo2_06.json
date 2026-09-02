@@ -7,30 +7,22 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 1080,
+      "duration_seconds": 720,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Over Under Vo2 focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Under",
+      "name": "Under 1.1",
       "duration_seconds": 120,
-      "intensity": 105,
+      "intensity": 100,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Over",
+      "name": "Over 1.1",
       "duration_seconds": 120,
       "intensity": 120,
       "duration_type": "Time",
@@ -38,23 +30,23 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1.1",
       "duration_seconds": 120,
-      "intensity": 50,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 1.2",
+      "duration_seconds": 120,
+      "intensity": 100,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Under",
-      "duration_seconds": 120,
-      "intensity": 105,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Over",
+      "name": "Over 1.2",
       "duration_seconds": 120,
       "intensity": 120,
       "duration_type": "Time",
@@ -62,23 +54,239 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1.2",
       "duration_seconds": 120,
-      "intensity": 50,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 1.3",
+      "duration_seconds": 120,
+      "intensity": 100,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Under",
+      "name": "Over 1.3",
       "duration_seconds": 120,
-      "intensity": 105,
+      "intensity": 120,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Over",
+      "name": "Recovery 1.3",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 1.4",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 1.4",
+      "duration_seconds": 120,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Set recovery 1",
+      "duration_seconds": 180,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 2.1",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 2.1",
+      "duration_seconds": 120,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 2.1",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 2.2",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 2.2",
+      "duration_seconds": 120,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 2.2",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 2.3",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 2.3",
+      "duration_seconds": 120,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 2.3",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 2.4",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 2.4",
+      "duration_seconds": 120,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Set recovery 2",
+      "duration_seconds": 180,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 3.1",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 3.1",
+      "duration_seconds": 120,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 3.1",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 3.2",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 3.2",
+      "duration_seconds": 120,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 3.2",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 3.3",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 3.3",
+      "duration_seconds": 120,
+      "intensity": 120,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 3.3",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 3.4",
+      "duration_seconds": 120,
+      "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 3.4",
       "duration_seconds": 120,
       "intensity": 120,
       "duration_type": "Time",
@@ -91,10 +299,10 @@
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.85,
+  "target_if": 0.96,
   "tags": [
     "cycling",
     "vo2max",
@@ -103,15 +311,12 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 44,
-  "estimated_tss": 43,
-  "target_tss": 43,
+  "duration_minutes": 94,
+  "estimated_tss": 124,
+  "target_tss": 124,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 44.5
-  },
   "fit_filename": "cycling/vo2max/cycling_vo2max_over_under_vo2_06.fit"
 }

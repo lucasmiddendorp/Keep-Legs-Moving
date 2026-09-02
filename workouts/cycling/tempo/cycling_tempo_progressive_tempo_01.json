@@ -11,68 +11,92 @@
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Progressive Tempo focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 540,
+      "name": "Progressive tempo 1",
+      "duration_seconds": 1560,
       "intensity": 78,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 540,
-      "intensity": 79,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 540,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 540,
+      "name": "Progressive tempo 2",
+      "duration_seconds": 1560,
       "intensity": 81,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 2",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Progressive tempo 3",
+      "duration_seconds": 1560,
+      "intensity": 84,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 3",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Progressive tempo 4",
+      "duration_seconds": 1560,
+      "intensity": 87,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 4",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Progressive tempo 5",
+      "duration_seconds": 1560,
+      "intensity": 90,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 5",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Progressive tempo 6",
+      "duration_seconds": 1560,
+      "intensity": 93,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -83,10 +107,10 @@
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.71,
+  "target_if": 0.83,
   "tags": [
     "cycling",
     "tempo",
@@ -95,26 +119,12 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 68,
-  "estimated_tss": 54,
-  "target_tss": 54,
+  "duration_minutes": 193,
+  "estimated_tss": 212,
+  "target_tss": 212,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
-<<<<<<< HEAD:workouts/cycling/tempo/cycling_tempo_progressive_tempo_01.json
-  "zones": {
-    "Anaerobic": 75.5
-  },
   "fit_filename": "cycling/tempo/cycling_tempo_progressive_tempo_01.fit"
-=======
-<<<<<<< Updated upstream:workouts/tempo/tempo_progressive_tempo_01.json
-  "fit_filename": "tempo/tempo_progressive_tempo_01.fit"
-=======
-  "zones": {
-    "Anaerobic": 67.5
-  },
-  "fit_filename": "cycling/tempo/cycling_tempo_progressive_tempo_01.fit"
->>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_progressive_tempo_01.json
->>>>>>> main:workouts/tempo/tempo_progressive_tempo_01.json
 }

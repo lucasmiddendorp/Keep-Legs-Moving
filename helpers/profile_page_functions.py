@@ -161,6 +161,8 @@ def render_training_goal_section(username):
     )
 
     current_goal = get_training_goal(username)
+    # show current goal
+    st.markdown(f"Current goal: **{current_goal.get('name', 'general_fitness').replace('_', ' ').title()} for {current_goal.get('sport', 'Cycling')}**")
 
     if not isinstance(current_goal, dict):
         current_goal = {"sport": "Cycling", "name": "general_fitness", "goal_date": None}

@@ -7,19 +7,11 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 720,
+      "duration_seconds": 540,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Z2 Tempo focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
       "name": "Endurance block",
@@ -39,11 +31,11 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 540,
+      "duration_seconds": 480,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
   "target_if": 0.7,
@@ -56,15 +48,12 @@
     "z2",
     "aerobic"
   ],
-  "duration_minutes": 124,
-  "estimated_tss": 99,
-  "target_tss": 99,
+  "duration_minutes": 119,
+  "estimated_tss": 96,
+  "target_tss": 96,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,
   "sets": 1,
-  "zones": {
-    "Anaerobic": 123.5
-  },
   "fit_filename": "cycling/endurance/cycling_endurance_z2_tempo_04.fit"
 }

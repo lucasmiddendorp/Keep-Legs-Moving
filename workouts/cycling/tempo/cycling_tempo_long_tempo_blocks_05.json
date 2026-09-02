@@ -7,119 +7,79 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 900,
+      "duration_seconds": 720,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
+      "description": "Progressive warm-up."
+    },
+    {
+      "name": "Tempo block 1",
+      "duration_seconds": 2520,
+      "intensity": 80,
+      "duration_type": "Time",
+      "repeat": 1,
       "description": ""
     },
     {
-      "name": "Long Tempo Blocks focus",
-      "duration_seconds": 30,
+      "name": "Recovery 1",
+      "duration_seconds": 180,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 1200,
+      "name": "Tempo block 2",
+      "duration_seconds": 2520,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 2",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 1200,
+      "name": "Tempo block 3",
+      "duration_seconds": 2520,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 3",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 1200,
+      "name": "Tempo block 4",
+      "duration_seconds": 2520,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 4",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 1200,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 1200,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 1200,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 1200,
+      "name": "Tempo block 5",
+      "duration_seconds": 2520,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -127,14 +87,14 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 720,
+      "duration_seconds": 660,
       "intensity": 55,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.76,
+  "target_if": 0.78,
   "tags": [
     "cycling",
     "tempo",
@@ -143,26 +103,12 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 186,
-  "estimated_tss": 172,
-  "target_tss": 172,
+  "duration_minutes": 245,
+  "estimated_tss": 244,
+  "target_tss": 244,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
-<<<<<<< HEAD:workouts/cycling/tempo/cycling_tempo_long_tempo_blocks_05.json
-  "zones": {
-    "Anaerobic": 99.5
-  },
   "fit_filename": "cycling/tempo/cycling_tempo_long_tempo_blocks_05.fit"
-=======
-<<<<<<< Updated upstream:workouts/tempo/tempo_long_tempo_blocks_05.json
-  "fit_filename": "tempo/tempo_long_tempo_blocks_05.fit"
-=======
-  "zones": {
-    "Anaerobic": 185.5
-  },
-  "fit_filename": "cycling/tempo/cycling_tempo_long_tempo_blocks_05.fit"
->>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_long_tempo_blocks_05.json
->>>>>>> main:workouts/tempo/tempo_long_tempo_blocks_05.json
 }

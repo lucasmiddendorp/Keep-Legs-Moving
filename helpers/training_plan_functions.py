@@ -2,7 +2,6 @@ from pathlib import Path
 import json
 import re
 from datetime import date, datetime
-from turtle import st
 import pandas as pd
 import Strava.strava_config as strava_config
 
@@ -32,6 +31,7 @@ def load_workouts(library_path):
             data["_file"] = str(file)
             data["_category"] = data.get("category", file.parent.name)
             data["_level"] = data.get("level", file.name[0].upper())
+            data["_sport"] = str(data.get("sport") or file.relative_to(library_path).parts[0]).title()
             workouts.append(data)
         except Exception:
             continue
@@ -86,19 +86,21 @@ def workout_to_fit_steps(workout):
     return steps
 
     
-def generate_workout_fit(workout, sport="Cycling"):
-    """Generate a FIT file from a library workout using the user's current settings."""
+def generate_user_fit_workout(workout, username):
+    """Generate a FIT file using the settings stored for one user."""
     steps = workout_to_fit_steps(workout)
     if not steps:
         raise ValueError(f"Workout '{workout.get('name', 'Workout')}' contains no valid steps.")
+    settings = get_user_settings(username)
+    sport = str(workout.get("sport", workout.get("_sport", "Cycling")) or "Cycling").title()
     if sport == "Cycling":
-        ftp = float(st.session_state.get("ftp", 0) or 0)
+        ftp = float(settings.get("ftp", 0) or 0)
         if ftp <= 0:
             raise ValueError("A valid cycling FTP is required.")
     else:
         ftp = None
     if sport == "Running":
-        threshold_pace = float(st.session_state.get("threshold_pace", 0) or 0)
+        threshold_pace = float(settings.get("threshold_pace", 0) or 0)
         if threshold_pace <= 0:
             raise ValueError("A valid running threshold pace is required.")
     else:

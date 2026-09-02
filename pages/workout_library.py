@@ -3,7 +3,8 @@ import streamlit as st
 from helpers.style import apply_global_style
 from helpers.dashboard_css import inject_card_css
 from helpers.workout_builder import plot_workout_summary, workout_builder_dialog
-from helpers.training_plan_functions import load_workouts, workout_to_plot_steps, generate_workout_fit
+from helpers.training_plan_functions import load_workouts, workout_to_plot_steps, generate_user_fit_workout
+from Strava.strava_user import get_training_goal
 
 apply_global_style()
 inject_card_css()
@@ -14,6 +15,11 @@ inject_card_css()
 
 ROOT = Path(__file__).resolve().parent.parent
 LIBRARY_PATH = ROOT / "workouts"
+username = st.session_state.get("username")
+training_goal = get_training_goal(username) if username else {}
+default_sport = training_goal.get("sport", "Cycling") if isinstance(training_goal, dict) else "Cycling"
+if default_sport not in ["Cycling", "Running"]:
+    default_sport = "Cycling"
 
 DURATION_RANGES = {
     "0–30 min": (0, 30),
@@ -34,16 +40,13 @@ def get_duration(workout):
         return float(workout.get("duration_seconds", 0) or 0) / 60
     return sum(float(s.get("duration_seconds", 0) or 0) + float(s.get("duration_minutes", 0) or 0) * 60 for s in workout.get("steps", [])) / 60
 
-def render_preview(workout, key, sport):
+def render_preview(workout, key, sport, height=180):
     steps = workout_to_plot_steps(workout)
     if not steps:
         return
     fig = plot_workout_summary(steps, sport=sport)
     fig.update_layout(
-        height=100,
-        margin=dict(l=5, r=5, t=3, b=3),
-        xaxis=dict(showticklabels=False, showgrid=False, title=None),
-        yaxis=dict(showticklabels=False, showgrid=False, title=None),
+        height=height,
     )
     st.plotly_chart(fig, width="stretch", config={"displayModeBar": False}, key=key)
 
@@ -54,9 +57,17 @@ def workout_details(workout, sport):
     target_if = float(workout.get("target_if", 0) or 0)
     st.subheader(workout.get("name", "Workout"))
     st.caption(f"{workout.get('_category', 'Workout')} · {duration} min · IF {target_if:.2f} · {tss:.0f} TSS")
-    render_preview(workout, f"details_{workout.get('_file', workout.get('name'))}", sport)
+    render_preview(
+        workout,
+        f"details_{workout.get('_file', workout.get('name'))}",
+        sport,
+        height=260,
+    )
     try:
-        fit_bytes, filename = generate_workout_fit(workout)
+        username = st.session_state.get("username")
+        if not username:
+            raise ValueError("Please log in first.")
+        fit_bytes, filename = generate_user_fit_workout(workout, username)
         st.download_button(
             "Download FIT",
             data=fit_bytes,
@@ -97,7 +108,7 @@ with add_col:
     if st.button("＋ Add workout", use_container_width=True, key="open_workout_builder"):
         st.session_state.pop("library_workout", None)
         st.session_state.pop("library_workout_name", None)
-        workout_builder_dialog()
+        workout_builder_dialog(st.session_state.get("workout_library_sport", default_sport))
     st.markdown('</div>', unsafe_allow_html=True)
 
 # =========================================================
@@ -110,7 +121,7 @@ st.caption("Find a workout based on the sport, type and time you have available.
 sport = st.segmented_control(
     "Sport",
     ["Cycling", "Running"],
-    default="Cycling",
+    default=default_sport,
     key="workout_library_sport",
 )
 

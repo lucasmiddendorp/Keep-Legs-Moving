@@ -7,182 +7,94 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 840,
+      "duration_seconds": 660,
       "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Progressive warm-up."
     },
     {
-      "name": "Progressive Tempo focus",
-      "duration_seconds": 30,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 600,
+      "name": "Progressive tempo 1",
+      "duration_seconds": 1500,
       "intensity": 78,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 1",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 600,
-      "intensity": 79,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 600,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 600,
+      "name": "Progressive tempo 2",
+      "duration_seconds": 1500,
       "intensity": 81,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 2",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 600,
-      "intensity": 82,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 600,
-      "intensity": 83,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 600,
+      "name": "Progressive tempo 3",
+      "duration_seconds": 1500,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Recovery 3",
       "duration_seconds": 180,
-      "intensity": 50,
+      "intensity": 60,
       "duration_type": "Time",
       "repeat": 1,
-      "description": ""
+      "description": "Easy recovery riding."
     },
     {
-      "name": "Tempo block",
-      "duration_seconds": 600,
-      "intensity": 85,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 600,
-      "intensity": 86,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 50,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Tempo block",
-      "duration_seconds": 600,
+      "name": "Progressive tempo 4",
+      "duration_seconds": 1500,
       "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Cool-down",
-      "duration_seconds": 660,
-      "intensity": 55,
+      "name": "Recovery 4",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Progressive tempo 5",
+      "duration_seconds": 1500,
+      "intensity": 90,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 600,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.76,
+  "target_if": 0.81,
   "tags": [
     "cycling",
     "tempo",
@@ -191,26 +103,12 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 152,
-  "estimated_tss": 139,
-  "target_tss": 139,
+  "duration_minutes": 158,
+  "estimated_tss": 166,
+  "target_tss": 166,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,
-<<<<<<< HEAD:workouts/cycling/tempo/cycling_tempo_progressive_tempo_04.json
-  "zones": {
-    "Anaerobic": 64.5
-  },
   "fit_filename": "cycling/tempo/cycling_tempo_progressive_tempo_04.fit"
-=======
-<<<<<<< Updated upstream:workouts/tempo/tempo_progressive_tempo_04.json
-  "fit_filename": "tempo/tempo_progressive_tempo_04.fit"
-=======
-  "zones": {
-    "Anaerobic": 152.5
-  },
-  "fit_filename": "cycling/tempo/cycling_tempo_progressive_tempo_04.fit"
->>>>>>> Stashed changes:workouts/cycling/tempo/cycling_tempo_progressive_tempo_04.json
->>>>>>> main:workouts/tempo/tempo_progressive_tempo_04.json
 }

@@ -15,13 +15,7 @@ def generate_library(sample=False):
         workouts = [workouts[index] for index in (0, 12, 24, 36) if index < len(workouts)]
     validate_unique(workouts)
     if OUTPUT.exists():
-        for category in ("endurance", "tempo", "threshold", "vo2max", "anaerobic"):
-            category_dir = OUTPUT / category
-            if category_dir.exists():
-                shutil.rmtree(category_dir)
-        index_path = OUTPUT / "workout_index.json"
-        if index_path.exists():
-            index_path.unlink()
+        shutil.rmtree(OUTPUT)
     OUTPUT.mkdir(parents=True, exist_ok=True)
     index = []
     counts = {}
@@ -38,7 +32,7 @@ def generate_library(sample=False):
         counts[workout.category] = counts.get(workout.category, 0) + 1
     (OUTPUT / "workout_index.json").write_text(json.dumps(index, indent=2), encoding="utf-8")
     print(f"Generated {len(workouts)} running workouts: {counts}")
-
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--sample", action="store_true")
