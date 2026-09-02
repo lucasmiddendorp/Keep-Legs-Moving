@@ -16,7 +16,7 @@ def render_topbar():
 
         .klm-topbar-wrapper {
             width:100%;
-            padding:4px 0 18px 0;
+            padding: 4px 0 18px 0;
             margin-bottom:20px;
             border-bottom:1px solid #e8ebee;
         }
@@ -158,22 +158,10 @@ def render_topbar():
     # =========================================================
 
     with brand_col:
-        logo_col,text_col=st.columns(
-            [0.35,0.65],
-            gap="small",
-            vertical_alignment="center"
-        )
+        logo=get_logo_base64()
+        st.image(f"data:image/png;base64,{logo}",width=150)
 
-        with logo_col:
-            logo=get_logo_base64()
-            st.image(f"data:image/png;base64,{logo}",width=40)
-
-        with text_col:
-            st.markdown(
-                '<div class="klm-title">Keep Legs Moving</div>',
-                unsafe_allow_html=True
-            )
-
+    
     # =========================================================
     # NAVIGATION
     # =========================================================

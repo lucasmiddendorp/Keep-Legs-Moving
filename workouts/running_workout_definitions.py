@@ -65,7 +65,7 @@ def warmup(minutes=5):
     return Step("Warm-up", minutes * 60, 70, description="Easy running with gradual progression.")
 
 def cooldown(minutes=5):
-    return Step("Cool-down", minutes * 60, , description="Easy running to bring the effort down.")
+    return Step("Cool-down", minutes * 60, 65, description="Easy running to bring the effort down.")
 
 def recovery(minutes, intensity=65):
     return Step("Recovery", round(minutes * 60), intensity, description="Easy running or very light jogging.")

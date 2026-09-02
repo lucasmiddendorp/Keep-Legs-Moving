@@ -203,7 +203,7 @@ fig.add_trace(
 )
 
 fig.update_layout(
-    height=560,
+    height=450,
     margin=dict(l=55, r=80, t=70, b=45),
     plot_bgcolor="#fffdf5",
     paper_bgcolor="#fffdf5",
