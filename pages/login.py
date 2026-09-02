@@ -31,6 +31,8 @@ with tab1:
                 st.session_state["authentication_status"] = True
                 st.session_state["username"] = username
                 st.session_state["user_id"] = user["id"]
+                if not st.session_state.get("athlete_profile_prompt_seen"):
+                    st.session_state["show_athlete_profile_prompt"] = True
                 st.rerun()
             else:
                 st.error("Incorrect username or password.")

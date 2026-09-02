@@ -9,7 +9,7 @@ import streamlit as st
 from helpers.style import apply_global_style
 from helpers.dashboard_css import inject_card_css
 from helpers.training_plan_functions import DAYS,CATEGORY_COLORS,load_workouts,calculate_target_weekly_tss,calculate_previous_week_tss
-from helpers.training_page_functions import empty_zones,get_zone_minutes_from_steps,get_completed_week_zones,get_workout_duration,get_workout_if,get_workout_zone_minutes,format_total_time,format_minutes,clean_activity_type,render_small_progress_circle,render_clickable_workout_card,render_static_day_card,render_week_summary,render_full_week,zone_color
+from helpers.training_page_functions import RECOVERY_COLOR,empty_zones,get_zone_minutes_from_steps,get_completed_week_zones,get_workout_duration,get_workout_if,get_workout_zone_minutes,format_total_time,format_minutes,clean_activity_type,render_small_progress_circle,render_clickable_workout_card,render_static_day_card,render_week_summary,render_full_week,zone_color
 from Strava.strava_user import get_training_goal,get_user_settings,save_user_settings
 from helpers.availability import load_availability
 from helpers.database import load_training_plan,save_training_plan
@@ -123,6 +123,11 @@ if not training_plan:
     st.info("Set weekly availability to create your training plan.")
     st.stop()
 
+if goal_day:
+    for plan in training_plan:
+        if str(plan.get("date")) == goal_day.isoformat():
+            plan["race_day"] = True
+
 display_plan=list(training_plan)
 
 if activities is not None and not activities.empty and "date" in activities.columns:
@@ -202,11 +207,15 @@ with st.container(border=True):
             if is_past or has_activity:
                 activity_name=activity_type_by_date.get(current_date,"Activity") if activity_tss else "Rest"
                 detail=f"{activity_tss:.0f} TSS" if activity_tss else "No activity"
-                color="#98a6b3" if activity_tss<=0 else "#6f9bb2" if activity_tss<50 else "#d39a45" if activity_tss<100 else "#b85c5c"
+                color=RECOVERY_COLOR if activity_tss<=0 else "#6f9bb2" if activity_tss<50 else "#d39a45" if activity_tss<100 else "#b85c5c"
+            elif plan and plan.get("race_day"):
+                activity_name="Race Day"
+                detail="Event day"
+                color="#b85c5c"
             elif not plan or plan.get("rest"):
                 activity_name="Rest"
                 detail="Recovery"
-                color="#98a6b3"
+                color=RECOVERY_COLOR
             else:
                 activity_name=plan.get("category","Training")
                 workout=plan.get("workout") or {}
@@ -313,6 +322,8 @@ with st.container(border=True):
         st.markdown(f'<div style="font-size:10px;font-weight:700;color:#526170;margin:8px 0 5px;">{week_title}</div>',unsafe_allow_html=True)
         summary_col,plan_col=st.columns([2,7],gap="small")
         with summary_col:
+            if goal_day and any(str(plan.get("date")) == goal_day.isoformat() for plan in week_plans):
+                st.markdown('<div style="font-size:11px;font-weight:800;color:#b85c5c;margin:0 0 6px;text-align:center;">Race Week</div>',unsafe_allow_html=True)
             render_week_summary(week_plans,zone_target,tss_target,activities)
         with plan_col:
             render_full_week(week_plans)

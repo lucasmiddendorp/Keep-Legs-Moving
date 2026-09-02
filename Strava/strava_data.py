@@ -207,8 +207,9 @@ def calculate_hr_zones(stream_df,max_hr):
         "time_z6_hr":int(z6)
     }
 
-def calculate_power_zones(stream_df,ftp):
-    from helpers.metrics import TRAINING_ZONES
+def calculate_power_zones(stream_df,ftp,sport="Cycling"):
+    from helpers.metrics import get_zone_definitions
+    zone_definitions = get_zone_definitions(sport)
     watts=pd.to_numeric(stream_df["watts"],errors="coerce")
 
     if watts.notna().sum()==0 or ftp<=0:
@@ -222,12 +223,12 @@ def calculate_power_zones(stream_df,ftp):
         }
 
     intensity = watts / ftp
-    z1=((intensity>=TRAINING_ZONES["Recovery"]["min"])&(intensity<TRAINING_ZONES["Recovery"]["max"])).sum()
-    z2=((intensity>=TRAINING_ZONES["Endurance"]["min"])&(intensity<TRAINING_ZONES["Endurance"]["max"])).sum()
-    z3=((intensity>=TRAINING_ZONES["Tempo"]["min"])&(intensity<TRAINING_ZONES["Tempo"]["max"])).sum()
-    z4=((intensity>=TRAINING_ZONES["Threshold"]["min"])&(intensity<TRAINING_ZONES["Threshold"]["max"])).sum()
-    z5=((intensity>=TRAINING_ZONES["VO2max"]["min"])&(intensity<TRAINING_ZONES["VO2max"]["max"])).sum()
-    z6=((intensity>=TRAINING_ZONES["Anaerobic"]["min"])).sum()
+    z1=((intensity>=zone_definitions["Recovery"]["min"])&(intensity<zone_definitions["Recovery"]["max"])).sum()
+    z2=((intensity>=zone_definitions["Endurance"]["min"])&(intensity<zone_definitions["Endurance"]["max"])).sum()
+    z3=((intensity>=zone_definitions["Tempo"]["min"])&(intensity<zone_definitions["Tempo"]["max"])).sum()
+    z4=((intensity>=zone_definitions["Threshold"]["min"])&(intensity<zone_definitions["Threshold"]["max"])).sum()
+    z5=((intensity>=zone_definitions["VO2max"]["min"])&(intensity<zone_definitions["VO2max"]["max"])).sum()
+    z6=((intensity>=zone_definitions["Anaerobic"]["min"])).sum()
 
     return {
         "time_z1_power":int(z1),
@@ -273,7 +274,7 @@ def update_hr_zones_from_streams(username,activities,max_hr):
             activities.loc[activities["id"]==activity_id,key]=value
     return activities
 
-def update_power_zones_from_streams(username,activities,ftp):
+def update_power_zones_from_streams(username,activities,ftp,sport="Cycling"):
     _,power_file=get_user_cache_paths(username)
     if not os.path.exists(power_file):
         return activities
@@ -282,7 +283,8 @@ def update_power_zones_from_streams(username,activities,ftp):
         stream=power_df[power_df["activity_id"]==activity_id]
         if stream.empty:
             continue
-        zones=calculate_power_zones(stream,ftp)
+        activity_sport = activities.loc[activities["id"] == activity_id, "sport"].iloc[0] if "sport" in activities.columns else sport
+        zones=calculate_power_zones(stream,ftp,activity_sport)
         for key,value in zones.items():
             activities.loc[activities["id"]==activity_id,key]=value
     return activities

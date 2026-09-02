@@ -2,9 +2,10 @@
 import streamlit as st
 
 from helpers.topbar import render_topbar
-from Strava.strava_user import get_user_strava
+from Strava.strava_user import get_training_goal, get_user_settings, get_user_strava
 from Strava.strava_oauth import handle_strava_callback
 from helpers.database import init_database
+from helpers.availability import load_availability
 
 
 # =========================================================
@@ -91,6 +92,50 @@ settings_exceptions = st.Page(
     "pages/settings_exceptions.py",
     title="Availability Exceptions",
 )
+
+
+def profile_has_changes(username):
+    goal = get_training_goal(username)
+    if goal.get("name"):
+        return True
+
+    settings = get_user_settings(username)
+    defaults = {
+        "ftp": 300,
+        "max_hr": 190,
+        "threshold_hr": None,
+        "threshold_pace": 5.0,
+        "weight": 70,
+        "athlete_level": "Amateur",
+        "training_progression": 8,
+        "atl_tc": 7,
+        "sessions_per_week": None,
+    }
+    for key, default in defaults.items():
+        if settings.get(key) != default:
+            return True
+
+    weekly = load_availability(username).get("weekly", {})
+    return any(
+        data.get("available") or data.get("hours", 0) or data.get("start") or data.get("end")
+        for data in weekly.values()
+        if isinstance(data, dict)
+    )
+
+
+@st.dialog("Complete your athlete profile")
+def show_athlete_profile_prompt():
+    st.write(
+        "Before you can access your performance dashboard, training plan "
+        "and workout library, please fill in your athlete profile."
+    )
+    if st.button("Fill in athlete profile", type="primary", use_container_width=True):
+        st.session_state["show_athlete_profile_prompt"] = False
+        st.session_state["athlete_profile_prompt_seen"] = True
+        goal = get_training_goal(st.session_state["username"])
+        st.session_state["profile_section"] = "Training Goal" if not goal.get("name") else "Thresholds"
+        st.session_state.pop("profile_athlete_subsection", None)
+        st.switch_page("pages/profile.py")
 
 
 # =========================================================
@@ -181,6 +226,15 @@ else:
                 ]
             )
             render_topbar()
+
+        if st.session_state.get("show_athlete_profile_prompt"):
+            if profile_has_changes(username):
+                st.session_state["show_athlete_profile_prompt"] = False
+                st.session_state["athlete_profile_prompt_seen"] = True
+            else:
+                st.session_state["show_athlete_profile_prompt"] = False
+                st.session_state["athlete_profile_prompt_seen"] = True
+                show_athlete_profile_prompt()
 
 
 # =========================================================

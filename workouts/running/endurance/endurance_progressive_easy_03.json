@@ -7,7 +7,7 @@
     {
       "name": "Warm-up",
       "duration_seconds": 600,
-      "intensity": 65,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
@@ -15,7 +15,7 @@
     {
       "name": "Easy running",
       "duration_seconds": 1920,
-      "intensity": 65,
+      "intensity": 71,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -23,7 +23,7 @@
     {
       "name": "Progressive finish",
       "duration_seconds": 1980,
-      "intensity": 73,
+      "intensity": 79,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -31,13 +31,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 540,
-      "intensity": 60,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.68,
+  "target_if": 0.74,
   "sport": "Running",
   "tags": [
     "endurance",
@@ -48,8 +48,8 @@
     "running"
   ],
   "duration_minutes": 84,
-  "estimated_tss": 64,
-  "target_tss": 64,
+  "estimated_tss": 77,
+  "target_tss": 77,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

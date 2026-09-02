@@ -7,7 +7,7 @@
     {
       "name": "Warm-up",
       "duration_seconds": 420,
-      "intensity": 65,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
@@ -15,7 +15,7 @@
     {
       "name": "Progressive tempo 1",
       "duration_seconds": 660,
-      "intensity": 80,
+      "intensity": 82,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -23,7 +23,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -31,7 +31,7 @@
     {
       "name": "Progressive tempo 2",
       "duration_seconds": 660,
-      "intensity": 83,
+      "intensity": 85,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -39,7 +39,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -47,7 +47,7 @@
     {
       "name": "Progressive tempo 3",
       "duration_seconds": 660,
-      "intensity": 86,
+      "intensity": 88,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -55,7 +55,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -63,7 +63,7 @@
     {
       "name": "Progressive tempo 4",
       "duration_seconds": 660,
-      "intensity": 89,
+      "intensity": 91,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -71,13 +71,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 360,
-      "intensity": 60,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.8,
+  "target_if": 0.82,
   "sport": "Running",
   "tags": [
     "tempo",
@@ -88,8 +88,8 @@
     "moderate"
   ],
   "duration_minutes": 63,
-  "estimated_tss": 65,
-  "target_tss": 65,
+  "estimated_tss": 70,
+  "target_tss": 70,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,

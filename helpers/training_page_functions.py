@@ -6,7 +6,8 @@ import streamlit as st
 from Strava.strava_user import get_user_settings
 from helpers.metrics import TRAINING_ZONES,get_training_zone,ZONE_KEYS,ZONE_TO_DISPLAY
 from helpers.training_plan_functions import DAYS,CATEGORY_COLORS,load_workouts,workout_to_plot_steps,generate_user_fit_workout
-ZONE_COLORS=["#8fa8b5","#6f9bb2","#d39a45","#b85c5c","#8c5c8c","#76558c","#5d4b82"]
+RECOVERY_COLOR="#AEB8C2"
+ZONE_COLORS=[RECOVERY_COLOR,"#6f9bb2","#d39a45","#b85c5c","#8c5c8c","#76558c","#5d4b82"]
 def zone_color(zone):
     try:return ZONE_COLORS[ZONE_KEYS.index(zone)%len(ZONE_COLORS)]
     except:return "#64748B"
@@ -18,7 +19,8 @@ def get_zone_minutes_from_steps(workout):
         intensity=float(step.get("intensity",0) or 0)/100
         repeat=int(step.get("repeat",1) or 1)
         minutes=float(step.get("duration_seconds",0) or 0)*repeat/60
-        zone=get_training_zone(intensity)
+        sport=(workout or {}).get("sport",(workout or {}).get("_sport","Cycling"))
+        zone=get_training_zone(intensity,sport)
         if zone == "Anaerobic":
             zone = "VO2max"
         if zone in zones:zones[zone]+=minutes
@@ -62,7 +64,8 @@ def get_workout_zone_minutes(workout):
         intensity=float(step.get("intensity",0) or 0)/100
         repeat=int(step.get("repeat",1) or 1)
         minutes=float(step.get("duration_seconds",0) or 0)*repeat/60
-        zone_name=get_training_zone(intensity)
+        sport=(workout or {}).get("sport",(workout or {}).get("_sport","Cycling"))
+        zone_name=get_training_zone(intensity,sport)
         if zone_name == "Anaerobic":
             zone_name = "VO2max"
         zone=ZONE_TO_DISPLAY.get(zone_name,"Zone 1")
@@ -307,10 +310,15 @@ def render_static_day_card(day,date_text,category,detail,color):
 
 def render_plan_day_card(plan):
     day=plan.get("day","")
-    if plan.get("rest"):
+    if plan.get("race_day"):
+        category="Race Day"
+        duration_text="Event day"
+        color="#b85c5c"
+        workout=None
+    elif plan.get("rest"):
         category="Rest"
         duration_text="Recovery"
-        color="#94A3B8"
+        color=RECOVERY_COLOR
         workout=None
     else:
         category=plan.get("category","Endurance")

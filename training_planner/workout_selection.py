@@ -4,7 +4,7 @@ Selects workouts based on category, quality-zone duration, or TSS target.
 
 from typing import Dict, List, Optional
 
-from helpers.metrics import TRAINING_ZONES
+from helpers.metrics import get_zone_definitions, get_training_zone
 
 
 class WorkoutSelector:
@@ -90,16 +90,12 @@ class WorkoutSelector:
         )
 
     @staticmethod
-    def _intensity_to_zone(intensity: float) -> str:
+    def _intensity_to_zone(intensity: float, sport="Cycling") -> str:
         """Convert FTP intensity percentage to a training zone."""
 
         ratio = float(intensity) / 100
 
-        for zone, limits in TRAINING_ZONES.items():
-            if limits["min"] <= ratio < limits["max"]:
-                return zone
-
-        return "Anaerobic"
+        return get_training_zone(ratio, sport)
 
     @classmethod
     def _get_workout_zone_minutes(
@@ -108,10 +104,9 @@ class WorkoutSelector:
     ) -> Dict[str, float]:
         """Return minutes spent in every training zone."""
 
-        zone_minutes = {
-            zone: 0.0
-            for zone in TRAINING_ZONES
-        }
+        sport = workout.get("sport", workout.get("_sport", "Cycling"))
+        zone_definitions = get_zone_definitions(sport)
+        zone_minutes = {zone: 0.0 for zone in zone_definitions}
 
         for step in workout.get("steps") or []:
             duration = float(
@@ -127,7 +122,7 @@ class WorkoutSelector:
             if duration <= 0:
                 continue
 
-            zone = cls._intensity_to_zone(intensity)
+            zone = get_training_zone(intensity / 100, sport)
 
             zone_minutes[zone] += (
                 duration * repeat / 60

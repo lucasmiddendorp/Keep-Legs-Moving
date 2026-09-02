@@ -7,7 +7,7 @@
     {
       "name": "Warm-up",
       "duration_seconds": 360,
-      "intensity": 65,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
@@ -23,7 +23,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -39,7 +39,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -55,7 +55,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -71,7 +71,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -87,7 +87,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -103,7 +103,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -119,13 +119,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 360,
-      "intensity": 60,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.91,
+  "target_if": 0.93,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -136,8 +136,8 @@
     "hard"
   ],
   "duration_minutes": 38,
-  "estimated_tss": 45,
-  "target_tss": 45,
+  "estimated_tss": 48,
+  "target_tss": 48,
   "interval_count": 7,
   "interval_duration": 0,
   "recovery_duration": 120,

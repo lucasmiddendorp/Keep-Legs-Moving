@@ -266,12 +266,13 @@ class TrainingPlanBuilder:
     @staticmethod
     def _get_workout_zone_minutes(workout: Optional[Dict]) -> Dict[str, float]:
         """Return step time by the canonical training-zone definitions."""
+        sport = (workout or {}).get("sport", (workout or {}).get("_sport", "Cycling"))
         zone_minutes = {zone: 0.0 for zone in TRAINING_ZONES}
         for step in (workout or {}).get("steps", []):
             intensity = float(step.get("intensity", 0) or 0) / 100
             duration = float(step.get("duration_seconds", 0) or 0)
             repeat = int(step.get("repeat", 1) or 1)
-            zone = get_training_zone(intensity)
+            zone = get_training_zone(intensity, sport)
             zone_minutes[zone] += duration * repeat / 60
         return zone_minutes
 
@@ -467,6 +468,19 @@ class TrainingPlanBuilder:
                     threshold_workout["target_tss"] = round(threshold_tss, 0)
                     threshold_workout["estimated_tss"] = round(threshold_tss, 0)
 
+            opener_workout = None
+            if goal_day and week_start <= goal_day and week_start + timedelta(days=6) >= goal_day - timedelta(days=3):
+                opener_workout = self.select_workout(
+                    "Openers",
+                    target_min=30,
+                )
+                if opener_workout:
+                    opener_workout = dict(opener_workout)
+                    opener_workout.pop("_level", None)
+                    opener_tss = self.workout_selector._get_workout_tss(opener_workout)
+                    opener_workout["target_tss"] = round(opener_tss, 0)
+                    opener_workout["estimated_tss"] = round(opener_tss, 0)
+
             print("=" * 60)
             print(f"WEEK {week_number} PLANNING DEBUG")
             print("=" * 60)
@@ -576,6 +590,39 @@ class TrainingPlanBuilder:
                 current_day = week_start + timedelta(days=offset)
                 if current_day > end:
                     break
+                race_day_offset = (goal_day - current_day).days if goal_day else None
+                if race_day_offset in (0, 1, 3):
+                    plan.append({
+                        "date": current_day.isoformat(),
+                        "day": day_name,
+                        "category": "Race Day" if race_day_offset == 0 else "Rest",
+                        "target_tss": 0,
+                        "actual_tss": 0,
+                        "workout": None,
+                        "race_day": race_day_offset == 0,
+                        "rest": race_day_offset != 0,
+                        "week_number": week_number,
+                        "week_target_tss": round(week_target_tss, 0),
+                        "deload": deload,
+                        "intensity_budget": intensity_budget,
+                    })
+                    continue
+                if race_day_offset == 2 and opener_workout:
+                    opener_tss = float(opener_workout.get("target_tss", 0) or 0)
+                    plan.append({
+                        "date": current_day.isoformat(),
+                        "day": day_name,
+                        "category": "Openers",
+                        "target_tss": round(opener_tss, 0),
+                        "actual_tss": round(opener_tss, 0),
+                        "workout": opener_workout,
+                        "rest": False,
+                        "week_number": week_number,
+                        "week_target_tss": round(week_target_tss, 0),
+                        "deload": deload,
+                        "intensity_budget": intensity_budget,
+                    })
+                    continue
                 if day_name not in selected_days:
                     plan.append({
                         "date": current_day.isoformat(),

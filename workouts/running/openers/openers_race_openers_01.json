@@ -1,0 +1,131 @@
+{
+  "id": "openers_race_openers_01",
+  "name": "Race Openers 01",
+  "category": "Openers",
+  "subtype": "race_openers",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 540,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Opener 1",
+      "duration_seconds": 60,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Opener 2",
+      "duration_seconds": 60,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Opener 3",
+      "duration_seconds": 60,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Opener 4",
+      "duration_seconds": 60,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Opener 5",
+      "duration_seconds": 60,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Opener 6",
+      "duration_seconds": 60,
+      "intensity": 109,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.82,
+  "sport": "Running",
+  "tags": [
+    "openers",
+    "race_openers",
+    "race_openers",
+    "openers",
+    "race-prep",
+    "activation",
+    "running"
+  ],
+  "duration_minutes": 31,
+  "estimated_tss": 31,
+  "target_tss": 31,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 120,
+  "sets": 1,
+  "fit_filename": "openers/openers_race_openers_01.fit"
+}

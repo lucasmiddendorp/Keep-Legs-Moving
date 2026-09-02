@@ -7,7 +7,7 @@
     {
       "name": "Warm-up",
       "duration_seconds": 360,
-      "intensity": 65,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
@@ -15,7 +15,7 @@
     {
       "name": "Norwegian interval 1",
       "duration_seconds": 480,
-      "intensity": 115,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -23,7 +23,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -31,7 +31,7 @@
     {
       "name": "Norwegian interval 2",
       "duration_seconds": 480,
-      "intensity": 115,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -39,7 +39,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -47,7 +47,7 @@
     {
       "name": "Norwegian interval 3",
       "duration_seconds": 480,
-      "intensity": 115,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -55,7 +55,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -63,7 +63,7 @@
     {
       "name": "Norwegian interval 4",
       "duration_seconds": 480,
-      "intensity": 115,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -71,13 +71,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 300,
-      "intensity": 60,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 1.05,
+  "target_if": 1.01,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -89,8 +89,8 @@
     "running"
   ],
   "duration_minutes": 49,
-  "estimated_tss": 82,
-  "target_tss": 82,
+  "estimated_tss": 78,
+  "target_tss": 78,
   "interval_count": 4,
   "interval_duration": 0,
   "recovery_duration": 120,

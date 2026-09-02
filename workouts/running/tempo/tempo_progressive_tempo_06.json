@@ -7,7 +7,7 @@
     {
       "name": "Warm-up",
       "duration_seconds": 300,
-      "intensity": 65,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
@@ -15,7 +15,7 @@
     {
       "name": "Progressive tempo 1",
       "duration_seconds": 600,
-      "intensity": 80,
+      "intensity": 82,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -23,7 +23,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -31,7 +31,7 @@
     {
       "name": "Progressive tempo 2",
       "duration_seconds": 600,
-      "intensity": 83,
+      "intensity": 85,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -39,13 +39,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 300,
-      "intensity": 60,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.76,
+  "target_if": 0.79,
   "sport": "Running",
   "tags": [
     "tempo",
@@ -56,8 +56,8 @@
     "moderate"
   ],
   "duration_minutes": 32,
-  "estimated_tss": 30,
-  "target_tss": 30,
+  "estimated_tss": 33,
+  "target_tss": 33,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,

@@ -28,7 +28,7 @@ def render_weekly_availability(username):
     for column, day in zip(columns, DAYS):
         with column:
             current = weekly.get(day, {"available": False, "hours": 0})
-            current_hours = max(0.0, min(12.0, float(current.get("hours", 0) or 0)))
+            current_hours = max(0.0, min(12.0, float(current.get("hours", 2) or 2)))
             st.markdown(
                 f'<div style="font-size:12px;font-weight:700;color:#526170;">{day[:3]}</div>',
                 unsafe_allow_html=True,

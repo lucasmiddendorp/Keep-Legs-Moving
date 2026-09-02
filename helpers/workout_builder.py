@@ -39,7 +39,7 @@ def make_rest():
 def get_zone(sport, intensity):
     from helpers.metrics import get_training_zone
     intensity = float(intensity)
-    zone = get_training_zone(intensity)
+    zone = get_training_zone(intensity, sport)
     if sport == "Running":
         running_names = {"Recovery": "Easy", "Endurance": "Aerobic", "Tempo": "Tempo", "Threshold": "Threshold", "VO2max": "VO₂max", "Anaerobic": "Speed"}
         display_name = running_names.get(zone, zone)
@@ -259,10 +259,10 @@ def calculate_workout_tss(steps, ftp):
 def plot_workout_summary(steps, sport, ftp=None, threshold_pace=None):
     import numpy as np
     import plotly.graph_objects as go
-    from helpers.metrics import TRAINING_ZONES
+    from helpers.metrics import get_zone_definitions
     fig = go.Figure()
     zone_colors = {
-        "Recovery": "#FFFFFF",
+        "Recovery": "#AEB8C2",
         "Endurance": "#3B82F6",
         "Tempo": "#22C55E",
         "Threshold": "#F97316",
@@ -271,7 +271,7 @@ def plot_workout_summary(steps, sport, ftp=None, threshold_pace=None):
     }
     def get_zone(intensity):
         intensity_ratio = float(intensity) / 100
-        for zone, limits in TRAINING_ZONES.items():
+        for zone, limits in get_zone_definitions(sport).items():
             if limits["min"] <= intensity_ratio < limits["max"]:
                 return zone
         return "Anaerobic"

@@ -7,7 +7,7 @@
     {
       "name": "Warm-up",
       "duration_seconds": 360,
-      "intensity": 65,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
@@ -15,22 +15,6 @@
     {
       "name": "Tempo block 1",
       "duration_seconds": 420,
-      "intensity": 82,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Tempo block 2",
-      "duration_seconds": 600,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,7 +23,23 @@
     {
       "name": "Recovery",
       "duration_seconds": 120,
-      "intensity": 60,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Tempo block 2",
+      "duration_seconds": 600,
+      "intensity": 86,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -47,7 +47,7 @@
     {
       "name": "Tempo block 3",
       "duration_seconds": 780,
-      "intensity": 86,
+      "intensity": 88,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -55,13 +55,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 360,
-      "intensity": 60,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.79,
+  "target_if": 0.82,
   "sport": "Running",
   "tags": [
     "tempo",
@@ -72,8 +72,8 @@
     "moderate"
   ],
   "duration_minutes": 46,
-  "estimated_tss": 46,
-  "target_tss": 46,
+  "estimated_tss": 50,
+  "target_tss": 50,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,

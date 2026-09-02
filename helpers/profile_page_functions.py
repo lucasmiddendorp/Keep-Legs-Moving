@@ -161,13 +161,14 @@ def render_training_goal_section(username):
     )
 
     current_goal = get_training_goal(username)
-    # show current goal
-    st.markdown(f"Current goal: **{current_goal.get('name', 'general_fitness').replace('_', ' ').title()} for {current_goal.get('sport', 'Cycling')}**")
-
     if not isinstance(current_goal, dict):
         current_goal = {"sport": "Cycling", "name": "general_fitness", "goal_date": None}
 
-    current_sport = current_goal.get("sport", "Cycling")
+    current_goal_name = current_goal.get("name") or "general_fitness"
+    current_goal_sport = current_goal.get("sport") or "Cycling"
+    st.markdown(f"Current goal: **{current_goal_name.replace('_', ' ').title()} for {current_goal_sport}**")
+
+    current_sport = current_goal_sport
 
     if current_sport not in ["Cycling", "Running"]:
         current_sport = "Cycling"

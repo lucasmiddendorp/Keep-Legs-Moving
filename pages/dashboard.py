@@ -33,7 +33,7 @@ settings = get_user_settings(username)
 activity_file, power_file = get_user_cache_paths(username)
 
 if not os.path.exists(activity_file):
-    st.info("No Strava data found. Click **Sync Strava** to download your activities.")
+    st.info("No Strava data found. Click **Sync** to download your activities.")
     st.stop()
 
 df = pd.read_csv(activity_file)

@@ -7,7 +7,7 @@
     {
       "name": "Warm-up",
       "duration_seconds": 300,
-      "intensity": 65,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
@@ -15,7 +15,7 @@
     {
       "name": "Threshold interval 1",
       "duration_seconds": 360,
-      "intensity": 100,
+      "intensity": 102,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -23,7 +23,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -31,7 +31,7 @@
     {
       "name": "Threshold interval 2",
       "duration_seconds": 360,
-      "intensity": 100,
+      "intensity": 102,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -39,7 +39,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -47,7 +47,7 @@
     {
       "name": "Threshold interval 3",
       "duration_seconds": 360,
-      "intensity": 100,
+      "intensity": 102,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -55,7 +55,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -63,7 +63,7 @@
     {
       "name": "Threshold interval 4",
       "duration_seconds": 360,
-      "intensity": 100,
+      "intensity": 102,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -71,13 +71,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 300,
-      "intensity": 60,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.89,
+  "target_if": 0.91,
   "sport": "Running",
   "tags": [
     "threshold",
@@ -88,8 +88,8 @@
     "race-specific"
   ],
   "duration_minutes": 43,
-  "estimated_tss": 52,
-  "target_tss": 52,
+  "estimated_tss": 56,
+  "target_tss": 56,
   "interval_count": 4,
   "interval_duration": 0,
   "recovery_duration": 180,

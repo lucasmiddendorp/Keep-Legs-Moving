@@ -12,6 +12,16 @@ TRAINING_ZONES = {
     "Anaerobic": {"min": 1.21, "max": float("inf")},
 }
 
+RUNNING_ZONES = {
+    "Recovery": {"min": 0.00, "max": 0.70},
+    "Endurance": {"min": 0.70, "max": 0.80},
+    "Tempo": {"min": 0.80, "max": 0.95},
+    "Threshold": {"min": 0.95, "max": 1.06},
+    "VO2max": {"min": 1.06, "max": 1.21},
+    "Anaerobic": {"min": 1.21, "max": float("inf")},
+}
+
+
 ZONE_KEYS = tuple(TRAINING_ZONES.keys())
 
 HR_ZONES = {
@@ -40,8 +50,12 @@ CATEGORY_ZONE_FOCUS = {
     "Anaerobic": ("Anaerobic",),
 }
 
-def get_training_zone(intensity):
-    for zone, limits in TRAINING_ZONES.items():
+def get_zone_definitions(sport="Cycling"):
+    return RUNNING_ZONES if str(sport or "Cycling").strip().casefold() == "running" else TRAINING_ZONES
+
+
+def get_training_zone(intensity, sport="Cycling"):
+    for zone, limits in get_zone_definitions(sport).items():
         if limits["min"] <= intensity < limits["max"]:
             return zone
     return "Anaerobic"

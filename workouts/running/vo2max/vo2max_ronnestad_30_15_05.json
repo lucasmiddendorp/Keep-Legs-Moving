@@ -7,7 +7,7 @@
     {
       "name": "Warm-up",
       "duration_seconds": 420,
-      "intensity": 65,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
@@ -23,7 +23,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.1",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -39,7 +39,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.2",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -55,7 +55,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.3",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -71,7 +71,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.4",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -87,7 +87,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.5",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -103,7 +103,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.6",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -119,7 +119,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.7",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -135,7 +135,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.8",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -151,7 +151,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.9",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -167,7 +167,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.10",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -183,7 +183,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.11",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -199,7 +199,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 1.12",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -215,7 +215,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -231,7 +231,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.1",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -247,7 +247,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.2",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -263,7 +263,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.3",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -279,7 +279,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.4",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -295,7 +295,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.5",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -311,7 +311,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.6",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -327,7 +327,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.7",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -343,7 +343,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.8",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -359,7 +359,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.9",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -375,7 +375,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.10",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -391,7 +391,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.11",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -407,7 +407,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 2.12",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -423,7 +423,7 @@
     {
       "name": "Recovery",
       "duration_seconds": 180,
-      "intensity": 60,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
@@ -439,7 +439,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.1",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -455,7 +455,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.2",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -471,7 +471,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.3",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -487,7 +487,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.4",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -503,7 +503,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.5",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -519,7 +519,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.6",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -535,7 +535,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.7",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -551,7 +551,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.8",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -567,7 +567,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.9",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -583,7 +583,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.10",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -599,7 +599,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.11",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -615,7 +615,7 @@
     {
       "name": "Ronnestad 15 sec Recovery 3.12",
       "duration_seconds": 15,
-      "intensity": 62,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -631,13 +631,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 360,
-      "intensity": 60,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.96,
+  "target_if": 0.97,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -649,8 +649,8 @@
     "high-intensity"
   ],
   "duration_minutes": 48,
-  "estimated_tss": 62,
-  "target_tss": 62,
+  "estimated_tss": 66,
+  "target_tss": 66,
   "interval_count": 39,
   "interval_duration": 30,
   "recovery_duration": 15,
