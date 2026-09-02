@@ -13,7 +13,7 @@ from helpers.training_page_functions import RECOVERY_COLOR,empty_zones,get_zone_
 from Strava.strava_user import get_training_goal,get_user_settings,save_user_settings
 from helpers.availability import load_availability
 from helpers.database import load_training_plan,save_training_plan
-from helpers.user_cache import get_user_cache_paths
+from helpers.database import load_activity_cache
 from training_planner import TrainingPlanBuilder
 
 apply_global_style()
@@ -74,8 +74,8 @@ goal_date=training_goal.get("goal_date")
 weekly_tss=calculate_target_weekly_tss(username)
 previous_week_tss=calculate_previous_week_tss(username)
 
-activity_file,_=get_user_cache_paths(username)
-activities=pd.read_csv(activity_file) if os.path.exists(activity_file) else None
+stored_activities=load_activity_cache(username)
+activities=pd.DataFrame(stored_activities) if stored_activities else None
 today=date.today()
 timeline_start=today-timedelta(days=today.weekday())
 completed_week_tss=0.0

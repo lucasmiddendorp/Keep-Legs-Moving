@@ -11,7 +11,7 @@ from helpers.metrics import calculate_training_load, rolling_km, format_duration
 from Strava.strava_data import update_strava_data
 from Strava.strava_user import get_user_strava, get_user_settings
 from Strava.strava_user import get_valid_access_token
-from helpers.user_cache import get_user_cache_paths
+from helpers.database import load_activity_cache, load_power_stream_cache
 from helpers.dashboard_cards import (
     render_metric_circle,
     render_readiness_card,
@@ -30,13 +30,12 @@ st.markdown("""<div class="dashboard-title">Dashboard</div>""",unsafe_allow_html
 username = st.session_state["username"]
 settings = get_user_settings(username)
 
-activity_file, power_file = get_user_cache_paths(username)
-
-if not os.path.exists(activity_file):
+stored_activities = load_activity_cache(username)
+if not stored_activities:
     st.info("No Strava data found. Click **Sync** to download your activities.")
     st.stop()
 
-df = pd.read_csv(activity_file)
+df = pd.DataFrame(stored_activities)
 
 df["date"] = pd.to_datetime(df["date"],errors="coerce")
 
@@ -317,8 +316,11 @@ def max_avg_power(watts, duration):
 
 
 @st.cache_data(show_spinner="Building power curve cache...")
-def build_power_curve_cache(path, modified_time, durations):
-    power_df = pd.read_parquet(path, columns=["activity_id", "watts"])
+def build_power_curve_cache(stream_records, durations):
+    power_df = pd.DataFrame(
+        [dict(record) for record in stream_records],
+        columns=["activity_id", "watts"],
+    )
     rows = []
 
     for activity_id, activity in power_df.groupby("activity_id", sort=False):
@@ -360,10 +362,10 @@ def best_power_curve(power_cache, durations):
     return powers, activity_ids
 
 
-if os.path.exists(power_file):
+stored_streams = load_power_stream_cache(username)
+if stored_streams:
     power_cache = build_power_curve_cache(
-        power_file,
-        os.path.getmtime(power_file),
+        tuple(tuple(sorted(record.items())) for record in stored_streams),
         tuple(DURATIONS),
     )
 

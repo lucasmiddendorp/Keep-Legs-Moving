@@ -4,7 +4,7 @@ os.environ["SILENCE_TOKEN_WARNINGS"] = "true"
 import pandas as pd
 import numpy as np
 from stravalib.client import Client
-from helpers.user_cache import get_user_cache_paths
+from helpers.database import load_activity_cache, load_power_stream_cache, save_activity_cache, save_power_stream_cache
 from Strava.strava_user import get_user_settings
 
 ACTIVITY_COLUMNS = [
@@ -83,9 +83,9 @@ def fetch_activities(access_token,after_date=None):
 
 
 def update_activity_cache(username,access_token):
-    activity_file,_=get_user_cache_paths(username)
+    stored_activities = load_activity_cache(username)
 
-    if not os.path.exists(activity_file):
+    if not stored_activities:
         print("Downloading all activities...")
         df=fetch_activities(access_token)
         new_df=df.copy()
@@ -93,7 +93,7 @@ def update_activity_cache(username,access_token):
         print("Loading activity cache...")
 
         try:
-            df=pd.read_csv(activity_file)
+            df=pd.DataFrame(stored_activities)
         except Exception as e:
             print("Could not read activity cache:",e)
             df=pd.DataFrame(columns=ACTIVITY_COLUMNS)
@@ -240,9 +240,9 @@ def calculate_power_zones(stream_df,ftp,sport="Cycling"):
     }
 
 def update_power_stream_cache(username,access_token,activities):
-    _,power_file=get_user_cache_paths(username)
-    if os.path.exists(power_file):
-        power_df=pd.read_parquet(power_file)
+    stored_streams = load_power_stream_cache(username)
+    if stored_streams:
+        power_df=pd.DataFrame(stored_streams)
         cached_ids=set(power_df["activity_id"])
     else:
         power_df=pd.DataFrame()
@@ -257,14 +257,14 @@ def update_power_stream_cache(username,access_token,activities):
             streams.append(stream)
     if streams:
         power_df=pd.concat([power_df,*streams],ignore_index=True)
-        power_df.to_parquet(power_file,index=False)
+        save_power_stream_cache(username, power_df)
     return power_df
 
 def update_hr_zones_from_streams(username,activities,max_hr):
-    _,power_file=get_user_cache_paths(username)
-    if not os.path.exists(power_file):
+    stored_streams = load_power_stream_cache(username)
+    if not stored_streams:
         return activities
-    power_df=pd.read_parquet(power_file)
+    power_df=pd.DataFrame(stored_streams)
     for activity_id in activities["id"]:
         stream=power_df[power_df["activity_id"]==activity_id]
         if stream.empty:
@@ -275,10 +275,10 @@ def update_hr_zones_from_streams(username,activities,max_hr):
     return activities
 
 def update_power_zones_from_streams(username,activities,ftp,sport="Cycling"):
-    _,power_file=get_user_cache_paths(username)
-    if not os.path.exists(power_file):
+    stored_streams = load_power_stream_cache(username)
+    if not stored_streams:
         return activities
-    power_df=pd.read_parquet(power_file)
+    power_df=pd.DataFrame(stored_streams)
     for activity_id in activities["id"]:
         stream=power_df[power_df["activity_id"]==activity_id]
         if stream.empty:
@@ -420,14 +420,7 @@ def update_strava_data(username,access_token):
 
         print("[7/7] Saving activity cache...")
 
-        activity_file,_=get_user_cache_paths(username)
-
-        print("Saving to:",activity_file)
-
-        activities.to_csv(
-            activity_file,
-            index=False
-        )
+        save_activity_cache(username, activities)
 
         print("[6/6] Activity cache saved successfully.")
         print("Total activities:",len(activities))

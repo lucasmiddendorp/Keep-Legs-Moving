@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
-from helpers.user_cache import get_user_cache_paths
+from helpers.database import load_activity_cache
 
 TRAINING_ZONES = {
     "Recovery": {"min": 0.00, "max": 0.55},
@@ -70,10 +70,10 @@ def get_hr_zone(hr, max_hr):
     return "Threshold"
 
 def calculate_training_load(username, ctl_tc, atl_tc, activity_type="All"):
-    activity_file, _ = get_user_cache_paths(username)
-    if not os.path.exists(activity_file):
+    stored_activities = load_activity_cache(username)
+    if not stored_activities:
         return pd.DataFrame(columns=["stress", "CTL", "ATL", "TSB"])
-    df = pd.read_csv(activity_file)
+    df = pd.DataFrame(stored_activities)
     df["date"] = pd.to_datetime(df["date"], errors="coerce")
     df = df.dropna(subset=["date"])
     df["type"] = df["type"].astype(str).str.replace("root='", "", regex=False).str.replace("'", "", regex=False)

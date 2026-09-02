@@ -121,6 +121,20 @@ def init_database():
                     UNIQUE (user_id, plan_date)
                 );
             """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS activity_cache (
+                    user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+                    activities JSONB NOT NULL DEFAULT '[]'::jsonb,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS power_stream_cache (
+                    user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+                    streams JSONB NOT NULL DEFAULT '[]'::jsonb,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
         conn.commit()
 
     finally:
@@ -229,6 +243,81 @@ def load_training_plan(username):
                 "SELECT plan FROM training_plans WHERE user_id = %s",
                 (user_id,),
             )
+            row = cur.fetchone()
+            return row[0] if row else None
+    finally:
+        conn.close()
+
+
+def save_activity_cache(username, activities):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
+    records = activities.copy()
+    records = records.where(records.notna(), None).to_dict("records")
+    for record in records:
+        for key, value in record.items():
+            if hasattr(value, "isoformat"):
+                record[key] = value.isoformat()
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO activity_cache (user_id, activities, updated_at)
+                VALUES (%s, %s, CURRENT_TIMESTAMP)
+                ON CONFLICT (user_id) DO UPDATE SET
+                    activities = EXCLUDED.activities,
+                    updated_at = CURRENT_TIMESTAMP
+            """, (user_id, Json(records)))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def load_activity_cache(username):
+    user_id = get_user_id(username)
+    if user_id is None:
+        return None
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT activities FROM activity_cache WHERE user_id = %s", (user_id,))
+            row = cur.fetchone()
+            if not row:
+                return None
+            return row[0]
+    finally:
+        conn.close()
+
+
+def save_power_stream_cache(username, streams):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
+    records = streams.copy().where(streams.notna(), None).to_dict("records")
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO power_stream_cache (user_id, streams, updated_at)
+                VALUES (%s, %s, CURRENT_TIMESTAMP)
+                ON CONFLICT (user_id) DO UPDATE SET
+                    streams = EXCLUDED.streams,
+                    updated_at = CURRENT_TIMESTAMP
+            """, (user_id, Json(records)))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def load_power_stream_cache(username):
+    user_id = get_user_id(username)
+    if user_id is None:
+        return None
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("SELECT streams FROM power_stream_cache WHERE user_id = %s", (user_id,))
             row = cur.fetchone()
             return row[0] if row else None
     finally:
