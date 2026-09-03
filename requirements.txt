@@ -1,0 +1,15 @@
+stravalib>=2.0
+numpy>=2.5.0
+pandas>=3.0.3
+streamlit>=1.58.0
+plotly>=6.8.0
+matplotlib>=3.10
+fitparse>=1.2
+gpxpy>=1.6.2
+PyYAML>=6.0.3
+streamlit-authenticator>=0.4.2
+fit-tool>=0.9.16
+psycopg2-binary>=2.9
+bcrypt>=4.0
+streamlit-calendar
+pyarrow
