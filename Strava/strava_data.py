@@ -649,7 +649,17 @@ def update_strava_data(username,access_token):
 
         print("[7/7] Saving activity cache...")
 
+        if activities.empty:
+            raise ValueError(
+                "Strava returned no activities, so no activity data was saved."
+            )
         save_activity_cache(username, activities)
+
+        saved_activities = load_activity_cache(username)
+        if not saved_activities:
+            raise RuntimeError(
+                "Activity data was saved but could not be read back from PostgreSQL."
+            )
 
         print("[6/6] Activity cache saved successfully.")
         print("Total activities:",len(activities))
