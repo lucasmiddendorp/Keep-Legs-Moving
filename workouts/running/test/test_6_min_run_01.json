@@ -1,37 +1,37 @@
 {
-  "id": "vo2max_norwegian_double_threshold_03",
-  "name": "Norwegian Double Threshold 03",
-  "category": "VO2max",
-  "subtype": "norwegian_double_threshold",
+  "id": "test_6_min_run_01",
+  "name": "6 Min Run 01",
+  "category": "TEST",
+  "subtype": "6_min_run",
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 300,
+      "duration_seconds": 360,
       "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
     },
     {
-      "name": "Norwegian interval 1",
-      "duration_seconds": 900,
-      "intensity": 106,
+      "name": "Test Warmup",
+      "duration_seconds": 30,
+      "intensity": 120,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Recovery",
-      "duration_seconds": 180,
+      "duration_seconds": 120,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running or very light jogging."
     },
     {
-      "name": "Norwegian interval 2",
-      "duration_seconds": 900,
-      "intensity": 106,
+      "name": "6 Minute Running Test",
+      "duration_seconds": 360,
+      "intensity": 120,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -39,29 +39,29 @@
     {
       "name": "Cool-down",
       "duration_seconds": 360,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.98,
+  "target_if": 0.94,
   "sport": "Running",
   "tags": [
-    "vo2max",
-    "norwegian_double_threshold",
-    "norwegian_double_threshold",
-    "norwegian",
-    "vo2max",
-    "controlled",
-    "running"
+    "test",
+    "6_min_run",
+    "6_min_run",
+    "test",
+    "6-minute",
+    "running",
+    "vo2max"
   ],
-  "duration_minutes": 44,
-  "estimated_tss": 67,
-  "target_tss": 67,
-  "interval_count": 2,
+  "duration_minutes": 20,
+  "estimated_tss": 26,
+  "target_tss": 26,
+  "interval_count": 0,
   "interval_duration": 0,
-  "recovery_duration": 180,
+  "recovery_duration": 120,
   "sets": 1,
-  "fit_filename": "vo2max/vo2max_norwegian_double_threshold_03.fit"
+  "fit_filename": "test/test_6_min_run_01.fit"
 }

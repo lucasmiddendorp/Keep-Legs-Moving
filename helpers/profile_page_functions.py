@@ -11,6 +11,8 @@ from Strava.strava_user import (
     get_training_goal,
     save_training_goal,
 )
+from helpers.database import load_curve_cache
+from helpers.thresholds import calculated_running_threshold_pace
 
 ATHLETE_PROFILE_SUBSECTIONS = ["Thresholds", "Training Goal", "Weekly Availability"]
 
@@ -21,6 +23,12 @@ def inject_profile_css():
         <style>
         .profile-card-title{font-size:16px;font-weight:700;color:#17212b;margin:0 0 14px;}
         .profile-section-title{font-size:11px;font-weight:750;color:#7a8792;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;}
+        .profile-section-note{font-size:12px;color:#7a8792;line-height:1.45;margin:-2px 0 14px;}
+        .threshold-panel{background:#f8fafb;border:1px solid #e4e8eb;border-radius:8px;padding:14px 16px;margin:8px 0 14px;}
+        .threshold-panel-title{font-size:13px;font-weight:700;color:#17212b;margin-bottom:2px;}
+        .threshold-panel-note{font-size:11px;color:#87919a;margin-bottom:12px;}
+        .calculated-threshold{background:#eef2f4;border:1px solid #dce3e7;border-radius:7px;color:#66737d;font-size:11px;font-weight:600;line-height:1.35;padding:11px 12px;margin-bottom:2px;}
+        .threshold-save{margin-top:14px;}
         [data-testid="stVerticalBlockBorderWrapper"] hr{margin:14px 0;}
         div[data-testid="stHorizontalBlock"]{align-items:flex-start !important;}
         </style>
@@ -83,20 +91,81 @@ def render_thresholds_section(username, settings):
         label_visibility="collapsed",
     )
 
-    st.caption("How quickly your training load increases during build weeks. 8% is recommended.")
+    st.markdown('<div class="profile-section-note">Controls the weekly load increase during build weeks.</div>', unsafe_allow_html=True)
 
     st.divider()
 
     st.markdown('<div class="profile-section-title">Threshold settings</div>', unsafe_allow_html=True)
+    st.markdown('<div class="profile-section-note">Set your training thresholds manually, or compare them with values calculated from your recorded efforts.</div>', unsafe_allow_html=True)
 
-    ftp = st.number_input(
-        "Cycling FTP (W)",
-        min_value=50,
-        max_value=700,
-        value=int(settings.get("ftp", 150)),
-        step=5,
-        key="profile_ftp",
+    curve_data = load_curve_cache(username) or {}
+    calculated_power = curve_data.get("best_20_min_power")
+    calculated_distance = curve_data.get("best_6_min_distance")
+    calculated_pace = (
+        6 / (float(calculated_distance) / 1000)
+        if calculated_distance and float(calculated_distance) > 0
+        else None
     )
+    calculated_pace = calculated_running_threshold_pace(calculated_pace)
+
+    with st.container(border=True):
+        st.markdown('<div class="threshold-panel-title">Cycling power</div>', unsafe_allow_html=True)
+        st.markdown('<div class="threshold-panel-note">Your functional threshold power for cycling workouts.</div>', unsafe_allow_html=True)
+        ftp_col, calculated_power_col = st.columns([1, 1], vertical_alignment="bottom")
+        with ftp_col:
+            ftp = st.number_input(
+                "Cycling FTP (W)",
+                min_value=50,
+                max_value=700,
+                value=int(settings.get("ftp", 150)),
+                step=5,
+                key="profile_ftp",
+            )
+        with calculated_power_col:
+            if calculated_power is not None:
+                st.markdown(
+                    f'<div class="calculated-threshold">Calculated from best 20-minute effort<br><strong>{calculated_power * 0.95:.0f} W</strong></div>',
+                    unsafe_allow_html=True,
+                )
+
+    with st.container(border=True):
+        st.markdown('<div class="threshold-panel-title">Running pace</div>', unsafe_allow_html=True)
+        st.markdown('<div class="threshold-panel-note">Your threshold pace in minutes per kilometre.</div>', unsafe_allow_html=True)
+
+        pace = float(settings.get("threshold_pace", 5.0))
+        pace_minutes = int(pace)
+        pace_seconds = int(round((pace - pace_minutes) * 60))
+
+        if pace_seconds == 60:
+            pace_minutes += 1
+            pace_seconds = 0
+
+        pace_input_col, calculated_pace_col = st.columns([1, 1], vertical_alignment="bottom")
+
+        with pace_input_col:
+            pace_min_col, pace_sec_col = st.columns(2)
+            with pace_min_col:
+                pace_min = st.number_input("Minutes", min_value=2, max_value=10, value=pace_minutes, step=1, key="profile_pace_min")
+            with pace_sec_col:
+                pace_sec = st.number_input("Seconds", min_value=0, max_value=59, value=pace_seconds, step=1, key="profile_pace_sec")
+
+        with calculated_pace_col:
+            if calculated_pace is not None:
+                st.markdown(
+                    f'<div class="calculated-threshold">Calculated from best 6-minute effort<br><strong>{calculated_pace:.2f} min/km</strong></div>',
+                    unsafe_allow_html=True,
+                )
+
+        max_hr = st.number_input(
+            "Maximum Heart Rate (bpm)",
+            min_value=120,
+            max_value=220,
+            value=int(settings.get("max_hr", 180)),
+            step=1,
+            key="profile_max_hr",
+        )
+
+    threshold_pace = pace_min + pace_sec / 60
 
     weight = st.number_input(
         "Weight (kg)",
@@ -106,36 +175,8 @@ def render_thresholds_section(username, settings):
         step=0.5,
         key="profile_weight",
     )
-
-    st.caption("Running threshold pace (min/km) - pace you can run at for 1 hour (or 95% of the pace you can run at for 20 min)")
-
-    pace = float(settings.get("threshold_pace", 5.0))
-    pace_minutes = int(pace)
-    pace_seconds = int(round((pace - pace_minutes) * 60))
-
-    if pace_seconds == 60:
-        pace_minutes += 1
-        pace_seconds = 0
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        pace_min = st.number_input("Minutes", min_value=2, max_value=10, value=pace_minutes, step=1, key="profile_pace_min")
-
-    with col2:
-        pace_sec = st.number_input("Seconds", min_value=0, max_value=59, value=pace_seconds, step=1, key="profile_pace_sec")
-
-    threshold_pace = pace_min + pace_sec / 60
-
-    max_hr = st.number_input(
-        "Maximum Heart Rate (bpm)",
-        min_value=120,
-        max_value=220,
-        value=int(settings.get("max_hr", 180)),
-        step=1,
-        key="profile_max_hr",
-    )
-    if st.button("Save Threshold Settings", type="primary", key="profile_save_thresholds"):
+    st.markdown('<div class="threshold-save">', unsafe_allow_html=True)
+    if st.button("Save Threshold Settings", type="primary", key="profile_save_thresholds", use_container_width=True):
         save_user_settings(
             username,
             ftp=ftp,
@@ -146,6 +187,7 @@ def render_thresholds_section(username, settings):
 
         st.session_state["profile_thresholds_saved"] = True
         st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
 
     if st.session_state.pop("profile_thresholds_saved", False):
         st.success("✅ Threshold settings saved!")

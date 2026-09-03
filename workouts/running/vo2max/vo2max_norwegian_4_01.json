@@ -1,0 +1,51 @@
+{
+  "id": "vo2max_norwegian_4_01",
+  "name": "Norwegian 4 01",
+  "category": "VO2max",
+  "subtype": "norwegian_4",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 360,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running with gradual progression."
+    },
+    {
+      "name": "Norwegian interval 1",
+      "duration_seconds": 240,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 360,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running to bring the effort down."
+    }
+  ],
+  "target_if": 0.88,
+  "sport": "Running",
+  "tags": [
+    "vo2max",
+    "norwegian_4",
+    "norwegian_4",
+    "norwegian",
+    "vo2max",
+    "controlled",
+    "running"
+  ],
+  "duration_minutes": 16,
+  "estimated_tss": 18,
+  "target_tss": 18,
+  "interval_count": 1,
+  "interval_duration": 0,
+  "recovery_duration": 0,
+  "sets": 1,
+  "fit_filename": "vo2max/vo2max_norwegian_4_01.fit"
+}

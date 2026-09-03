@@ -16,7 +16,6 @@ class ActivityCache:
 
     def __init__(self, username: str) -> None:
         folder = Path("data") / username
-        folder.mkdir(parents=True, exist_ok=True)
 
         self.cache_file = folder / "activities_cache.csv"
         self.power_cache_file = folder / "power_streams.parquet"

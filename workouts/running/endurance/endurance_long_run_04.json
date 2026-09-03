@@ -14,7 +14,7 @@
     },
     {
       "name": "Long run",
-      "duration_seconds": 6120,
+      "duration_seconds": 6900,
       "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
@@ -23,7 +23,7 @@
     {
       "name": "Cool-down",
       "duration_seconds": 300,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
@@ -39,9 +39,9 @@
     "aerobic",
     "easy"
   ],
-  "duration_minutes": 113,
-  "estimated_tss": 97,
-  "target_tss": 97,
+  "duration_minutes": 126,
+  "estimated_tss": 108,
+  "target_tss": 108,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

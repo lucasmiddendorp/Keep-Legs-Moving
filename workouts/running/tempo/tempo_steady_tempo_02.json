@@ -15,7 +15,7 @@
     {
       "name": "Tempo block 1",
       "duration_seconds": 720,
-      "intensity": 84,
+      "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -31,7 +31,7 @@
     {
       "name": "Tempo block 2",
       "duration_seconds": 720,
-      "intensity": 84,
+      "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +47,7 @@
     {
       "name": "Tempo block 3",
       "duration_seconds": 720,
-      "intensity": 84,
+      "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,7 +63,7 @@
     {
       "name": "Tempo block 4",
       "duration_seconds": 720,
-      "intensity": 84,
+      "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -71,13 +71,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 300,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.8,
+  "target_if": 0.82,
   "sport": "Running",
   "tags": [
     "tempo",
@@ -88,8 +88,8 @@
     "moderate"
   ],
   "duration_minutes": 69,
-  "estimated_tss": 73,
-  "target_tss": 73,
+  "estimated_tss": 76,
+  "target_tss": 76,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

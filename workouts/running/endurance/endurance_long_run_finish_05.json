@@ -14,7 +14,7 @@
     },
     {
       "name": "Long aerobic block",
-      "duration_seconds": 5700,
+      "duration_seconds": 7800,
       "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,7 +39,7 @@
     {
       "name": "Cool-down",
       "duration_seconds": 360,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
@@ -55,9 +55,9 @@
     "aerobic",
     "easy"
   ],
-  "duration_minutes": 133,
-  "estimated_tss": 124,
-  "target_tss": 124,
+  "duration_minutes": 168,
+  "estimated_tss": 154,
+  "target_tss": 154,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

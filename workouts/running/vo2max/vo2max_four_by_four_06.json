@@ -71,13 +71,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 300,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.93,
+  "target_if": 0.92,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -88,8 +88,8 @@
     "hard"
   ],
   "duration_minutes": 35,
-  "estimated_tss": 46,
-  "target_tss": 46,
+  "estimated_tss": 45,
+  "target_tss": 45,
   "interval_count": 4,
   "interval_duration": 0,
   "recovery_duration": 180,

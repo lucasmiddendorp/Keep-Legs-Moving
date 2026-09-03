@@ -171,11 +171,17 @@ class WorkoutSelector:
         workout: Dict,
         category: str,
     ) -> float:
-        """Return minutes spent in the requested training category."""
+        """Return minutes used to match a workout to a category target."""
 
         zone_minutes = cls._get_workout_zone_minutes(workout)
 
         normalized = cls._normalize_category(category)
+
+        if normalized == "endurance":
+            return float(
+                zone_minutes.get("Recovery", 0.0)
+                + zone_minutes.get("Endurance", 0.0)
+            )
 
         aliases = {
             "vo2max": "VO2max",
@@ -208,7 +214,9 @@ class WorkoutSelector:
 
         Selection is based on the workout's declared category,
         while target_min is matched against the actual time spent
-        in the requested training zone.
+        in the requested training zone. Endurance matching includes
+        recovery and endurance minutes, and under-budget workouts are
+        preferred so the requested low-intensity budget is not exceeded.
         """
 
         normalized_category = self._normalize_category(category)
@@ -230,17 +238,28 @@ class WorkoutSelector:
 
         if target_min is not None:
             target_min = float(target_min)
+            workout_minutes = [
+                (
+                    workout,
+                    self._get_workout_quality_minutes(workout, category),
+                )
+                for workout in options
+            ]
+            within_budget = [
+                (workout, minutes)
+                for workout, minutes in workout_minutes
+                if minutes <= target_min
+            ]
+            candidates = within_budget or workout_minutes
 
-            return min(
-                options,
-                key=lambda workout: abs(
-                    self._get_workout_quality_minutes(
-                        workout,
-                        category,
-                    )
-                    - target_min
+            selected_workout, _ = min(
+                candidates,
+                key=lambda candidate: (
+                    abs(candidate[1] - target_min),
+                    -candidate[1],
                 ),
             )
+            return selected_workout
 
         if target_tss is not None:
             target_tss = float(target_tss)

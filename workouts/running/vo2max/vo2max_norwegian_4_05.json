@@ -1,8 +1,8 @@
 {
-  "id": "vo2max_norwegian_5x6_02",
-  "name": "Norwegian 5X6 02",
+  "id": "vo2max_norwegian_4_05",
+  "name": "Norwegian 4 05",
   "category": "VO2max",
-  "subtype": "norwegian_5x6",
+  "subtype": "norwegian_4",
   "steps": [
     {
       "name": "Warm-up",
@@ -14,15 +14,15 @@
     },
     {
       "name": "Norwegian interval 1",
-      "duration_seconds": 360,
-      "intensity": 110,
+      "duration_seconds": 240,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Recovery",
-      "duration_seconds": 120,
+      "duration_seconds": 180,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,15 +30,15 @@
     },
     {
       "name": "Norwegian interval 2",
-      "duration_seconds": 360,
-      "intensity": 110,
+      "duration_seconds": 240,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Recovery",
-      "duration_seconds": 120,
+      "duration_seconds": 180,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
@@ -46,15 +46,15 @@
     },
     {
       "name": "Norwegian interval 3",
-      "duration_seconds": 360,
-      "intensity": 110,
+      "duration_seconds": 240,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Recovery",
-      "duration_seconds": 120,
+      "duration_seconds": 180,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
@@ -62,15 +62,15 @@
     },
     {
       "name": "Norwegian interval 4",
-      "duration_seconds": 360,
-      "intensity": 110,
+      "duration_seconds": 240,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Recovery",
-      "duration_seconds": 120,
+      "duration_seconds": 180,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
@@ -78,38 +78,38 @@
     },
     {
       "name": "Norwegian interval 5",
-      "duration_seconds": 360,
-      "intensity": 110,
+      "duration_seconds": 240,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 300,
-      "intensity": 70,
+      "duration_seconds": 360,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.99,
+  "target_if": 0.97,
   "sport": "Running",
   "tags": [
     "vo2max",
-    "norwegian_5x6",
-    "norwegian_5x6",
+    "norwegian_4",
+    "norwegian_4",
     "norwegian",
     "vo2max",
     "controlled",
     "running"
   ],
-  "duration_minutes": 50,
-  "estimated_tss": 76,
-  "target_tss": 76,
+  "duration_minutes": 45,
+  "estimated_tss": 62,
+  "target_tss": 62,
   "interval_count": 5,
   "interval_duration": 0,
-  "recovery_duration": 120,
+  "recovery_duration": 180,
   "sets": 1,
-  "fit_filename": "vo2max/vo2max_norwegian_5x6_02.fit"
+  "fit_filename": "vo2max/vo2max_norwegian_4_05.fit"
 }

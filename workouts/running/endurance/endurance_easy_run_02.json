@@ -6,7 +6,7 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 720,
+      "duration_seconds": 420,
       "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
@@ -14,22 +14,22 @@
     },
     {
       "name": "Easy running",
-      "duration_seconds": 3300,
-      "intensity": 72,
+      "duration_seconds": 1260,
+      "intensity": 75,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 480,
-      "intensity": 70,
+      "duration_seconds": 300,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.71,
+  "target_if": 0.73,
   "sport": "Running",
   "tags": [
     "endurance",
@@ -39,9 +39,9 @@
     "aerobic",
     "running"
   ],
-  "duration_minutes": 75,
-  "estimated_tss": 64,
-  "target_tss": 64,
+  "duration_minutes": 33,
+  "estimated_tss": 29,
+  "target_tss": 29,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

@@ -15,7 +15,7 @@
     {
       "name": "Progressive tempo 1",
       "duration_seconds": 600,
-      "intensity": 82,
+      "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -31,7 +31,7 @@
     {
       "name": "Progressive tempo 2",
       "duration_seconds": 600,
-      "intensity": 85,
+      "intensity": 90,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +47,7 @@
     {
       "name": "Progressive tempo 3",
       "duration_seconds": 600,
-      "intensity": 88,
+      "intensity": 93,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -55,13 +55,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 300,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.81,
+  "target_if": 0.84,
   "sport": "Running",
   "tags": [
     "tempo",
@@ -72,8 +72,8 @@
     "moderate"
   ],
   "duration_minutes": 45,
-  "estimated_tss": 48,
-  "target_tss": 48,
+  "estimated_tss": 52,
+  "target_tss": 52,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,

@@ -14,8 +14,8 @@
     },
     {
       "name": "Easy running",
-      "duration_seconds": 2340,
-      "intensity": 65,
+      "duration_seconds": 1320,
+      "intensity": 68,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -23,13 +23,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 360,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.66,
+  "target_if": 0.68,
   "sport": "Running",
   "tags": [
     "endurance",
@@ -39,9 +39,9 @@
     "aerobic",
     "running"
   ],
-  "duration_minutes": 50,
-  "estimated_tss": 36,
-  "target_tss": 36,
+  "duration_minutes": 33,
+  "estimated_tss": 25,
+  "target_tss": 25,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

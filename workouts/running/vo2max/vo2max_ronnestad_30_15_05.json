@@ -631,7 +631,7 @@
     {
       "name": "Cool-down",
       "duration_seconds": 360,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
@@ -649,8 +649,8 @@
     "high-intensity"
   ],
   "duration_minutes": 48,
-  "estimated_tss": 66,
-  "target_tss": 66,
+  "estimated_tss": 65,
+  "target_tss": 65,
   "interval_count": 39,
   "interval_duration": 30,
   "recovery_duration": 15,

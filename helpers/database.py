@@ -1,6 +1,8 @@
 import streamlit as st
 import psycopg2
+import numpy as np
 from psycopg2.extras import RealDictCursor, Json
+import math
 
 
 def get_connection():
@@ -135,6 +137,28 @@ def init_database():
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 );
             """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS running_stream_cache (
+                    user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+                    streams JSONB NOT NULL DEFAULT '[]'::jsonb,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS curve_cache (
+                    user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+                    power_curve JSONB NOT NULL DEFAULT '[]'::jsonb,
+                    running_curve JSONB NOT NULL DEFAULT '[]'::jsonb,
+                    best_20_min_power FLOAT,
+                    best_6_min_distance FLOAT,
+                    calculation_version INTEGER NOT NULL DEFAULT 4,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+            cur.execute("""
+                ALTER TABLE curve_cache
+                ADD COLUMN IF NOT EXISTS calculation_version INTEGER NOT NULL DEFAULT 4;
+            """)
         conn.commit()
 
     finally:
@@ -253,10 +277,13 @@ def save_activity_cache(username, activities):
     user_id = get_user_id(username)
     if user_id is None:
         raise ValueError("User does not exist.")
-    records = activities.copy()
+    records = activities.replace([np.inf, -np.inf], np.nan).astype(object)
     records = records.where(records.notna(), None).to_dict("records")
     for record in records:
         for key, value in record.items():
+            if isinstance(value, (float, np.floating)) and not np.isfinite(value):
+                record[key] = None
+                continue
             if hasattr(value, "isoformat"):
                 record[key] = value.isoformat()
     conn = get_connection()
@@ -289,26 +316,60 @@ def load_activity_cache(username):
     finally:
         conn.close()
 
+def clean_json_data(obj):
+    """Convert NaN and Infinity values to None so they are valid JSON."""
+
+    if isinstance(obj, (float, np.floating)):
+        if not np.isfinite(obj):
+            return None
+        return float(obj)
+
+    if isinstance(obj, (np.integer,)):
+        return int(obj)
+
+    if isinstance(obj, dict):
+        return {
+            key: clean_json_data(value)
+            for key, value in obj.items()
+        }
+
+    if isinstance(obj, (list, tuple)):
+        return [
+            clean_json_data(value)
+            for value in obj
+        ]
+
+    return obj
 
 def save_power_stream_cache(username, streams):
     user_id = get_user_id(username)
+
     if user_id is None:
         raise ValueError("User does not exist.")
-    records = streams.copy().where(streams.notna(), None).to_dict("records")
+
+    records = streams.to_dict("records")
+    records = clean_json_data(records)
+
     conn = get_connection()
+
     try:
         with conn.cursor() as cur:
             cur.execute("""
                 INSERT INTO power_stream_cache (user_id, streams, updated_at)
                 VALUES (%s, %s, CURRENT_TIMESTAMP)
-                ON CONFLICT (user_id) DO UPDATE SET
+                ON CONFLICT (user_id)
+                DO UPDATE SET
                     streams = EXCLUDED.streams,
                     updated_at = CURRENT_TIMESTAMP
-            """, (user_id, Json(records)))
+            """, (
+                user_id,
+                Json(records)
+            ))
+
         conn.commit()
+
     finally:
         conn.close()
-
 
 def load_power_stream_cache(username):
     user_id = get_user_id(username)
@@ -320,5 +381,100 @@ def load_power_stream_cache(username):
             cur.execute("SELECT streams FROM power_stream_cache WHERE user_id = %s", (user_id,))
             row = cur.fetchone()
             return row[0] if row else None
+    finally:
+        conn.close()
+
+
+def save_running_stream_cache(username, streams):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
+    records = clean_json_data(streams.to_dict("records"))
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO running_stream_cache (user_id, streams, updated_at)
+                VALUES (%s, %s, CURRENT_TIMESTAMP)
+                ON CONFLICT (user_id) DO UPDATE SET
+                    streams = EXCLUDED.streams,
+                    updated_at = CURRENT_TIMESTAMP
+            """, (user_id, Json(records)))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def load_running_stream_cache(username):
+    user_id = get_user_id(username)
+    if user_id is None:
+        return None
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT streams FROM running_stream_cache WHERE user_id = %s",
+                (user_id,),
+            )
+            row = cur.fetchone()
+            return row[0] if row else None
+    finally:
+        conn.close()
+
+
+def save_curve_cache(username, power_curve, running_curve, best_20_min_power=None, best_6_min_distance=None):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO curve_cache (
+                    user_id, power_curve, running_curve,
+                    best_20_min_power, best_6_min_distance, calculation_version, updated_at
+                )
+                VALUES (%s, %s, %s, %s, %s, 4, CURRENT_TIMESTAMP)
+                ON CONFLICT (user_id) DO UPDATE SET
+                    power_curve = EXCLUDED.power_curve,
+                    running_curve = EXCLUDED.running_curve,
+                    best_20_min_power = EXCLUDED.best_20_min_power,
+                    best_6_min_distance = EXCLUDED.best_6_min_distance,
+                    calculation_version = EXCLUDED.calculation_version,
+                    updated_at = CURRENT_TIMESTAMP
+            """, (
+                user_id,
+                Json(clean_json_data(power_curve)),
+                Json(clean_json_data(running_curve)),
+                best_20_min_power,
+                best_6_min_distance,
+            ))
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def load_curve_cache(username):
+    user_id = get_user_id(username)
+    if user_id is None:
+        return None
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                  SELECT power_curve, running_curve, best_20_min_power,
+                      best_6_min_distance, calculation_version
+                FROM curve_cache WHERE user_id = %s
+            """, (user_id,))
+            row = cur.fetchone()
+            if not row:
+                return None
+            return {
+                "power_curve": row[0] or [],
+                "running_curve": row[1] or [],
+                "best_20_min_power": row[2],
+                "best_6_min_distance": row[3],
+                "calculation_version": row[4],
+            }
     finally:
         conn.close()

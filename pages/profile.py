@@ -7,7 +7,6 @@ apply_global_style()
 inject_card_css()
 inject_profile_css()
 
-st.markdown('<div class="dashboard-title">Profile</div>', unsafe_allow_html=True)
 
 username = st.session_state.get("username", "")
 

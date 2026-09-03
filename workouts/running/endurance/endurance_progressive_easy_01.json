@@ -6,7 +6,7 @@
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 660,
+      "duration_seconds": 360,
       "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
@@ -14,7 +14,7 @@
     },
     {
       "name": "Easy running",
-      "duration_seconds": 1620,
+      "duration_seconds": 960,
       "intensity": 71,
       "duration_type": "Time",
       "repeat": 1,
@@ -22,7 +22,7 @@
     },
     {
       "name": "Progressive finish",
-      "duration_seconds": 1680,
+      "duration_seconds": 1020,
       "intensity": 79,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,8 +30,8 @@
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 540,
-      "intensity": 70,
+      "duration_seconds": 360,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
@@ -47,9 +47,9 @@
     "aerobic",
     "running"
   ],
-  "duration_minutes": 75,
-  "estimated_tss": 68,
-  "target_tss": 68,
+  "duration_minutes": 45,
+  "estimated_tss": 40,
+  "target_tss": 40,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

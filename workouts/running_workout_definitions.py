@@ -88,14 +88,14 @@ def strides(count=4, duration_seconds=20, recovery_seconds=60):
 def generate_running_workouts():
     workouts = []
     easy_families = {
-        "recovery_run": (20, 60),
-        "easy_run": (30, 70),
-        "aerobic_run": (45, 72),
-        "progressive_easy": (45, 74),
+        "recovery_run": (10, 68),
+        "easy_run": (15, 75),
+        "aerobic_run": (30, 75),
+        "progressive_easy": (30, 74),
     }
     for family, (base_minutes, intensity) in easy_families.items():
         for variant in range(1, 7):
-            duration = base_minutes + variant * (5 if family != "recovery_run" else 4)
+            duration = base_minutes + variant * (3 if family != "recovery_run" else 4)
             if family == "progressive_easy":
                 half = duration // 2
                 steps = [
@@ -111,16 +111,16 @@ def generate_running_workouts():
                 family,
                 steps,
                 ["easy", "aerobic", "running"],
-                5 if family == "recovery_run" else 10,
-                5 if family == "recovery_run" else 8,
+                5,
+                5
             ))
 
     long_families = {
         "long_run": (75, 72),
         "progressive_long_run": (90, 72),
         "long_run_finish": (105, 72),
-        "extended_long_run": (120, 70),
-        "ultra_long_run": (180, 68),
+        "extended_long_run": (120, 72),
+        "ultra_long_run": (180, 72),
     }
     for family, (base_minutes, intensity) in long_families.items():
         for variant in range(1, 7):
@@ -155,11 +155,11 @@ def generate_running_workouts():
             ))
 
     tempo_families = {
-        "steady_tempo": (10, 84),
-        "tempo_blocks": (12, 87),
-        "progressive_tempo": (10, 82),
-        "tempo_ladder": (6, 84),
-        "tempo_endurance": (15, 82),
+        "steady_tempo": (10, 87),
+        "tempo_blocks": (12, 90),
+        "progressive_tempo": (10, 87),
+        "tempo_ladder": (6, 87),
+        "tempo_endurance": (15, 85),
     }
     for family, (work_minutes, intensity) in tempo_families.items():
         for variant in range(1, 7):
@@ -226,28 +226,23 @@ def generate_running_workouts():
                 5,
             ))
 
-    norwegian = {
-        "norwegian_4x4": (4, 4, 3, 110),
-        "norwegian_5x6": (5, 6, 2, 110),
-        "norwegian_3x10": (3, 10, 2, 108),
-        "norwegian_4x8": (4, 8, 2, 110),
-        "norwegian_double_threshold": (2, 15, 3, 106),
-        "norwegian_cruise": (5, 8, 1, 108),
-    }
+    norwegian = {"norwegian_4": (1, 4, 3, 115)}
     for family, (reps, work_minutes, recover_minutes, intensity) in norwegian.items():
-        for variant in range(1, 7):
-            count = reps + (variant % 2 if family in {"norwegian_5x6", "norwegian_cruise"} else 0)
+        for variant in range(1, 6):
+            count = variant
             steps = []
+
             for i in range(count):
-                current = intensity + (variant - 1) % 3 if family in {"norwegian_4x4", "norwegian_4x8"} else intensity
                 steps.append(work(
-                    work_minutes + (variant % 2 if family == "norwegian_3x10" else 0),
-                    current,
+                    work_minutes,
+                    intensity,
                     f"Norwegian interval {i + 1}",
                 ))
+
                 if i < count - 1:
                     steps.append(recovery(recover_minutes, 65))
-            category = intensity_to_zone(current)
+
+            category = intensity_to_zone(intensity)
             workouts.append(build_workout(
                 family,
                 variant,
@@ -286,6 +281,26 @@ def generate_running_workouts():
                 family,
                 steps,
                 ["ronnestad", "30-15", "vo2max", "high-intensity"],
+                5,
+                5,
+            ))
+
+    test = {"6_min_run": (360, 120)}
+
+    for family, (duration_seconds, intensity) in test.items():
+        for variant in range(1, 2):
+            steps = [Step("Test Warmup",30,120),
+                recovery(2, 65),
+                Step("6 Minute Running Test",duration_seconds,intensity),
+            ]
+
+            workouts.append(build_workout(
+                family,
+                variant,
+                "TEST",
+                family,
+                steps,
+                ["test", "6-minute", "running", "vo2max"],
                 5,
                 5,
             ))

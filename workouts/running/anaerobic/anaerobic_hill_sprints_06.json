@@ -167,13 +167,13 @@
     {
       "name": "Cool-down",
       "duration_seconds": 300,
-      "intensity": 70,
+      "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.86,
+  "target_if": 0.85,
   "sport": "Running",
   "tags": [
     "anaerobic",
@@ -184,8 +184,8 @@
     "high-intensity"
   ],
   "duration_minutes": 33,
-  "estimated_tss": 34,
-  "target_tss": 34,
+  "estimated_tss": 33,
+  "target_tss": 33,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,
