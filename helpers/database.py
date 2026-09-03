@@ -156,6 +156,40 @@ def init_database():
                 );
             """)
             cur.execute("""
+                CREATE TABLE IF NOT EXISTS power_efforts (
+                    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+                    activity_id BIGINT NOT NULL,
+                    duration_seconds INTEGER NOT NULL,
+                    best_power FLOAT NOT NULL,
+                    PRIMARY KEY (user_id, activity_id, duration_seconds)
+                );
+            """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS running_efforts (
+                    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+                    activity_id BIGINT NOT NULL,
+                    distance_meters FLOAT NOT NULL,
+                    best_speed FLOAT NOT NULL,
+                    PRIMARY KEY (user_id, activity_id, distance_meters)
+                );
+            """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS training_test_status (
+                    user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+                    running_test_done BOOLEAN NOT NULL DEFAULT FALSE,
+                    cycling_test_done BOOLEAN NOT NULL DEFAULT FALSE,
+                    running_test_answered BOOLEAN NOT NULL DEFAULT FALSE,
+                    cycling_test_answered BOOLEAN NOT NULL DEFAULT FALSE,
+                    running_goal VARCHAR(100),
+                    cycling_goal VARCHAR(100),
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+            cur.execute("ALTER TABLE training_test_status ADD COLUMN IF NOT EXISTS running_test_answered BOOLEAN NOT NULL DEFAULT FALSE")
+            cur.execute("ALTER TABLE training_test_status ADD COLUMN IF NOT EXISTS cycling_test_answered BOOLEAN NOT NULL DEFAULT FALSE")
+            cur.execute("ALTER TABLE training_test_status ADD COLUMN IF NOT EXISTS running_goal VARCHAR(100)")
+            cur.execute("ALTER TABLE training_test_status ADD COLUMN IF NOT EXISTS cycling_goal VARCHAR(100)")
+            cur.execute("""
                 ALTER TABLE curve_cache
                 ADD COLUMN IF NOT EXISTS calculation_version INTEGER NOT NULL DEFAULT 4;
             """)
@@ -476,5 +510,139 @@ def load_curve_cache(username):
                 "best_6_min_distance": row[3],
                 "calculation_version": row[4],
             }
+    finally:
+        conn.close()
+
+
+def save_power_efforts(username, efforts):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.executemany("""
+                INSERT INTO power_efforts
+                    (user_id, activity_id, duration_seconds, best_power)
+                VALUES (%s, %s, %s, %s)
+                ON CONFLICT (user_id, activity_id, duration_seconds)
+                DO UPDATE SET best_power = EXCLUDED.best_power
+            """, [
+                (user_id, int(row["activity_id"]), int(row["duration"]), float(row["value"]))
+                for row in efforts
+            ])
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def load_power_efforts(username):
+    user_id = get_user_id(username)
+    if user_id is None:
+        return []
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT activity_id, duration_seconds, best_power
+                FROM power_efforts WHERE user_id = %s
+            """, (user_id,))
+            return [
+                {"activity_id": row[0], "duration": row[1], "value": row[2]}
+                for row in cur.fetchall()
+            ]
+    finally:
+        conn.close()
+
+
+def save_running_efforts(username, efforts):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.executemany("""
+                INSERT INTO running_efforts
+                    (user_id, activity_id, distance_meters, best_speed)
+                VALUES (%s, %s, %s, %s)
+                ON CONFLICT (user_id, activity_id, distance_meters)
+                DO UPDATE SET best_speed = EXCLUDED.best_speed
+            """, [
+                (user_id, int(row["activity_id"]), float(row["distance"]), float(row["speed"]))
+                for row in efforts
+            ])
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def load_running_efforts(username):
+    user_id = get_user_id(username)
+    if user_id is None:
+        return []
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT activity_id, distance_meters, best_speed
+                FROM running_efforts WHERE user_id = %s
+            """, (user_id,))
+            return [
+                {"activity_id": row[0], "distance": row[1], "speed": row[2]}
+                for row in cur.fetchall()
+            ]
+    finally:
+        conn.close()
+
+
+def load_training_test_status(username, sport, goal):
+    user_id = get_user_id(username)
+    if user_id is None:
+        return {"answered": False, "done": False}
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT running_test_done, cycling_test_done,
+                       running_test_answered, cycling_test_answered,
+                       running_goal, cycling_goal
+                FROM training_test_status WHERE user_id = %s
+            """, (user_id,))
+            row = cur.fetchone()
+            if not row:
+                return {"answered": False, "done": False}
+            index = 0 if sport == "Running" else 1
+            answered_index = 2 if sport == "Running" else 3
+            goal_index = 4 if sport == "Running" else 5
+            matches_goal = row[goal_index] == goal
+            return {
+                "answered": bool(row[answered_index]) and matches_goal,
+                "done": bool(row[index]) and matches_goal,
+            }
+    finally:
+        conn.close()
+
+
+def save_training_test_status(username, sport, goal, done):
+    user_id = get_user_id(username)
+    if user_id is None:
+        raise ValueError("User does not exist.")
+    column = "running_test_done" if sport == "Running" else "cycling_test_done"
+    answered_column = "running_test_answered" if sport == "Running" else "cycling_test_answered"
+    goal_column = "running_goal" if sport == "Running" else "cycling_goal"
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(f"""
+                INSERT INTO training_test_status (user_id, {column}, {answered_column}, {goal_column}, updated_at)
+                VALUES (%s, %s, TRUE, %s, CURRENT_TIMESTAMP)
+                ON CONFLICT (user_id) DO UPDATE SET
+                    {column} = EXCLUDED.{column},
+                    {answered_column} = TRUE,
+                    {goal_column} = EXCLUDED.{goal_column},
+                    updated_at = CURRENT_TIMESTAMP
+            """, (user_id, bool(done), goal))
+        conn.commit()
     finally:
         conn.close()

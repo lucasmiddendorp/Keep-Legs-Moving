@@ -73,10 +73,23 @@ def best_20_min_cycling(records: Iterable[dict[str, Any]]) -> Optional[float]:
     )
 
 def build_power_curve(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
-    result = []
-    for duration in POWER_CURVE_DURATIONS:
-        best = None
-        for activity in _activity_frames(records):
+    records = list(records or [])
+    if records and "value" in records[0] and "duration" in records[0]:
+        efforts = records
+    else:
+        efforts = build_power_efforts(records)
+    return [
+        {"duration": duration, "value": max(row["value"] for row in efforts if row["duration"] == duration)}
+        for duration in POWER_CURVE_DURATIONS
+        if any(row["duration"] == duration for row in efforts)
+    ]
+
+
+def build_power_efforts(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    result = {}
+    for activity in _activity_frames(records):
+        activity_id = int(activity["activity_id"].iloc[0])
+        for duration in POWER_CURVE_DURATIONS:
             if "time" not in activity.columns or "watts" not in activity.columns:
                 continue
             frame = pd.DataFrame({
@@ -101,18 +114,32 @@ def build_power_curve(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]
                 values = np.interp(samples, segment["time"], segment["watts"])
                 averages = np.convolve(values, np.ones(duration), mode="valid") / duration
                 value = float(np.max(averages))
-                if best is None or value > best:
-                    best = value
-        if best is not None:
-            result.append({"duration": duration, "value": best})
-    return result
+                key = (activity_id, duration)
+                result[key] = max(result.get(key, 0.0), value)
+    return [
+        {"activity_id": activity_id, "duration": duration, "value": value}
+        for (activity_id, duration), value in result.items()
+    ]
 
 
 def build_running_curve(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    records = list(records or [])
+    if records and "speed" in records[0] and "distance" in records[0]:
+        efforts = records
+    else:
+        efforts = build_running_efforts(records)
+    return [
+        {"distance": distance, "speed": max(row["speed"] for row in efforts if row["distance"] == distance)}
+        for distance in RUNNING_CURVE_DISTANCES
+        if any(row["distance"] == distance for row in efforts)
+    ]
+
+
+def build_running_efforts(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
     result = []
-    for distance_target in RUNNING_CURVE_DISTANCES:
-        best_speed = None
-        for activity in _activity_frames(records):
+    for activity in _activity_frames(records):
+        activity_id = int(activity["activity_id"].iloc[0])
+        for distance_target in RUNNING_CURVE_DISTANCES:
             if "time" not in activity.columns or "distance" not in activity.columns:
                 continue
             frame = pd.DataFrame({
@@ -130,7 +157,5 @@ def build_running_curve(records: Iterable[dict[str, Any]]) -> list[dict[str, Any
             valid = duration > 0
             if valid.any():
                 value = float(np.max(distance_target / duration[valid]))
-                best_speed = max(best_speed or 0.0, value)
-        if best_speed:
-            result.append({"distance": distance_target, "speed": best_speed})
+                result.append({"activity_id": activity_id, "distance": distance_target, "speed": value})
     return result

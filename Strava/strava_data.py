@@ -13,12 +13,18 @@ from helpers.database import (
     save_running_stream_cache,
     load_curve_cache,
     save_curve_cache,
+    load_power_efforts,
+    save_power_efforts,
+    load_running_efforts,
+    save_running_efforts,
 )
 from Strava.strava_user import get_user_settings
 from helpers.thresholds import (
     CURVE_CACHE_VERSION,
     build_power_curve,
     build_running_curve,
+    build_power_efforts,
+    build_running_efforts,
     best_20_min_cycling,
     best_6_min_running,
 )
@@ -78,8 +84,6 @@ def activity_to_dict(activity):
         "moving_time":int(activity.moving_time) if activity.moving_time else None,
         "total_elevation_gain":float(activity.total_elevation_gain) if activity.total_elevation_gain else None,
         "average_speed":float(activity.average_speed) if activity.average_speed else None,
-        "average_heartrate":float(activity.average_heartrate) if getattr(activity,"average_heartrate",None) else None,
-        "max_heartrate":float(activity.max_heartrate) if getattr(activity,"max_heartrate",None) else None,
         "average_watts":float(activity.average_watts) if getattr(activity,"average_watts",None) else None,
         "weighted_average_watts":float(activity.weighted_average_watts) if getattr(activity,"weighted_average_watts",None) else None,
         "trainer":activity.trainer,
@@ -176,7 +180,7 @@ def update_activity_cache(username,access_token):
 
     return df,new_df
 
-def fetch_power_stream(access_token,activity_id,activity_type=None):
+def fetch_power_stream(access_token,activity_id,activity_type=None,has_power=False):
     client=get_user_client(access_token)
     try:
         is_running = str(activity_type or "").lower() in {
@@ -185,7 +189,7 @@ def fetch_power_stream(access_token,activity_id,activity_type=None):
             "treadmill",
         }
         stream_types=["time","moving","heartrate","velocity_smooth","distance"]
-        if not is_running:
+        if not is_running and has_power:
             stream_types.append("watts")
         streams=client.get_activity_streams(
             activity_id,
@@ -230,7 +234,12 @@ def fetch_power_stream(access_token,activity_id,activity_type=None):
             return None
         df["activity_id"]=activity_id
         df["timepoint"]=df.index
-        return df[["activity_id","timepoint","time","moving","watts","heartrate","velocity_smooth","distance"]]
+        columns=["activity_id","timepoint","time","moving","heartrate"]
+        if not is_running and has_power:
+            columns.insert(4,"watts")
+        if is_running:
+            columns.extend(["velocity_smooth","distance"])
+        return df[columns]
     except Exception as e:
         print("Power stream error",activity_id,e)
         return None
@@ -344,7 +353,12 @@ def update_running_stream_cache(username,access_token,activities):
             subset=["activity_id","timepoint"],keep="last"
         )
         save_running_stream_cache(username,stream_df)
-    return stream_df, bool(streams)
+    new_streams=(
+        pd.concat(streams,ignore_index=True)
+        if streams
+        else stream_df.iloc[0:0].copy()
+    )
+    return new_streams, bool(streams)
 
 def update_power_stream_cache(username,access_token,activities):
     stored_streams=load_power_stream_cache(username)
@@ -358,6 +372,11 @@ def update_power_stream_cache(username,access_token,activities):
     else:
         cached_ids=set()
 
+    cache_changed=False
+    if "watts" in power_df and not power_df["watts"].notna().any():
+        power_df=power_df.drop(columns=["watts"])
+        cache_changed=True
+
     streams=[]
     for _,row in activities.iterrows():
         activity_id=int(row["id"])
@@ -367,7 +386,16 @@ def update_power_stream_cache(username,access_token,activities):
 
         print("DEBUG: fetching streams for activity:",activity_id,activity_type)
 
-        stream=fetch_power_stream(access_token,activity_id,row.get("type"))
+        has_power=bool(
+            pd.notna(row.get("weighted_average_watts"))
+            or pd.notna(row.get("average_watts"))
+        )
+        stream=fetch_power_stream(
+            access_token,
+            activity_id,
+            row.get("type"),
+            has_power=has_power,
+        )
         if stream is not None:
             stream=stream.drop(columns=["velocity_smooth","distance"],errors="ignore")
 
@@ -376,7 +404,7 @@ def update_power_stream_cache(username,access_token,activities):
                 "DEBUG: fetched",
                 len(stream),
                 "rows | watts:",
-                stream["watts"].notna().sum(),
+                stream["watts"].notna().sum() if "watts" in stream else 0,
             )
             streams.append(stream)
 
@@ -397,7 +425,6 @@ def update_power_stream_cache(username,access_token,activities):
             "timepoint",
             "time",
             "moving",
-            "watts",
             "heartrate",
             "velocity_smooth",
             "distance",
@@ -405,9 +432,18 @@ def update_power_stream_cache(username,access_token,activities):
             if column not in power_df.columns:
                 power_df[column]=np.nan
 
+        if "watts" in power_df and not power_df["watts"].notna().any():
+            power_df=power_df.drop(columns=["watts"])
+            cache_changed=True
+
         save_power_stream_cache(username,power_df)
 
-    return power_df, bool(streams)
+    new_streams=(
+        pd.concat(streams,ignore_index=True)
+        if streams
+        else power_df.iloc[0:0].copy()
+    )
+    return new_streams, bool(streams)
 
 def update_hr_zones_from_streams(username,activities,max_hr,threshold_pace=5.0):
     power_streams=load_power_stream_cache(username) or []
@@ -524,12 +560,22 @@ def update_strava_data(username,access_token):
                 f"{len(activities)} activities..."
             )
 
-            _, running_changed=update_running_stream_cache(username,access_token,activities)
-            _, power_changed=update_power_stream_cache(
+            running_streams,running_changed=update_running_stream_cache(username,access_token,activities)
+            power_streams,power_changed=update_power_stream_cache(
                 username,
                 access_token,
                 activities
             )
+            if running_changed:
+                save_running_efforts(
+                    username,
+                    build_running_efforts(running_streams),
+                )
+            if power_changed:
+                save_power_efforts(
+                    username,
+                    build_power_efforts(power_streams),
+                )
             curve_cache=load_curve_cache(username)
             if (
                 running_changed
@@ -537,14 +583,22 @@ def update_strava_data(username,access_token):
                 or curve_cache is None
                 or curve_cache.get("calculation_version") != CURVE_CACHE_VERSION
             ):
-                running_records=load_running_stream_cache(username) or []
-                power_records=load_power_stream_cache(username) or []
+                power_efforts=load_power_efforts(username)
+                running_efforts=load_running_efforts(username)
+                if not power_efforts:
+                    power_records=load_power_stream_cache(username) or []
+                    power_efforts=build_power_efforts(power_records)
+                    save_power_efforts(username,power_efforts)
+                if not running_efforts:
+                    running_records=load_running_stream_cache(username) or []
+                    running_efforts=build_running_efforts(running_records)
+                    save_running_efforts(username,running_efforts)
                 save_curve_cache(
                     username,
-                    build_power_curve(power_records),
-                    build_running_curve(running_records),
-                    best_20_min_cycling(power_records),
-                    best_6_min_running(running_records),
+                    build_power_curve(power_efforts),
+                    build_running_curve(running_efforts),
+                    best_20_min_cycling(power_efforts),
+                    best_6_min_running(running_efforts),
                 )
 
             print("[2/7] Activity streams updated successfully.")

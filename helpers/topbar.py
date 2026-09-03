@@ -14,11 +14,11 @@ def render_topbar():
            TOP BAR
         ===================================================== */
 
-        .klm-topbar-wrapper {
-            width:100%;
-            padding: 4px 0 18px 0;
-            margin-bottom:20px;
-            border-bottom:1px solid #e8ebee;
+        .klm-topbar-wrapper { 
+            width: 100%;
+            padding: 0;
+            margin: 0 0 8px 0;
+            border-bottom: 1px solid #e8ebee;
         }
 
         /* =====================================================

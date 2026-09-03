@@ -5,7 +5,7 @@ from helpers.database import get_user, create_user
 
 logo_col_left, logo_col, logo_col_right = st.columns([1, 2, 1])
 with logo_col:
-    st.image(Path(__file__).resolve().parent.parent / "logo.png", width=150)
+    st.image(Path(__file__).resolve().parent.parent / "logo_horizontal.png", width=3000)
 
 auth_status = st.session_state.get("authentication_status", None)
 

@@ -12,7 +12,7 @@ from helpers.training_plan_functions import DAYS,CATEGORY_COLORS,load_workouts,c
 from helpers.training_page_functions import RECOVERY_COLOR,empty_zones,get_zone_minutes_from_steps,get_completed_week_zones,get_workout_duration,get_workout_if,get_workout_zone_minutes,format_total_time,format_minutes,clean_activity_type,render_small_progress_circle,render_clickable_workout_card,render_static_day_card,render_week_summary,render_full_week,zone_color
 from Strava.strava_user import get_training_goal,get_user_settings,save_user_settings
 from helpers.availability import load_availability
-from helpers.database import load_training_plan,save_training_plan
+from helpers.database import load_training_plan,save_training_plan,load_training_test_status,save_training_test_status
 from helpers.database import load_activity_cache
 from training_planner import TrainingPlanBuilder
 
@@ -43,6 +43,37 @@ goal=str(training_goal["name"]).strip().lower().replace(" ","_").replace("-","_"
 running_goals={"5k","10k","half_marathon","marathon"}
 is_running_plan=goal in running_goals
 sport=goal_sport if goal_sport else ("Running" if is_running_plan else "Cycling")
+
+test_status=load_training_test_status(username,sport,goal)
+test_done=test_status["done"]
+test_answered=test_status["answered"]
+test_question=(
+    "Have you done a 6-minute running test?"
+    if sport == "Running"
+    else "Have you done a 20-minute FTP test?"
+)
+test_answer=st.session_state.get(f"training_test_answer_{sport}_{goal}")
+if not test_answered:
+    with st.container(border=True):
+        prompt_col, yes_col, no_col = st.columns([6, 1, 1], vertical_alignment="center")
+        with prompt_col:
+            st.markdown(
+                f'<div style="font-size:13px;font-weight:650;color:#17212b;">Time for a test <span style="font-size:12px;font-weight:400;color:#7a8792;margin-left:8px;">{test_question}</span></div>',
+                unsafe_allow_html=True,
+            )
+        with yes_col:
+            yes_pressed=st.button("Yes",key=f"training_test_yes_{sport}",use_container_width=True)
+        with no_col:
+            no_pressed=st.button("No",key=f"training_test_no_{sport}",use_container_width=True)
+        if yes_pressed:
+            save_training_test_status(username,sport,goal,True)
+            st.session_state.pop("training_plan_horizon",None)
+            st.session_state.pop("training_plan_signature",None)
+            st.rerun()
+        if no_pressed:
+            save_training_test_status(username,sport,goal,False)
+            st.session_state[f"training_test_answer_{sport}_{goal}"]="No"
+            test_answer="No"
 
 goal_labels={"general_fitness":"General Fitness","gran_fondo":"Gran Fondo","criterium":"Criterium","5k":"5K","10k":"10K","half_marathon":"Half Marathon","marathon":"Marathon"}
 goal_label=goal_labels.get(goal,str(goal).replace("_"," ").title())
@@ -103,6 +134,43 @@ planner_version=hashlib.sha256(planner_sources).hexdigest()
 
 plan_signature=repr((planner_version,today.isoformat(),goal,sport,goal_date,training_goal.get("event_distance_km"),training_goal.get("event_climb_m"),training_goal.get("event_type"),planning_settings.get("ftp"),planning_settings.get("athlete_level"),planning_settings.get("training_progression"),sessions_per_week,completed_session_dates,completed_activity_signature,sorted((day,data.get("hours"),data.get("available")) for day,data in weekly_availability.items() if isinstance(data,dict)),repr(athlete_state)))
 
+
+def threshold_test_workout():
+    test_subtype = "6_min_run" if sport == "Running" else "ftp_test"
+    return next(
+        (
+            workout
+            for workout in workouts
+            if workout.get("subtype") == test_subtype
+        ),
+        None,
+    )
+
+
+def replace_next_threshold_test(plan):
+    if test_done or test_answer != "No":
+        return False
+    test_workout=threshold_test_workout()
+    if not test_workout:
+        return False
+    if any(
+        (item.get("workout") or {}).get("id") == test_workout.get("id")
+        for item in plan
+    ):
+        return False
+    for item in plan:
+        if (
+            item.get("category") == "VO2max"
+            and str(item.get("date", "")) >= today.isoformat()
+        ):
+            item["category"]="Testing"
+            item["target_tss"]=test_workout.get("target_tss",0)
+            item["actual_tss"]=test_workout.get("target_tss",0)
+            item["workout"]=test_workout
+            item["rest"]=False
+            return True
+    return False
+
 if "training_plan_horizon" not in st.session_state:
     st.session_state.training_plan_horizon=load_training_plan(username) or []
 
@@ -114,10 +182,14 @@ plan_needs_update=not stored_plan or st.session_state.get("training_plan_signatu
 if plan_needs_update:
     settings=planning_settings
     st.session_state.training_plan_horizon=planner.build_long_term_plan(baseline_tss=weekly_tss,progression=float(settings.get("training_progression",8) or 8),start_date=timeline_start,goal_date=goal_date,sessions_per_week=sessions_per_week,completed_session_dates=completed_session_dates)
+    replace_next_threshold_test(st.session_state.training_plan_horizon)
     save_training_plan(username,st.session_state.training_plan_horizon)
     st.session_state.training_plan_signature=plan_signature
 
 training_plan=st.session_state.training_plan_horizon
+
+if replace_next_threshold_test(training_plan):
+    save_training_plan(username,training_plan)
 
 if not training_plan:
     st.info("Set weekly availability to create your training plan.")
