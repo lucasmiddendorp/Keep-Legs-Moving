@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from stravalib.client import Client
 import streamlit as st
+from helpers.debug import debug_error, debug_log, show_debug_log, clear_debug_log
 from helpers.database import (
     load_activity_cache,
     load_power_stream_cache,
