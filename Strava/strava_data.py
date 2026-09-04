@@ -597,7 +597,7 @@ def update_strava_data(username, access_token):
             # -----------------------------------------------------
             debug_log("Checking curve cache...")
             curve_cache = load_curve_cache(username)
-            debug_log("Curve cache: " + ("exists" if curve_cache else "does not exist"))
+            debug_log("Curve cache: " + ("exists" if curve_cache is not None else "does not exist"))
 
             if running_changed or power_changed or curve_cache is None or curve_cache.get("calculation_version") != CURVE_CACHE_VERSION:
                 debug_log("Rebuilding performance curves...")
@@ -606,7 +606,7 @@ def update_strava_data(username, access_token):
                 debug_log(f"Existing power efforts: {len(power_efforts)}")
                 debug_log(f"Existing running efforts: {len(running_efforts)}")
 
-                if not power_efforts:
+                if not _has_records(power_efforts):
                     debug_log("Building power efforts from cached streams...")
                     power_records = load_power_stream_cache(username)
                     power_records = power_records if _has_records(power_records) else []
@@ -615,7 +615,7 @@ def update_strava_data(username, access_token):
                     save_power_efforts(username, power_efforts)
                     debug_log(f"✅ Power efforts saved: {len(power_efforts)}")
 
-                if not running_efforts:
+                if not _has_records(running_efforts):
                     debug_log("Building running efforts from cached streams...")
                     running_records = load_running_stream_cache(username)
                     running_records = running_records if _has_records(running_records) else []
