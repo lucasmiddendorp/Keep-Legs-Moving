@@ -332,17 +332,19 @@ def calculate_pace_zones(stream_df,threshold_pace):
 
 def update_running_stream_cache(username,access_token,activities):
     stored_streams=load_running_stream_cache(username)
-    stream_df=pd.DataFrame(stored_streams or [])
+    if isinstance(stored_streams,pd.DataFrame):
+        stream_df=stored_streams.copy()
+    else:
+        stream_df=pd.DataFrame(stored_streams if stored_streams is not None else [])
     cached_ids=set()
-
     if not stream_df.empty and "activity_id" in stream_df.columns and "velocity_smooth" in stream_df.columns:
         for activity_id,group in stream_df.groupby("activity_id"):
             velocity=pd.to_numeric(group["velocity_smooth"],errors="coerce")
             if velocity.notna().any():
                 cached_ids.add(int(activity_id))
-
-    running_activities=activities[activities["type"].astype(str).str.contains("Run|TrailRun|Treadmill",case=False,regex=True)]
-
+    running_activities=activities[
+        activities["type"].astype(str).str.contains("Run|TrailRun|Treadmill",case=False,regex=True)
+    ]
     streams=[]
     for _,row in running_activities.iterrows():
         activity_id=int(row["id"])
@@ -351,12 +353,10 @@ def update_running_stream_cache(username,access_token,activities):
         stream=fetch_power_stream(access_token,activity_id,row.get("type"))
         if stream is not None:
             streams.append(stream.drop(columns=["watts"],errors="ignore"))
-
     if streams:
         stream_df=pd.concat([stream_df,*streams],ignore_index=True)
         stream_df=stream_df.drop_duplicates(subset=["activity_id","timepoint"],keep="last")
         save_running_stream_cache(username,stream_df)
-
     new_streams=(
         pd.concat(streams,ignore_index=True)
         if streams
