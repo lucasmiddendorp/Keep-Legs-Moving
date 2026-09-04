@@ -12,7 +12,12 @@ CURVE_CACHE_VERSION = 4
 
 
 def _activity_frames(records: Iterable[dict[str, Any]]) -> Iterable[pd.DataFrame]:
-    frame = pd.DataFrame(records or [])
+    if records is None:
+        frame = pd.DataFrame()
+    elif isinstance(records, pd.DataFrame):
+        frame = records
+    else:
+        frame = pd.DataFrame(records)
     if frame.empty or "activity_id" not in frame.columns:
         return []
     return (activity for _, activity in frame.groupby("activity_id", sort=False))
@@ -73,7 +78,12 @@ def best_20_min_cycling(records: Iterable[dict[str, Any]]) -> Optional[float]:
     )
 
 def build_power_curve(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
-    records = list(records or [])
+    if records is None:
+        records = []
+    elif isinstance(records, pd.DataFrame):
+        records = records.to_dict("records")
+    else:
+        records = list(records)
     if records and "value" in records[0] and "duration" in records[0]:
         efforts = records
     else:
@@ -123,21 +133,37 @@ def build_power_efforts(records: Iterable[dict[str, Any]]) -> list[dict[str, Any
 
 
 def build_running_curve(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
-    records = list(records or [])
+    if records is None:
+        records = []
+    elif isinstance(records, pd.DataFrame):
+        records = records.to_dict("records")
+    else:
+        records = list(records)
     if records and "speed" in records[0] and "distance" in records[0]:
         efforts = records
     else:
         efforts = build_running_efforts(records)
-    return [
+    curve = [
         {"distance": distance, "speed": max(row["speed"] for row in efforts if row["distance"] == distance)}
         for distance in RUNNING_CURVE_DISTANCES
         if any(row["distance"] == distance for row in efforts)
     ]
+    print(
+        "Running curve debug:",
+        "input_records=",len(records),
+        "efforts=",len(efforts),
+        "distances=",[point["distance"] for point in curve],
+    )
+    return curve
 
 
 def build_running_efforts(records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
     result = []
+    activity_count = 0
+    valid_activity_count = 0
+    maximum_distances = []
     for activity in _activity_frames(records):
+        activity_count += 1
         activity_id = int(activity["activity_id"].iloc[0])
         for distance_target in RUNNING_CURVE_DISTANCES:
             if "time" not in activity.columns or "distance" not in activity.columns:
@@ -148,6 +174,9 @@ def build_running_efforts(records: Iterable[dict[str, Any]]) -> list[dict[str, A
             }).dropna()
             if frame.empty:
                 continue
+            if distance_target == RUNNING_CURVE_DISTANCES[0]:
+                valid_activity_count += 1
+                maximum_distances.append(float(frame["distance"].max() - frame["distance"].min()))
             frame = frame.sort_values("distance").drop_duplicates("distance")
             if frame["distance"].iloc[-1] - frame["distance"].iloc[0] < distance_target:
                 continue
@@ -158,4 +187,11 @@ def build_running_efforts(records: Iterable[dict[str, Any]]) -> list[dict[str, A
             if valid.any():
                 value = float(np.max(distance_target / duration[valid]))
                 result.append({"activity_id": activity_id, "distance": distance_target, "speed": value})
+    print(
+        "Running efforts debug:",
+        "activities=",activity_count,
+        "valid_activities=",valid_activity_count,
+        "max_distances=",maximum_distances[:10],
+        "efforts=",len(result),
+    )
     return result

@@ -335,13 +335,13 @@ def save_activity_cache(username, activities):
         conn.close()
 
 def load_activity_cache(username):
-    st.write("DEBUG username:", repr(username))
+    print("DEBUG username:", repr(username))
 
     user_id = get_user_id(username)
-    st.write("DEBUG user_id:", user_id)
+    print("DEBUG user_id:", user_id)
 
     if user_id is None:
-        st.error("DEBUG: user_id is None")
+        print("DEBUG: user_id is None")
         return None
 
     conn = get_connection()
@@ -359,10 +359,10 @@ def load_activity_cache(username):
 
             row = cur.fetchone()
 
-            st.write("DEBUG activity_cache row:", row)
+            print("DEBUG activity_cache row:", row)
 
             if not row:
-                st.error("DEBUG: No activity_cache row found")
+                print("DEBUG: No activity_cache row found")
                 return None
 
             # Now actually retrieve it
@@ -377,9 +377,9 @@ def load_activity_cache(username):
 
             activities = cur.fetchone()[0]
 
-            st.write(
+            print(
                 "DEBUG activities returned:",
-                len(activities) if activities else 0
+                len(activities) if activities is not None else 0
             )
 
             return activities
@@ -497,6 +497,12 @@ def save_curve_cache(username, power_curve, running_curve, best_20_min_power=Non
     user_id = get_user_id(username)
     if user_id is None:
         raise ValueError("User does not exist.")
+    print(
+        "Saving curve cache:",
+        "power_points=",len(power_curve),
+        "running_points=",len(running_curve),
+        "running_distances=",[point.get("distance") for point in running_curve],
+    )
     conn = get_connection()
     try:
         with conn.cursor() as cur:
@@ -539,7 +545,14 @@ def load_curve_cache(username):
             """, (user_id,))
             row = cur.fetchone()
             if not row:
+                print("Curve cache: no row found")
                 return None
+            print(
+                "Loaded curve cache:",
+                "power_points=",len(row[0] or []),
+                "running_points=",len(row[1] or []),
+                "running_distances=",[point.get("distance") for point in (row[1] or [])],
+            )
             return {
                 "power_curve": row[0] or [],
                 "running_curve": row[1] or [],

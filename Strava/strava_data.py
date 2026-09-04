@@ -193,65 +193,147 @@ def update_activity_cache(username,access_token):
 def fetch_power_stream(access_token,activity_id,activity_type=None,has_power=False):
     client=get_user_client(access_token)
     try:
-        is_running = str(activity_type or "").lower() in {
-            "run",
-            "trailrun",
-            "treadmill",
-        }
-        stream_types=["time","moving","heartrate","velocity_smooth","distance"]
+        activity_type_str=str(activity_type or "").strip().lower()
+
+        is_running=(
+            "run" in activity_type_str
+            or "treadmill" in activity_type_str
+        )
+
+        stream_types=[
+            "time",
+            "moving",
+            "heartrate",
+            "velocity_smooth",
+            "distance",
+        ]
+
         if not is_running and has_power:
             stream_types.append("watts")
+
         streams=client.get_activity_streams(
             activity_id,
             types=stream_types,
             resolution="high",
             series_type="time"
         )
+
         data={}
-        for key in ["time","moving","watts","heartrate","velocity_smooth","distance"]:
+
+        for key in [
+            "time",
+            "moving",
+            "watts",
+            "heartrate",
+            "velocity_smooth",
+            "distance",
+        ]:
             stream=streams.get(key)
             data[key]=stream.data if stream else []
+
         velocity_values=pd.to_numeric(
-            data["velocity_smooth"],errors="coerce"
+            data["velocity_smooth"],
+            errors="coerce"
         )
+
         if not np.isfinite(velocity_values).any():
             velocity_stream=streams.get("velocity")
             data["velocity_smooth"]=(
-                velocity_stream.data if velocity_stream else []
+                velocity_stream.data
+                if velocity_stream
+                else []
             )
-        max_len=max(len(x) for x in data.values())
-        for key in data:
-            data[key]+= [np.nan]*(max_len-len(data[key]))
-        velocity_values=pd.to_numeric(
-            data["velocity_smooth"],errors="coerce"
+
+        max_len=max(
+            len(values)
+            for values in data.values()
         )
-        if (not np.isfinite(velocity_values).any()
-                and data["distance"] and data["time"]):
+
+        for key in data:
+            data[key]+=(
+                [np.nan] * (max_len-len(data[key]))
+            )
+
+        velocity_values=pd.to_numeric(
+            data["velocity_smooth"],
+            errors="coerce"
+        )
+
+        if (
+            not np.isfinite(velocity_values).any()
+            and len(data["distance"]) > 0
+            and len(data["time"]) > 0
+        ):
             distance=pd.Series(
-                pd.to_numeric(data["distance"],errors="coerce")
+                pd.to_numeric(
+                    data["distance"],
+                    errors="coerce"
+                )
             )
+
             elapsed=pd.Series(
-                pd.to_numeric(data["time"],errors="coerce")
+                pd.to_numeric(
+                    data["time"],
+                    errors="coerce"
+                )
             )
+
             distance_delta=distance.diff()
             elapsed_delta=elapsed.diff()
-            derived_speed=distance_delta.div(elapsed_delta.where(elapsed_delta>0))
+
+            derived_speed=distance_delta.div(
+                elapsed_delta.where(
+                    elapsed_delta>0
+                )
+            )
+
             if len(derived_speed)>1:
                 derived_speed.iloc[0]=derived_speed.iloc[1]
+
             data["velocity_smooth"]=derived_speed.tolist()
+
         df=pd.DataFrame(data)
+
         if df.empty:
             return None
+
         df["activity_id"]=activity_id
         df["timepoint"]=df.index
-        columns=["activity_id","timepoint","time","moving","heartrate"]
-        if not is_running and has_power:
-            columns.insert(4,"watts")
+
         if is_running:
-            columns.extend(["velocity_smooth","distance"])
+            columns=[
+                "activity_id",
+                "timepoint",
+                "time",
+                "moving",
+                "heartrate",
+                "velocity_smooth",
+                "distance",
+            ]
+        else:
+            columns=[
+                "activity_id",
+                "timepoint",
+                "time",
+                "moving",
+                "heartrate",
+            ]
+
+            if has_power:
+                columns.insert(4,"watts")
+
+        for column in columns:
+            if column not in df.columns:
+                df[column]=np.nan
+
         return df[columns]
+
     except Exception as e:
-        print("Power stream error",activity_id,e)
+        print(
+            "Power stream error",
+            activity_id,
+            e
+        )
         return None
 
 
@@ -292,6 +374,15 @@ def calculate_hr_zones(stream_df,max_hr):
 def calculate_power_zones(stream_df,ftp,sport="Cycling"):
     from helpers.metrics import get_zone_definitions
     zone_definitions = get_zone_definitions(sport)
+    if "watts" not in stream_df.columns:
+        return {
+            "time_z1_power":np.nan,
+            "time_z2_power":np.nan,
+            "time_z3_power":np.nan,
+            "time_z4_power":np.nan,
+            "time_z5_power":np.nan,
+            "time_z6_power":np.nan
+        }
     watts=pd.to_numeric(stream_df["watts"],errors="coerce")
 
     if watts.notna().sum()==0 or ftp<=0:
@@ -353,8 +444,14 @@ def update_running_stream_cache(username,access_token,activities):
             if velocity.notna().any():
                 cached_ids.add(int(activity_id))
     running_activities=activities[
-        activities["type"].astype(str).str.contains("Run|TrailRun|Treadmill",case=False,regex=True)
+        activities["type"].astype(str).str.contains(
+            "run|treadmill",
+            case=False,
+            regex=True,
+            na=False
+        )
     ]
+    print("Running activities found:",len(running_activities))
     streams=[]
     for _,row in running_activities.iterrows():
         activity_id=int(row["id"])
@@ -362,7 +459,15 @@ def update_running_stream_cache(username,access_token,activities):
             continue
         stream=fetch_power_stream(access_token,activity_id,row.get("type"))
         if stream is not None:
+            print(
+                "Running stream debug:",
+                "activity=",activity_id,
+                "columns=",list(stream.columns),
+                "time_values=",stream["time"].notna().sum() if "time" in stream else 0,
+                "distance_values=",stream["distance"].notna().sum() if "distance" in stream else 0,
+            )
             streams.append(stream.drop(columns=["watts"],errors="ignore"))
+    print("Running stream activities fetched:",len(streams))
     if streams:
         stream_df=pd.concat([stream_df,*streams],ignore_index=True)
         stream_df=stream_df.drop_duplicates(subset=["activity_id","timepoint"],keep="last")
@@ -388,10 +493,8 @@ def update_power_stream_cache(username,access_token,activities):
     else:
         cached_ids=set()
 
-    cache_changed=False
-    if "watts" in power_df and not power_df["watts"].notna().any():
-        power_df=power_df.drop(columns=["watts"])
-        cache_changed=True
+    if "watts" not in power_df.columns:
+        power_df["watts"]=np.nan
 
     streams=[]
     for _,row in activities.iterrows():
@@ -448,10 +551,6 @@ def update_power_stream_cache(username,access_token,activities):
             if column not in power_df.columns:
                 power_df[column]=np.nan
 
-        if "watts" in power_df and not power_df["watts"].notna().any():
-            power_df=power_df.drop(columns=["watts"])
-            cache_changed=True
-
         save_power_stream_cache(username,power_df)
 
     new_streams=(
@@ -476,7 +575,7 @@ def update_hr_zones_from_streams(username,activities,max_hr,threshold_pace=5.0):
         stream=source_df[source_df["activity_id"]==activity_id] if not source_df.empty else pd.DataFrame()
         if stream.empty:
             continue
-        if activity_type in {"run","trailrun","treadmill"} and "velocity_smooth" in stream:
+        if "run" in activity_type or "treadmill" in activity_type and "velocity_smooth" in stream:
             zones=calculate_pace_zones(stream,threshold_pace)
         else:
             zones=calculate_hr_zones(stream,max_hr)
@@ -581,6 +680,7 @@ def update_strava_data(username, access_token):
             if running_changed:
                 debug_log("Building running efforts...")
                 running_efforts = build_running_efforts(running_streams)
+                print("Running efforts from new streams:",len(running_efforts))
                 debug_log(f"Running efforts built: {len(running_efforts)}")
                 save_running_efforts(username, running_efforts)
                 debug_log("✅ Running efforts saved.")
@@ -627,6 +727,7 @@ def update_strava_data(username, access_token):
                 debug_log("Building performance curves...")
                 power_curve = build_power_curve(power_efforts)
                 running_curve = build_running_curve(running_efforts)
+                print("Running curve before save:",running_curve)
                 best_20_min = best_20_min_cycling(power_efforts)
                 best_6_min = best_6_min_running(running_efforts)
                 debug_log("Performance curves built.")
