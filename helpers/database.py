@@ -334,19 +334,56 @@ def save_activity_cache(username, activities):
     finally:
         conn.close()
 
-
 def load_activity_cache(username):
+    st.write("DEBUG username:", repr(username))
+
     user_id = get_user_id(username)
+    st.write("DEBUG user_id:", user_id)
+
     if user_id is None:
+        st.error("DEBUG: user_id is None")
         return None
+
     conn = get_connection()
+
     try:
         with conn.cursor() as cur:
-            cur.execute("SELECT activities FROM activity_cache WHERE user_id = %s", (user_id,))
+            cur.execute(
+                """
+                SELECT user_id, jsonb_array_length(activities), updated_at
+                FROM activity_cache
+                WHERE user_id = %s
+                """,
+                (user_id,)
+            )
+
             row = cur.fetchone()
+
+            st.write("DEBUG activity_cache row:", row)
+
             if not row:
+                st.error("DEBUG: No activity_cache row found")
                 return None
-            return row[0]
+
+            # Now actually retrieve it
+            cur.execute(
+                """
+                SELECT activities
+                FROM activity_cache
+                WHERE user_id = %s
+                """,
+                (user_id,)
+            )
+
+            activities = cur.fetchone()[0]
+
+            st.write(
+                "DEBUG activities returned:",
+                len(activities) if activities else 0
+            )
+
+            return activities
+
     finally:
         conn.close()
 
