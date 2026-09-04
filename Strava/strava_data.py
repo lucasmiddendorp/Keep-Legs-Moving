@@ -533,330 +533,160 @@ def calculate_activity_stress(df,ftp,max_hr,threshold_pace):
     df.loc[fallback_mask,"stress"] = hours[fallback_mask] * (0.4**2) * 100
     return df
 
-
 def update_strava_data(username, access_token):
-
-    st.write("=" * 60)
-    st.write("🚀 STARTING STRAVA SYNC")
-    st.write("Username:", repr(username))
-    st.write("Access token present:", bool(access_token))
-    st.write("=" * 60)
+    clear_debug_log()
+    debug_log("=" * 60)
+    debug_log("🚀 STARTING STRAVA SYNC")
+    debug_log(f"Username: {username!r}")
+    debug_log(f"Access token present: {bool(access_token)}")
+    debug_log("=" * 60)
 
     try:
         # ---------------------------------------------------------
         # 1. ACTIVITY CACHE
         # ---------------------------------------------------------
-        st.write("### [1/7] Loading/updating activity cache...")
-
-        activities, new_activities = update_activity_cache(
-            username,
-            access_token
-        )
-
-        st.write(
-            "[1/7] Activity cache loaded successfully.",
-            f"Total activities: {len(activities)}",
-            f"| New activities: {len(new_activities)}"
-        )
+        debug_log("### [1/7] Loading/updating activity cache...")
+        activities, new_activities = update_activity_cache(username, access_token)
+        debug_log(f"[1/7] Activity cache loaded successfully. Total activities: {len(activities)} | New activities: {len(new_activities)}")
 
         # ---------------------------------------------------------
         # 2. STREAMS
         # ---------------------------------------------------------
         if not activities.empty:
-
-            st.write(
-                f"### [2/7] Updating activity streams "
-                f"for {len(activities)} activities..."
-            )
-
-            running_streams, running_changed = update_running_stream_cache(
-                username,
-                access_token,
-                activities
-            )
-
-            st.write(
-                "Running streams:",
-                len(running_streams),
-                "| Changed:",
-                running_changed
-            )
-
-            power_streams, power_changed = update_power_stream_cache(
-                username,
-                access_token,
-                activities
-            )
-
-            st.write(
-                "Power streams:",
-                len(power_streams),
-                "| Changed:",
-                power_changed
-            )
+            debug_log(f"### [2/7] Updating activity streams for {len(activities)} activities...")
+            debug_log("Starting running stream cache update...")
+            running_streams, running_changed = update_running_stream_cache(username, access_token, activities)
+            debug_log(f"Running streams updated. Rows: {len(running_streams)} | Changed: {running_changed}")
+            debug_log("Starting power stream cache update...")
+            power_streams, power_changed = update_power_stream_cache(username, access_token, activities)
+            debug_log(f"Power streams updated. Rows: {len(power_streams)} | Changed: {power_changed}")
 
             if running_changed:
-                st.write("Saving running efforts...")
-
-                save_running_efforts(
-                    username,
-                    build_running_efforts(running_streams),
-                )
-
-                st.write("✅ Running efforts saved.")
+                debug_log("Building running efforts...")
+                running_efforts = build_running_efforts(running_streams)
+                debug_log(f"Running efforts built: {len(running_efforts)}")
+                save_running_efforts(username, running_efforts)
+                debug_log("✅ Running efforts saved.")
 
             if power_changed:
-                st.write("Saving power efforts...")
-
-                save_power_efforts(
-                    username,
-                    build_power_efforts(power_streams),
-                )
-
-                st.write("✅ Power efforts saved.")
+                debug_log("Building power efforts...")
+                power_efforts = build_power_efforts(power_streams)
+                debug_log(f"Power efforts built: {len(power_efforts)}")
+                save_power_efforts(username, power_efforts)
+                debug_log("✅ Power efforts saved.")
 
             # -----------------------------------------------------
             # CURVE CACHE
             # -----------------------------------------------------
-            st.write("Checking curve cache...")
-
+            debug_log("Checking curve cache...")
             curve_cache = load_curve_cache(username)
+            debug_log("Curve cache: " + ("exists" if curve_cache else "does not exist"))
 
-            st.write(
-                "Curve cache:",
-                "exists" if curve_cache else "does not exist"
-            )
-
-            if (
-                running_changed
-                or power_changed
-                or curve_cache is None
-                or curve_cache.get("calculation_version") != CURVE_CACHE_VERSION
-            ):
-
-                st.write("Rebuilding performance curves...")
-
+            if running_changed or power_changed or curve_cache is None or curve_cache.get("calculation_version") != CURVE_CACHE_VERSION:
+                debug_log("Rebuilding performance curves...")
                 power_efforts = load_power_efforts(username)
                 running_efforts = load_running_efforts(username)
-
-                st.write(
-                    "Existing power efforts:",
-                    len(power_efforts)
-                )
-
-                st.write(
-                    "Existing running efforts:",
-                    len(running_efforts)
-                )
+                debug_log(f"Existing power efforts: {len(power_efforts)}")
+                debug_log(f"Existing running efforts: {len(running_efforts)}")
 
                 if not power_efforts:
-                    st.write("Building power efforts from streams...")
-
+                    debug_log("Building power efforts from cached streams...")
                     power_records = load_power_stream_cache(username) or []
-
-                    power_efforts = build_power_efforts(
-                        power_records
-                    )
-
-                    save_power_efforts(
-                        username,
-                        power_efforts
-                    )
-
-                    st.write(
-                        "✅ Power efforts saved:",
-                        len(power_efforts)
-                    )
+                    debug_log(f"Power stream records: {len(power_records)}")
+                    power_efforts = build_power_efforts(power_records)
+                    save_power_efforts(username, power_efforts)
+                    debug_log(f"✅ Power efforts saved: {len(power_efforts)}")
 
                 if not running_efforts:
-                    st.write("Building running efforts from streams...")
-
+                    debug_log("Building running efforts from cached streams...")
                     running_records = load_running_stream_cache(username) or []
+                    debug_log(f"Running stream records: {len(running_records)}")
+                    running_efforts = build_running_efforts(running_records)
+                    save_running_efforts(username, running_efforts)
+                    debug_log(f"✅ Running efforts saved: {len(running_efforts)}")
 
-                    running_efforts = build_running_efforts(
-                        running_records
-                    )
+                debug_log("Building performance curves...")
+                power_curve = build_power_curve(power_efforts)
+                running_curve = build_running_curve(running_efforts)
+                best_20_min = best_20_min_cycling(power_efforts)
+                best_6_min = best_6_min_running(running_efforts)
+                debug_log("Performance curves built.")
+                debug_log("Saving curve cache...")
+                save_curve_cache(username, power_curve, running_curve, best_20_min, best_6_min)
+                debug_log("✅ Curve cache saved.")
 
-                    save_running_efforts(
-                        username,
-                        running_efforts
-                    )
-
-                    st.write(
-                        "✅ Running efforts saved:",
-                        len(running_efforts)
-                    )
-
-                st.write("Saving curve cache...")
-
-                save_curve_cache(
-                    username,
-                    build_power_curve(power_efforts),
-                    build_running_curve(running_efforts),
-                    best_20_min_cycling(power_efforts),
-                    best_6_min_running(running_efforts),
-                )
-
-                st.write("✅ Curve cache saved.")
-
-            st.write("✅ [2/7] Activity streams updated successfully.")
-
+            debug_log("✅ [2/7] Activity streams updated successfully.")
         else:
-
-            st.write(
-                "⚠️ [2/7] No activities. Skipping power streams."
-            )
+            debug_log("⚠️ [2/7] No activities. Skipping activity streams.")
 
         # ---------------------------------------------------------
         # 3. SETTINGS
         # ---------------------------------------------------------
-        st.write("### [3/7] Loading user settings...")
-
+        debug_log("### [3/7] Loading user settings...")
         settings = get_user_settings(username)
-
-        st.write("User settings loaded.")
-
-        st.write(
-            "FTP:",
-            settings.get("ftp", 200)
-        )
-
-        st.write(
-            "Max HR:",
-            settings.get("max_hr", 190)
-        )
-
-        st.write(
-            "Threshold pace:",
-            settings.get("threshold_pace", 5)
-        )
+        debug_log("User settings loaded.")
+        debug_log(f"FTP: {settings.get('ftp', 200)}")
+        debug_log(f"Max HR: {settings.get('max_hr', 190)}")
+        debug_log(f"Threshold pace: {settings.get('threshold_pace', 5)}")
 
         # ---------------------------------------------------------
         # 4. HR ZONES
         # ---------------------------------------------------------
-        st.write("### [4/7] Updating HR zones...")
-
-        activities = update_hr_zones_from_streams(
-            username,
-            activities,
-            settings.get("max_hr", 190),
-            settings.get("threshold_pace", 5),
-        )
-
-        st.write("✅ [4/7] HR zones updated successfully.")
+        debug_log("### [4/7] Updating HR zones...")
+        activities = update_hr_zones_from_streams(username, activities, settings.get("max_hr", 190), settings.get("threshold_pace", 5))
+        debug_log("✅ [4/7] HR zones updated successfully.")
 
         # ---------------------------------------------------------
         # 5. POWER ZONES
         # ---------------------------------------------------------
-        st.write("### [5/7] Updating power zones...")
-
-        activities = update_power_zones_from_streams(
-            username,
-            activities,
-            settings.get("ftp", 200)
-        )
-
-        st.write("✅ [5/7] Power zones updated successfully.")
+        debug_log("### [5/7] Updating power zones...")
+        activities = update_power_zones_from_streams(username, activities, settings.get("ftp", 200))
+        debug_log("✅ [5/7] Power zones updated successfully.")
 
         # ---------------------------------------------------------
         # 6. STRESS
         # ---------------------------------------------------------
-        st.write("### [6/7] Calculating activity stress...")
-
-        activities = calculate_activity_stress(
-            activities,
-            ftp=settings.get("ftp", 200),
-            max_hr=settings.get("max_hr", 190),
-            threshold_pace=settings.get("threshold_pace", 5)
-        )
-
-        st.write("✅ [6/7] Activity stress calculated successfully.")
+        debug_log("### [6/7] Calculating activity stress...")
+        activities = calculate_activity_stress(activities, ftp=settings.get("ftp", 200), max_hr=settings.get("max_hr", 190), threshold_pace=settings.get("threshold_pace", 5))
+        debug_log("✅ [6/7] Activity stress calculated successfully.")
 
         # ---------------------------------------------------------
         # 7. SAVE ACTIVITY CACHE
         # ---------------------------------------------------------
-        st.write("### [7/7] Saving activity cache...")
-
-        st.write("DEBUG BEFORE SAVE")
-        st.write("Username:", repr(username))
-        st.write("Number of activities:", len(activities))
-        st.write("Columns:", list(activities.columns))
+        debug_log("### [7/7] Saving activity cache...")
+        debug_log(f"Username: {username!r}")
+        debug_log(f"Number of activities: {len(activities)}")
+        debug_log(f"Columns: {list(activities.columns)}")
 
         if activities.empty:
-            raise ValueError(
-                "Strava returned no activities, so no activity data was saved."
-            )
+            raise ValueError("Strava returned no activities, so no activity data was saved.")
 
-        try:
-
-            save_activity_cache(
-                username,
-                activities
-            )
-
-            st.write("✅ DEBUG SAVE SUCCESS")
-
-        except Exception as e:
-
-            st.error("❌ DEBUG SAVE FAILED")
-            st.error(f"Error type: {type(e).__name__}")
-            st.error(f"Error: {str(e)}")
-
-            raise
+        debug_log("Calling save_activity_cache()...")
+        save_activity_cache(username, activities)
+        debug_log("✅ Activity cache saved successfully.")
 
         # ---------------------------------------------------------
         # READ BACK FROM DATABASE
         # ---------------------------------------------------------
-        st.write("DEBUG AFTER SAVE")
-        st.write("Testing PostgreSQL readback...")
-
+        debug_log("Testing PostgreSQL readback...")
         saved_activities = load_activity_cache(username)
-
-        st.write(
-            "DEBUG READBACK:",
-            len(saved_activities) if saved_activities else 0
-        )
+        debug_log(f"Database readback: {len(saved_activities) if saved_activities else 0} activities")
 
         if not saved_activities:
-            raise RuntimeError(
-                "Activity data was saved but could not be read back "
-                "from PostgreSQL."
-            )
+            raise RuntimeError("Activity data was saved but could not be read back from PostgreSQL.")
 
-        st.success("✅ DEBUG SAVE + READBACK SUCCESS")
-
-        st.write(
-            "Total activities:",
-            len(activities)
-        )
-
-        st.write(
-            "New activities:",
-            len(new_activities)
-        )
-
-        st.write("=" * 60)
-        st.success("🎉 STRAVA SYNC COMPLETE")
-        st.write("=" * 60)
+        debug_log("✅ Database save + readback successful.")
+        debug_log(f"Total activities: {len(activities)}")
+        debug_log(f"New activities: {len(new_activities)}")
+        debug_log("=" * 60)
+        debug_log("🎉 STRAVA SYNC COMPLETE")
+        debug_log("=" * 60)
 
         return activities, new_activities
 
     except Exception as e:
-
+        debug_error(e)
         st.error("❌ STRAVA SYNC FAILED")
         st.error(f"Error type: {type(e).__name__}")
         st.error(f"Error: {str(e)}")
-
-        raise
-
-    except Exception as e:
-        print("="*60)
-        print("STRAVA SYNC FAILED")
-        print("Error type:",type(e).__name__)
-        print("Error:",str(e))
-        print("="*60)
-
-        import traceback
-        traceback.print_exc()
-
         raise
