@@ -343,7 +343,9 @@ def update_running_stream_cache(username,access_token,activities):
     if isinstance(stored_streams,pd.DataFrame):
         stream_df=stored_streams.copy()
     else:
-        stream_df=pd.DataFrame(stored_streams or [])
+        stream_df=pd.DataFrame(
+            stored_streams if _has_records(stored_streams) else []
+        )
     cached_ids=set()
     if not stream_df.empty and "activity_id" in stream_df.columns and "velocity_smooth" in stream_df.columns:
         for activity_id,group in stream_df.groupby("activity_id"):
@@ -460,8 +462,10 @@ def update_power_stream_cache(username,access_token,activities):
     return new_streams, bool(streams)
 
 def update_hr_zones_from_streams(username,activities,max_hr,threshold_pace=5.0):
-    power_streams=load_power_stream_cache(username) or []
-    running_streams=load_running_stream_cache(username) or []
+    power_streams=load_power_stream_cache(username)
+    running_streams=load_running_stream_cache(username)
+    power_streams = power_streams if _has_records(power_streams) else []
+    running_streams = running_streams if _has_records(running_streams) else []
     if not _has_records(power_streams) and not _has_records(running_streams):
         return activities
     power_df=pd.DataFrame(power_streams)
@@ -604,7 +608,8 @@ def update_strava_data(username, access_token):
 
                 if not power_efforts:
                     debug_log("Building power efforts from cached streams...")
-                    power_records = load_power_stream_cache(username) or []
+                    power_records = load_power_stream_cache(username)
+                    power_records = power_records if _has_records(power_records) else []
                     debug_log(f"Power stream records: {len(power_records)}")
                     power_efforts = build_power_efforts(power_records)
                     save_power_efforts(username, power_efforts)
@@ -612,7 +617,8 @@ def update_strava_data(username, access_token):
 
                 if not running_efforts:
                     debug_log("Building running efforts from cached streams...")
-                    running_records = load_running_stream_cache(username) or []
+                    running_records = load_running_stream_cache(username)
+                    running_records = running_records if _has_records(running_records) else []
                     debug_log(f"Running stream records: {len(running_records)}")
                     running_efforts = build_running_efforts(running_records)
                     save_running_efforts(username, running_efforts)
@@ -683,9 +689,12 @@ def update_strava_data(username, access_token):
         # ---------------------------------------------------------
         debug_log("Testing PostgreSQL readback...")
         saved_activities = load_activity_cache(username)
-        debug_log(f"Database readback: {len(saved_activities) if saved_activities else 0} activities")
+        debug_log(
+            "Database readback: "
+            f"{len(saved_activities) if _has_records(saved_activities) else 0} activities"
+        )
 
-        if not saved_activities:
+        if not _has_records(saved_activities):
             raise RuntimeError("Activity data was saved but could not be read back from PostgreSQL.")
 
         debug_log("✅ Database save + readback successful.")
