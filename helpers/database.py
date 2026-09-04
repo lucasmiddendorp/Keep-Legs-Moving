@@ -335,13 +335,13 @@ def save_activity_cache(username, activities):
         conn.close()
 
 def load_activity_cache(username):
-    print("DEBUG username:", repr(username))
+    #print("DEBUG username:", repr(username))
 
     user_id = get_user_id(username)
-    print("DEBUG user_id:", user_id)
+    #print("DEBUG user_id:", user_id)
 
     if user_id is None:
-        print("DEBUG: user_id is None")
+        #print("DEBUG: user_id is None")
         return None
 
     conn = get_connection()
@@ -359,10 +359,10 @@ def load_activity_cache(username):
 
             row = cur.fetchone()
 
-            print("DEBUG activity_cache row:", row)
+            #print("DEBUG activity_cache row:", row)
 
             if not row:
-                print("DEBUG: No activity_cache row found")
+                #print("DEBUG: No activity_cache row found")
                 return None
 
             # Now actually retrieve it

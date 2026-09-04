@@ -503,7 +503,7 @@ def update_power_stream_cache(username,access_token,activities):
         if "run" in activity_type or "treadmill" in activity_type or activity_id in cached_ids:
             continue
 
-        print("DEBUG: fetching streams for activity:",activity_id,activity_type)
+        #print("DEBUG: fetching streams for activity:",activity_id,activity_type)
 
         has_power=bool(
             pd.notna(row.get("weighted_average_watts"))
