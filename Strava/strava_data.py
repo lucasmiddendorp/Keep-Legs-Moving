@@ -70,6 +70,14 @@ ACTIVITY_COLUMNS = [
     "time_z6_pace",
 ]
 
+
+def _has_records(value):
+    if value is None:
+        return False
+    if isinstance(value, pd.DataFrame):
+        return not value.empty
+    return bool(value)
+
 def get_user_client(access_token):
     client=Client()
     client.access_token=access_token
@@ -113,7 +121,7 @@ def fetch_activities(access_token,after_date=None):
 def update_activity_cache(username,access_token):
     stored_activities = load_activity_cache(username)
 
-    if not stored_activities:
+    if not _has_records(stored_activities):
         print("Downloading all activities...")
         df=fetch_activities(access_token)
         new_df=df.copy()
@@ -335,7 +343,7 @@ def update_running_stream_cache(username,access_token,activities):
     if isinstance(stored_streams,pd.DataFrame):
         stream_df=stored_streams.copy()
     else:
-        stream_df=pd.DataFrame(stored_streams if stored_streams is not None else [])
+        stream_df=pd.DataFrame(stored_streams or [])
     cached_ids=set()
     if not stream_df.empty and "activity_id" in stream_df.columns and "velocity_smooth" in stream_df.columns:
         for activity_id,group in stream_df.groupby("activity_id"):
@@ -366,7 +374,9 @@ def update_running_stream_cache(username,access_token,activities):
 
 def update_power_stream_cache(username,access_token,activities):
     stored_streams=load_power_stream_cache(username)
-    if stored_streams:
+    if isinstance(stored_streams,pd.DataFrame):
+        power_df=stored_streams.copy()
+    elif stored_streams is not None:
         power_df=pd.DataFrame(stored_streams)
     else:
         power_df=pd.DataFrame()
@@ -452,7 +462,7 @@ def update_power_stream_cache(username,access_token,activities):
 def update_hr_zones_from_streams(username,activities,max_hr,threshold_pace=5.0):
     power_streams=load_power_stream_cache(username) or []
     running_streams=load_running_stream_cache(username) or []
-    if not power_streams and not running_streams:
+    if not _has_records(power_streams) and not _has_records(running_streams):
         return activities
     power_df=pd.DataFrame(power_streams)
     running_df=pd.DataFrame(running_streams)
@@ -472,7 +482,7 @@ def update_hr_zones_from_streams(username,activities,max_hr,threshold_pace=5.0):
 
 def update_power_zones_from_streams(username,activities,ftp,sport="Cycling"):
     stored_streams = load_power_stream_cache(username)
-    if not stored_streams:
+    if not _has_records(stored_streams):
         return activities
     power_df=pd.DataFrame(stored_streams)
     for activity_id in activities["id"]:
