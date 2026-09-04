@@ -653,15 +653,34 @@ def update_strava_data(username,access_token):
             raise ValueError(
                 "Strava returned no activities, so no activity data was saved."
             )
-        save_activity_cache(username, activities)
+
+        print("DEBUG: About to save activities:", len(activities))
+
+        try:
+            save_activity_cache(username, activities)
+            print("DEBUG: save_activity_cache() completed successfully")
+        except Exception as e:
+            print("DEBUG: save_activity_cache() FAILED")
+            print("DEBUG error type:", type(e).__name__)
+            print("DEBUG error:", str(e))
+            raise
+
+        print("DEBUG: Checking database after save...")
 
         saved_activities = load_activity_cache(username)
+
+        print(
+            "DEBUG: Database returned:",
+            len(saved_activities) if saved_activities else 0
+        )
+
         if not saved_activities:
             raise RuntimeError(
                 "Activity data was saved but could not be read back from PostgreSQL."
             )
 
-        print("[6/6] Activity cache saved successfully.")
+        print("DEBUG: Activity cache saved and verified successfully.")
+        print("Total activities:", len(activities))
         print("Total activities:",len(activities))
         print("="*60)
         print("STRAVA SYNC COMPLETE")
