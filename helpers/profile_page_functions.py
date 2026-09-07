@@ -11,76 +11,207 @@ from Strava.strava_user import (
     get_training_goal,
     save_training_goal,
 )
-from helpers.database import load_curve_cache
-from helpers.thresholds import calculated_running_threshold_pace
+from helpers.database import delete_user_account
 
-ATHLETE_PROFILE_SUBSECTIONS = ["Thresholds", "Training Goal", "Weekly Availability"]
+ATHLETE_PROFILE_SUBSECTIONS = [
+    "Thresholds",
+    "Training Goal",
+    "Weekly Availability",
+]
 
 
 def inject_profile_css():
     st.markdown(
         """
         <style>
-        .profile-card-title{font-size:16px;font-weight:700;color:#17212b;margin:0 0 14px;}
-        .profile-section-title{font-size:11px;font-weight:750;color:#7a8792;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;}
-        .profile-section-note{font-size:12px;color:#7a8792;line-height:1.45;margin:-2px 0 14px;}
-        .threshold-panel{background:#f8fafb;border:1px solid #e4e8eb;border-radius:8px;padding:14px 16px;margin:8px 0 14px;}
-        .threshold-panel-title{font-size:13px;font-weight:700;color:#17212b;margin-bottom:2px;}
-        .threshold-panel-note{font-size:11px;color:#87919a;margin-bottom:12px;}
-        .calculated-threshold{background:#eef2f4;border:1px solid #dce3e7;border-radius:7px;color:#66737d;font-size:11px;font-weight:600;line-height:1.35;padding:11px 12px;margin-bottom:2px;}
-        .threshold-save{margin-top:14px;}
-        [data-testid="stVerticalBlockBorderWrapper"] hr{margin:14px 0;}
-        div[data-testid="stHorizontalBlock"]{align-items:flex-start !important;}
+        .profile-card-title{
+            font-size:16px;
+            font-weight:700;
+            color:#17212b;
+            margin:0 0 14px;
+        }
+        .profile-section-title{
+            font-size:11px;
+            font-weight:750;
+            color:#7a8792;
+            text-transform:uppercase;
+            letter-spacing:.05em;
+            margin:0 0 8px;
+        }
+        .profile-section-note{
+            font-size:12px;
+            color:#7a8792;
+            line-height:1.45;
+            margin:-2px 0 14px;
+        }
+        .threshold-panel{
+            background:#f8fafb;
+            border:1px solid #e4e8eb;
+            border-radius:8px;
+            padding:14px 16px;
+            margin:8px 0 14px;
+        }
+        .threshold-panel-title{
+            font-size:13px;
+            font-weight:700;
+            color:#17212b;
+            margin-bottom:2px;
+        }
+        .threshold-panel-note{
+            font-size:11px;
+            color:#87919a;
+            margin-bottom:12px;
+        }
+        .threshold-save{
+            margin-top:14px;
+        }
+        [data-testid="stVerticalBlockBorderWrapper"] hr{
+            margin:14px 0;
+        }
+        div[data-testid="stHorizontalBlock"]{
+            align-items:flex-start !important;
+        }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
+@st.dialog("Delete account")
+def delete_account_dialog(username):
+    st.warning("This action cannot be undone.")
+    st.write(
+        "Deleting your account will permanently remove your profile, "
+        "Strava connection, activities, training data, training plans, "
+        "and other stored account data."
+    )
+    st.write(f"Account: **{username}**")
+    st.divider()
+    st.write("Are you sure you want to permanently delete your account?")
+    col1,col2=st.columns(2)
+    with col1:
+        if st.button("Cancel",width="stretch"):
+            st.rerun()
+    with col2:
+        if st.button("Delete account",type="primary",width="stretch"):
+            try:
+                delete_user_account(username)
+                st.session_state.clear()
+                st.rerun()
+            except Exception as e:
+                st.error(f"Could not delete account: {e}")
 
 def render_account_section(username):
     with st.container(border=True):
-        st.markdown('<div class="profile-card-title">Account</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="profile-card-title">Account</div>',
+            unsafe_allow_html=True,
+        )
 
-        st.text_input("Username", value=username, disabled=True, key="profile_username_display")
-        st.text_input("Email", value=st.session_state.get("email", ""), disabled=True, key="profile_email_display")
+        st.text_input(
+            "Username",
+            value=username,
+            disabled=True,
+            key="profile_username_display",
+        )
+
+        st.text_input(
+            "Email",
+            value=st.session_state.get("email", ""),
+            disabled=True,
+            key="profile_email_display",
+        )
 
         st.divider()
 
-        st.markdown('<div class="profile-section-title">Security</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="profile-section-title">Security</div>',
+            unsafe_allow_html=True,
+        )
 
-        st.text_input("Current password", type="password", key="profile_current_password")
-        st.text_input("New password", type="password", key="profile_new_password")
-        st.text_input("Confirm new password", type="password", key="profile_confirm_password")
+        st.text_input(
+            "Current password",
+            type="password",
+            key="profile_current_password",
+        )
 
-        if st.button("Update password", type="primary", key="profile_update_password"):
+        st.text_input(
+            "New password",
+            type="password",
+            key="profile_new_password",
+        )
+
+        st.text_input(
+            "Confirm new password",
+            type="password",
+            key="profile_confirm_password",
+        )
+
+        if st.button(
+            "Update password",
+            type="primary",
+            key="profile_update_password",
+        ):
             st.info("Password update functionality coming soon.")
 
         st.divider()
 
-        st.markdown('<div class="profile-section-title">Strava connection</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="profile-section-title">Strava connection</div>',
+            unsafe_allow_html=True,
+        )
 
         strava = get_user_strava(username)
-        strava_connected = isinstance(strava, dict) and strava.get("connected", False) and strava.get("access_token")
+
+        strava_connected = (
+            isinstance(strava, dict)
+            and strava.get("connected", False)
+            and strava.get("access_token")
+        )
 
         if strava_connected:
             st.success("Connected to Strava")
-            if st.button("Disconnect Strava", key="profile_disconnect_strava"):
+
+            if st.button(
+                "Disconnect Strava",
+                key="profile_disconnect_strava",
+            ):
                 reset_user_strava(username)
                 st.rerun()
         else:
             st.warning("Not connected to Strava")
-            if st.button("Connect Strava", key="profile_connect_strava"):
+
+            if st.button(
+                "Connect Strava",
+                key="profile_connect_strava",
+            ):
                 st.switch_page("pages/connect_strava.py")
 
         st.divider()
 
-        if st.button("🚪 Log out", key="profile_logout", use_container_width=True):
+        if st.button(
+            "🚪 Log out",
+            key="profile_logout",
+            width="stretch",
+        ):
             logout_user()
             st.rerun()
 
+        st.divider()
+
+        if st.button(
+            "Delete account",
+            key="profile_delete_account",
+            width="stretch",
+            type="secondary",
+        ):
+            delete_account_dialog(username)
+
 
 def render_thresholds_section(username, settings):
-    st.markdown('<div class="profile-section-title">Training progression</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="profile-section-title">Training progression</div>',
+        unsafe_allow_html=True,
+    )
 
     progression = st.select_slider(
         "Weekly progression",
@@ -91,48 +222,73 @@ def render_thresholds_section(username, settings):
         label_visibility="collapsed",
     )
 
-    st.markdown('<div class="profile-section-note">Controls the weekly load increase during build weeks.</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="profile-section-note">'
+        "Controls the weekly load increase during build weeks."
+        "</div>",
+        unsafe_allow_html=True,
+    )
 
     st.divider()
 
-    st.markdown('<div class="profile-section-title">Threshold settings</div>', unsafe_allow_html=True)
-    st.markdown('<div class="profile-section-note">Set your training thresholds manually, or compare them with values calculated from your recorded efforts.</div>', unsafe_allow_html=True)
-
-    curve_data = load_curve_cache(username) or {}
-    calculated_power = curve_data.get("best_20_min_power")
-    calculated_distance = curve_data.get("best_6_min_distance")
-    calculated_pace = (
-        6 / (float(calculated_distance) / 1000)
-        if calculated_distance and float(calculated_distance) > 0
-        else None
+    st.markdown(
+        '<div class="profile-section-title">Threshold settings</div>',
+        unsafe_allow_html=True,
     )
-    calculated_pace = calculated_running_threshold_pace(calculated_pace)
+
+    st.markdown(
+        '<div class="profile-section-note">'
+        "Set the thresholds used to calculate training intensity and prescribe workouts."
+        "</div>",
+        unsafe_allow_html=True,
+    )
+    st.info("Match these values to your Strava settings.")
+
+    # ---------------------------------------------------------
+    # CYCLING FTP
+    # ---------------------------------------------------------
 
     with st.container(border=True):
-        st.markdown('<div class="threshold-panel-title">Cycling power</div>', unsafe_allow_html=True)
-        st.markdown('<div class="threshold-panel-note">Your functional threshold power for cycling workouts.</div>', unsafe_allow_html=True)
-        ftp_col, calculated_power_col = st.columns([1, 1], vertical_alignment="bottom")
-        with ftp_col:
-            ftp = st.number_input(
-                "Cycling FTP (W)",
-                min_value=50,
-                max_value=700,
-                value=int(settings.get("ftp", 150)),
-                step=5,
-                key="profile_ftp",
-            )
-        with calculated_power_col:
-            if calculated_power is not None:
-                st.markdown(
-                    f'<div class="calculated-threshold">Calculated from best 20-minute effort<br><strong>{calculated_power * 0.95:.0f} W</strong></div>',
-                    unsafe_allow_html=True,
-                )
+        st.markdown(
+            '<div class="threshold-panel-title">Cycling power</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            '<div class="threshold-panel-note">'
+            "Your functional threshold power for cycling workouts."
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
+        ftp = st.number_input(
+            "Cycling FTP (W)",
+            min_value=50,
+            max_value=700,
+            value=int(settings.get("ftp", 150)),
+            step=5,
+            key="profile_ftp",
+        )
+
+    # ---------------------------------------------------------
+    # RUNNING THRESHOLD
+    # ---------------------------------------------------------
 
     with st.container(border=True):
-        st.markdown('<div class="threshold-panel-title">Running pace</div>', unsafe_allow_html=True)
-        st.markdown('<div class="threshold-panel-note">Your threshold pace in minutes per kilometre.</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="threshold-panel-title">Running pace</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
+            '<div class="threshold-panel-note">'
+            "Your threshold pace in minutes per kilometre."
+            "</div>",
+            unsafe_allow_html=True,
+        )
 
         pace = float(settings.get("threshold_pace", 5.0))
+
         pace_minutes = int(pace)
         pace_seconds = int(round((pace - pace_minutes) * 60))
 
@@ -140,32 +296,46 @@ def render_thresholds_section(username, settings):
             pace_minutes += 1
             pace_seconds = 0
 
-        pace_input_col, calculated_pace_col = st.columns([1, 1], vertical_alignment="bottom")
+        pace_min_col, pace_sec_col = st.columns(2)
 
-        with pace_input_col:
-            pace_min_col, pace_sec_col = st.columns(2)
-            with pace_min_col:
-                pace_min = st.number_input("Minutes", min_value=2, max_value=10, value=pace_minutes, step=1, key="profile_pace_min")
-            with pace_sec_col:
-                pace_sec = st.number_input("Seconds", min_value=0, max_value=59, value=pace_seconds, step=1, key="profile_pace_sec")
+        with pace_min_col:
+            pace_min = st.number_input(
+                "Minutes",
+                min_value=2,
+                max_value=10,
+                value=pace_minutes,
+                step=1,
+                key="profile_pace_min",
+            )
 
-        with calculated_pace_col:
-            if calculated_pace is not None:
-                st.markdown(
-                    f'<div class="calculated-threshold">Calculated from best 6-minute effort<br><strong>{calculated_pace:.2f} min/km</strong></div>',
-                    unsafe_allow_html=True,
-                )
+        with pace_sec_col:
+            pace_sec = st.number_input(
+                "Seconds",
+                min_value=0,
+                max_value=59,
+                value=pace_seconds,
+                step=1,
+                key="profile_pace_sec",
+            )
 
-        max_hr = st.number_input(
-            "Maximum Heart Rate (bpm)",
-            min_value=120,
-            max_value=220,
-            value=int(settings.get("max_hr", 180)),
-            step=1,
-            key="profile_max_hr",
-        )
+        threshold_pace = pace_min + pace_sec / 60
 
-    threshold_pace = pace_min + pace_sec / 60
+    # ---------------------------------------------------------
+    # HEART RATE
+    # ---------------------------------------------------------
+
+    max_hr = st.number_input(
+        "Maximum Heart Rate (bpm)",
+        min_value=120,
+        max_value=220,
+        value=int(settings.get("max_hr", 180)),
+        step=1,
+        key="profile_max_hr",
+    )
+
+    # ---------------------------------------------------------
+    # WEIGHT
+    # ---------------------------------------------------------
 
     weight = st.number_input(
         "Weight (kg)",
@@ -175,26 +345,39 @@ def render_thresholds_section(username, settings):
         step=0.5,
         key="profile_weight",
     )
-    st.markdown('<div class="threshold-save">', unsafe_allow_html=True)
-    if st.button("Save Threshold Settings", type="primary", key="profile_save_thresholds", use_container_width=True):
+
+    st.markdown(
+        '<div class="threshold-save"></div>',
+        unsafe_allow_html=True,
+    )
+
+    if st.button(
+        "Save Threshold Settings",
+        type="primary",
+        key="profile_save_thresholds",
+        width="stretch",
+    ):
         save_user_settings(
             username,
             ftp=ftp,
             max_hr=max_hr,
             threshold_pace=threshold_pace,
             weight=weight,
-            training_progression=progression)
+            training_progression=progression,
+        )
 
         st.session_state["profile_thresholds_saved"] = True
         st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
 
     if st.session_state.pop("profile_thresholds_saved", False):
         st.success("✅ Threshold settings saved!")
 
 
 def render_training_goal_section(username):
-    st.markdown('<div class="profile-section-title">Training Goal</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="profile-section-title">Training Goal</div>',
+        unsafe_allow_html=True,
+    )
 
     st.caption(
         "Choose the sport and event you are training towards. "
@@ -203,12 +386,21 @@ def render_training_goal_section(username):
     )
 
     current_goal = get_training_goal(username)
+
     if not isinstance(current_goal, dict):
-        current_goal = {"sport": "Cycling", "name": "general_fitness", "goal_date": None}
+        current_goal = {
+            "sport": "Cycling",
+            "name": "general_fitness",
+            "goal_date": None,
+        }
 
     current_goal_name = current_goal.get("name") or "general_fitness"
     current_goal_sport = current_goal.get("sport") or "Cycling"
-    st.markdown(f"Current goal: **{current_goal_name.replace('_', ' ').title()} for {current_goal_sport}**")
+
+    st.markdown(
+        f"Current goal: **{current_goal_name.replace('_', ' ').title()} "
+        f"for {current_goal_sport}**"
+    )
 
     current_sport = current_goal_sport
 
@@ -240,7 +432,11 @@ def render_training_goal_section(username):
         "marathon": "Marathon",
     }
 
-    goal_options = running_goal_options if sport == "Running" else cycling_goal_options
+    goal_options = (
+        running_goal_options
+        if sport == "Running"
+        else cycling_goal_options
+    )
 
     current_goal_name = current_goal.get("name", "general_fitness")
 
@@ -271,15 +467,25 @@ def render_training_goal_section(username):
     )
 
     if sport == "Running":
-        default_distances = {"general_fitness": 0, "5k": 5, "10k": 10, "half_marathon": 21.1, "marathon": 42.2}
+        default_distances = {
+            "general_fitness": 0,
+            "5k": 5,
+            "10k": 10,
+            "half_marathon": 21.1,
+            "marathon": 42.2,
+        }
+
         event_distance_km = default_distances.get(goal, 0)
         event_climb_m = 0
         event_type = "race"
+
     else:
         event_distance_km = st.number_input(
             "Event distance (km)",
             min_value=0.0,
-            value=float(current_goal.get("event_distance_km") or 0),
+            value=float(
+                current_goal.get("event_distance_km") or 0
+            ),
             step=5.0,
             key="profile_cycling_event_distance",
         )
@@ -287,13 +493,23 @@ def render_training_goal_section(username):
         event_climb_m = st.number_input(
             "Event climbing (m)",
             min_value=0.0,
-            value=float(current_goal.get("event_climb_m") or 0),
+            value=float(
+                current_goal.get("event_climb_m") or 0
+            ),
             step=100.0,
             key="profile_cycling_event_climb",
         )
 
-        event_type_options = ["endurance", "race", "time_trial"]
-        current_event_type = current_goal.get("event_type", "endurance")
+        event_type_options = [
+            "endurance",
+            "race",
+            "time_trial",
+        ]
+
+        current_event_type = current_goal.get(
+            "event_type",
+            "endurance",
+        )
 
         if current_event_type not in event_type_options:
             current_event_type = "endurance"
@@ -307,22 +523,52 @@ def render_training_goal_section(username):
 
     if sport == "Running":
         goal_descriptions = {
-            "general_fitness": "Build general running fitness with a balanced mix of easy running, aerobic work, tempo and faster sessions.",
-            "5k": "Prioritizes VO₂max, speed, running economy and shorter high-intensity intervals while maintaining aerobic fitness.",
-            "10k": "Balances threshold development, VO₂max and aerobic endurance with progressively longer race-specific work.",
-            "half_marathon": "Emphasizes aerobic endurance, threshold work and long runs with increasing amounts of race-specific intensity.",
-            "marathon": "Prioritizes long-run development, aerobic endurance, fatigue resistance and controlled marathon-specific work.",
+            "general_fitness": (
+                "Build general running fitness with a balanced mix "
+                "of easy running, aerobic work, tempo and faster sessions."
+            ),
+            "5k": (
+                "Prioritizes VO₂max, speed, running economy and "
+                "shorter high-intensity intervals while maintaining "
+                "aerobic fitness."
+            ),
+            "10k": (
+                "Balances threshold development, VO₂max and aerobic "
+                "endurance with progressively longer race-specific work."
+            ),
+            "half_marathon": (
+                "Emphasizes aerobic endurance, threshold work and "
+                "long runs with increasing amounts of race-specific intensity."
+            ),
+            "marathon": (
+                "Prioritizes long-run development, aerobic endurance, "
+                "fatigue resistance and controlled marathon-specific work."
+            ),
         }
+
     else:
         goal_descriptions = {
-            "general_fitness": "Build general cycling fitness with a balanced mix of endurance, tempo and high-intensity workouts.",
-            "gran_fondo": "Prioritizes endurance, long rides, climbing and the ability to sustain power for extended periods.",
-            "criterium": "Places more emphasis on repeated high-intensity efforts, acceleration, VO₂max and anaerobic capacity.",
+            "general_fitness": (
+                "Build general cycling fitness with a balanced mix "
+                "of endurance, tempo and high-intensity workouts."
+            ),
+            "gran_fondo": (
+                "Prioritizes endurance, long rides, climbing and the "
+                "ability to sustain power for extended periods."
+            ),
+            "criterium": (
+                "Places more emphasis on repeated high-intensity efforts, "
+                "acceleration, VO₂max and anaerobic capacity."
+            ),
         }
 
     st.info(goal_descriptions.get(goal, ""))
 
-    if st.button("Save Training Goal", use_container_width=True, key="profile_save_training_goal"):
+    if st.button(
+        "Save Training Goal",
+        width="stretch",
+        key="profile_save_training_goal",
+    ):
         save_training_goal(
             username,
             goal,
@@ -339,10 +585,21 @@ def render_training_goal_section(username):
 
 def render_athlete_profile_section(username):
     with st.container(border=True):
-        st.markdown('<div class="profile-card-title">Athlete Profile</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="profile-card-title">Athlete Profile</div>',
+            unsafe_allow_html=True,
+        )
 
-        requested_section = st.session_state.pop("profile_section", None)
-        default_section = requested_section if requested_section in ATHLETE_PROFILE_SUBSECTIONS else "Thresholds"
+        requested_section = st.session_state.pop(
+            "profile_section",
+            None,
+        )
+
+        default_section = (
+            requested_section
+            if requested_section in ATHLETE_PROFILE_SUBSECTIONS
+            else "Thresholds"
+        )
 
         selected_sub = st.segmented_control(
             "Athlete profile section",
@@ -358,10 +615,19 @@ def render_athlete_profile_section(username):
         st.divider()
 
         if selected_sub == "Thresholds":
-            render_thresholds_section(username, get_user_settings(username))
+            render_thresholds_section(
+                username,
+                get_user_settings(username),
+            )
+
         elif selected_sub == "Training Goal":
             render_training_goal_section(username)
+
         else:
             render_weekly_availability(username)
-            if st.button("Manage availability exceptions", key="profile_manage_exceptions"):
+
+            if st.button(
+                "Manage availability exceptions",
+                key="profile_manage_exceptions",
+            ):
                 st.switch_page("pages/settings_exceptions.py")

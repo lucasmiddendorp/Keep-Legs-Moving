@@ -2,25 +2,21 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import Strava.strava_config as strava_config
-import os
 import plotly.graph_objects as go
 from datetime import date
-
 from helpers.style import apply_global_style
-from helpers.metrics import calculate_training_load, rolling_km, format_duration
+from helpers.metrics import calculate_training_load, format_duration
 from Strava.strava_data import update_strava_data
 from Strava.strava_user import get_user_strava, get_user_settings
 from Strava.strava_user import get_valid_access_token
-from helpers.database import load_activity_cache, load_curve_cache
+from helpers.database import load_activity_cache
 from helpers.dashboard_cards import (
     render_metric_circle,
     render_readiness_card,
     render_fatigue_card,
     render_ramp_card
 )
-
 from helpers.dashboard_css import inject_card_css
-
 
 apply_global_style()
 inject_card_css()
@@ -36,45 +32,43 @@ if not stored_activities:
     st.stop()
 
 df = pd.DataFrame(stored_activities)
-
 df["date"] = pd.to_datetime(df["date"],errors="coerce")
-
 df = df.dropna(subset=["date"])
+df["type"] = df["type"].astype(str).str.replace("root='","",regex=False).str.replace("'","",regex=False)
+if "sport" in df.columns:
+    df["sport"] = df["sport"].astype(str).str.replace("root='","",regex=False).str.replace("'","",regex=False)
+else:
+    df["sport"] = df["type"]
 
-df["type"] = (df["type"].astype(str).str.replace("root='", "", regex=False).str.replace("'", "", regex=False))
 activity_types = ["All"] + sorted(df["type"].dropna().unique().tolist())
 activity_type = st.segmented_control("Activity type",activity_types,default="All",key="activity_type_filter")
 
 if activity_type != "All":
     df = df[df["type"] == activity_type]
 
-daily = calculate_training_load(username,strava_config.CTL_TIME_CONSTANT, settings.get("atl_tc", 7), activity_type=activity_type)
+daily = calculate_training_load(username,strava_config.CTL_TIME_CONSTANT,settings.get("atl_tc",7),activity_type=activity_type)
 
 if daily is None or daily.empty:
     st.info("No training-load data yet. Sync Strava activities first.")
     st.stop()
 
 with st.expander("Filters"):
-
-    col1, col2, col3 = st.columns(3)
-
+    col1,col2,col3 = st.columns(3)
     with col1:
         start_date = st.date_input("Start date",date.today() - pd.Timedelta(days=90))
-
     with col2:
         end_date = st.date_input("End date",date.today())
-
     with col3:
         rolling_days = st.slider("Rolling Average",1,28,5)
-filtered = daily.loc[pd.to_datetime(start_date):pd.to_datetime(end_date)]
 
+filtered = daily.loc[pd.to_datetime(start_date):pd.to_datetime(end_date)]
 smoothed = filtered.copy()
+
 if rolling_days > 1:
-    smoothed["CTL"] = filtered["CTL"].rolling(rolling_days, min_periods=1, center=False).mean()
-    smoothed["ATL"] = filtered["ATL"].rolling(rolling_days, min_periods=1, center=False).mean()
-    smoothed["TSB"] = filtered["TSB"].rolling(rolling_days, min_periods=1, center=False).mean()
-    
-# DASHBOARD
+    smoothed["CTL"] = filtered["CTL"].rolling(rolling_days,min_periods=1,center=False).mean()
+    smoothed["ATL"] = filtered["ATL"].rolling(rolling_days,min_periods=1,center=False).mean()
+    smoothed["TSB"] = filtered["TSB"].rolling(rolling_days,min_periods=1,center=False).mean()
+
 ctl = daily["CTL"].iloc[-1]
 atl = daily["ATL"].iloc[-1]
 tsb = daily["TSB"].iloc[-1]
@@ -133,22 +127,13 @@ else:
 col1,col2,col3 = st.columns(3)
 
 with col1:
-        render_ramp_card(ramp_label, ramp_position, fitness_ramp_rate)
+    render_ramp_card(ramp_label,ramp_position,fitness_ramp_rate)
 
 with col2:
-    render_fatigue_card(
-                fatigue_label,
-                atl,
-                fatigue_delta
-            )
-
+    render_fatigue_card(fatigue_label,atl,fatigue_delta)
 
 with col3:
-    render_readiness_card(
-        readiness_label,
-        readiness_note,
-        readiness_color
-    )   
+    render_readiness_card(readiness_label,readiness_note,readiness_color)
 
 st.subheader("Performance Management Chart")
 
@@ -160,7 +145,7 @@ fig.add_trace(
         y=filtered["stress"],
         name="Stress (TSS)",
         mode="markers",
-        marker=dict(color="#991b1b", size=4, opacity=0.75),
+        marker=dict(color="#991b1b",size=4,opacity=0.75),
         yaxis="y2"
     )
 )
@@ -171,10 +156,10 @@ fig.add_trace(
         y=smoothed["CTL"],
         name="Fitness (CTL)",
         mode="lines",
-        line=dict(color="#5f8fb3", width=2.5),
+        line=dict(color="#5f8fb3",width=2.5),
         fill="tozeroy",
-        fillcolor="rgba(95, 143, 179, 0.22)",
-        hovertemplate="<b>Fitness</b>: %{y:.1f}<extra></extra>",
+        fillcolor="rgba(95,143,179,0.22)",
+        hovertemplate="<b>Fitness</b>: %{y:.1f}<extra></extra>"
     )
 )
 
@@ -184,8 +169,8 @@ fig.add_trace(
         y=smoothed["ATL"],
         name="Fatigue (ATL)",
         mode="lines",
-        line=dict(color="#f0a4e8", width=1.8),
-        hovertemplate="<b>Fatigue</b>: %{y:.1f}<extra></extra>",
+        line=dict(color="#f0a4e8",width=1.8),
+        hovertemplate="<b>Fatigue</b>: %{y:.1f}<extra></extra>"
     )
 )
 
@@ -195,15 +180,15 @@ fig.add_trace(
         y=smoothed["TSB"],
         name="Form (TSB)",
         mode="lines",
-        line=dict(color="#f2c14e", width=1.8),
+        line=dict(color="#f2c14e",width=1.8),
         yaxis="y3",
-        hovertemplate="<b>Form</b>: %{y:.1f}<extra></extra>",
+        hovertemplate="<b>Form</b>: %{y:.1f}<extra></extra>"
     )
 )
 
 fig.update_layout(
     height=450,
-    margin=dict(l=55, r=80, t=70, b=45),
+    margin=dict(l=55,r=80,t=70,b=45),
     plot_bgcolor="#fffdf5",
     paper_bgcolor="#fffdf5",
     title=dict(
@@ -215,297 +200,116 @@ fig.update_layout(
         ),
         x=0.5,
         xanchor="center",
-        font=dict(size=26),
+        font=dict(size=26)
     ),
     xaxis=dict(
         title="Date",
         showgrid=False,
-        rangeslider=dict(visible=True, thickness=0.05),
+        rangeslider=dict(visible=True,thickness=0.05)
     ),
     yaxis=dict(
         title="Fitness / Fatigue",
         showgrid=True,
-        gridcolor="rgba(15, 23, 42, 0.10)",
+        gridcolor="rgba(15,23,42,0.10)",
         zeroline=False,
-        rangemode="tozero",
+        rangemode="tozero"
     ),
     yaxis2=dict(
-        title=dict(text="Stress (TSS)", font=dict(color="#991b1b")),
+        title=dict(text="Stress (TSS)",font=dict(color="#991b1b")),
         tickfont=dict(color="#991b1b"),
         overlaying="y",
         side="left",
         anchor="free",
         position=0.02,
         showgrid=False,
-        rangemode="tozero",
+        rangemode="tozero"
     ),
     yaxis3=dict(
-        title=dict(text="Form", font=dict(color="#eab308")),
+        title=dict(text="Form",font=dict(color="#eab308")),
         tickfont=dict(color="#eab308"),
         overlaying="y",
         side="right",
         showgrid=False,
         zeroline=True,
-        zerolinecolor="rgba(234, 179, 8, 0.35)",
+        zerolinecolor="rgba(234,179,8,0.35)"
     ),
     hovermode="x unified",
-    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
+    legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="center",x=0.5)
 )
 
-st.plotly_chart(fig, width='stretch')
-
-DURATIONS = [
-    5, 15, 30, 60, 120, 300, 600, 1200, 1800, 3600
-]
-duration_labels = [
-    "5s", "15s", "30s", "1m", "2m", "5m", "10m", "20m", "30m", "1h"
-]
-
-def max_avg_power(watts, duration):
-    window = int(duration)
-    watts = np.asarray(watts, dtype=float)
-    watts = watts[~np.isnan(watts)]
-    if len(watts) < window:
-        return np.nan, None
-
-    cumsum = np.concatenate(([0.0], np.cumsum(watts)))
-    rolling = (cumsum[window:] - cumsum[:-window]) / window
-    max_idx = int(np.argmax(rolling))
-    return rolling[max_idx], max_idx + window - 1
-
-
-@st.cache_data(show_spinner="Building power curve cache...")
-def build_power_curve_cache(stream_records, durations):
-    power_df = pd.DataFrame(
-        [dict(record) for record in stream_records],
-        columns=["activity_id", "watts"],
-    )
-    rows = []
-
-    for activity_id, activity in power_df.groupby("activity_id", sort=False):
-        watts = pd.to_numeric(activity["watts"], errors="coerce").to_numpy()
-        for duration in durations:
-            max_power, _ = max_avg_power(watts, duration)
-            if not np.isnan(max_power):
-                rows.append(
-                    {
-                        "activity_id": activity_id,
-                        "duration": duration,
-                        "max_power": max_power,
-                    }
-                )
-
-    return pd.DataFrame(rows, columns=["activity_id", "duration", "max_power"])
-
-
-def best_power_curve(power_cache, durations):
-    if power_cache.empty:
-        return [np.nan] * len(durations), [None] * len(durations)
-
-    best = (
-        power_cache.sort_values(["duration", "max_power"], ascending=[True, False])
-        .drop_duplicates("duration")
-        .set_index("duration")
-    )
-
-    powers = []
-    activity_ids = []
-    for duration in durations:
-        if duration in best.index:
-            powers.append(best.loc[duration, "max_power"])
-            activity_ids.append(best.loc[duration, "activity_id"])
-        else:
-            powers.append(np.nan)
-            activity_ids.append(None)
-
-    return powers, activity_ids
-
-
-RUNNING_DISTANCES = [500, 1000, 2000, 5000, 10000, 21097.5, 42195]
-running_distance_labels = ["500m", "1km", "2km", "5km", "10km", "21km", "42km"]
-
-
-def max_avg_speed_for_distance(distance, elapsed, target_distance):
-    distance = pd.to_numeric(distance, errors="coerce").to_numpy(dtype=float)
-    elapsed = pd.to_numeric(elapsed, errors="coerce").to_numpy(dtype=float)
-    valid = np.isfinite(distance) & np.isfinite(elapsed)
-    distance = distance[valid]
-    elapsed = elapsed[valid]
-    if len(distance) < 2:
-        return np.nan, None
-
-    order = np.argsort(distance)
-    distance = distance[order]
-    elapsed = elapsed[order]
-    distance, unique_indices = np.unique(distance, return_index=True)
-    elapsed = elapsed[unique_indices]
-    if distance[-1] - distance[0] < target_distance:
-        return np.nan, None
-
-    end_distances = distance[distance >= distance[0] + target_distance]
-    start_distances = end_distances - target_distance
-    start_times = np.interp(start_distances, distance, elapsed)
-    end_times = np.interp(end_distances, distance, elapsed)
-    durations = end_times - start_times
-    valid_durations = durations > 0
-    if not valid_durations.any():
-        return np.nan, None
-    speeds = target_distance / durations[valid_durations]
-    best_index = int(np.argmax(speeds))
-    return speeds[best_index], None
-
-
-@st.cache_data(show_spinner="Building running pace curve cache...")
-def build_running_curve_cache(stream_records, durations):
-    running_df = pd.DataFrame(
-        [dict(record) for record in stream_records],
-        columns=["activity_id", "time", "distance"],
-    )
-    rows = []
-
-    for activity_id, activity in running_df.groupby("activity_id", sort=False):
-        distance = pd.to_numeric(activity["distance"], errors="coerce")
-        elapsed = pd.to_numeric(activity["time"], errors="coerce")
-        for duration in durations:
-            max_speed, _ = max_avg_speed_for_distance(
-                distance,
-                elapsed,
-                duration,
-            )
-            if not np.isnan(max_speed) and max_speed > 0:
-                rows.append({
-                    "activity_id": activity_id,
-                    "distance": duration,
-                    "max_speed": max_speed,
-                })
-
-    return pd.DataFrame(rows, columns=["activity_id", "distance", "max_speed"])
-
-
-def best_running_curve(running_cache, durations):
-    if running_cache.empty:
-        return [np.nan] * len(durations), [None] * len(durations)
-
-    best = (
-        running_cache.sort_values(["distance", "max_speed"], ascending=[True, False])
-        .drop_duplicates("distance")
-        .set_index("distance")
-    )
-    speeds = []
-    activity_ids = []
-    for duration in durations:
-        if duration in best.index:
-            speeds.append(best.loc[duration, "max_speed"])
-            activity_ids.append(best.loc[duration, "activity_id"])
-        else:
-            speeds.append(np.nan)
-            activity_ids.append(None)
-    return speeds, activity_ids
-
-
-curve_data = load_curve_cache(username) or {}
-power_curve_data = pd.DataFrame(curve_data.get("power_curve", []))
-running_curve_data = pd.DataFrame(curve_data.get("running_curve", []))
-
-with st.container(border=True):
-    power_col, running_col = st.columns(2, gap="large")
-
-    with power_col:
-        st.subheader("Cycling Power Curve")
-        if power_curve_data.empty:
-            st.info("No cycling power stream data found.")
-        else:
-            power_values = power_curve_data.set_index("duration").reindex(DURATIONS)["value"].tolist()
-            fig2 = go.Figure(go.Scatter(
-                x=DURATIONS,
-                y=power_values,
-                mode="lines+markers",
-                name="Power Curve",
-                marker=dict(size=8),
-            ))
-            fig2.update_layout(
-                height=360,
-                margin=dict(l=20, r=20, t=45, b=35),
-                xaxis=dict(type="log", tickvals=DURATIONS, ticktext=duration_labels),
-                yaxis_title="Watts",
-                title="Best Power Curve",
-                legend=dict(orientation="h"),
-            )
-            st.plotly_chart(fig2, width="stretch", key="power_curve")
-
-    with running_col:
-        st.subheader("Running Pace Curve")
-        if running_curve_data.empty:
-            st.info("No running pace stream data found. Sync Strava to backfill it.")
-        else:
-            running_speeds = running_curve_data.set_index("distance").reindex(RUNNING_DISTANCES)["speed"].tolist()
-            running_paces = [
-                1000 / (speed * 60) if pd.notna(speed) and speed > 0 else np.nan
-                for speed in running_speeds
-            ]
-            fig3 = go.Figure(go.Scatter(
-                x=RUNNING_DISTANCES,
-                y=running_paces,
-                mode="lines+markers",
-                name="Running Pace",
-                marker=dict(size=8),
-                customdata=[
-                    f"{int(pace)}:{int(round((pace % 1) * 60)):02d}/km" if pd.notna(pace) else ""
-                    for pace in running_paces
-                ],
-                hovertemplate="%{customdata}<extra></extra>",
-            ))
-            fig3.update_layout(
-                height=360,
-                margin=dict(l=20, r=20, t=45, b=35),
-                xaxis=dict(type="log", tickvals=RUNNING_DISTANCES, ticktext=running_distance_labels),
-                yaxis=dict(title="Pace (min/km)", autorange="reversed"),
-                title="Best Running Pace Curve",
-                legend=dict(orientation="h"),
-            )
-            st.plotly_chart(fig3, width="stretch", key="running_pace_curve")
-
+st.plotly_chart(fig,width="stretch")
 
 st.subheader("Latest Activities")
 
 latest_activities = df[
     (pd.to_datetime(df["date"]) >= pd.to_datetime(start_date)) &
     (pd.to_datetime(df["date"]) <= pd.to_datetime(end_date) + pd.Timedelta(days=1))
-].sort_values("date", ascending=False).copy()
+].sort_values("date",ascending=False).copy()
+
 latest_activities["Date"] = latest_activities["date"].dt.strftime("%Y-%m-%d")
-latest_activities["Activity"] = latest_activities["type"].astype(str).str.replace("root='", "", regex=False).str.replace("'", "", regex=False)
-latest_activities["Distance"] = latest_activities["distance_km"].map(lambda value: "" if pd.isna(value) else f"{value:.1f} km")
+latest_activities["Activity"] = latest_activities["type"].astype(str)
+latest_activities["Distance"] = latest_activities["distance_km"].map(
+    lambda value: "" if pd.isna(value) else f"{value:.1f} km"
+)
 latest_activities["Time"] = latest_activities["moving_time"].map(format_duration)
-latest_activities["Stress"] = latest_activities["stress"].map(lambda value: "" if pd.isna(value) else f"{value:.0f}")
-latest_activities["Normalized Power"] = latest_activities["weighted_average_watts"].map(lambda value: "" if pd.isna(value) else f"{value:.0f} W")
-latest_activities["Avg Heart Rate"] = latest_activities["average_heartrate"].map(lambda value: "" if pd.isna(value) else f"{value:.0f} bpm")
+latest_activities["Stress"] = latest_activities["stress"].map(
+    lambda value: "" if pd.isna(value) else f"{value:.0f}"
+)
+latest_activities["Normalized Power"] = latest_activities["weighted_average_watts"].map(
+    lambda value: "" if pd.isna(value) else f"{value:.0f} W"
+)
+latest_activities["Average Heart Rate"] = latest_activities["average_heartrate"].map(
+    lambda value: "" if pd.isna(value) else f"{value:.0f} bpm"
+)
 
-from helpers.metrics import ZONE_KEYS
+for column in [
+    "hr_z1",
+    "hr_z2",
+    "hr_z3",
+    "hr_z4",
+    "hr_z5",
+]:
+    if column not in latest_activities.columns:
+        latest_activities[column] = np.nan
 
+hr_zone_labels = {
+    "hr_z1": "HR Zone 1",
+    "hr_z2": "HR Zone 2",
+    "hr_z3": "HR Zone 3",
+    "hr_z4": "HR Zone 4",
+    "hr_z5": "HR Zone 5",
+}
 
-def get_zone_time(row, zone_num):
-    activity_type = str(row.get("type", "")).lower()
-    is_cycling = "ride" in activity_type or "virtual" in activity_type or "gravel" in activity_type or "mountain" in activity_type
-    is_running = "run" in activity_type or "treadmill" in activity_type
-    if is_cycling and pd.notna(row.get("time_z1_power")):
-        value = row.get(f"time_z{zone_num}_power")
-    elif is_running and pd.notna(row.get("time_z1_pace")):
-        value = row.get(f"time_z{zone_num}_pace")
-    else:
-        value = row.get(f"time_z{zone_num}_hr")
-    return "" if pd.isna(value) or value == 0 else f"{value/60:.0f} min"
+for source_column, label in hr_zone_labels.items():
+    latest_activities[label] = latest_activities[source_column].map(
+        lambda value: "" if pd.isna(value) else f"{value / 60:.0f} min"
+    )
 
-
-zone_columns = []
-for zone_num, zone_name in enumerate(ZONE_KEYS, 1):
-    column = f"Zone {zone_num} ({zone_name})"
-    latest_activities[column] = latest_activities.apply(lambda row, z=zone_num: get_zone_time(row, z), axis=1)
-    zone_columns.append(column)
+hr_zone_values = latest_activities[list(hr_zone_labels)].apply(
+    pd.to_numeric,
+    errors="coerce",
+).fillna(0)
+show_hr_zones = (
+    (
+        "zones_status" not in latest_activities.columns
+        or latest_activities["zones_status"].ne("unavailable").any()
+    )
+    and hr_zone_values.to_numpy().sum() > 0
+)
+table_columns = [
+    "Date",
+    "Activity",
+    "Distance",
+    "Time",
+    "Stress",
+    "Normalized Power",
+    "Average Heart Rate",
+]
+if show_hr_zones:
+    table_columns.extend(hr_zone_labels.values())
 
 st.dataframe(
-    latest_activities[
-        ["Date", "Activity", "Distance", "Time", "Stress", "Normalized Power", "Avg Heart Rate", *zone_columns]
-    ],
+    latest_activities[table_columns],
     width="stretch",
-    hide_index=True,
+    hide_index=True
 )

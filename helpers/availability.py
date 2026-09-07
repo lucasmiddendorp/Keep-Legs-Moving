@@ -1,8 +1,6 @@
-import os
 import json
 from datetime import datetime, timedelta
 from helpers.database import get_connection, get_user_id
-from helpers.user_cache import get_user_cache_paths
 
 
 DEFAULT_AVAILABILITY = {
@@ -25,11 +23,6 @@ DEFAULT_AVAILABILITY = {
     "exceptions": {}
 }
 
-
-def get_availability_file(username):
-    activity_file, _ = get_user_cache_paths(username)
-    folder = os.path.dirname(activity_file)
-    return os.path.join(folder, "availability.json")
 
 
 def load_availability(username):
@@ -54,13 +47,7 @@ def load_availability(username):
         conn.close()
 
     if not weekly_rows and not exception_rows:
-        try:
-            with open(get_availability_file(username), "r") as file:
-                legacy = json.load(file)
-            save_availability(username, legacy)
-            return legacy
-        except FileNotFoundError:
-            return json.loads(json.dumps(DEFAULT_AVAILABILITY))
+        return json.loads(json.dumps(DEFAULT_AVAILABILITY))
 
     weekly = json.loads(json.dumps(DEFAULT_AVAILABILITY["weekly"]))
     for day, available, hours, start, end in weekly_rows:
