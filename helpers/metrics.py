@@ -3,13 +3,14 @@ import pandas as pd
 from datetime import date
 from helpers.database import load_activity_cache
 
+# training zones based on strava power zones
 TRAINING_ZONES = {
     "Recovery": {"min": 0.00, "max": 0.55},
-    "Endurance": {"min": 0.55, "max": 0.76},
-    "Tempo": {"min": 0.76, "max": 0.91},
-    "Threshold": {"min": 0.91, "max": 1.06},
-    "VO2max": {"min": 1.06, "max": 1.21},
-    "Anaerobic": {"min": 1.21, "max": float("inf")},
+    "Endurance": {"min": 0.55, "max": 0.75},
+    "Tempo": {"min": 0.75, "max": 0.90},
+    "Threshold": {"min": 0.90, "max": 1.05},
+    "VO2max": {"min": 1.05, "max": 1.20},
+    "Anaerobic": {"min": 1.20, "max": float("inf")},
 }
 
 RUNNING_ZONES = {
@@ -23,7 +24,7 @@ RUNNING_ZONES = {
 
 ZONE_KEYS = tuple(TRAINING_ZONES.keys())
 
-ZONE_TO_DISPLAY = {
+ZONE_TO_DISPLAY = { 
     "Recovery": "Zone 1",
     "Endurance": "Zone 2",
     "Tempo": "Zone 3",
@@ -130,3 +131,45 @@ def calculate_workout_metrics(workout):
         "tss":round(tss),
         "steps":steps
     }
+
+def get_activity_zone_minutes(activity, ftp):
+    display_zones = list(dict.fromkeys([ZONE_TO_DISPLAY[z] for z in ZONE_KEYS]))
+    zones = {z: 0.0 for z in display_zones}
+    if not ftp or pd.isna(ftp):
+        return zones
+    power_buckets = [
+        ("power_0_50", 0, 50),
+        ("power_50_100", 50, 100),
+        ("power_100_150", 100, 150),
+        ("power_150_200", 150, 200),
+        ("power_200_250", 200, 250),
+        ("power_250_300", 250, 300),
+        ("power_300_350", 300, 350),
+        ("power_350_400", 350, 400),
+        ("power_400_450", 400, 450),
+    ]
+    for column, bucket_low, bucket_high in power_buckets:
+        seconds = pd.to_numeric(activity.get(column, 0), errors="coerce")
+        if pd.isna(seconds) or seconds <= 0:
+            continue
+        bucket_width = bucket_high - bucket_low
+        bucket_minutes = float(seconds) / 60.0
+        for zone_name in ZONE_KEYS:
+            zone = TRAINING_ZONES[zone_name]
+            zone_low = zone["min"] * float(ftp)
+            zone_high = zone["max"] * float(ftp)
+            overlap_low = max(bucket_low, zone_low)
+            overlap_high = min(bucket_high, zone_high)
+            if overlap_high > overlap_low:
+                fraction = (overlap_high - overlap_low) / bucket_width
+                display_zone = ZONE_TO_DISPLAY[zone_name]
+                zones[display_zone] += bucket_minutes * fraction
+    seconds_450_plus = pd.to_numeric(activity.get("power_450_plus", 0), errors="coerce")
+    if not pd.isna(seconds_450_plus) and seconds_450_plus > 0:
+        for zone_name in reversed(ZONE_KEYS):
+            zone = TRAINING_ZONES[zone_name]
+            if 450 >= zone["min"] * float(ftp):
+                display_zone = ZONE_TO_DISPLAY[zone_name]
+                zones[display_zone] += float(seconds_450_plus) / 60.0
+                break
+    return zones

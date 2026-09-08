@@ -45,9 +45,11 @@ def _power_target(intensity):
     return int(round(max(0, min(1000, intensity))))
 
 
-def _speed_target(threshold_pace, intensity):
-    speed_mps = (1000 / threshold_pace) * (intensity / 100)
-    return int(round(speed_mps * 1000))
+def _speed_target(threshold_pace,intensity):
+    threshold_seconds_per_km=float(threshold_pace)*60
+    threshold_speed_mps=1000/threshold_seconds_per_km
+    target_speed_mps=threshold_speed_mps*(float(intensity)/100)
+    return int(round(target_speed_mps))
 
 
 def _duration(step):

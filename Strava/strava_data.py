@@ -361,6 +361,7 @@ def update_activity_cache(client, username, progress_callback=None):
             if column not in fallback.columns:
                 fallback[column] = np.nan
         return fallback, pd.DataFrame(columns=ACTIVITY_COLUMNS)
+    
 def get_activity_zone_data(client,activity_id):
     zone_data={column:np.nan for column in ZONE_COLUMNS}
     try:

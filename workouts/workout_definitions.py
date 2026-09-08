@@ -197,16 +197,25 @@ def generate_workouts():
                     steps.append(recovery(5, 55, f"Set recovery {s + 1}"))
             workouts.append(build_workout(family, variant, "Threshold", family, steps, ["hard", "threshold"], 10, 10))
     tempo_families = {
-        "steady_tempo": (4, 30, 82),
-        "progressive_tempo": (5, 25, 78),
-        "tempo_intervals": (6, 20, 84),
-        "long_tempo_blocks": (4, 40, 80),
-        "tempo_endurance": (4, 30, 80),
-        "cadence_tempo": (6, 20, 82),
-        "sweetspot_tempo": (5, 25, 88),
-        "over_under_tempo": (6, 15, 84),
-        "variable_tempo": (6, 18, 80),
-        "tempo_ladder": (5, 20, 80),
+        # Short tempo
+        "short_tempo": (3, 8, 80),
+        "tempo_bursts": (4, 6, 82),
+
+        # Medium tempo
+        "steady_tempo": (3, 15, 82),
+        "progressive_tempo": (3, 12, 78),
+        "tempo_intervals": (4, 10, 84),
+        "cadence_tempo": (4, 8, 82),
+        "sweetspot_tempo": (3, 12, 88),
+        "over_under_tempo": (4, 6, 84),
+        "variable_tempo": (4, 8, 80),
+        "tempo_ladder": (3, 8, 80),
+
+        # Long tempo
+        "long_tempo_blocks": (4, 20, 80),
+        "tempo_endurance": (3, 20, 80),
+        "long_steady_tempo": (3, 30, 78),
+        "extended_tempo": (2, 40, 76),
     }
     for family, (sets, work_min, intensity) in tempo_families.items():
         for variant in range(1, 7):

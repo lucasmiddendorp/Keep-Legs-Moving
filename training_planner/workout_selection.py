@@ -208,6 +208,7 @@ class WorkoutSelector:
         target_tss: Optional[float] = None,
         target_min: Optional[float] = None,
         exclude_ids: Optional[set] = None,
+        previous_week_workout_id: Optional[str] = None,
     ) -> Optional[Dict]:
         """
         Select the workout closest to the requested target.
@@ -221,16 +222,16 @@ class WorkoutSelector:
 
         normalized_category = self._normalize_category(category)
 
+        excluded_ids=set(exclude_ids or set())
+        if previous_week_workout_id is not None:
+            excluded_ids.add(previous_week_workout_id)
         options = [
             workout
             for workout in self.workouts
             if self._normalize_category(
                 self._get_workout_category(workout)
             ) == normalized_category
-            and (
-                not exclude_ids
-                or workout.get("id") not in exclude_ids
-            )
+            and workout.get("id") not in excluded_ids
         ]
 
         if not options:

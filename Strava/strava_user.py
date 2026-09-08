@@ -155,10 +155,10 @@ def get_user_settings(username):
 
     if user_id is None:
         return {
-            "ftp": 300,
-            "threshold_pace": 5.0,
-            "max_hr": 190,
-            "weight": 70,
+            "ftp": 250,
+            "threshold_pace": 6.0,
+            "max_hr": 200,
+            "weight": 80,
             "athlete_level": "Amateur",
             "training_progression": 8,
             "atl_tc": 7,
@@ -188,10 +188,10 @@ def get_user_settings(username):
 
             if not row:
                 return {
-                    "ftp": 300,
-                    "threshold_pace": 5.0,
-                    "max_hr": 190,
-                    "weight": 70,
+                    "ftp": 250,
+                    "threshold_pace": 6.0,
+                    "max_hr": 200,
+                    "weight": 80,
                     "athlete_level": "Amateur",
                     "training_progression": 8,
                     "atl_tc": 7,
@@ -247,11 +247,11 @@ def save_user_settings(
                 )
                 VALUES (
                     %s,
-                    COALESCE(%s, 300),
-                    COALESCE(%s, 190),
+                    COALESCE(%s, 250),
+                    COALESCE(%s, 200),
                     %s,
-                    COALESCE(%s, 5.0),
-                    COALESCE(%s, 70),
+                    COALESCE(%s, 6.0),
+                    COALESCE(%s, 80),
                     COALESCE(%s, 'Amateur'),
                     COALESCE(%s, 8),
                     COALESCE(%s, 7),
@@ -259,11 +259,11 @@ def save_user_settings(
                 )
                 ON CONFLICT (user_id)
                 DO UPDATE SET
-                    ftp = CASE WHEN EXCLUDED.ftp != 300 THEN EXCLUDED.ftp ELSE user_settings.ftp END,
-                    max_hr = CASE WHEN EXCLUDED.max_hr != 190 THEN EXCLUDED.max_hr ELSE user_settings.max_hr END,
+                    ftp = CASE WHEN EXCLUDED.ftp != 250 THEN EXCLUDED.ftp ELSE user_settings.ftp END,
+                    max_hr = CASE WHEN EXCLUDED.max_hr != 200 THEN EXCLUDED.max_hr ELSE user_settings.max_hr END,
                     threshold_hr = COALESCE(EXCLUDED.threshold_hr, user_settings.threshold_hr),
-                    threshold_pace = CASE WHEN EXCLUDED.threshold_pace != 5.0 THEN EXCLUDED.threshold_pace ELSE user_settings.threshold_pace END,
-                    weight = CASE WHEN EXCLUDED.weight != 70 THEN EXCLUDED.weight ELSE user_settings.weight END,
+                    threshold_pace = CASE WHEN EXCLUDED.threshold_pace != 6.0 THEN EXCLUDED.threshold_pace ELSE user_settings.threshold_pace END,
+                    weight = CASE WHEN EXCLUDED.weight != 80 THEN EXCLUDED.weight ELSE user_settings.weight END,
                     athlete_level = CASE WHEN EXCLUDED.athlete_level != 'Amateur' THEN EXCLUDED.athlete_level ELSE user_settings.athlete_level END,
                     training_progression = CASE WHEN EXCLUDED.training_progression != 8 THEN EXCLUDED.training_progression ELSE user_settings.training_progression END,
                     atl_tc = CASE WHEN EXCLUDED.atl_tc != 7 THEN EXCLUDED.atl_tc ELSE user_settings.atl_tc END,

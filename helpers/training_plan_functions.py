@@ -10,7 +10,6 @@ from helpers.metrics import calculate_training_load
 from helpers.fit_generator import generate_fit_workout
 
 CATEGORIES = {"VO2max": "VO2max", "Threshold": "Threshold", "Tempo": "Tempo", "Endurance": "Endurance"}
-LEVELS = {"A": 20, "B": 40, "C": 60, "D": 80, "E": 100}
 DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 CATEGORY_COLORS = {
@@ -223,3 +222,5 @@ def calculate_weekly_tss(training_plan):
         for plan in training_plan.values()
         if plan
     )
+
+

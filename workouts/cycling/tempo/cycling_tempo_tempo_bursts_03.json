@@ -1,0 +1,114 @@
+{
+  "id": "cycling_tempo_tempo_bursts_03",
+  "name": "Tempo Bursts 03",
+  "category": "Tempo",
+  "subtype": "tempo_bursts",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 600,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Progressive warm-up."
+    },
+    {
+      "name": "Tempo block 1",
+      "duration_seconds": 360,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 1",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Tempo block 2",
+      "duration_seconds": 360,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 2",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Tempo block 3",
+      "duration_seconds": 360,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 3",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Tempo block 4",
+      "duration_seconds": 360,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 4",
+      "duration_seconds": 180,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Tempo block 5",
+      "duration_seconds": 360,
+      "intensity": 82,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy riding to finish the workout."
+    }
+  ],
+  "target_if": 0.73,
+  "tags": [
+    "cycling",
+    "tempo",
+    "tempo_bursts",
+    "tempo_bursts",
+    "moderate",
+    "aerobic"
+  ],
+  "duration_minutes": 63,
+  "estimated_tss": 52,
+  "target_tss": 52,
+  "interval_count": 0,
+  "interval_duration": 0,
+  "recovery_duration": 180,
+  "sets": 1,
+  "fit_filename": "cycling/tempo/cycling_tempo_tempo_bursts_03.fit"
+}

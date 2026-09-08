@@ -4,7 +4,7 @@ from helpers.style import apply_global_style
 from helpers.dashboard_css import inject_card_css
 from helpers.workout_builder import plot_workout_summary, workout_builder_dialog
 from helpers.training_plan_functions import load_workouts, workout_to_plot_steps, generate_user_fit_workout
-from Strava.strava_user import get_training_goal
+from Strava.strava_user import get_training_goal, get_user_settings
 
 apply_global_style()
 inject_card_css()
@@ -16,6 +16,9 @@ inject_card_css()
 ROOT = Path(__file__).resolve().parent.parent
 LIBRARY_PATH = ROOT / "workouts"
 username = st.session_state.get("username")
+user_settings = get_user_settings(username) if username else {}
+ftp = float(user_settings.get("ftp", 0) or 0)
+threshold_pace = float(user_settings.get("threshold_pace", 0) or 0)
 training_goal = get_training_goal(username) if username else {}
 default_sport = training_goal.get("sport", "Cycling") if isinstance(training_goal, dict) else "Cycling"
 if default_sport not in ["Cycling", "Running"]:
@@ -40,18 +43,19 @@ def get_duration(workout):
         return float(workout.get("duration_seconds", 0) or 0) / 60
     return sum(float(s.get("duration_seconds", 0) or 0) + float(s.get("duration_minutes", 0) or 0) * 60 for s in workout.get("steps", [])) / 60
 
-def render_preview(workout, key, sport, height=180):
+def render_preview(workout, key, sport, height=180, ftp=None, threshold_pace=None):
     steps = workout_to_plot_steps(workout)
     if not steps:
         return
-    fig = plot_workout_summary(steps, sport=sport)
+    print(threshold_pace)
+    fig = plot_workout_summary(steps, sport=sport, ftp=ftp, threshold_pace=threshold_pace)
     fig.update_layout(
         height=height,
     )
     st.plotly_chart(fig, width="stretch", config={"displayModeBar": False}, key=key)
 
 @st.dialog("Workout details")
-def workout_details(workout, sport):
+def workout_details(workout, sport, ftp=None, threshold_pace=None):
     duration = round(get_duration(workout))
     tss = float(workout.get("target_tss", workout.get("estimated_tss", 0)) or 0)
     target_if = float(workout.get("target_if", 0) or 0)
@@ -62,6 +66,8 @@ def workout_details(workout, sport):
         f"details_{workout.get('_file', workout.get('name'))}",
         sport,
         height=260,
+        ftp=ftp,
+        threshold_pace=threshold_pace,
     )
     try:
         username = st.session_state.get("username")
@@ -196,10 +202,10 @@ for i, workout in enumerate(workouts):
             """,
             unsafe_allow_html=True,
         )
-        render_preview(workout, f"preview_{sport}_{i}", sport)
+        render_preview(workout, f"preview_{sport}_{i}", sport, ftp=ftp, threshold_pace=threshold_pace)
         if st.button(
             "View workout",
             key=f"view_{sport}_{i}",
             use_container_width=True,
         ):
-            workout_details(workout, sport)
+            workout_details(workout, sport, ftp=ftp, threshold_pace=threshold_pace)

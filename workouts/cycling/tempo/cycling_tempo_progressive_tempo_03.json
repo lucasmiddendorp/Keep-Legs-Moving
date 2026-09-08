@@ -15,7 +15,7 @@
     },
     {
       "name": "Progressive tempo 1",
-      "duration_seconds": 1560,
+      "duration_seconds": 780,
       "intensity": 78,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +31,7 @@
     },
     {
       "name": "Progressive tempo 2",
-      "duration_seconds": 1560,
+      "duration_seconds": 780,
       "intensity": 81,
       "duration_type": "Time",
       "repeat": 1,
@@ -47,7 +47,7 @@
     },
     {
       "name": "Progressive tempo 3",
-      "duration_seconds": 1560,
+      "duration_seconds": 780,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -63,40 +63,8 @@
     },
     {
       "name": "Progressive tempo 4",
-      "duration_seconds": 1560,
+      "duration_seconds": 780,
       "intensity": 87,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 4",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Progressive tempo 5",
-      "duration_seconds": 1560,
-      "intensity": 90,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 5",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Progressive tempo 6",
-      "duration_seconds": 1560,
-      "intensity": 93,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -110,7 +78,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.83,
+  "target_if": 0.76,
   "tags": [
     "cycling",
     "tempo",
@@ -119,9 +87,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 192,
-  "estimated_tss": 211,
-  "target_tss": 211,
+  "duration_minutes": 82,
+  "estimated_tss": 76,
+  "target_tss": 76,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

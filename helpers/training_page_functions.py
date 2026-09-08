@@ -27,23 +27,48 @@ def get_zone_minutes_from_steps(workout):
     return zones
 def get_completed_week_zones(activities,week_start,today,ftp):
     zones=empty_zones()
-    if activities is None or activities.empty or "date" not in activities:return zones
+    if activities is None or activities.empty or "date" not in activities.columns or not ftp:
+        return zones
     frame=activities.copy()
     frame["date"]=pd.to_datetime(frame["date"],errors="coerce").dt.date
     frame=frame[(frame["date"]>=week_start)&(frame["date"]<=today)]
+    power_buckets=[
+        ("power_0_50",0,50),
+        ("power_50_100",50,100),
+        ("power_100_150",100,150),
+        ("power_150_200",150,200),
+        ("power_200_250",200,250),
+        ("power_250_300",250,300),
+        ("power_300_350",300,350),
+        ("power_350_400",350,400),
+        ("power_400_450",400,450),
+    ]
+    ftp=float(ftp)
     for _,activity in frame.iterrows():
-        power_times=[]
-        hr_times=[]
-        for index in range(1,len(ZONE_KEYS)+1):
-            power_time=activity.get(f"time_z{index}_power",0)
-            hr_time=activity.get(f"time_z{index}_hr",0)
-            power_times.append(float(power_time) if power_time is not None and not pd.isna(power_time) else 0)
-            hr_times.append(float(hr_time) if hr_time is not None and not pd.isna(hr_time) else 0)
-        source_times=power_times if any(power_times) else hr_times
-        for zone,seconds in zip(ZONE_KEYS,source_times):zones[zone]+=seconds/60
-    zones["VO2max"] += zones["Anaerobic"]
-    zones["Anaerobic"] = 0.0
+        for column,bucket_low,bucket_high in power_buckets:
+            seconds=pd.to_numeric(activity.get(column,0),errors="coerce")
+            if pd.isna(seconds) or seconds<=0:
+                continue
+            bucket_width=bucket_high-bucket_low
+            for zone in ZONE_KEYS:
+                zone_min=TRAINING_ZONES[zone]["min"]*ftp
+                zone_max=TRAINING_ZONES[zone]["max"]*ftp
+                overlap_low=max(bucket_low,zone_min)
+                overlap_high=min(bucket_high,zone_max)
+                if overlap_high>overlap_low:
+                    fraction=(overlap_high-overlap_low)/bucket_width
+                    zones[zone]+=(float(seconds)*fraction)/60
+        seconds_450_plus=pd.to_numeric(activity.get("power_450_plus",0),errors="coerce")
+        if not pd.isna(seconds_450_plus) and seconds_450_plus>0:
+            for zone in reversed(ZONE_KEYS):
+                zone_min=TRAINING_ZONES[zone]["min"]*ftp
+                if 450>=zone_min:
+                    zones[zone]+=float(seconds_450_plus)/60
+                    break
+    zones["VO2max"]+=zones["Anaerobic"]
+    zones["Anaerobic"]=0.0
     return zones
+
 def get_workout_duration(workout):
     steps=(workout or {}).get("steps",[])
     if not steps:
@@ -135,7 +160,7 @@ def render_preview(workout, key, height=180):
     )
     
 @st.dialog("Workout details")
-def workout_details_dialog(workout):
+def workout_details_dialog(workout, ftp, threshold_pace):
     category=workout.get("_category",workout.get("category","Workout"))
     duration=get_workout_duration(workout)
     target_tss=float(workout.get("target_tss",workout.get("estimated_tss",0)) or 0)
@@ -145,7 +170,9 @@ def workout_details_dialog(workout):
     render_preview(
         workout,
         f"details_preview_{workout.get('id',workout.get('_file','workout'))}",
-        height=260
+        height=260,
+        ftp= ftp,
+        threshold_pace=threshold_pace,
     )
     try:
         username=st.session_state.get("username")
@@ -218,7 +245,10 @@ def render_clickable_workout_card(workout,day,date_text,category,duration_text,c
         width="stretch",
         help="Open workout",
     ):
-        workout_details_dialog(workout)
+        user_settings = get_user_settings(st.session_state.get("username"))
+        ftp = float(user_settings.get("ftp", 0) or 0)
+        threshold_pace = float(user_settings.get("threshold_pace", 0) or 0)
+        workout_details_dialog(workout, ftp, threshold_pace)
 
     st.markdown(
         f"""

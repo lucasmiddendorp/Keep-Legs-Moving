@@ -15,7 +15,7 @@
     },
     {
       "name": "Tempo ladder 1",
-      "duration_seconds": 1200,
+      "duration_seconds": 480,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +31,7 @@
     },
     {
       "name": "Tempo ladder 2",
-      "duration_seconds": 1380,
+      "duration_seconds": 660,
       "intensity": 82,
       "duration_type": "Time",
       "repeat": 1,
@@ -47,7 +47,7 @@
     },
     {
       "name": "Tempo ladder 3",
-      "duration_seconds": 1560,
+      "duration_seconds": 840,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -63,40 +63,8 @@
     },
     {
       "name": "Tempo ladder 4",
-      "duration_seconds": 1740,
+      "duration_seconds": 1020,
       "intensity": 86,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 4",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Tempo ladder 5",
-      "duration_seconds": 1920,
-      "intensity": 88,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 5",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Tempo ladder 6",
-      "duration_seconds": 2100,
-      "intensity": 90,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -110,7 +78,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.83,
+  "target_if": 0.77,
   "tags": [
     "cycling",
     "tempo",
@@ -119,9 +87,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 201,
-  "estimated_tss": 223,
-  "target_tss": 223,
+  "duration_minutes": 80,
+  "estimated_tss": 75,
+  "target_tss": 75,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

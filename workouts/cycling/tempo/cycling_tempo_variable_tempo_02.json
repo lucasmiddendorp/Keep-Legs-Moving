@@ -15,7 +15,7 @@
     },
     {
       "name": "Variable tempo 1",
-      "duration_seconds": 1080,
+      "duration_seconds": 480,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +31,7 @@
     },
     {
       "name": "Variable tempo 2",
-      "duration_seconds": 1140,
+      "duration_seconds": 540,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -47,7 +47,7 @@
     },
     {
       "name": "Variable tempo 3",
-      "duration_seconds": 1200,
+      "duration_seconds": 600,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -63,39 +63,7 @@
     },
     {
       "name": "Variable tempo 4",
-      "duration_seconds": 1080,
-      "intensity": 84,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 4",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Variable tempo 5",
-      "duration_seconds": 1140,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 5",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Variable tempo 6",
-      "duration_seconds": 1200,
+      "duration_seconds": 480,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -110,7 +78,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.78,
+  "target_if": 0.74,
   "tags": [
     "cycling",
     "tempo",
@@ -119,9 +87,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 151,
-  "estimated_tss": 149,
-  "target_tss": 149,
+  "duration_minutes": 66,
+  "estimated_tss": 57,
+  "target_tss": 57,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

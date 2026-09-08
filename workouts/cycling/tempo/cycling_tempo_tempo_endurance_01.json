@@ -15,7 +15,7 @@
     },
     {
       "name": "Tempo block 1",
-      "duration_seconds": 1860,
+      "duration_seconds": 1260,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +31,7 @@
     },
     {
       "name": "Tempo block 2",
-      "duration_seconds": 1860,
+      "duration_seconds": 1260,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -47,7 +47,7 @@
     },
     {
       "name": "Tempo block 3",
-      "duration_seconds": 1860,
+      "duration_seconds": 1260,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -63,23 +63,7 @@
     },
     {
       "name": "Tempo block 4",
-      "duration_seconds": 1860,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 4",
-      "duration_seconds": 300,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Tempo block 5",
-      "duration_seconds": 1860,
+      "duration_seconds": 1260,
       "intensity": 80,
       "duration_type": "Time",
       "repeat": 1,
@@ -94,7 +78,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.77,
+  "target_if": 0.75,
   "tags": [
     "cycling",
     "tempo",
@@ -103,9 +87,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 197,
-  "estimated_tss": 189,
-  "target_tss": 189,
+  "duration_minutes": 121,
+  "estimated_tss": 111,
+  "target_tss": 111,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 300,
