@@ -3,6 +3,63 @@ import pandas as pd
 from datetime import date
 from helpers.database import load_activity_cache
 
+TRAINING_ZONES = {
+    "Recovery": {"min": 0.00, "max": 0.55},
+    "Endurance": {"min": 0.55, "max": 0.76},
+    "Tempo": {"min": 0.76, "max": 0.91},
+    "Threshold": {"min": 0.91, "max": 1.06},
+    "VO2max": {"min": 1.06, "max": 1.21},
+    "Anaerobic": {"min": 1.21, "max": float("inf")},
+}
+
+RUNNING_ZONES = {
+    "Recovery": {"min": 0.00, "max": 0.70},
+    "Endurance": {"min": 0.70, "max": 0.80},
+    "Tempo": {"min": 0.80, "max": 0.95},
+    "Threshold": {"min": 0.95, "max": 1.06},
+    "VO2max": {"min": 1.06, "max": 1.21},
+    "Anaerobic": {"min": 1.21, "max": float("inf")},
+}
+
+ZONE_KEYS = tuple(TRAINING_ZONES.keys())
+
+ZONE_TO_DISPLAY = {
+    "Recovery": "Zone 1",
+    "Endurance": "Zone 2",
+    "Tempo": "Zone 3",
+    "Threshold": "Zone 4",
+    "VO2max": "Zone 5+",
+    "Anaerobic": "Zone 5+",
+}
+
+_ACTIVE_ZONE_DEFINITIONS = {
+    "Cycling": TRAINING_ZONES,
+    "Running": RUNNING_ZONES,
+}
+
+
+def set_strava_zone_definitions(power_zones=None, heart_rate_zones=None):
+    definitions = {}
+    if power_zones:
+        definitions["Cycling"] = power_zones
+    if heart_rate_zones:
+        definitions["Running"] = heart_rate_zones
+    for sport, zone_definitions in definitions.items():
+        _ACTIVE_ZONE_DEFINITIONS[sport] = zone_definitions
+
+def get_zone_definitions(sport="Cycling"):
+    if str(sport or "Cycling").strip().casefold() == "running":
+        return _ACTIVE_ZONE_DEFINITIONS["Running"]
+    return _ACTIVE_ZONE_DEFINITIONS["Cycling"]
+
+
+def get_training_zone(intensity, sport="Cycling"):
+    for zone, limits in get_zone_definitions(sport).items():
+        if limits["min"] <= intensity < limits["max"]:
+            return zone
+    return "Anaerobic"
+
+
 def calculate_training_load(username,ctl_tc,atl_tc,activity_type="All"):
     stored_activities = load_activity_cache(username)
     if stored_activities is None or len(stored_activities) == 0:

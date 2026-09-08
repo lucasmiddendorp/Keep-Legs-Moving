@@ -91,6 +91,56 @@ def normalize_strava_value(value):
     return str(value).replace("root='", "").replace("'", "")
 
 
+def _normalize_athlete_zones(zones, reference_value, category_names):
+    category_count = len(category_names)
+    if not zones or reference_value <= 0:
+        return None
+    normalized = []
+    source_zones = list(zones)
+    if len(source_zones) > category_count:
+        source_zones = source_zones[:category_count - 1] + [source_zones[-1]]
+    for zone in source_zones[:category_count]:
+        minimum = getattr(zone, "min", None)
+        maximum = getattr(zone, "max", None)
+        if minimum is None:
+            continue
+        normalized.append({
+            "min": float(minimum) / reference_value,
+            "max": (
+                float(maximum) / reference_value
+                if maximum is not None
+                else float("inf")
+            ),
+        })
+    if len(normalized) != category_count:
+        return None
+    return dict(zip(category_names, normalized))
+
+
+def fetch_athlete_zone_definitions(client, ftp, max_hr):
+    try:
+        athlete_zones = client.get_athlete_zones()
+        power = getattr(athlete_zones, "power", None)
+        heart_rate = getattr(athlete_zones, "heart_rate", None)
+        power_zones = _normalize_athlete_zones(
+            getattr(power, "zones", None),
+            ftp,
+            ["Recovery", "Endurance", "Tempo", "Threshold", "VO2max", "Anaerobic"],
+        )
+        heart_rate_zones = _normalize_athlete_zones(
+            getattr(heart_rate, "zones", None),
+            max_hr,
+            ["Recovery", "Endurance", "Tempo", "Threshold", "VO2max"],
+        )
+        if power_zones or heart_rate_zones:
+            from helpers.metrics import set_strava_zone_definitions
+            set_strava_zone_definitions(power_zones, heart_rate_zones)
+        return True
+    except Exception as e:
+        debug_log(f"Could not load Strava athlete zones: {e}")
+        return False
+
+
 def activity_to_dict(activity):
     sport = getattr(activity, "sport_type", None)
     if sport is None:
@@ -181,24 +231,45 @@ def check_strava_rate_limit(client, safety_margin=5):
     except Exception as e:
         debug_log(f"Could not inspect Strava rate-limit headers: {e}")
 
-def fetch_activities(client):
-    try:
-        activities = []
-        check_strava_rate_limit(client)
-        activities.extend(list(client.get_activities(limit=100)))
-        return activities
-    except (RateLimitExceeded, RateLimitTimeout) as e:
-        state = _rate_limit_state(client) or {}
-        daily = state.get("remaining_daily", 1) <= 0
-        raise StravaRateLimitReached(
-            reset_at=None if daily else _next_quarter_hour(),
-            reason=str(e),
-            limit_type="daily" if daily else "15_min",
-            remaining=state.get("remaining_15_min"),
+def fetch_activities(client, max_pages=10):
+    activities = []
+    before = None
+    for _ in range(max_pages):
+        try:
+            check_strava_rate_limit(client)
+        except StravaRateLimitReached:
+            if activities:
+                break
+            raise
+        try:
+            page = list(client.get_activities(before=before, limit=100))
+        except (RateLimitExceeded, RateLimitTimeout) as e:
+            if activities:
+                break
+            state = _rate_limit_state(client) or {}
+            daily = state.get("remaining_daily", 1) <= 0
+            raise StravaRateLimitReached(
+                reset_at=None if daily else _next_quarter_hour(),
+                reason=str(e),
+                limit_type="daily" if daily else "15_min",
+                remaining=state.get("remaining_15_min"),
+            )
+        except Exception as e:
+            debug_error(f"Error fetching activities: {e}")
+            break
+        if not page:
+            break
+        activities.extend(page)
+        if len(page) < 100:
+            break
+        oldest_date = min(
+            (getattr(a, "start_date", None) for a in page if getattr(a, "start_date", None)),
+            default=None,
         )
-    except Exception as e:
-        debug_error(f"Error fetching activities: {e}")
-        return []
+        if oldest_date is None:
+            break
+        before = oldest_date
+    return activities
 
 def update_activity_cache(client, username, progress_callback=None):
     try:
@@ -592,6 +663,7 @@ def update_strava_data(username=None,access_token=None,progress_callback=None):
         ftp=float(settings.get("ftp",290) or 290)
         threshold_pace=float(settings.get("threshold_pace",5.0) or 5.0)
         max_hr=float(settings.get("max_hr",190) or 190)
+        fetch_athlete_zone_definitions(client, ftp, max_hr)
         running_threshold_speed=1000 / (threshold_pace * 60)
         df=calculate_activity_stress(df,ftp,running_threshold_speed,max_hr)
         for column in ACTIVITY_COLUMNS + ["zones_synced"]:
