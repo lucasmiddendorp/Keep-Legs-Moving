@@ -171,8 +171,6 @@ def workout_details_dialog(workout, ftp, threshold_pace):
         workout,
         f"details_preview_{workout.get('id',workout.get('_file','workout'))}",
         height=260,
-        ftp= ftp,
-        threshold_pace=threshold_pace,
     )
     try:
         username=st.session_state.get("username")
