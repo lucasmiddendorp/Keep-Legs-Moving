@@ -13,8 +13,8 @@
       "description": "Easy running with gradual progression."
     },
     {
-      "name": "Sustained threshold",
-      "duration_seconds": 1620,
+      "name": "Sustained threshold 1",
+      "duration_seconds": 1500,
       "intensity": 96,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,9 +39,9 @@
     "hard",
     "race-specific"
   ],
-  "duration_minutes": 39,
-  "estimated_tss": 51,
-  "target_tss": 51,
+  "duration_minutes": 37,
+  "estimated_tss": 48,
+  "target_tss": 48,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

@@ -13,9 +13,17 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "VO2max interval 1",
       "duration_seconds": 120,
-      "intensity": 108,
+      "intensity": 107,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +55,7 @@
     {
       "name": "VO2max interval 3",
       "duration_seconds": 120,
-      "intensity": 110,
+      "intensity": 111,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,7 +71,7 @@
     {
       "name": "VO2max interval 4",
       "duration_seconds": 120,
-      "intensity": 111,
+      "intensity": 113,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -79,23 +87,15 @@
     {
       "name": "VO2max interval 5",
       "duration_seconds": 120,
-      "intensity": 112,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "VO2max interval 6",
-      "duration_seconds": 120,
-      "intensity": 113,
+      "name": "Endurance after intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -109,7 +109,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.89,
+  "target_if": 0.86,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -119,10 +119,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 35,
-  "estimated_tss": 41,
-  "target_tss": 41,
-  "interval_count": 6,
+  "duration_minutes": 41,
+  "estimated_tss": 45,
+  "target_tss": 45,
+  "interval_count": 7,
   "interval_duration": 0,
   "recovery_duration": 120,
   "sets": 1,

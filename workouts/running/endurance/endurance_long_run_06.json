@@ -14,7 +14,7 @@
     },
     {
       "name": "Long run",
-      "duration_seconds": 8100,
+      "duration_seconds": 7200,
       "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
@@ -39,9 +39,9 @@
     "aerobic",
     "easy"
   ],
-  "duration_minutes": 145,
-  "estimated_tss": 124,
-  "target_tss": 124,
+  "duration_minutes": 130,
+  "estimated_tss": 111,
+  "target_tss": 111,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

@@ -14,7 +14,7 @@
     },
     {
       "name": "Long aerobic block",
-      "duration_seconds": 7200,
+      "duration_seconds": 5400,
       "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +31,7 @@
     {
       "name": "Strong finish",
       "duration_seconds": 600,
-      "intensity": 90,
+      "intensity": 88,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -55,9 +55,9 @@
     "aerobic",
     "easy"
   ],
-  "duration_minutes": 156,
-  "estimated_tss": 143,
-  "target_tss": 143,
+  "duration_minutes": 126,
+  "estimated_tss": 117,
+  "target_tss": 117,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

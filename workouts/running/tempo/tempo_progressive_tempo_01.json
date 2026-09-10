@@ -13,8 +13,8 @@
       "description": "Easy running with gradual progression."
     },
     {
-      "name": "Progressive tempo 1",
-      "duration_seconds": 660,
+      "name": "Tempo block 1",
+      "duration_seconds": 480,
       "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
@@ -29,25 +29,9 @@
       "description": "Easy running or very light jogging."
     },
     {
-      "name": "Progressive tempo 2",
-      "duration_seconds": 660,
+      "name": "Tempo block 2",
+      "duration_seconds": 480,
       "intensity": 90,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Progressive tempo 3",
-      "duration_seconds": 660,
-      "intensity": 93,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -61,7 +45,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.84,
+  "target_if": 0.81,
   "sport": "Running",
   "tags": [
     "tempo",
@@ -71,9 +55,9 @@
     "aerobic",
     "moderate"
   ],
-  "duration_minutes": 49,
-  "estimated_tss": 57,
-  "target_tss": 57,
+  "duration_minutes": 30,
+  "estimated_tss": 31,
+  "target_tss": 31,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,

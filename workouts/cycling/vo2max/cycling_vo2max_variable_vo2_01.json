@@ -14,7 +14,7 @@
       "description": "Progressive warm-up."
     },
     {
-      "name": "Work interval 1.1",
+      "name": "Work interval 1",
       "duration_seconds": 120,
       "intensity": 110,
       "duration_type": "Time",
@@ -22,7 +22,7 @@
       "description": ""
     },
     {
-      "name": "Recovery 1.1",
+      "name": "Recovery 1",
       "duration_seconds": 120,
       "intensity": 60,
       "duration_type": "Time",
@@ -30,169 +30,9 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Work interval 1.2",
+      "name": "Work interval 2",
       "duration_seconds": 180,
       "intensity": 112,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 1.2",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 1.3",
-      "duration_seconds": 240,
-      "intensity": 114,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 1.3",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 1.4",
-      "duration_seconds": 120,
-      "intensity": 116,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Set recovery 1",
-      "duration_seconds": 180,
-      "intensity": 55,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 2.1",
-      "duration_seconds": 120,
-      "intensity": 110,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.1",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 2.2",
-      "duration_seconds": 180,
-      "intensity": 112,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.2",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 2.3",
-      "duration_seconds": 240,
-      "intensity": 114,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.3",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 2.4",
-      "duration_seconds": 120,
-      "intensity": 116,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Set recovery 2",
-      "duration_seconds": 180,
-      "intensity": 55,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 3.1",
-      "duration_seconds": 120,
-      "intensity": 110,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.1",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 3.2",
-      "duration_seconds": 180,
-      "intensity": 112,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.2",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 3.3",
-      "duration_seconds": 240,
-      "intensity": 114,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.3",
-      "duration_seconds": 120,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 3.4",
-      "duration_seconds": 120,
-      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -206,7 +46,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.93,
+  "target_if": 0.76,
   "tags": [
     "cycling",
     "vo2max",
@@ -215,10 +55,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 81,
-  "estimated_tss": 98,
-  "target_tss": 98,
-  "interval_count": 12,
+  "duration_minutes": 31,
+  "estimated_tss": 25,
+  "target_tss": 25,
+  "interval_count": 2,
   "interval_duration": 120,
   "recovery_duration": 120,
   "sets": 1,

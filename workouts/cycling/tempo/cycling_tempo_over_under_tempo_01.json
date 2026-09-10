@@ -54,78 +54,6 @@
       "description": ""
     },
     {
-      "name": "Recovery 2",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Under 3",
-      "duration_seconds": 360,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Over 3",
-      "duration_seconds": 360,
-      "intensity": 92,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Under 4",
-      "duration_seconds": 360,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Over 4",
-      "duration_seconds": 360,
-      "intensity": 92,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 4",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Under 5",
-      "duration_seconds": 360,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Over 5",
-      "duration_seconds": 360,
-      "intensity": 92,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 660,
       "intensity": 55,
@@ -134,7 +62,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.8,
+  "target_if": 0.76,
   "tags": [
     "cycling",
     "tempo",
@@ -143,9 +71,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 94,
-  "estimated_tss": 94,
-  "target_tss": 94,
+  "duration_minutes": 49,
+  "estimated_tss": 44,
+  "target_tss": 44,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

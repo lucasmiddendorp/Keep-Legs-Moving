@@ -49,11 +49,40 @@ def validate_fit(payload: bytes) -> None:
 
 def validate_unique(workouts: list[Workout]) -> None:
     ids = [workout.id for workout in workouts]
+
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate workout IDs detected")
+
     signatures = [
-        tuple((step.name, step.duration_seconds, step.intensity, step.repeat) for step in workout.steps)
+        tuple(
+            (
+                step.name,
+                step.duration_seconds,
+                step.intensity,
+                step.repeat,
+            )
+            for step in workout.steps
+        )
         for workout in workouts
     ]
-    if len(signatures) != len(set(signatures)):
-        raise ValueError("Duplicate workout structures detected")
+
+    seen = {}
+
+    for workout, signature in zip(workouts, signatures):
+        if signature in seen:
+            print("\nDUPLICATE:")
+            print("  ", seen[signature])
+            print("  ", workout.id)
+            print("  ", workout.name)
+            print("\nSTEPS:")
+            for step in workout.steps:
+                print(
+                    f"  {step.name}: "
+                    f"{step.duration_seconds}s @ "
+                    f"{step.intensity}%"
+                )
+            print()
+
+            raise ValueError("Duplicate workout structures detected")
+
+        seen[signature] = workout.id

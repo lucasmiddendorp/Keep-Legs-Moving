@@ -37,38 +37,6 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "VO2max interval 3",
-      "duration_seconds": 300,
-      "intensity": 108,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "VO2max interval 4",
-      "duration_seconds": 300,
-      "intensity": 108,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 300,
       "intensity": 65,
@@ -77,7 +45,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.94,
+  "target_if": 0.9,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -87,10 +55,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 41,
-  "estimated_tss": 54,
-  "target_tss": 54,
-  "interval_count": 4,
+  "duration_minutes": 25,
+  "estimated_tss": 31,
+  "target_tss": 31,
+  "interval_count": 2,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,

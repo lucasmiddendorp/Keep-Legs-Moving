@@ -1,0 +1,170 @@
+{
+  "id": "cycling_threshold_over_under_07",
+  "name": "Over Under 07",
+  "category": "Threshold",
+  "subtype": "over_under",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 660,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Progressive warm-up."
+    },
+    {
+      "name": "Endurance before intervals",
+      "duration_seconds": 1800,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
+      "name": "Under 1",
+      "duration_seconds": 120,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 1",
+      "duration_seconds": 120,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 1",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 2",
+      "duration_seconds": 120,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 2",
+      "duration_seconds": 120,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 2",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 3",
+      "duration_seconds": 120,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 3",
+      "duration_seconds": 120,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 3",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 4",
+      "duration_seconds": 120,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 4",
+      "duration_seconds": 120,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 4",
+      "duration_seconds": 120,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Under 5",
+      "duration_seconds": 120,
+      "intensity": 88,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Over 5",
+      "duration_seconds": 120,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 1800,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy riding to finish the workout."
+    }
+  ],
+  "target_if": 0.75,
+  "tags": [
+    "cycling",
+    "threshold",
+    "over_under",
+    "over_under",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 110,
+  "estimated_tss": 96,
+  "target_tss": 96,
+  "interval_count": 2,
+  "interval_duration": 1800,
+  "recovery_duration": 120,
+  "sets": 1,
+  "fit_filename": "cycling/threshold/cycling_threshold_over_under_07.fit"
+}

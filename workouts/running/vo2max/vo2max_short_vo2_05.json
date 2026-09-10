@@ -15,7 +15,7 @@
     {
       "name": "VO2max interval 1",
       "duration_seconds": 60,
-      "intensity": 117,
+      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -31,7 +31,7 @@
     {
       "name": "VO2max interval 2",
       "duration_seconds": 60,
-      "intensity": 117,
+      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +47,7 @@
     {
       "name": "VO2max interval 3",
       "duration_seconds": 60,
-      "intensity": 117,
+      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,7 +63,7 @@
     {
       "name": "VO2max interval 4",
       "duration_seconds": 60,
-      "intensity": 117,
+      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -79,7 +79,7 @@
     {
       "name": "VO2max interval 5",
       "duration_seconds": 60,
-      "intensity": 117,
+      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -95,7 +95,7 @@
     {
       "name": "VO2max interval 6",
       "duration_seconds": 60,
-      "intensity": 117,
+      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -111,7 +111,7 @@
     {
       "name": "VO2max interval 7",
       "duration_seconds": 60,
-      "intensity": 117,
+      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -127,55 +127,7 @@
     {
       "name": "VO2max interval 8",
       "duration_seconds": 60,
-      "intensity": 117,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 60,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "VO2max interval 9",
-      "duration_seconds": 60,
-      "intensity": 117,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 60,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "VO2max interval 10",
-      "duration_seconds": 60,
-      "intensity": 117,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 60,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "VO2max interval 11",
-      "duration_seconds": 60,
-      "intensity": 117,
+      "intensity": 116,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -189,7 +141,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.93,
+  "target_if": 0.9,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -199,10 +151,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 34,
-  "estimated_tss": 42,
-  "target_tss": 42,
-  "interval_count": 11,
+  "duration_minutes": 28,
+  "estimated_tss": 33,
+  "target_tss": 33,
+  "interval_count": 8,
   "interval_duration": 0,
   "recovery_duration": 60,
   "sets": 1,

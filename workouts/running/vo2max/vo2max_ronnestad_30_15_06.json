@@ -13,6 +13,14 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 900,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Ronnestad 30 sec Work 1.1",
       "duration_seconds": 30,
       "intensity": 115,
@@ -213,7 +221,7 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Set recovery 1",
       "duration_seconds": 180,
       "intensity": 65,
       "duration_type": "Time",
@@ -421,7 +429,7 @@
       "description": ""
     },
     {
-      "name": "Recovery",
+      "name": "Set recovery 2",
       "duration_seconds": 180,
       "intensity": 65,
       "duration_type": "Time",
@@ -629,6 +637,14 @@
       "description": ""
     },
     {
+      "name": "Endurance after intervals",
+      "duration_seconds": 900,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Cool-down",
       "duration_seconds": 300,
       "intensity": 65,
@@ -637,7 +653,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.97,
+  "target_if": 0.89,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -648,10 +664,10 @@
     "vo2max",
     "high-intensity"
   ],
-  "duration_minutes": 44,
-  "estimated_tss": 61,
-  "target_tss": 61,
-  "interval_count": 39,
+  "duration_minutes": 74,
+  "estimated_tss": 87,
+  "target_tss": 87,
+  "interval_count": 41,
   "interval_duration": 30,
   "recovery_duration": 15,
   "sets": 1,

@@ -13,6 +13,14 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Threshold ladder 1",
       "duration_seconds": 300,
       "intensity": 98,
@@ -53,6 +61,30 @@
       "description": ""
     },
     {
+      "name": "Recovery",
+      "duration_seconds": 120,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold ladder 4",
+      "duration_seconds": 660,
+      "intensity": 101,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Cool-down",
       "duration_seconds": 300,
       "intensity": 65,
@@ -71,10 +103,10 @@
     "hard",
     "race-specific"
   ],
-  "duration_minutes": 36,
-  "estimated_tss": 46,
-  "target_tss": 46,
-  "interval_count": 0,
+  "duration_minutes": 59,
+  "estimated_tss": 74,
+  "target_tss": 74,
+  "interval_count": 2,
   "interval_duration": 0,
   "recovery_duration": 120,
   "sets": 1,

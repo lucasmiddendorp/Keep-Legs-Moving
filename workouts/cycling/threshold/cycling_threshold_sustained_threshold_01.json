@@ -14,8 +14,8 @@
       "description": "Progressive warm-up."
     },
     {
-      "name": "Sustained threshold 1",
-      "duration_seconds": 1920,
+      "name": "Sustained threshold",
+      "duration_seconds": 1800,
       "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,7 +30,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.83,
+  "target_if": 0.82,
   "tags": [
     "cycling",
     "threshold",
@@ -39,9 +39,9 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 54,
-  "estimated_tss": 57,
-  "target_tss": 57,
+  "duration_minutes": 52,
+  "estimated_tss": 54,
+  "target_tss": 54,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

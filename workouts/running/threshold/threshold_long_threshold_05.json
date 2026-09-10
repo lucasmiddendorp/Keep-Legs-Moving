@@ -13,8 +13,16 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Threshold interval 1",
-      "duration_seconds": 660,
+      "duration_seconds": 600,
       "intensity": 100,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,7 +38,7 @@
     },
     {
       "name": "Threshold interval 2",
-      "duration_seconds": 660,
+      "duration_seconds": 600,
       "intensity": 100,
       "duration_type": "Time",
       "repeat": 1,
@@ -46,7 +54,7 @@
     },
     {
       "name": "Threshold interval 3",
-      "duration_seconds": 660,
+      "duration_seconds": 600,
       "intensity": 100,
       "duration_type": "Time",
       "repeat": 1,
@@ -62,8 +70,16 @@
     },
     {
       "name": "Threshold interval 4",
-      "duration_seconds": 660,
+      "duration_seconds": 600,
       "intensity": 100,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -77,7 +93,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.93,
+  "target_if": 0.9,
   "sport": "Running",
   "tags": [
     "threshold",
@@ -87,10 +103,10 @@
     "hard",
     "race-specific"
   ],
-  "duration_minutes": 66,
-  "estimated_tss": 90,
-  "target_tss": 90,
-  "interval_count": 4,
+  "duration_minutes": 72,
+  "estimated_tss": 92,
+  "target_tss": 92,
+  "interval_count": 6,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,

@@ -14,8 +14,16 @@
       "description": "Progressive warm-up."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 1200,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
       "name": "Progressive tempo 1",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 78,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +39,7 @@
     },
     {
       "name": "Progressive tempo 2",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 81,
       "duration_type": "Time",
       "repeat": 1,
@@ -47,7 +55,7 @@
     },
     {
       "name": "Progressive tempo 3",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -63,11 +71,19 @@
     },
     {
       "name": "Progressive tempo 4",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 1200,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
     },
     {
       "name": "Cool-down",
@@ -78,7 +94,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.76,
+  "target_if": 0.74,
   "tags": [
     "cycling",
     "tempo",
@@ -87,11 +103,11 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 84,
-  "estimated_tss": 77,
-  "target_tss": 77,
-  "interval_count": 0,
-  "interval_duration": 0,
+  "duration_minutes": 120,
+  "estimated_tss": 105,
+  "target_tss": 105,
+  "interval_count": 2,
+  "interval_duration": 1200,
   "recovery_duration": 180,
   "sets": 1,
   "fit_filename": "cycling/tempo/cycling_tempo_progressive_tempo_05.fit"

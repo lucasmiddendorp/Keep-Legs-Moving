@@ -14,6 +14,14 @@
       "description": "Progressive warm-up."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 1800,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
       "name": "Ronnestad 30 sec Work 1.1",
       "duration_seconds": 30,
       "intensity": 115,
@@ -630,6 +638,14 @@
       "description": "High-intensity 30-second effort."
     },
     {
+      "name": "Endurance after intervals",
+      "duration_seconds": 1800,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
       "name": "Cool-down",
       "duration_seconds": 600,
       "intensity": 55,
@@ -638,7 +654,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.9,
+  "target_if": 0.82,
   "tags": [
     "cycling",
     "vo2max",
@@ -649,11 +665,11 @@
     "vo2max",
     "high-intensity"
   ],
-  "duration_minutes": 60,
-  "estimated_tss": 66,
-  "target_tss": 66,
-  "interval_count": 39,
-  "interval_duration": 30,
+  "duration_minutes": 120,
+  "estimated_tss": 115,
+  "target_tss": 115,
+  "interval_count": 41,
+  "interval_duration": 1800,
   "recovery_duration": 15,
   "sets": 1,
   "fit_filename": "cycling/vo2max/cycling_vo2max_ronnestad_30_15_06.fit"

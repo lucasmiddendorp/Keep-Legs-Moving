@@ -54,22 +54,6 @@
       "description": ""
     },
     {
-      "name": "Recovery 3",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Tempo block 4",
-      "duration_seconds": 1800,
-      "intensity": 78,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 660,
       "intensity": 55,
@@ -87,9 +71,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 150,
-  "estimated_tss": 139,
-  "target_tss": 139,
+  "duration_minutes": 117,
+  "estimated_tss": 106,
+  "target_tss": 106,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

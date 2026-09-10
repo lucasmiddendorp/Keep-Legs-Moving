@@ -1,21 +1,29 @@
 {
-  "id": "anaerobic_hill_sprints_01",
-  "name": "Hill Sprints 01",
-  "category": "Anaerobic",
+  "id": "vo2max_hill_sprints_06",
+  "name": "Hill Sprints 06",
+  "category": "VO2max",
   "subtype": "hill_sprints",
   "steps": [
     {
       "name": "Warm-up",
-      "duration_seconds": 360,
+      "duration_seconds": 300,
       "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Hill repeat 1",
       "duration_seconds": 30,
-      "intensity": 126,
+      "intensity": 125,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -31,7 +39,7 @@
     {
       "name": "Hill repeat 2",
       "duration_seconds": 30,
-      "intensity": 126,
+      "intensity": 125,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +55,7 @@
     {
       "name": "Hill repeat 3",
       "duration_seconds": 30,
-      "intensity": 126,
+      "intensity": 125,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,7 +71,7 @@
     {
       "name": "Hill repeat 4",
       "duration_seconds": 30,
-      "intensity": 126,
+      "intensity": 125,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -79,7 +87,7 @@
     {
       "name": "Hill repeat 5",
       "duration_seconds": 30,
-      "intensity": 126,
+      "intensity": 125,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -95,7 +103,7 @@
     {
       "name": "Hill repeat 6",
       "duration_seconds": 30,
-      "intensity": 126,
+      "intensity": 125,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -111,7 +119,7 @@
     {
       "name": "Hill repeat 7",
       "duration_seconds": 30,
-      "intensity": 126,
+      "intensity": 125,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -127,72 +135,32 @@
     {
       "name": "Hill repeat 8",
       "duration_seconds": 30,
-      "intensity": 126,
+      "intensity": 125,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Hill repeat 9",
-      "duration_seconds": 30,
-      "intensity": 126,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Hill repeat 10",
-      "duration_seconds": 30,
-      "intensity": 126,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Hill repeat 11",
-      "duration_seconds": 30,
-      "intensity": 126,
+      "name": "Endurance after intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Cool-down",
-      "duration_seconds": 360,
+      "duration_seconds": 300,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.85,
+  "target_if": 0.82,
   "sport": "Running",
   "tags": [
-    "anaerobic",
+    "vo2max",
     "hill_sprints",
     "hill_sprints",
     "hills",
@@ -200,11 +168,11 @@
     "high-intensity"
   ],
   "duration_minutes": 38,
-  "estimated_tss": 38,
-  "target_tss": 38,
-  "interval_count": 0,
+  "estimated_tss": 37,
+  "target_tss": 37,
+  "interval_count": 2,
   "interval_duration": 0,
   "recovery_duration": 120,
   "sets": 1,
-  "fit_filename": "anaerobic/anaerobic_hill_sprints_01.fit"
+  "fit_filename": "vo2max/vo2max_hill_sprints_06.fit"
 }

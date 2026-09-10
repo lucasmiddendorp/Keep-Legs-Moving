@@ -14,7 +14,7 @@
     },
     {
       "name": "Long aerobic block",
-      "duration_seconds": 4800,
+      "duration_seconds": 3600,
       "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
@@ -47,9 +47,9 @@
     "aerobic",
     "easy"
   ],
-  "duration_minutes": 112,
-  "estimated_tss": 101,
-  "target_tss": 101,
+  "duration_minutes": 92,
+  "estimated_tss": 84,
+  "target_tss": 84,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

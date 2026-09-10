@@ -14,15 +14,23 @@
       "description": "Progressive warm-up."
     },
     {
-      "name": "Threshold interval 1.1",
-      "duration_seconds": 420,
+      "name": "Endurance before intervals",
+      "duration_seconds": 600,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 480,
       "intensity": 98,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery 1.1",
+      "name": "Recovery 1",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -30,15 +38,15 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 1.2",
-      "duration_seconds": 420,
+      "name": "Threshold interval 2",
+      "duration_seconds": 480,
       "intensity": 98,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery 1.2",
+      "name": "Recovery 2",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -46,15 +54,15 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 1.3",
-      "duration_seconds": 420,
+      "name": "Threshold interval 3",
+      "duration_seconds": 480,
       "intensity": 98,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery 1.3",
+      "name": "Recovery 3",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -62,15 +70,15 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 1.4",
-      "duration_seconds": 420,
+      "name": "Threshold interval 4",
+      "duration_seconds": 480,
       "intensity": 98,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery 1.4",
+      "name": "Recovery 4",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -78,364 +86,20 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Threshold interval 1.5",
-      "duration_seconds": 420,
+      "name": "Threshold interval 5",
+      "duration_seconds": 480,
       "intensity": 98,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery 1.5",
-      "duration_seconds": 240,
-      "intensity": 60,
+      "name": "Endurance after intervals",
+      "duration_seconds": 600,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 1.6",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 1.6",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 1.7",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 1.7",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 1.8",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 1.8",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 1.9",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Set recovery 1",
-      "duration_seconds": 300,
-      "intensity": 55,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.1",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.1",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.2",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.2",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.3",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.3",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.4",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.4",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.5",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.5",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.6",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.6",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.7",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.7",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.8",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.8",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 2.9",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Set recovery 2",
-      "duration_seconds": 300,
-      "intensity": 55,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.1",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.1",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.2",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.2",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.3",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.3",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.4",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.4",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.5",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.5",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.6",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.6",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.7",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.7",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.8",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.8",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Threshold interval 3.9",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
+      "description": "Aerobic endurance riding."
     },
     {
       "name": "Cool-down",
@@ -446,7 +110,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.88,
+  "target_if": 0.83,
   "tags": [
     "cycling",
     "threshold",
@@ -455,11 +119,11 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 318,
-  "estimated_tss": 378,
-  "target_tss": 378,
-  "interval_count": 27,
-  "interval_duration": 420,
+  "duration_minutes": 99,
+  "estimated_tss": 103,
+  "target_tss": 103,
+  "interval_count": 7,
+  "interval_duration": 600,
   "recovery_duration": 240,
   "sets": 1,
   "fit_filename": "cycling/threshold/cycling_threshold_traditional_05.fit"

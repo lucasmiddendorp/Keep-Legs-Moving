@@ -14,7 +14,7 @@
     },
     {
       "name": "Long aerobic block",
-      "duration_seconds": 8400,
+      "duration_seconds": 6600,
       "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +31,7 @@
     {
       "name": "Strong finish",
       "duration_seconds": 600,
-      "intensity": 90,
+      "intensity": 88,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -45,7 +45,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.74,
+  "target_if": 0.75,
   "sport": "Running",
   "tags": [
     "endurance",
@@ -55,9 +55,9 @@
     "aerobic",
     "easy"
   ],
-  "duration_minutes": 175,
-  "estimated_tss": 160,
-  "target_tss": 160,
+  "duration_minutes": 145,
+  "estimated_tss": 133,
+  "target_tss": 133,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

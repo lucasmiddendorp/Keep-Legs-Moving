@@ -14,7 +14,15 @@
       "description": "Progressive warm-up."
     },
     {
-      "name": "Descending interval 1.1",
+      "name": "Endurance before intervals",
+      "duration_seconds": 1200,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
+      "name": "Descending interval 1",
       "duration_seconds": 600,
       "intensity": 98,
       "duration_type": "Time",
@@ -22,7 +30,7 @@
       "description": ""
     },
     {
-      "name": "Recovery 1.1",
+      "name": "Recovery 1",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -30,7 +38,7 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Descending interval 1.2",
+      "name": "Descending interval 2",
       "duration_seconds": 540,
       "intensity": 98,
       "duration_type": "Time",
@@ -38,7 +46,7 @@
       "description": ""
     },
     {
-      "name": "Recovery 1.2",
+      "name": "Recovery 2",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -46,7 +54,7 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Descending interval 1.3",
+      "name": "Descending interval 3",
       "duration_seconds": 480,
       "intensity": 98,
       "duration_type": "Time",
@@ -54,7 +62,7 @@
       "description": ""
     },
     {
-      "name": "Recovery 1.3",
+      "name": "Recovery 3",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -62,7 +70,7 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Descending interval 1.4",
+      "name": "Descending interval 4",
       "duration_seconds": 420,
       "intensity": 98,
       "duration_type": "Time",
@@ -70,180 +78,12 @@
       "description": ""
     },
     {
-      "name": "Recovery 1.4",
-      "duration_seconds": 240,
-      "intensity": 60,
+      "name": "Endurance after intervals",
+      "duration_seconds": 1200,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 1.5",
-      "duration_seconds": 360,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Set recovery 1",
-      "duration_seconds": 300,
-      "intensity": 55,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 2.1",
-      "duration_seconds": 600,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.1",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 2.2",
-      "duration_seconds": 540,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.2",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 2.3",
-      "duration_seconds": 480,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.3",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 2.4",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.4",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 2.5",
-      "duration_seconds": 360,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Set recovery 2",
-      "duration_seconds": 300,
-      "intensity": 55,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 3.1",
-      "duration_seconds": 600,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.1",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 3.2",
-      "duration_seconds": 540,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.2",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 3.3",
-      "duration_seconds": 480,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.3",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 3.4",
-      "duration_seconds": 420,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.4",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Descending interval 3.5",
-      "duration_seconds": 360,
-      "intensity": 98,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
+      "description": "Aerobic endurance riding."
     },
     {
       "name": "Cool-down",
@@ -254,7 +94,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.88,
+  "target_if": 0.8,
   "tags": [
     "cycling",
     "threshold",
@@ -263,11 +103,11 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 201,
-  "estimated_tss": 239,
-  "target_tss": 239,
-  "interval_count": 15,
-  "interval_duration": 600,
+  "duration_minutes": 109,
+  "estimated_tss": 107,
+  "target_tss": 107,
+  "interval_count": 6,
+  "interval_duration": 1200,
   "recovery_duration": 240,
   "sets": 1,
   "fit_filename": "cycling/threshold/cycling_threshold_descending_threshold_05.fit"

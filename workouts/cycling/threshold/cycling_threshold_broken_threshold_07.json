@@ -1,0 +1,114 @@
+{
+  "id": "cycling_threshold_broken_threshold_07",
+  "name": "Broken Threshold 07",
+  "category": "Threshold",
+  "subtype": "broken_threshold",
+  "sport": "cycling",
+  "steps": [
+    {
+      "name": "Warm-up",
+      "duration_seconds": 660,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Progressive warm-up."
+    },
+    {
+      "name": "Endurance before intervals",
+      "duration_seconds": 2400,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
+      "name": "Threshold interval 1",
+      "duration_seconds": 600,
+      "intensity": 97,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 1",
+      "duration_seconds": 240,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Threshold interval 2",
+      "duration_seconds": 600,
+      "intensity": 97,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 2",
+      "duration_seconds": 240,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Threshold interval 3",
+      "duration_seconds": 600,
+      "intensity": 97,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery 3",
+      "duration_seconds": 240,
+      "intensity": 60,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Threshold interval 4",
+      "duration_seconds": 600,
+      "intensity": 97,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 2400,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
+      "name": "Cool-down",
+      "duration_seconds": 660,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy riding to finish the workout."
+    }
+  ],
+  "target_if": 0.79,
+  "tags": [
+    "cycling",
+    "threshold",
+    "broken_threshold",
+    "broken_threshold",
+    "hard",
+    "threshold"
+  ],
+  "duration_minutes": 154,
+  "estimated_tss": 147,
+  "target_tss": 147,
+  "interval_count": 6,
+  "interval_duration": 2400,
+  "recovery_duration": 240,
+  "sets": 1,
+  "fit_filename": "cycling/threshold/cycling_threshold_broken_threshold_07.fit"
+}

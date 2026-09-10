@@ -14,7 +14,7 @@
     },
     {
       "name": "Tempo block 1",
-      "duration_seconds": 780,
+      "duration_seconds": 600,
       "intensity": 90,
       "duration_type": "Time",
       "repeat": 1,
@@ -22,7 +22,7 @@
     },
     {
       "name": "Recovery",
-      "duration_seconds": 180,
+      "duration_seconds": 120,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,23 +30,7 @@
     },
     {
       "name": "Tempo block 2",
-      "duration_seconds": 780,
-      "intensity": 90,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Tempo block 3",
-      "duration_seconds": 780,
+      "duration_seconds": 600,
       "intensity": 90,
       "duration_type": "Time",
       "repeat": 1,
@@ -61,7 +45,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.85,
+  "target_if": 0.83,
   "sport": "Running",
   "tags": [
     "tempo",
@@ -71,12 +55,12 @@
     "aerobic",
     "moderate"
   ],
-  "duration_minutes": 57,
-  "estimated_tss": 66,
-  "target_tss": 66,
+  "duration_minutes": 34,
+  "estimated_tss": 38,
+  "target_tss": 38,
   "interval_count": 0,
   "interval_duration": 0,
-  "recovery_duration": 180,
+  "recovery_duration": 120,
   "sets": 1,
   "fit_filename": "tempo/tempo_tempo_blocks_01.fit"
 }

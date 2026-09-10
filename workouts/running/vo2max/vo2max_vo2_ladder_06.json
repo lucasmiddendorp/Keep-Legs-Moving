@@ -13,6 +13,14 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "VO2max interval 1",
       "duration_seconds": 120,
       "intensity": 107,
@@ -31,7 +39,7 @@
     {
       "name": "VO2max interval 2",
       "duration_seconds": 120,
-      "intensity": 108,
+      "intensity": 109,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +55,7 @@
     {
       "name": "VO2max interval 3",
       "duration_seconds": 120,
-      "intensity": 109,
+      "intensity": 111,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,7 +71,7 @@
     {
       "name": "VO2max interval 4",
       "duration_seconds": 120,
-      "intensity": 110,
+      "intensity": 113,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -79,7 +87,15 @@
     {
       "name": "VO2max interval 5",
       "duration_seconds": 120,
-      "intensity": 111,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 600,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -93,7 +109,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.89,
+  "target_if": 0.84,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -103,10 +119,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 28,
-  "estimated_tss": 33,
-  "target_tss": 33,
-  "interval_count": 5,
+  "duration_minutes": 48,
+  "estimated_tss": 51,
+  "target_tss": 51,
+  "interval_count": 7,
   "interval_duration": 0,
   "recovery_duration": 120,
   "sets": 1,

@@ -13,9 +13,17 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "VO2max interval 1",
       "duration_seconds": 300,
-      "intensity": 109,
+      "intensity": 108,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -31,7 +39,7 @@
     {
       "name": "VO2max interval 2",
       "duration_seconds": 300,
-      "intensity": 109,
+      "intensity": 108,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +55,7 @@
     {
       "name": "VO2max interval 3",
       "duration_seconds": 300,
-      "intensity": 109,
+      "intensity": 108,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,23 +71,15 @@
     {
       "name": "VO2max interval 4",
       "duration_seconds": 300,
-      "intensity": 109,
+      "intensity": 108,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "VO2max interval 5",
+      "name": "Endurance after intervals",
       "duration_seconds": 300,
-      "intensity": 109,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -93,7 +93,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.95,
+  "target_if": 0.9,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -103,10 +103,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 50,
-  "estimated_tss": 68,
-  "target_tss": 68,
-  "interval_count": 5,
+  "duration_minutes": 52,
+  "estimated_tss": 64,
+  "target_tss": 64,
+  "interval_count": 6,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,

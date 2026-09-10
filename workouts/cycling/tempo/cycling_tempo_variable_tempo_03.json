@@ -70,22 +70,6 @@
       "description": ""
     },
     {
-      "name": "Recovery 4",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Variable tempo 5",
-      "duration_seconds": 540,
-      "intensity": 80,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 660,
       "intensity": 55,
@@ -103,9 +87,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 77,
-  "estimated_tss": 68,
-  "target_tss": 68,
+  "duration_minutes": 65,
+  "estimated_tss": 56,
+  "target_tss": 56,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

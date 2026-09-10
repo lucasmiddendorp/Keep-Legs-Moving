@@ -70,22 +70,6 @@
       "description": ""
     },
     {
-      "name": "Recovery 4",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Tempo block 5",
-      "duration_seconds": 480,
-      "intensity": 82,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 660,
       "intensity": 55,
@@ -94,7 +78,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.74,
+  "target_if": 0.73,
   "tags": [
     "cycling",
     "tempo",
@@ -103,9 +87,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 73,
-  "estimated_tss": 64,
-  "target_tss": 64,
+  "duration_minutes": 62,
+  "estimated_tss": 53,
+  "target_tss": 53,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

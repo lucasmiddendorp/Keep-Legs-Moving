@@ -14,8 +14,8 @@
     },
     {
       "name": "Easy running",
-      "duration_seconds": 1440,
-      "intensity": 75,
+      "duration_seconds": 1800,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -29,7 +29,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.73,
+  "target_if": 0.71,
   "sport": "Running",
   "tags": [
     "endurance",
@@ -39,9 +39,9 @@
     "aerobic",
     "running"
   ],
-  "duration_minutes": 35,
-  "estimated_tss": 31,
-  "target_tss": 31,
+  "duration_minutes": 41,
+  "estimated_tss": 34,
+  "target_tss": 34,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

@@ -13,6 +13,14 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Hill repeat 1",
       "duration_seconds": 180,
       "intensity": 108,
@@ -101,6 +109,14 @@
       "description": ""
     },
     {
+      "name": "Endurance after intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Cool-down",
       "duration_seconds": 300,
       "intensity": 65,
@@ -109,7 +125,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.91,
+  "target_if": 0.88,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -119,10 +135,10 @@
     "strength",
     "high-intensity"
   ],
-  "duration_minutes": 43,
-  "estimated_tss": 53,
-  "target_tss": 53,
-  "interval_count": 0,
+  "duration_minutes": 53,
+  "estimated_tss": 62,
+  "target_tss": 62,
+  "interval_count": 2,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,

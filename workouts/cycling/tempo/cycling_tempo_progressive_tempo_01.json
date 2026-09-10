@@ -15,7 +15,7 @@
     },
     {
       "name": "Progressive tempo 1",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 78,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,40 +31,8 @@
     },
     {
       "name": "Progressive tempo 2",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 81,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Progressive tempo 3",
-      "duration_seconds": 780,
-      "intensity": 84,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Progressive tempo 4",
-      "duration_seconds": 780,
-      "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -78,7 +46,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.76,
+  "target_if": 0.71,
   "tags": [
     "cycling",
     "tempo",
@@ -87,9 +55,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 83,
-  "estimated_tss": 77,
-  "target_tss": 77,
+  "duration_minutes": 49,
+  "estimated_tss": 39,
+  "target_tss": 39,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

@@ -85,54 +85,6 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Hill repeat 6",
-      "duration_seconds": 60,
-      "intensity": 108,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Hill repeat 7",
-      "duration_seconds": 60,
-      "intensity": 108,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Hill repeat 8",
-      "duration_seconds": 60,
-      "intensity": 108,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 300,
       "intensity": 65,
@@ -141,7 +93,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.83,
+  "target_if": 0.81,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -151,9 +103,9 @@
     "strength",
     "high-intensity"
   ],
-  "duration_minutes": 34,
-  "estimated_tss": 35,
-  "target_tss": 35,
+  "duration_minutes": 25,
+  "estimated_tss": 25,
+  "target_tss": 25,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,

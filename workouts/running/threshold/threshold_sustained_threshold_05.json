@@ -13,9 +13,57 @@
       "description": "Easy running with gradual progression."
     },
     {
-      "name": "Sustained threshold",
-      "duration_seconds": 2100,
+      "name": "Endurance before intervals",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Sustained threshold 1",
+      "duration_seconds": 1500,
       "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Sustained threshold 2",
+      "duration_seconds": 1500,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Sustained threshold 3",
+      "duration_seconds": 1500,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 600,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -29,7 +77,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.91,
+  "target_if": 0.89,
   "sport": "Running",
   "tags": [
     "threshold",
@@ -39,12 +87,12 @@
     "hard",
     "race-specific"
   ],
-  "duration_minutes": 48,
-  "estimated_tss": 64,
-  "target_tss": 64,
-  "interval_count": 0,
+  "duration_minutes": 114,
+  "estimated_tss": 147,
+  "target_tss": 147,
+  "interval_count": 2,
   "interval_duration": 0,
-  "recovery_duration": 0,
+  "recovery_duration": 180,
   "sets": 1,
   "fit_filename": "threshold/threshold_sustained_threshold_05.fit"
 }

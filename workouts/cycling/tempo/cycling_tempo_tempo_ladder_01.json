@@ -38,38 +38,6 @@
       "description": ""
     },
     {
-      "name": "Recovery 2",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Tempo ladder 3",
-      "duration_seconds": 840,
-      "intensity": 84,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3",
-      "duration_seconds": 180,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Tempo ladder 4",
-      "duration_seconds": 1020,
-      "intensity": 86,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 660,
       "intensity": 55,
@@ -78,7 +46,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.77,
+  "target_if": 0.71,
   "tags": [
     "cycling",
     "tempo",
@@ -87,9 +55,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 81,
-  "estimated_tss": 76,
-  "target_tss": 76,
+  "duration_minutes": 44,
+  "estimated_tss": 35,
+  "target_tss": 35,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

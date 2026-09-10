@@ -13,6 +13,14 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "VO2max interval 1",
       "duration_seconds": 180,
       "intensity": 110,
@@ -85,6 +93,14 @@
       "description": ""
     },
     {
+      "name": "Endurance after intervals",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Cool-down",
       "duration_seconds": 300,
       "intensity": 65,
@@ -93,7 +109,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.94,
+  "target_if": 0.87,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -103,10 +119,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 33,
-  "estimated_tss": 43,
-  "target_tss": 43,
-  "interval_count": 5,
+  "duration_minutes": 53,
+  "estimated_tss": 61,
+  "target_tss": 61,
+  "interval_count": 7,
   "interval_duration": 0,
   "recovery_duration": 120,
   "sets": 1,

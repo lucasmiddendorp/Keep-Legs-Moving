@@ -13,8 +13,16 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 600,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Tempo block 1",
-      "duration_seconds": 420,
+      "duration_seconds": 360,
       "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,7 +38,7 @@
     },
     {
       "name": "Tempo block 2",
-      "duration_seconds": 600,
+      "duration_seconds": 480,
       "intensity": 89,
       "duration_type": "Time",
       "repeat": 1,
@@ -46,7 +54,7 @@
     },
     {
       "name": "Tempo block 3",
-      "duration_seconds": 780,
+      "duration_seconds": 600,
       "intensity": 91,
       "duration_type": "Time",
       "repeat": 1,
@@ -62,8 +70,16 @@
     },
     {
       "name": "Tempo block 4",
-      "duration_seconds": 960,
+      "duration_seconds": 720,
       "intensity": 93,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 600,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -77,7 +93,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.86,
+  "target_if": 0.82,
   "sport": "Running",
   "tags": [
     "tempo",
@@ -87,10 +103,10 @@
     "aerobic",
     "moderate"
   ],
-  "duration_minutes": 65,
-  "estimated_tss": 77,
-  "target_tss": 77,
-  "interval_count": 0,
+  "duration_minutes": 75,
+  "estimated_tss": 81,
+  "target_tss": 81,
+  "interval_count": 2,
   "interval_duration": 0,
   "recovery_duration": 120,
   "sets": 1,

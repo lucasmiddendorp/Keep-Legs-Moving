@@ -13,9 +13,17 @@
       "description": "Easy running with gradual progression."
     },
     {
+      "name": "Endurance before intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "VO2max interval 1",
       "duration_seconds": 180,
-      "intensity": 111,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -31,7 +39,7 @@
     {
       "name": "VO2max interval 2",
       "duration_seconds": 180,
-      "intensity": 111,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -47,7 +55,7 @@
     {
       "name": "VO2max interval 3",
       "duration_seconds": 180,
-      "intensity": 111,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -63,7 +71,7 @@
     {
       "name": "VO2max interval 4",
       "duration_seconds": 180,
-      "intensity": 111,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -79,23 +87,15 @@
     {
       "name": "VO2max interval 5",
       "duration_seconds": 180,
-      "intensity": 111,
+      "intensity": 110,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "VO2max interval 6",
-      "duration_seconds": 180,
-      "intensity": 111,
+      "name": "Endurance after intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -109,7 +109,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.94,
+  "target_if": 0.89,
   "sport": "Running",
   "tags": [
     "vo2max",
@@ -119,10 +119,10 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 41,
+  "duration_minutes": 46,
   "estimated_tss": 54,
   "target_tss": 54,
-  "interval_count": 6,
+  "interval_count": 7,
   "interval_duration": 0,
   "recovery_duration": 120,
   "sets": 1,

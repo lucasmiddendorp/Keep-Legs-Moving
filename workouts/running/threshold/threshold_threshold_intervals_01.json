@@ -14,7 +14,7 @@
     },
     {
       "name": "Threshold interval 1",
-      "duration_seconds": 420,
+      "duration_seconds": 360,
       "intensity": 102,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,55 +30,7 @@
     },
     {
       "name": "Threshold interval 2",
-      "duration_seconds": 420,
-      "intensity": 102,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Threshold interval 3",
-      "duration_seconds": 420,
-      "intensity": 102,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Threshold interval 4",
-      "duration_seconds": 420,
-      "intensity": 102,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery",
-      "duration_seconds": 180,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Threshold interval 5",
-      "duration_seconds": 420,
+      "duration_seconds": 360,
       "intensity": 102,
       "duration_type": "Time",
       "repeat": 1,
@@ -93,7 +45,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.92,
+  "target_if": 0.88,
   "sport": "Running",
   "tags": [
     "threshold",
@@ -103,10 +55,10 @@
     "hard",
     "race-specific"
   ],
-  "duration_minutes": 59,
-  "estimated_tss": 78,
-  "target_tss": 78,
-  "interval_count": 5,
+  "duration_minutes": 27,
+  "estimated_tss": 32,
+  "target_tss": 32,
+  "interval_count": 2,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,

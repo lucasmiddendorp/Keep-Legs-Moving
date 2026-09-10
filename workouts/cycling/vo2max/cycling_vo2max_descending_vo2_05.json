@@ -14,15 +14,23 @@
       "description": "Progressive warm-up."
     },
     {
-      "name": "Work interval 1.1",
+      "name": "Endurance before intervals",
+      "duration_seconds": 600,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
+      "name": "Descending interval 1",
       "duration_seconds": 240,
-      "intensity": 107,
+      "intensity": 112,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery 1.1",
+      "name": "Recovery 1",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -30,15 +38,15 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Work interval 1.2",
+      "name": "Descending interval 2",
       "duration_seconds": 240,
-      "intensity": 107,
+      "intensity": 109,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery 1.2",
+      "name": "Recovery 2",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -46,31 +54,15 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Work interval 1.3",
+      "name": "Descending interval 3",
       "duration_seconds": 240,
-      "intensity": 107,
+      "intensity": 106,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Set recovery 1",
-      "duration_seconds": 180,
-      "intensity": 55,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 2.1",
-      "duration_seconds": 240,
-      "intensity": 107,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 2.1",
+      "name": "Recovery 3",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -78,15 +70,15 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Work interval 2.2",
+      "name": "Descending interval 4",
       "duration_seconds": 240,
-      "intensity": 107,
+      "intensity": 103,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Recovery 2.2",
+      "name": "Recovery 4",
       "duration_seconds": 240,
       "intensity": 60,
       "duration_type": "Time",
@@ -94,60 +86,20 @@
       "description": "Easy recovery riding."
     },
     {
-      "name": "Work interval 2.3",
+      "name": "Descending interval 5",
       "duration_seconds": 240,
-      "intensity": 107,
+      "intensity": 100,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
-      "name": "Set recovery 2",
-      "duration_seconds": 180,
-      "intensity": 55,
+      "name": "Endurance after intervals",
+      "duration_seconds": 600,
+      "intensity": 70,
       "duration_type": "Time",
       "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 3.1",
-      "duration_seconds": 240,
-      "intensity": 107,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.1",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 3.2",
-      "duration_seconds": 240,
-      "intensity": 107,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
-      "name": "Recovery 3.2",
-      "duration_seconds": 240,
-      "intensity": 60,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy recovery riding."
-    },
-    {
-      "name": "Work interval 3.3",
-      "duration_seconds": 240,
-      "intensity": 107,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
+      "description": "Aerobic endurance riding."
     },
     {
       "name": "Cool-down",
@@ -158,7 +110,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.88,
+  "target_if": 0.81,
   "tags": [
     "cycling",
     "vo2max",
@@ -167,11 +119,11 @@
     "high-intensity",
     "hard"
   ],
-  "duration_minutes": 91,
-  "estimated_tss": 100,
-  "target_tss": 100,
-  "interval_count": 9,
-  "interval_duration": 240,
+  "duration_minutes": 81,
+  "estimated_tss": 77,
+  "target_tss": 77,
+  "interval_count": 7,
+  "interval_duration": 600,
   "recovery_duration": 240,
   "sets": 1,
   "fit_filename": "cycling/vo2max/cycling_vo2max_descending_vo2_05.fit"

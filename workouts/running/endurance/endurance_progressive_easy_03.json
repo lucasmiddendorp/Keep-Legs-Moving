@@ -14,16 +14,16 @@
     },
     {
       "name": "Easy running",
-      "duration_seconds": 1140,
-      "intensity": 71,
+      "duration_seconds": 1320,
+      "intensity": 68,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
     },
     {
       "name": "Progressive finish",
-      "duration_seconds": 1200,
-      "intensity": 79,
+      "duration_seconds": 1380,
+      "intensity": 77,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -37,7 +37,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.74,
+  "target_if": 0.72,
   "sport": "Running",
   "tags": [
     "endurance",
@@ -47,9 +47,9 @@
     "aerobic",
     "running"
   ],
-  "duration_minutes": 50,
-  "estimated_tss": 45,
-  "target_tss": 45,
+  "duration_minutes": 56,
+  "estimated_tss": 48,
+  "target_tss": 48,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

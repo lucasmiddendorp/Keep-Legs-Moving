@@ -133,22 +133,6 @@
       "description": ""
     },
     {
-      "name": "Recovery",
-      "duration_seconds": 120,
-      "intensity": 65,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": "Easy running or very light jogging."
-    },
-    {
-      "name": "Hill repeat 9",
-      "duration_seconds": 60,
-      "intensity": 109,
-      "duration_type": "Time",
-      "repeat": 1,
-      "description": ""
-    },
-    {
       "name": "Cool-down",
       "duration_seconds": 360,
       "intensity": 65,
@@ -167,9 +151,9 @@
     "strength",
     "high-intensity"
   ],
-  "duration_minutes": 38,
-  "estimated_tss": 39,
-  "target_tss": 39,
+  "duration_minutes": 35,
+  "estimated_tss": 36,
+  "target_tss": 36,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 120,

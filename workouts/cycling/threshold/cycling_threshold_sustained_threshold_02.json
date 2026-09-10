@@ -14,12 +14,28 @@
       "description": "Progressive warm-up."
     },
     {
-      "name": "Sustained threshold 1",
-      "duration_seconds": 2040,
+      "name": "Endurance before intervals",
+      "duration_seconds": 600,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
+    },
+    {
+      "name": "Sustained threshold",
+      "duration_seconds": 1920,
       "intensity": 92,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 600,
+      "intensity": 70,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Aerobic endurance riding."
     },
     {
       "name": "Cool-down",
@@ -30,7 +46,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.83,
+  "target_if": 0.8,
   "tags": [
     "cycling",
     "threshold",
@@ -39,11 +55,11 @@
     "hard",
     "threshold"
   ],
-  "duration_minutes": 56,
-  "estimated_tss": 60,
-  "target_tss": 60,
-  "interval_count": 0,
-  "interval_duration": 0,
+  "duration_minutes": 74,
+  "estimated_tss": 74,
+  "target_tss": 74,
+  "interval_count": 2,
+  "interval_duration": 600,
   "recovery_duration": 0,
   "sets": 1,
   "fit_filename": "cycling/threshold/cycling_threshold_sustained_threshold_02.fit"

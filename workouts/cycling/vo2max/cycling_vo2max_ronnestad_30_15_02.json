@@ -16,7 +16,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.1",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -32,7 +32,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.2",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -48,7 +48,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.3",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -64,7 +64,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.4",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -80,7 +80,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.5",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -96,7 +96,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.6",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -112,7 +112,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.7",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -128,7 +128,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.8",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -144,7 +144,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.9",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -160,7 +160,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.10",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -176,7 +176,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.11",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -192,7 +192,7 @@
     {
       "name": "Ronnestad 30 sec Work 1.12",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -208,7 +208,215 @@
     {
       "name": "Ronnestad 30 sec Work 1.13",
       "duration_seconds": 30,
-      "intensity": 117,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Set recovery 1",
+      "duration_seconds": 180,
+      "intensity": 55,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy recovery riding."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.1",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.1",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.2",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.2",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.3",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.3",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.4",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.4",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.5",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.5",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.6",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.6",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.7",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.7",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.8",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.8",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.9",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.9",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.10",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.10",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.11",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.11",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.12",
+      "duration_seconds": 30,
+      "intensity": 115,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "High-intensity 30-second effort."
+    },
+    {
+      "name": "Ronnestad 15 sec Recovery 2.12",
+      "duration_seconds": 15,
+      "intensity": 62,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Short controlled recovery."
+    },
+    {
+      "name": "Ronnestad 30 sec Work 2.13",
+      "duration_seconds": 30,
+      "intensity": 115,
       "duration_type": "Time",
       "repeat": 1,
       "description": "High-intensity 30-second effort."
@@ -222,7 +430,7 @@
       "description": "Easy riding to finish the workout."
     }
   ],
-  "target_if": 0.81,
+  "target_if": 0.86,
   "tags": [
     "cycling",
     "vo2max",
@@ -233,10 +441,10 @@
     "vo2max",
     "high-intensity"
   ],
-  "duration_minutes": 36,
-  "estimated_tss": 32,
-  "target_tss": 32,
-  "interval_count": 13,
+  "duration_minutes": 49,
+  "estimated_tss": 49,
+  "target_tss": 49,
+  "interval_count": 26,
   "interval_duration": 30,
   "recovery_duration": 15,
   "sets": 1,

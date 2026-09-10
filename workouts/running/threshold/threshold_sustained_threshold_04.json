@@ -13,9 +13,57 @@
       "description": "Easy running with gradual progression."
     },
     {
-      "name": "Sustained threshold",
-      "duration_seconds": 1980,
+      "name": "Endurance before intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Sustained threshold 1",
+      "duration_seconds": 1500,
       "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Sustained threshold 2",
+      "duration_seconds": 1500,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Sustained threshold 3",
+      "duration_seconds": 1500,
+      "intensity": 96,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
+      "name": "Endurance after intervals",
+      "duration_seconds": 300,
+      "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
       "description": ""
@@ -39,12 +87,12 @@
     "hard",
     "race-specific"
   ],
-  "duration_minutes": 44,
-  "estimated_tss": 59,
-  "target_tss": 59,
-  "interval_count": 0,
+  "duration_minutes": 102,
+  "estimated_tss": 136,
+  "target_tss": 136,
+  "interval_count": 2,
   "interval_duration": 0,
-  "recovery_duration": 0,
+  "recovery_duration": 180,
   "sets": 1,
   "fit_filename": "threshold/threshold_sustained_threshold_04.fit"
 }

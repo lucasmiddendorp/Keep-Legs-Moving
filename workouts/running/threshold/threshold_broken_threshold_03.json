@@ -14,7 +14,7 @@
     },
     {
       "name": "Threshold interval 1",
-      "duration_seconds": 960,
+      "duration_seconds": 900,
       "intensity": 97,
       "duration_type": "Time",
       "repeat": 1,
@@ -22,7 +22,7 @@
     },
     {
       "name": "Recovery",
-      "duration_seconds": 240,
+      "duration_seconds": 180,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
@@ -30,7 +30,7 @@
     },
     {
       "name": "Threshold interval 2",
-      "duration_seconds": 960,
+      "duration_seconds": 900,
       "intensity": 97,
       "duration_type": "Time",
       "repeat": 1,
@@ -38,7 +38,7 @@
     },
     {
       "name": "Recovery",
-      "duration_seconds": 240,
+      "duration_seconds": 180,
       "intensity": 65,
       "duration_type": "Time",
       "repeat": 1,
@@ -46,7 +46,7 @@
     },
     {
       "name": "Threshold interval 3",
-      "duration_seconds": 960,
+      "duration_seconds": 900,
       "intensity": 97,
       "duration_type": "Time",
       "repeat": 1,
@@ -71,12 +71,12 @@
     "hard",
     "race-specific"
   ],
-  "duration_minutes": 67,
-  "estimated_tss": 89,
-  "target_tss": 89,
+  "duration_minutes": 62,
+  "estimated_tss": 83,
+  "target_tss": 83,
   "interval_count": 3,
   "interval_duration": 0,
-  "recovery_duration": 240,
+  "recovery_duration": 180,
   "sets": 1,
   "fit_filename": "threshold/threshold_broken_threshold_03.fit"
 }

@@ -14,7 +14,7 @@
     },
     {
       "name": "Long run",
-      "duration_seconds": 5100,
+      "duration_seconds": 4200,
       "intensity": 72,
       "duration_type": "Time",
       "repeat": 1,
@@ -29,7 +29,7 @@
       "description": "Easy running to bring the effort down."
     }
   ],
-  "target_if": 0.72,
+  "target_if": 0.71,
   "sport": "Running",
   "tags": [
     "endurance",
@@ -39,9 +39,9 @@
     "aerobic",
     "easy"
   ],
-  "duration_minutes": 97,
-  "estimated_tss": 83,
-  "target_tss": 83,
+  "duration_minutes": 82,
+  "estimated_tss": 70,
+  "target_tss": 70,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 0,

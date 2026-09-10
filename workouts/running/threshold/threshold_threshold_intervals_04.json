@@ -69,6 +69,22 @@
       "description": ""
     },
     {
+      "name": "Recovery",
+      "duration_seconds": 180,
+      "intensity": 65,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": "Easy running or very light jogging."
+    },
+    {
+      "name": "Threshold interval 5",
+      "duration_seconds": 360,
+      "intensity": 102,
+      "duration_type": "Time",
+      "repeat": 1,
+      "description": ""
+    },
+    {
       "name": "Cool-down",
       "duration_seconds": 300,
       "intensity": 65,
@@ -87,10 +103,10 @@
     "hard",
     "race-specific"
   ],
-  "duration_minutes": 44,
-  "estimated_tss": 56,
-  "target_tss": 56,
-  "interval_count": 4,
+  "duration_minutes": 53,
+  "estimated_tss": 69,
+  "target_tss": 69,
+  "interval_count": 5,
   "interval_duration": 0,
   "recovery_duration": 180,
   "sets": 1,

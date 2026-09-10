@@ -15,7 +15,7 @@
     },
     {
       "name": "Tempo block 1",
-      "duration_seconds": 2520,
+      "duration_seconds": 2400,
       "intensity": 76,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +31,7 @@
     },
     {
       "name": "Tempo block 2",
-      "duration_seconds": 2520,
+      "duration_seconds": 2400,
       "intensity": 76,
       "duration_type": "Time",
       "repeat": 1,
@@ -55,9 +55,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 109,
-  "estimated_tss": 95,
-  "target_tss": 95,
+  "duration_minutes": 105,
+  "estimated_tss": 91,
+  "target_tss": 91,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,

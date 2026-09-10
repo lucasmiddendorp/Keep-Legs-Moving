@@ -15,7 +15,7 @@
     },
     {
       "name": "Progressive tempo 1",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 78,
       "duration_type": "Time",
       "repeat": 1,
@@ -31,7 +31,7 @@
     },
     {
       "name": "Progressive tempo 2",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 81,
       "duration_type": "Time",
       "repeat": 1,
@@ -47,7 +47,7 @@
     },
     {
       "name": "Progressive tempo 3",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 84,
       "duration_type": "Time",
       "repeat": 1,
@@ -63,7 +63,7 @@
     },
     {
       "name": "Progressive tempo 4",
-      "duration_seconds": 780,
+      "duration_seconds": 720,
       "intensity": 87,
       "duration_type": "Time",
       "repeat": 1,
@@ -87,9 +87,9 @@
     "moderate",
     "aerobic"
   ],
-  "duration_minutes": 82,
-  "estimated_tss": 76,
-  "target_tss": 76,
+  "duration_minutes": 78,
+  "estimated_tss": 71,
+  "target_tss": 71,
   "interval_count": 0,
   "interval_duration": 0,
   "recovery_duration": 180,
